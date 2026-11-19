@@ -1,0 +1,8 @@
+page.click: Timeout 30000ms exceeded.
+Call log:
+[2m  - waiting for locator('[data-go="assistant"]')[22m
+
+    at /home/user/tisa-trip-os/scripts/qa/assistant-browser.cjs:44:18 {
+  log: [ `  - waiting for locator('[data-go="assistant"]')` ],
+  name: 'TimeoutError'
+}

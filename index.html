@@ -141,6 +141,9 @@
                   <span class="home-bar"><span class="home-bar-label" data-slot="home-pack-label"></span><span class="mini-meter" aria-hidden="true"><span class="mini-fill" data-slot="home-pack-fill"></span></span></span>
                 </span>
               </button>
+              <button class="btn btn-ghost btn-small" type="button" data-go="assistant">
+                <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-chat"/></svg><span data-i18n="ast.open">עוזר: מה לעשות היום</span>
+              </button>
               <button class="btn btn-ghost btn-small" type="button" data-action="task-quick">
                 <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-plus"/></svg><span data-i18n="task.new">משימה חדשה</span>
               </button>
@@ -484,6 +487,35 @@
         <section class="card surface future-card" aria-labelledby="transfers-future-title">
           <h2 class="tool-title" id="transfers-future-title" data-i18n="transfers.future.title">חיפוש והשוואה של טיסות ומלונות</h2>
           <p class="muted" data-slot="transfers-future" data-i18n="transfers.future.text">חיפוש במחירים חיים יגיע בגרסה עתידית. עד אז כל טיסה ומלון נכתבים כאן ידנית, בלי מחירים, שעות או זמינות מומצאים.</p>
+        </section>
+      </section>
+
+      <!-- ASSISTANT (0.5.4): rule-based, from the user's own data only. A full AI chat is a future version. -->
+      <section class="panel assistant" id="panel-assistant" role="tabpanel" aria-labelledby="assistant-title" hidden>
+        <div class="itin-head">
+          <h1 class="display" id="assistant-title" data-i18n="ast.title">עוזר</h1>
+          <p class="muted" data-i18n="ast.lead">מבוסס רק על הנתונים שלכם. כל מספר מגיע עם החישוב שלו, ושום דבר לא מנוחש.</p>
+        </div>
+        <section class="card surface ast-card" aria-labelledby="ast-money-title">
+          <h2 id="ast-money-title" data-i18n="ast.money.title">הכסף</h2>
+          <div data-slot="ast-money"></div>
+          <p class="ast-warn" data-slot="ast-warn" hidden></p>
+          <details class="ast-how" data-slot="ast-how" hidden>
+            <summary data-i18n="ast.how.title">איך זה חושב</summary>
+            <div class="how-body" data-slot="ast-how-body"></div>
+          </details>
+        </section>
+        <section class="card surface ast-card" aria-labelledby="ast-today-title">
+          <h2 id="ast-today-title" data-i18n="ast.today.title">מה לעשות היום</h2>
+          <div data-slot="ast-today"></div>
+        </section>
+        <section class="card surface ast-card" aria-labelledby="ast-due-title">
+          <h2 id="ast-due-title" data-i18n="ast.due.title">משימות שמגיע זמנן</h2>
+          <div data-slot="ast-due"></div>
+        </section>
+        <section class="card surface future-card" aria-labelledby="ast-future-title">
+          <h2 class="tool-title" id="ast-future-title" data-i18n="ast.future.title">צ'אט עם שאלות פתוחות</h2>
+          <p class="muted" data-slot="ast-future" data-i18n="ast.future.text">צ'אט AI מלא יגיע בגרסה עתידית. עד אז העוזר עונה רק מתוך החישובים והנתונים שלכם.</p>
         </section>
       </section>
 
