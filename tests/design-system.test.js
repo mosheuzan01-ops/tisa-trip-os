@@ -54,11 +54,14 @@ test('S6: every text/background token pair passes WCAG AA in light and dark', ()
     ['--on-deep', '--deep', 4.5], ['--on-deep-muted', '--deep', 4.5], ['--deep-btn-ink', '--deep-btn', 4.5],
     ...[1, 2, 3, 4, 5, 6, 7].map((i) => ['--metal-ink', `--metal-${i}`, 4.5]),
     ['--on-deep', '--metal-pill', 4.5], ['--toast-ink', '--toast-bg', 4.5],
+    // Design v2 calm surfaces: tab chip, selected choice, danger text, accent icons, inputs.
+    ['--ink', '--surface-2', 4.5], ['--muted', '--surface-2', 4.5], ['--title', '--surface-2', 4.5], ['--title', '--surface', 4.5],
+    ['--bg', '--ink', 4.5], ['--danger', '--surface', 4.5], ['--accent', '--surface', 3], ['--line-strong', '--surface', 1.2],
     // Page text over the dusk glow (its peak colors), so the atmosphere never costs contrast.
     ...['--glow-1', '--glow-2'].flatMap((g) => [['--ink', g, 4.5], ['--muted', g, 4.5], ['--title', g, 4.5]]),
   ];
   // Darker metal surfaces: light text must pass on every gradient stop.
-  for (const fam of ['today', 'setup', 't1', 't2', 't3', 't4', 'nav']) {
+  for (const fam of ['setup']) {
     for (let i = 1; i <= 5; i++) pairs.push(['--on-dmetal', `--m-${fam}-${i}`, 4.5], ['--on-dmetal-muted', `--m-${fam}-${i}`, 4.5]);
   }
   for (let i = 1; i <= 5; i++) {

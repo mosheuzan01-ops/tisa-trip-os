@@ -148,7 +148,7 @@
   "result": "PASS",
   "fileName": "tisa-backup-2026-11-19.json",
   "format": "tisa-backup",
-  "summary": "טיול\nתאילנד\nתאריכים\n5 בדצמ׳ 2026 – 3 בינו׳ 2027\nעודכן לאחרונה\n19 בנובמבר 2026 בשעה 16:07",
+  "summary": "טיול\nתאילנד\nתאריכים\n5 בדצמ׳ 2026 – 3 בינו׳ 2027\nעודכן לאחרונה\n19 בנובמבר 2026 בשעה 16:40",
   "cancelKeptData": true,
   "importedStart": "2026-12-05",
   "brokenError": "זה לא קובץ גיבוי של TISA.",
@@ -178,7 +178,7 @@
     "tisa:v1"
    ],
    "trip": {
-    "id": "841e1407-369d-46ef-be06-13a5445297ea",
+    "id": "c7e13359-bedd-4801-a6c1-452103ea819b",
     "countryCode": "TH",
     "name": "תאילנד",
     "startDate": "2027-03-10",
@@ -293,7 +293,7 @@
  "B17": {
   "result": "PASS",
   "cacheBefore": [
-   "tisa-0.2.0"
+   "tisa-0.2.1"
   ],
   "after": {
    "caches": [
