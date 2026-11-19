@@ -690,7 +690,8 @@ function setupSettings(ctx) {
     ctx.toast('reset.done');
   });
 
-  $('[data-action="export"]').addEventListener('click', () => downloadBackup(ctx));
+  // Scoped to the settings panel: the backup banner (rendered earlier, on home) has its own export button.
+  $('[data-action="export"]', panel).addEventListener('click', () => downloadBackup(ctx));
 
   // Banner buttons (rendered later) use one delegated handler.
   $('[data-slot="banners"]').addEventListener('click', (e) => {
