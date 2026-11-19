@@ -82,12 +82,24 @@ function audit() {
       await page.click('[data-action="seed-confirm"]');
       await page.waitForFunction(() => document.querySelectorAll('.stop').length === 11);
       await sleep(2800); // toast gone
-      for (const screen of ['home', 'itinerary', 'settings']) {
+      // Stage 4: a budget and a couple of expenses, so the money screen has content
+      await page.evaluate(() => { location.hash = '#/money'; });
+      await page.click('[data-slot="money-empty"] [data-action="profile-open"]');
+      await page.click('#dlg-profile [type="submit"]');
+      for (const [amount, cur, cat] of [['300', 'THB', 'food'], ['1200', 'ILS', 'lodging']]) {
+        await page.click('#panel-money [data-action="expense-add"]');
+        await page.fill('#dlg-expense [name="amount"]', amount);
+        await page.selectOption('#dlg-expense [name="currency"]', cur);
+        await page.selectOption('#dlg-expense [name="category"]', cat);
+        await page.click('#dlg-expense [type="submit"]');
+      }
+      await sleep(2800);
+      for (const screen of ['home', 'itinerary', 'money', 'settings']) {
         await page.evaluate((s) => { location.hash = `#/${s}`; }, screen);
         await sleep(250);
         const a = await page.evaluate(audit);
         report.widths[`${width}-${scheme}-${screen}`] = a;
-        if (scheme === 'light' || screen === 'itinerary') await page.screenshot({ path: `${OUT}/${width}-${scheme}-${screen}.png`, fullPage: false });
+        if (scheme === 'light' || screen === 'itinerary' || screen === 'money') await page.screenshot({ path: `${OUT}/${width}-${scheme}-${screen}.png`, fullPage: false });
       }
       // a dialog, too
       await page.evaluate(() => { location.hash = '#/itinerary'; });

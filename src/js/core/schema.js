@@ -1,8 +1,9 @@
 // The app's data model (one object, saved under one key) and its version migrations. Pure functions, no DOM.
 // Shape and rules are documented in docs/BACKUP_FORMAT.md; a backup file carries this same object.
 import { isIsoDate, daysBetween } from './trip.js';
+import { toMinor } from './money.js';
 
-export const SCHEMA_VERSION = 1;
+export const SCHEMA_VERSION = 2;
 export const DEFAULT_QUESTION_LIMIT = 50;
 export const BACKUP_REMINDER_DAYS = 7;
 
@@ -14,10 +15,14 @@ const THEMES = [null, 'light', 'dark'];
 
 const isObj = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
 
+/** Stage 4 budget: whole minor units in the base currency, nine categories, nothing filled in. */
+export const emptyBudget = () => ({ currency: 'ILS', totalMinor: null, categoriesMinor: {}, profileId: null, estimate: false });
+
 export function createTrip({ makeId, countryCode, tripName }) {
   const trip = { id: makeId(), countryCode, name: tripName, startDate: null, endDate: null };
   for (const f of ARRAY_FIELDS) trip[f] = [];
   for (const f of OBJECT_FIELDS) trip[f] = {};
+  trip.budget = emptyBudget();
   return trip;
 }
 
@@ -67,6 +72,7 @@ const MIGRATIONS = {
   // 0 -> 1: the Stage 1 format ("tisa:trip" { dates, budget } + "tisa:theme") becomes one versioned object.
   0(old, opts) {
     const next = createDefaultState(opts);
+    next.schemaVersion = 1; // the next step brings it to the current version
     const trip = next.trips[next.activeTripId];
     const { dates, budget, ...rest } = isObj(old.trip) ? old.trip : {};
     for (const [k, v] of Object.entries(rest)) if (!(k in trip)) trip[k] = v;
@@ -76,6 +82,19 @@ const MIGRATIONS = {
     }
     if (isObj(budget)) trip.budget = { ...budget };
     if (old.theme === 'light' || old.theme === 'dark') next.settings.theme = old.theme;
+    return next;
+  },
+  // 1 -> 2 (Stage 4): budget { amount, currency } in decimals becomes whole minor units with categories.
+  // Nothing is dropped: unknown budget fields stay, and every other trip field is untouched.
+  1(old) {
+    const next = { ...old, schemaVersion: 2, trips: {} };
+    for (const [id, trip] of Object.entries(old.trips ?? {})) {
+      const b = isObj(trip?.budget) ? trip.budget : {};
+      if ('categoriesMinor' in b) { next.trips[id] = trip; continue; }
+      const { amount, currency, ...rest } = b;
+      const total = Number(amount) > 0 ? toMinor(amount) : null;
+      next.trips[id] = { ...trip, budget: { ...emptyBudget(), ...rest, currency: typeof currency === 'string' ? currency : 'ILS', totalMinor: total } };
+    }
     return next;
   },
 };
