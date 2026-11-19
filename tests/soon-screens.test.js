@@ -19,3 +19,16 @@ test('soon copy says "a future version", with no stage number, in both languages
   }
   assert.match(readJson('locales/he.json')['soon.future'], /בגרסה עתידית/);
 });
+
+// 0.5.5: no user-facing text anywhere promises a stage (the settings dates hint still said "stage 3").
+test('no user-facing text names a stage, in both languages', () => {
+  for (const loc of ['he', 'en']) {
+    const d = readJson(`locales/${loc}.json`);
+    for (const [k, v] of Object.entries(d)) {
+      if (typeof v !== 'string') continue;
+      assert.doesNotMatch(v, /בשלב\s*(\d|הבא)|שלב\s*\d|\bstage\s*\d|next stage/i, `${loc} ${k}: "${v}"`);
+    }
+  }
+  const html = readText('index.html').replace(/<!--[\s\S]*?-->/g, '');
+  assert.doesNotMatch(html, />[^<]*(בשלב\s*(\d|הבא)|שלב\s*\d)[^<]*</, 'index.html fallback text');
+});
