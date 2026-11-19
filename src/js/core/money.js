@@ -166,6 +166,7 @@ export function summarize(budget, expenses = [], rates = null) {
     unconvertible: running.length ? null : unconvertible,
     totalMinor, paidMinor, plannedMinor, committedMinor,
     freeMinor: totalMinor - paidMinor - plannedMinor - committedMinor,
+    freeBeforePlanMinor: totalMinor - paidMinor,
     categories: ids.map(line),
     emergency: { planMinor: em.planMinor, usedMinor: em.usedMinor, leftMinor: em.leftMinor, over: em.over },
   };
@@ -227,4 +228,28 @@ export function atmCost(amountMinor, feeMinor, rates, currency = Object.keys(rat
     totalBaseMinor: Math.round(totalMinor * r),
     feeBaseMinor: Math.round(feeMinor * r),
   };
+}
+
+/** "Is it worth it?": a purchase (in shekel agorot) against free money after planning, and the new daily amount. */
+export function affordability(summary, priceMinor, days) {
+  if (!Number.isInteger(priceMinor) || priceMinor <= 0) return null;
+  const freeNowMinor = summary.freeMinor;
+  const freeAfterMinor = freeNowMinor - priceMinor;
+  return {
+    freeNowMinor,
+    freeAfterMinor,
+    dailyNow: dailyAllowance(freeNowMinor, days),
+    dailyAfter: dailyAllowance(freeAfterMinor, days),
+    verdict: !summary.hasBudget ? 'noBudget' : freeAfterMinor >= 0 ? 'ok' : 'over',
+  };
+}
+
+/** Rows to CSV for Excel: BOM (so Hebrew opens right), CRLF, quoted when needed, formulas neutralised. */
+export function toCsv(rows) {
+  const cell = (v) => {
+    let x = String(v ?? '');
+    if (/^[=+@]/.test(x) || (/^-/.test(x) && Number.isNaN(Number(x)))) x = `'${x}`;
+    return /[",\r\n]/.test(x) ? `"${x.replace(/"/g, '""')}"` : x;
+  };
+  return `\uFEFF${rows.map((r) => r.map(cell).join(',')).join('\r\n')}\r\n`;
 }

@@ -59,6 +59,7 @@
   --line-strong: #D8CAC6;
   --surface-glass: rgba(255, 255, 255, .88);
   --danger: #A3283E;
+  --danger-soft: #F8ECEE; /* 0.4.2: quiet over-budget background (dark red text on it, 4.5:1+) */
   /* Stage 4 chart colors, one per budget category (non-text: at least 3:1 on --surface) */
   --chart-1: #8B5868; --chart-2: #2F6F8F; --chart-3: #B5654A; --chart-4: #4E7D4A; --chart-5: #7A5CA8;
   --chart-6: #2E8577; --chart-7: #A07A1F; --chart-8: #6B6470; --chart-9: #A3283E;
@@ -125,6 +126,7 @@
   --line-strong: #4D4256;
   --surface-glass: rgba(30, 26, 36, .88);
   --danger: #FFA3B1;
+  --danger-soft: #34232A;
   --chart-1: #E0A9BA; --chart-2: #8EC3DF; --chart-3: #F0A58B; --chart-4: #9FCF96; --chart-5: #C3AEF0;
   --chart-6: #7FD3C3; --chart-7: #E5C46B; --chart-8: #B8B1BC; --chart-9: #FFA3B1;
   --toast-bg: #C9BCEB; --toast-ink: #141118;
