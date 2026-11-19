@@ -80,7 +80,18 @@ button { font: inherit; color: inherit; }
   box-shadow: 0 1px 0 var(--metal-6), 0 2px 0 var(--metal-7), 0 3px 0 var(--metal-7),
     calc(var(--tx, 0) * -10px) calc(18px + var(--ty, 0) * -6px) 30px -14px var(--shadow-strong), 0 4px 8px var(--shadow);
 }
-.back { transform: rotateY(180deg); }
+.front { transform: translateZ(3px); }
+.back { transform: rotateY(180deg) translateZ(3px); }
+/* Card core: layers between the two faces, so the card shows real thickness when it turns edge-on */
+.pass-inner::before, .pass-inner::after {
+  content: ""; position: absolute; inset: 1px; border-radius: var(--radius-xl); pointer-events: none;
+  background: linear-gradient(125deg, var(--metal-5), var(--metal-7));
+}
+.pass-inner::before { transform: translateZ(1.5px); }
+.pass-inner::after { transform: translateZ(-1.5px); }
+/* The card lifts toward the viewer while it turns */
+@keyframes pass-lift { 50% { translate: 0 -8px; scale: 1.035; } }
+.pass.is-flipping .pass-inner { animation: pass-lift var(--dur-flip) var(--ease-out); }
 /* Glare that follows the finger or pointer */
 .pass .face::before {
   content: ""; position: absolute; inset: 0; z-index: 5; pointer-events: none; border-radius: inherit;

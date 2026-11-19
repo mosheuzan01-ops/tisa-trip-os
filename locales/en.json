@@ -16,7 +16,7 @@
   "budget.total": "Budget",
   "budget.spent": "Spent",
   "budget.left": "Left",
-  "budget.back": "Back to pass",
+  "budget.back": "Tap for location",
   "today.clock": "Time now in {city}",
   "today.empty": "Set your dates and today's plan will show up here.",
   "setup.title": "Set up the trip",
@@ -84,5 +84,6 @@
   "today.before.caption": "days to go",
   "today.during.caption": "of {length} days",
   "tools.note": "Opening in the next stages",
-  "form.currencyOption": "{name} ({code})"
+  "form.currencyOption": "{name} ({code})",
+  "pass.flipLabelBack": "Trip budget. Tap to go back to the location"
 }

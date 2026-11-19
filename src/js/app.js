@@ -32,7 +32,7 @@ async function boot() {
   for (const el of $$('[data-slot="country-latin"]')) el.textContent = country.names.en ?? country.id;
 
   setupTheme(config);
-  setupPass();
+  setupPass(t);
   setupClock(country, locale, t);
   const toast = setupToast(t);
   const tabs = setupTabs(t);
@@ -62,11 +62,17 @@ function setupTheme(config) {
   });
 }
 
-function setupPass() {
+function setupPass(t) {
   const pass = $('.pass');
   pass.addEventListener('click', () => {
-    pass.setAttribute('aria-pressed', String(pass.getAttribute('aria-pressed') !== 'true'));
+    const showBudget = pass.getAttribute('aria-pressed') !== 'true';
+    pass.setAttribute('aria-pressed', String(showBudget));
+    pass.setAttribute('aria-label', t(showBudget ? pass.dataset.labelBack : pass.dataset.i18nLabel));
+    pass.classList.remove('is-flipping');
+    void pass.offsetWidth; // restart the lift animation on quick repeat taps
+    pass.classList.add('is-flipping');
   });
+  $('.pass-inner').addEventListener('animationend', () => pass.classList.remove('is-flipping'));
   setupTilt(pass);
 }
 

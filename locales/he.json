@@ -16,7 +16,7 @@
   "budget.total": "תקציב",
   "budget.spent": "הוצא",
   "budget.left": "נשאר",
-  "budget.back": "חזרה לכרטיס",
+  "budget.back": "הקישו למיקום",
   "today.clock": "השעה עכשיו ב{city}",
   "today.empty": "כשתקבעו תאריכים, כאן יופיע מה מחכה לכם היום.",
   "setup.title": "הקמת הטיול",
@@ -84,5 +84,6 @@
   "today.before.caption": "ימים לטיול",
   "today.during.caption": "מתוך {length} ימים",
   "tools.note": "ייפתחו בשלבים הבאים",
-  "form.currencyOption": "{name} ({code})"
+  "form.currencyOption": "{name} ({code})",
+  "pass.flipLabelBack": "תקציב הטיול. הקישו כדי לחזור למיקום"
 }
