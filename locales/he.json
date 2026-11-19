@@ -240,5 +240,8 @@
   "replan.warn.outside": "מחוץ לתאריכי הטיול: {names}.",
   "replanErr.flex.none": "אין במסלול יעד גמיש.",
   "replanErr.flex.outOfRange": "היעד הגמיש יכול להיות {min} עד {max} לילות. השינוי גדול מדי.",
-  "replan.done": "המסלול עודכן."
+  "replan.done": "המסלול עודכן.",
+  "replan.fromDates": "יש תחנות במסלול. בחרו מה יקרה להן, ורק אז התאריכים יישמרו.",
+  "today.stop.during": "התחנה של היום:",
+  "today.stop.next": "התחנה הבאה:"
 }

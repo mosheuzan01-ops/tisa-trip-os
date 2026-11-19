@@ -122,6 +122,7 @@
                 <h2 id="today-title" data-i18n="today.title.unset" data-slot="today-title">מה מחכה לכם</h2>
               </div>
               <p class="today-status" data-slot="today-status" hidden></p>
+              <p class="today-stop" data-slot="today-stop" hidden></p>
               <p class="today-time"><span class="clock ltr" data-slot="clock">--:--</span><span class="today-where" data-slot="clock-label"></span></p>
               <p class="muted" data-i18n="today.empty" data-slot="today-sub">כשתקבעו תאריכים, כאן יופיע מה מחכה לכם היום.</p>
             </section>
@@ -474,6 +475,7 @@
     <dialog class="sheet dmetal" id="dlg-replan" aria-labelledby="dlg-replan-title">
       <form class="sheet-form" data-form="replan" novalidate>
         <h2 id="dlg-replan-title" data-i18n="replan.title">תכנון מחדש</h2>
+        <p class="sheet-hint" data-slot="replan-from" data-i18n="replan.fromDates" hidden>יש תחנות במסלול. בחרו מה יקרה להן, ורק אז התאריכים יישמרו.</p>
         <div class="field-row">
           <label class="field"><span data-i18n="dates.start">יציאה</span><input class="ltr" type="date" name="start" aria-describedby="replan-error"></label>
           <label class="field"><span data-i18n="dates.end">חזרה</span><input class="ltr" type="date" name="end" aria-describedby="replan-error"></label>

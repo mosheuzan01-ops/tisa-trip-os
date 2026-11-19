@@ -361,6 +361,12 @@ function setupSheets(ctx) {
     const dates = { start: form.start.value, end: form.end.value };
     const errors = validateDates(dates);
     if (errors.length) { showFormErrors(t, form, errors); return; }
+    if (ctx.needsReplan?.(dates)) { // stops exist: show the before/after first, save only on yes
+      const from = opener;
+      sheets.dates.close();
+      ctx.openReplan(dates, from);
+      return;
+    }
     commit((s) => { const trip = s.trips[s.activeTripId]; trip.startDate = dates.start; trip.endDate = dates.end; }, sheets.dates, 'toast.saved');
   });
 
@@ -586,6 +592,13 @@ function setupSettings(ctx) {
     const errors = validateDates(dates);
     if (errors.length) { showFormErrors(t, datesForm, errors); return; }
     showFormErrors(t, datesForm, []);
+    if (ctx.needsReplan?.(dates)) {
+      ctx.openReplan(dates, datesForm.querySelector('[type="submit"]'), () => {
+        datesForm.start.value = ctx.trip().startDate ?? '';
+        datesForm.end.value = ctx.trip().endDate ?? '';
+      });
+      return;
+    }
     const result = ctx.change((s) => { const trip = s.trips[s.activeTripId]; trip.startDate = dates.start; trip.endDate = dates.end; }, { now: true });
     ctx.toast(result?.ok ? 'toast.saved' : 'form.saveFailed');
   });

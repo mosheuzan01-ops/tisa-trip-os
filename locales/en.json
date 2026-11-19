@@ -240,5 +240,8 @@
   "replan.warn.outside": "Outside the trip dates: {names}.",
   "replanErr.flex.none": "The route has no flexible stop.",
   "replanErr.flex.outOfRange": "The flexible stop can be {min} to {max} nights. The change is too big.",
-  "replan.done": "The route was updated."
+  "replan.done": "The route was updated.",
+  "replan.fromDates": "The route has stops. Choose what happens to them; the dates are saved only then.",
+  "today.stop.during": "Today's stop:",
+  "today.stop.next": "Next stop:"
 }

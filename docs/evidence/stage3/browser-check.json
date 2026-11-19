@@ -121,7 +121,7 @@
     "firstRow": "בנגקוקהיה: 5 בדצמ׳ – 8 בדצמ׳יהיה: 7 בדצמ׳ – 10 בדצמ׳",
     "savedBeforeConfirm": "2026-12-05",
     "shiftedFirst": {
-      "id": "e10479e7-9935-4c8c-a36e-6583a3f77a64",
+      "id": "bc25d44e-850e-481d-acb1-a457082e43c3",
       "name": "בנגקוק",
       "startDate": "2026-12-07",
       "endDate": "2026-12-10",
@@ -131,7 +131,7 @@
     "flexDisabled": true,
     "flexRows": 2,
     "tao": {
-      "id": "3c694d61-48e5-439d-aa79-46e3d0781b7b",
+      "id": "fc54290d-2782-4af4-853a-c05e03fdfe3c",
       "name": "קו טאו",
       "startDate": "2027-01-03",
       "endDate": "2027-01-05",
@@ -162,13 +162,13 @@
     "result": "PASS",
     "caches": {
       "keys": [
-        "tisa-0.3.0"
+        "tisa-0.3.1"
       ],
       "hasView": true,
       "hasCore": true,
       "hasPack": true
     },
-    "version": "0.3.0",
+    "version": "0.3.1",
     "offlineBanner": [
       "אין חיבור לאינטרנט. הכול שמור במכשיר וממשיך לעבוד."
     ],

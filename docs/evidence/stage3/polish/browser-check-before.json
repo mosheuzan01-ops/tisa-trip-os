@@ -1,0 +1,39 @@
+{
+  "S3-12": {
+    "result": "FAIL",
+    "during": "",
+    "landed": "",
+    "beforeTrip": ""
+  },
+  "S3-13": {
+    "result": "FAIL",
+    "opened": false,
+    "prefilled": [],
+    "rows": 0,
+    "note": "",
+    "notSavedYet": "2026-12-08",
+    "afterCancel": [
+      "2026-12-08",
+      "2026-12-05"
+    ],
+    "settingsField": "2026-12-08",
+    "afterYes": [
+      "2026-12-08",
+      "2026-12-05"
+    ],
+    "fromHome": false,
+    "datesSheetClosed": true,
+    "afterHome": [
+      "2026-12-09",
+      "2026-12-05"
+    ],
+    "plain": {
+      "replanOpened": false,
+      "saved": "2026-12-05"
+    }
+  },
+  "no errors": {
+    "result": "PASS",
+    "errors": []
+  }
+}

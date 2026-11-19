@@ -129,6 +129,8 @@ const visible = (page, sel) => page.locator(sel).isVisible();
     const summary = await page.locator('.import-summary').innerText();
     await page.screenshot({ path: `${OUT}/import-dialog.png` });
     await page.click('#dlg-import [data-close]');
+    await page.waitForSelector('#dlg-import:not([open])', { state: 'attached' });
+    await sleep(100); // let the dialog's close handler finish before picking the file again (test race, not an app bug)
     const afterCancel = await page.evaluate(() => localStorage.getItem('tisa:v1'));
     await page.setInputFiles('#import-file', backupPath);
     await page.waitForSelector('#dlg-import[open]');
