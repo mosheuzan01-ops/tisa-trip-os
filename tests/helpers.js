@@ -21,3 +21,8 @@ export function listFiles(dir, exts) {
   walk(join(ROOT, dir));
   return out;
 }
+
+/** The one approved external URL: the share-card image on the project's own Pages origin (owner OK, 2026-11-19). */
+export const PAGES_ORIGIN = 'https://mosheuzan01-ops.github.io/tisa-trip-os/';
+export const stripShareImage = (text) =>
+  text.replace(/<meta property="og:image" content="https:\/\/mosheuzan01-ops\.github\.io\/tisa-trip-os\/[^"]*">/g, '');
