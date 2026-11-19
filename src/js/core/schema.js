@@ -3,14 +3,14 @@
 import { isIsoDate, daysBetween } from './trip.js';
 import { toMinor } from './money.js';
 
-export const SCHEMA_VERSION = 2;
+export const SCHEMA_VERSION = 3;
 export const DEFAULT_QUESTION_LIMIT = 50;
 export const BACKUP_REMINDER_DAYS = 7;
 
-const ARRAY_FIELDS = ['destinations', 'expenses', 'transfers', 'checklist', 'events'];
+const ARRAY_FIELDS = ['destinations', 'expenses', 'transfers', 'checklist', 'events', 'tasks'];
 const OBJECT_FIELDS = ['budget', 'rates', 'info', 'assistant'];
 /** Empty slots for later features, so later stages add data without changing the shape. */
-export const TRIP_FEATURE_FIELDS = ['destinations', 'expenses', 'budget', 'rates', 'transfers', 'checklist', 'events', 'info', 'assistant'];
+export const TRIP_FEATURE_FIELDS = ['destinations', 'expenses', 'budget', 'rates', 'transfers', 'checklist', 'tasks', 'events', 'info', 'assistant'];
 const THEMES = [null, 'light', 'dark'];
 
 const isObj = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
@@ -94,6 +94,19 @@ const MIGRATIONS = {
       const { amount, currency, ...rest } = b;
       const total = Number(amount) > 0 ? toMinor(amount) : null;
       next.trips[id] = { ...trip, budget: { ...emptyBudget(), ...rest, currency: typeof currency === 'string' ? currency : 'ILS', totalMinor: total } };
+    }
+    return next;
+  },
+  // 2 -> 3 (Stage 5): tasks are added; any old checklist entries get the new fields' defaults. Nothing else changes.
+  2(old) {
+    const next = { ...old, schemaVersion: 3, trips: {} };
+    for (const [id, trip] of Object.entries(old.trips ?? {})) {
+      const list = Array.isArray(trip?.checklist) ? trip.checklist : [];
+      next.trips[id] = {
+        ...trip,
+        tasks: Array.isArray(trip?.tasks) ? trip.tasks : [],
+        checklist: list.map((x) => (isObj(x) ? { group: 'documents', qty: 1, note: '', done: false, ...x } : x)),
+      };
     }
     return next;
   },

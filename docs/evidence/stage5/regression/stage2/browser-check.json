@@ -1,0 +1,269 @@
+{
+ "B11": {
+  "result": "PASS",
+  "nav": {
+   "home": {
+    "hash": "#/home",
+    "panelVisible": true,
+    "ariaCurrent": 1,
+    "hscroll": false
+   },
+   "itinerary": {
+    "hash": "#/itinerary",
+    "panelVisible": true,
+    "ariaCurrent": 1,
+    "hscroll": false
+   },
+   "money": {
+    "hash": "#/money",
+    "panelVisible": true,
+    "ariaCurrent": 1,
+    "hscroll": false
+   },
+   "checklist": {
+    "hash": "#/checklist",
+    "panelVisible": true,
+    "ariaCurrent": 1,
+    "hscroll": false
+   },
+   "transfers": {
+    "hash": "#/transfers",
+    "panelVisible": true,
+    "ariaCurrent": 1,
+    "hscroll": false,
+    "buttons": [
+     "home"
+    ],
+    "text": "המסך הזה ייבנה בשלב 5. בינתיים הכול מחכה לכם במסך הבית."
+   },
+   "info": {
+    "hash": "#/info",
+    "panelVisible": true,
+    "ariaCurrent": 1,
+    "hscroll": false,
+    "buttons": [
+     "home"
+    ],
+    "text": "המסך הזה ייבנה בשלב 7. בינתיים הכול מחכה לכם במסך הבית."
+   },
+   "assistant": {
+    "hash": "#/assistant",
+    "panelVisible": true,
+    "ariaCurrent": 1,
+    "hscroll": false,
+    "buttons": [
+     "home"
+    ],
+    "text": "המסך הזה ייבנה בשלב 7. בינתיים הכול מחכה לכם במסך הבית."
+   },
+   "settings": {
+    "hash": "#/settings",
+    "panelVisible": true,
+    "ariaCurrent": 1,
+    "hscroll": false
+   }
+  },
+  "afterBack": "#/transfers",
+  "afterReload": "#/transfers",
+  "legacyHash": "#/money"
+ },
+ "B12": {
+  "result": "PASS",
+  "screens": {
+   "transfers": {
+    "buttons": [
+     "home"
+    ],
+    "text": "המסך הזה ייבנה בשלב 5. בינתיים הכול מחכה לכם במסך הבית."
+   },
+   "info": {
+    "buttons": [
+     "home"
+    ],
+    "text": "המסך הזה ייבנה בשלב 7. בינתיים הכול מחכה לכם במסך הבית."
+   },
+   "assistant": {
+    "buttons": [
+     "home"
+    ],
+    "text": "המסך הזה ייבנה בשלב 7. בינתיים הכול מחכה לכם במסך הבית."
+   }
+  }
+ },
+ "B13": {
+  "result": "PASS",
+  "start": "2026-12-05",
+  "end": "2027-01-03",
+  "theme": "dark",
+  "radio": "dark",
+  "stored": "dark"
+ },
+ "B14": {
+  "result": "PASS",
+  "fileName": "tisa-backup-2026-11-19.json",
+  "format": "tisa-backup",
+  "summary": "טיול\nתאילנד\nתאריכים\n5 בדצמ׳ 2026 – 3 בינו׳ 2027\nעודכן לאחרונה\n19 בנובמבר 2026 בשעה 20:46",
+  "cancelKeptData": true,
+  "importedStart": "2026-12-05",
+  "brokenError": "זה לא קובץ גיבוי של TISA.",
+  "brokenDialog": 0,
+  "brokenKeptData": true,
+  "disabledAtStart": true,
+  "disabledWrong": true,
+  "offersBackup": true,
+  "enabledRight": true,
+  "afterReset": {
+   "start": null,
+   "trips": 1
+  }
+ },
+ "B19": {
+  "result": "PASS",
+  "errors": [],
+  "external": [],
+  "failed": []
+ },
+ "migrationInBrowser": {
+  "result": "PASS",
+  "migrated": {
+   "keys": [
+    "tisa:theme",
+    "tisa:trip",
+    "tisa:v1"
+   ],
+   "trip": {
+    "id": "6aef2be5-2c44-4e92-a167-5445685386e9",
+    "countryCode": "TH",
+    "name": "תאילנד",
+    "startDate": "2027-03-10",
+    "endDate": "2027-03-19",
+    "destinations": [],
+    "expenses": [],
+    "transfers": [],
+    "checklist": [],
+    "events": [],
+    "tasks": [],
+    "budget": {
+     "currency": "ILS",
+     "totalMinor": 1200000,
+     "categoriesMinor": {},
+     "profileId": null,
+     "estimate": false
+    },
+    "rates": {},
+    "info": {},
+    "assistant": {}
+   },
+   "kpi": "‏12,000 ‏₪",
+   "theme": "dark"
+  }
+ },
+ "corruptInBrowser": {
+  "result": "PASS",
+  "corrupt": {
+   "banner": "הנתונים השמורים לא נקראים. לא מחקנו אותם: שמרנו עותק בצד. אפשר לייבא גיבוי או להתחיל מחדש.לייבא גיבוילהתחיל מחדש",
+   "mainKey": "{\"schemaVersion\":1, broken",
+   "copies": 1
+  },
+  "errors": []
+ },
+ "B15": {
+  "result": "PASS",
+  "banner": "הדפדפן חוסם שמירה במכשיר. אפשר להמשיך לעבוד, אבל מה שתזינו יימחק כשתסגרו את הדף.",
+  "errors": [],
+  "inMemory": "2026-12-05",
+  "homeStatus": true
+ },
+ "B18": {
+  "result": "PASS",
+  "installabilityErrors": [],
+  "manifestErrors": [],
+  "manifestUrl": "http://127.0.0.1:8091/manifest.webmanifest"
+ },
+ "B16": {
+  "result": "PASS",
+  "offline": {
+   "home": {
+    "hash": "#/home",
+    "font": true,
+    "styled": true,
+    "icons": true
+   },
+   "itinerary": {
+    "hash": "#/itinerary",
+    "font": true,
+    "styled": true,
+    "icons": true
+   },
+   "money": {
+    "hash": "#/money",
+    "font": true,
+    "styled": true,
+    "icons": true
+   },
+   "checklist": {
+    "hash": "#/checklist",
+    "font": true,
+    "styled": true,
+    "icons": true
+   },
+   "transfers": {
+    "hash": "#/transfers",
+    "font": true,
+    "styled": true,
+    "icons": true
+   },
+   "info": {
+    "hash": "#/info",
+    "font": true,
+    "styled": true,
+    "icons": true
+   },
+   "assistant": {
+    "hash": "#/assistant",
+    "font": true,
+    "styled": true,
+    "icons": true
+   },
+   "settings": {
+    "hash": "#/settings",
+    "font": true,
+    "styled": true,
+    "icons": true
+   }
+  },
+  "fontsLoaded": [
+   "Heebo",
+   "Plex Mono"
+  ],
+  "failedRequests": [],
+  "errors": [],
+  "banner": [
+   "אין חיבור לאינטרנט. הכול שמור במכשיר וממשיך לעבוד."
+  ]
+ },
+ "B17": {
+  "result": "PASS",
+  "cacheBefore": [
+   "tisa-0.5.0"
+  ],
+  "after": {
+   "caches": [
+    "tisa-9.9.9-test"
+   ],
+   "start": "2026-12-05",
+   "banner": false
+  },
+  "errors": []
+ },
+ "B20": {
+  "result": "PASS",
+  "shots": [
+   "home-375.png",
+   "settings-375-dark.png",
+   "import-dialog.png",
+   "banner-offline.png",
+   "banner-update.png"
+  ]
+ }
+}

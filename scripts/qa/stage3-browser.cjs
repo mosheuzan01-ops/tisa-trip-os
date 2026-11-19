@@ -7,7 +7,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 
 const ROOT = path.join(__dirname, '..', '..');
-const OUT = path.join(ROOT, 'docs/evidence/stage3');
+const OUT = process.env.QA_OUT ? path.resolve(process.env.QA_OUT) : path.join(ROOT, 'docs/evidence/stage3'); // rule 10: reruns write elsewhere
 fs.mkdirSync(OUT, { recursive: true });
 const PORT = 8093;
 const BASE = `http://127.0.0.1:${PORT}/`;

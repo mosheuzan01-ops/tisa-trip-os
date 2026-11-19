@@ -158,7 +158,7 @@ test('S4-8: filters by day, category and stop; pie slices match the sums', () =>
 const opts = { now: () => new Date('2026-11-19T10:00:00Z'), appVersion: '0.4.0', makeId: () => 'trip-1', countryCode: 'TH', tripName: 'תאילנד' };
 
 test('S4-13: v1 data with a Stage 1 budget migrates to v2 without losing anything', () => {
-  assert.equal(SCHEMA_VERSION, 2);
+  assert.ok(SCHEMA_VERSION >= 2, 'the 1 -> 2 step stays in the chain (Stage 5 added 2 -> 3)');
   const v1 = createDefaultState(opts);
   v1.schemaVersion = 1;
   const trip = v1.trips['trip-1'];
@@ -166,7 +166,7 @@ test('S4-13: v1 data with a Stage 1 budget migrates to v2 without losing anythin
   trip.destinations = [{ id: 'd', name: 'x', startDate: '2026-12-05', endDate: '2026-12-08', note: '' }];
   trip.startDate = '2026-12-05';
   const out = migrate(structuredClone(v1), opts);
-  assert.equal(out.schemaVersion, 2);
+  assert.equal(out.schemaVersion, SCHEMA_VERSION);
   const b = out.trips['trip-1'].budget;
   assert.deepEqual(b, { currency: 'ILS', totalMinor: 1200050, categoriesMinor: {}, profileId: null, estimate: false, extra: 'keep' });
   assert.deepEqual(out.trips['trip-1'].destinations, trip.destinations);
@@ -176,9 +176,9 @@ test('S4-13: v1 data with a Stage 1 budget migrates to v2 without losing anythin
   assert.deepEqual(migrate(empty, opts).trips['trip-1'].budget, { currency: 'ILS', totalMinor: null, categoriesMinor: {}, profileId: null, estimate: false });
 });
 
-test('S4-13: a fresh state is v2 with an empty money budget', () => {
+test('S4-13: a fresh state has an empty money budget', () => {
   const s = createDefaultState(opts);
-  assert.equal(s.schemaVersion, 2);
+  assert.equal(s.schemaVersion, SCHEMA_VERSION);
   assert.deepEqual(s.trips['trip-1'].budget, { currency: 'ILS', totalMinor: null, categoriesMinor: {}, profileId: null, estimate: false });
   assert.deepEqual(validateState(s), []);
 });

@@ -35,6 +35,9 @@ function audit() {
   const inMain = (n) => !n.closest('.tabbar, .toast');
   const small = [...document.querySelectorAll('button, a[href], input:not([type="file"]), select, label.choice, label.replan-mode')]
     .filter((n) => visible(n) && !n.disabled && n.type !== 'radio')
+    // A checkbox inside its label: the label is the tap target (WCAG 2.5.8), so measure the label, and only if it is >= 44px
+    .map((n) => { if (n.type !== 'checkbox') return n; const l = n.closest('label'); const r = l?.getBoundingClientRect(); return l && r.width >= 44 && r.height >= 44 ? null : n; })
+    .filter(Boolean)
     .map((n) => { const r = n.getBoundingClientRect(); return { el: `${n.tagName.toLowerCase()}.${n.className}`.slice(0, 50), text: (n.textContent || n.getAttribute('aria-label') || '').trim().slice(0, 20), w: Math.round(r.width), h: Math.round(r.height) }; })
     .filter((x) => x.w < 44 || x.h < 44);
   const texts = [...document.querySelectorAll('body *')].filter((n) => visible(n) && [...n.childNodes].some((c) => c.nodeType === 3 && c.textContent.trim()));
@@ -94,12 +97,21 @@ function audit() {
         await page.click('#dlg-expense [type="submit"]');
       }
       await sleep(2800);
-      for (const screen of ['home', 'itinerary', 'money', 'settings']) {
+      // Stage 5: the starter list and tasks, one ticked, one overdue
+      await page.evaluate(() => { location.hash = '#/checklist'; });
+      for (const which of ['list-seed', 'tasks-seed']) {
+        await page.click(`[data-action="${which}"]`);
+        await page.click('[data-action="list-confirm-yes"]');
+        await page.waitForSelector('#dlg-list-confirm:not([open])', { state: 'attached' });
+      }
+      await page.locator('[data-action="item-toggle"]').first().check();
+      await sleep(2800);
+      for (const screen of ['home', 'itinerary', 'money', 'checklist', 'settings']) {
         await page.evaluate((s) => { location.hash = `#/${s}`; }, screen);
         await sleep(250);
         const a = await page.evaluate(audit);
         report.widths[`${width}-${scheme}-${screen}`] = a;
-        if (scheme === 'light' || screen === 'itinerary' || screen === 'money') await page.screenshot({ path: `${OUT}/${width}-${scheme}-${screen}.png`, fullPage: false });
+        if (scheme === 'light' || ['itinerary', 'money', 'checklist'].includes(screen)) await page.screenshot({ path: `${OUT}/${width}-${scheme}-${screen}.png`, fullPage: false });
       }
       // a dialog, too
       await page.evaluate(() => { location.hash = '#/itinerary'; });

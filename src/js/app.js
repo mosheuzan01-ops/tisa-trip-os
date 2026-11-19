@@ -14,6 +14,7 @@ import { createAutosave } from './core/autosave.js';
 import { setupItinerary, renderItinerary } from './itinerary-view.js';
 import { setupMoney, renderMoney, moneyState, formatMinor } from './money-view.js';
 import { parseMoney } from './core/money.js';
+import { setupLists, renderLists } from './checklist-view.js';
 
 const $ = (sel, root = document) => root.querySelector(sel);
 const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
@@ -24,7 +25,7 @@ const SCREENS = {
   home: { tab: 'home' },
   itinerary: { tab: 'itinerary', title: 'nav.itinerary', icon: 'i-route' },
   money: { tab: 'budget', title: 'screen.money', icon: 'i-wallet' },
-  checklist: { tab: 'lists', title: 'screen.checklist', icon: 'i-list', stage: 5 },
+  checklist: { tab: 'lists', title: 'screen.checklist', icon: 'i-list' },
   transfers: { title: 'screen.transfers', icon: 'i-plane', stage: 5 },
   info: { title: 'screen.info', icon: 'i-doc', stage: 7 },
   assistant: { title: 'screen.assistant', icon: 'i-chat', stage: 7 },
@@ -100,6 +101,7 @@ async function boot() {
     renderSettings(ctx);
     renderItinerary(ctx);
     renderMoney(ctx);
+    renderLists(ctx);
     renderBanners(ctx);
   };
   addEventListener('pagehide', () => autosave.flush());
@@ -117,11 +119,12 @@ async function boot() {
   setupSettings(ctx);
   setupItinerary(ctx, { wireDialog, showFormErrors });
   setupMoney(ctx, { wireDialog, showFormErrors });
+  setupLists(ctx, { wireDialog, showFormErrors });
   setupServiceWorker(ctx);
   addEventListener('online', () => renderBanners(ctx));
   addEventListener('offline', () => renderBanners(ctx));
   ctx.render();
-  setInterval(() => { renderTrip({ t, locale, country, trip: tripView(ctx) }); renderItinerary(ctx); renderMoney(ctx); }, 60_000); // keeps "today" right across midnight
+  setInterval(() => { renderTrip({ t, locale, country, trip: tripView(ctx) }); renderItinerary(ctx); renderMoney(ctx); renderLists(ctx); }, 60_000); // keeps "today" right across midnight
 }
 
 /** The home screen reads { dates, budget, money }. Money comes from the Stage 4 summary (whole agorot). */
@@ -409,7 +412,7 @@ function setupSheets(ctx) {
 function setupRouter(ctx) {
   const { t } = ctx;
   const tabs = $$('[role="tab"]');
-  const panels = { home: $('#panel-home'), itinerary: $('#panel-itinerary'), money: $('#panel-money'), soon: $('#panel-soon'), settings: $('#panel-settings') };
+  const panels = { home: $('#panel-home'), itinerary: $('#panel-itinerary'), money: $('#panel-money'), checklist: $('#panel-checklist'), soon: $('#panel-soon'), settings: $('#panel-settings') };
   const main = $('#main');
   const rtl = () => document.documentElement.dir === 'rtl';
 

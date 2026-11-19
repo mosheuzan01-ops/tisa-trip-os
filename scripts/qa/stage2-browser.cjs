@@ -57,17 +57,17 @@ const visible = (page, sel) => page.locator(sel).isVisible();
       if (route === 'settings') await page.click('.settings-btn');
       else if (route === 'home') await page.click('[data-tab="home"]');
       else if (await page.locator(`[role="tab"][data-route="${route}"]`).count()) await page.click(`[role="tab"][data-route="${route}"]`);
-      else { await page.click('[data-tab="lists"]'); await page.click(`.soon-link[data-route="${route}"]`); } // itinerary (Stage 3) and money (Stage 4) are real screens now
+      else { await page.click('[data-tab="home"]'); await page.click('.tile[data-go="info"]'); if (route !== 'info') await page.click(`.soon-link[data-route="${route}"]`); } // all tabs are real screens since Stage 5; soon screens open from the home tile
       await page.waitForFunction((r) => location.hash === `#/${r}`, route);
       await page.waitForSelector(`[data-route="${route}"][aria-current="page"]`, { state: "attached" }); // hashchange is handled a moment later
     };
     for (const route of ROUTES) {
       await open(route);
-      const panel = { home: '#panel-home', settings: '#panel-settings', itinerary: '#panel-itinerary', money: '#panel-money' }[route] ?? '#panel-soon';
+      const panel = { home: '#panel-home', settings: '#panel-settings', itinerary: '#panel-itinerary', money: '#panel-money', checklist: '#panel-checklist' }[route] ?? '#panel-soon';
       const current = await page.locator(`[data-route="${route}"][aria-current="page"]`).count();
       const hscroll = await page.evaluate(() => document.documentElement.scrollWidth > innerWidth);
       nav[route] = { hash: await page.evaluate(() => location.hash), panelVisible: await visible(page, panel), ariaCurrent: current, hscroll };
-      if (!['home', 'settings', 'itinerary', 'money'].includes(route)) {
+      if (!['home', 'settings', 'itinerary', 'money', 'checklist'].includes(route)) {
         // B12: no fake action buttons on an empty screen (only "back to home" and real links)
         nav[route].buttons = await page.locator('#panel-soon button').evaluateAll((b) => b.map((x) => x.dataset.go ?? 'NO-DESTINATION'));
         nav[route].text = await page.locator('[data-slot="soon-text"]').textContent();
@@ -86,10 +86,10 @@ const visible = (page, sel) => page.locator(sel).isVisible();
     const legacyHash = await page.evaluate(() => location.hash);
     const b11 = Object.values(nav).every((n) => n.panelVisible && n.ariaCurrent > 0 && !n.hscroll) && afterBack === '#/transfers' && afterReload === '#/transfers' && transfersVisible && legacyHash === '#/money';
     pass('B11', b11, { nav, afterBack, afterReload, legacyHash });
-    const soon = Object.entries(nav).filter(([r]) => !['home', 'settings', 'itinerary', 'money'].includes(r));
+    const soon = Object.entries(nav).filter(([r]) => !['home', 'settings', 'itinerary', 'money', 'checklist'].includes(r));
     pass('B12', soon.every(([, n]) => n.buttons.length === 1 && n.buttons[0] === 'home' && /שלב \d/.test(n.text)), { screens: Object.fromEntries(soon.map(([r, n]) => [r, { buttons: n.buttons, text: n.text }])) });
-    await open('checklist');
-    await page.screenshot({ path: `${OUT}/empty-screen-checklist.png`, fullPage: false });
+    await open('info');
+    await page.screenshot({ path: `${OUT}/empty-screen-info.png`, fullPage: false });
 
     // B13: settings survive a refresh
     await open('settings');

@@ -7,7 +7,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 
 const ROOT = path.join(__dirname, '..', '..');
-const OUT = path.join(ROOT, 'docs/evidence/stage4/tools');
+const OUT = process.env.QA_OUT ? path.resolve(process.env.QA_OUT) : path.join(ROOT, 'docs/evidence/stage4/tools'); // rule 10: reruns write elsewhere
 fs.mkdirSync(OUT, { recursive: true });
 const SHOTS = process.env.SHOTS !== '0';
 const PORT = 8099;
