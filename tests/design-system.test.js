@@ -3,7 +3,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { existsSync } from 'node:fs';
 import { join } from 'node:path';
-import { ROOT, readText, readJson, listFiles } from './helpers.js';
+import { ROOT, readText, readJson, listFiles, stripShareImage } from './helpers.js';
 import { contrastRatio, parseThemes } from '../src/js/core/contrast.js';
 
 const TOKENS = 'src/css/tokens.css';
@@ -36,7 +36,7 @@ test('S1: tokens.css is the only place that defines colors', () => {
 
 test('S2: fonts and icons are local; no external URLs anywhere in the view', () => {
   for (const file of [...viewFiles, TOKENS]) {
-    assert.doesNotMatch(readText(file).replace(/xmlns(:\w+)?="[^"]*"/g, ''), /https?:\/\/|\/\/[a-z0-9-]+\.[a-z]{2,}\//i, file);
+    assert.doesNotMatch(stripShareImage(readText(file)).replace(/xmlns(:\w+)?="[^"]*"/g, ''), /https?:\/\/|\/\/[a-z0-9-]+\.[a-z]{2,}\//i, file);
   }
   const fontCss = readText('src/css/fonts.css');
   const urls = [...fontCss.matchAll(/url\("([^"]+)"\)/g)].map((m) => m[1]);

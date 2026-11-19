@@ -42,3 +42,10 @@ test('Q6: theme choice radio covers the full 44px pill, border included', () => 
   const css = readText('src/css/main.css');
   assert.match(css, /\.choice input \{[^}]*inset: -1px/);
 });
+
+// Owner approved 2026-11-19: share-card image may use the project's own Pages URL (WhatsApp needs an absolute URL).
+test('Q7: og:image is an absolute URL on the project GitHub Pages origin', () => {
+  for (const page of pages) {
+    assert.match(meta(readText(page), 'property', 'og:image'), /^https:\/\/mosheuzan01-ops\.github\.io\/tisa-trip-os\/icons\/[\w-]+\.png$/, page);
+  }
+});

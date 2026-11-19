@@ -3,7 +3,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { existsSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
-import { ROOT, readText, readJson, listFiles } from './helpers.js';
+import { ROOT, readText, readJson, listFiles, stripShareImage } from './helpers.js';
 import { validateCountry } from '../src/js/core/country.js';
 
 const appFiles = ['index.html', ...listFiles('src', ['.js', '.css'])];
@@ -22,7 +22,7 @@ test('G8: page is Hebrew and RTL', () => {
 
 test('G9: no external URLs (no CDN) in app code', () => {
   for (const file of appFiles) {
-    assert.doesNotMatch(readText(file), /https?:\/\//, `${file} references an external URL`);
+    assert.doesNotMatch(stripShareImage(readText(file)), /https?:\/\//, `${file} references an external URL`);
   }
 });
 
