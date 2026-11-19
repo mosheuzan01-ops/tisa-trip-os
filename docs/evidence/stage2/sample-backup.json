@@ -1,22 +1,22 @@
 {
   "format": "tisa-backup",
   "schemaVersion": 1,
-  "exportedAt": "2026-11-19T16:40:53.690Z",
+  "exportedAt": "2026-11-19T16:56:46.176Z",
   "data": {
     "schemaVersion": 1,
-    "appVersion": "0.2.1",
-    "createdAt": "2026-11-19T16:40:51.591Z",
-    "updatedAt": "2026-11-19T16:40:53.326Z",
+    "appVersion": "0.2.2",
+    "createdAt": "2026-11-19T16:56:44.105Z",
+    "updatedAt": "2026-11-19T16:56:45.810Z",
     "settings": {
       "language": "he",
       "theme": "light",
       "lastBackupAt": null,
       "assistantQuestionLimit": 50
     },
-    "activeTripId": "bdec1ea5-7b09-44f6-a7be-7083552f4cf8",
+    "activeTripId": "f2c9a7a1-5e5d-421a-83da-fd82fd69373f",
     "trips": {
-      "bdec1ea5-7b09-44f6-a7be-7083552f4cf8": {
-        "id": "bdec1ea5-7b09-44f6-a7be-7083552f4cf8",
+      "f2c9a7a1-5e5d-421a-83da-fd82fd69373f": {
+        "id": "f2c9a7a1-5e5d-421a-83da-fd82fd69373f",
         "countryCode": "TH",
         "name": "תאילנד",
         "startDate": "2026-12-05",
