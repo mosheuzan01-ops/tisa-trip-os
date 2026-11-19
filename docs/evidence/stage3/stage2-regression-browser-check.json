@@ -1,0 +1,369 @@
+{
+ "B11": {
+  "result": "PASS",
+  "nav": {
+   "home": {
+    "hash": "#/home",
+    "panelVisible": true,
+    "ariaCurrent": 1,
+    "hscroll": false
+   },
+   "itinerary": {
+    "hash": "#/itinerary",
+    "panelVisible": true,
+    "ariaCurrent": 1,
+    "hscroll": false
+   },
+   "money": {
+    "hash": "#/money",
+    "panelVisible": true,
+    "ariaCurrent": 2,
+    "hscroll": false,
+    "buttons": [
+     "home"
+    ],
+    "text": "המסך הזה ייבנה בשלב 4. בינתיים הכול מחכה לכם במסך הבית."
+   },
+   "checklist": {
+    "hash": "#/checklist",
+    "panelVisible": true,
+    "ariaCurrent": 2,
+    "hscroll": false,
+    "buttons": [
+     "home"
+    ],
+    "text": "המסך הזה ייבנה בשלב 5. בינתיים הכול מחכה לכם במסך הבית."
+   },
+   "transfers": {
+    "hash": "#/transfers",
+    "panelVisible": true,
+    "ariaCurrent": 1,
+    "hscroll": false,
+    "buttons": [
+     "home"
+    ],
+    "text": "המסך הזה ייבנה בשלב 5. בינתיים הכול מחכה לכם במסך הבית."
+   },
+   "info": {
+    "hash": "#/info",
+    "panelVisible": true,
+    "ariaCurrent": 1,
+    "hscroll": false,
+    "buttons": [
+     "home"
+    ],
+    "text": "המסך הזה ייבנה בשלב 7. בינתיים הכול מחכה לכם במסך הבית."
+   },
+   "assistant": {
+    "hash": "#/assistant",
+    "panelVisible": true,
+    "ariaCurrent": 1,
+    "hscroll": false,
+    "buttons": [
+     "home"
+    ],
+    "text": "המסך הזה ייבנה בשלב 7. בינתיים הכול מחכה לכם במסך הבית."
+   },
+   "settings": {
+    "hash": "#/settings",
+    "panelVisible": true,
+    "ariaCurrent": 1,
+    "hscroll": false
+   }
+  },
+  "afterBack": "#/transfers",
+  "afterReload": "#/transfers",
+  "legacyHash": "#/money"
+ },
+ "B12": {
+  "result": "PASS",
+  "screens": {
+   "money": {
+    "buttons": [
+     "home"
+    ],
+    "text": "המסך הזה ייבנה בשלב 4. בינתיים הכול מחכה לכם במסך הבית."
+   },
+   "checklist": {
+    "buttons": [
+     "home"
+    ],
+    "text": "המסך הזה ייבנה בשלב 5. בינתיים הכול מחכה לכם במסך הבית."
+   },
+   "transfers": {
+    "buttons": [
+     "home"
+    ],
+    "text": "המסך הזה ייבנה בשלב 5. בינתיים הכול מחכה לכם במסך הבית."
+   },
+   "info": {
+    "buttons": [
+     "home"
+    ],
+    "text": "המסך הזה ייבנה בשלב 7. בינתיים הכול מחכה לכם במסך הבית."
+   },
+   "assistant": {
+    "buttons": [
+     "home"
+    ],
+    "text": "המסך הזה ייבנה בשלב 7. בינתיים הכול מחכה לכם במסך הבית."
+   }
+  }
+ },
+ "B13": {
+  "result": "PASS",
+  "start": "2026-12-05",
+  "end": "2027-01-03",
+  "theme": "dark",
+  "radio": "dark",
+  "stored": "dark"
+ },
+ "B14": {
+  "result": "PASS",
+  "fileName": "tisa-backup-2026-11-19.json",
+  "format": "tisa-backup",
+  "summary": "טיול\nתאילנד\nתאריכים\n5 בדצמ׳ 2026 – 3 בינו׳ 2027\nעודכן לאחרונה\n19 בנובמבר 2026 בשעה 17:34",
+  "cancelKeptData": true,
+  "importedStart": "2026-12-05",
+  "brokenError": "זה לא קובץ גיבוי של TISA.",
+  "brokenDialog": 0,
+  "brokenKeptData": true,
+  "disabledAtStart": true,
+  "disabledWrong": true,
+  "offersBackup": true,
+  "enabledRight": true,
+  "afterReset": {
+   "start": null,
+   "trips": 1
+  }
+ },
+ "B19": {
+  "result": "PASS",
+  "errors": [],
+  "external": [],
+  "failed": []
+ },
+ "migrationInBrowser": {
+  "result": "PASS",
+  "migrated": {
+   "keys": [
+    "tisa:theme",
+    "tisa:trip",
+    "tisa:v1"
+   ],
+   "trip": {
+    "id": "e76f77ef-37e2-433f-b02f-48560d20622f",
+    "countryCode": "TH",
+    "name": "תאילנד",
+    "startDate": "2027-03-10",
+    "endDate": "2027-03-19",
+    "destinations": [
+     {
+      "id": "a6886a4d-69e6-4c30-8d03-5c4ca16aa1ce",
+      "name": "בנגקוק",
+      "startDate": "2026-12-05",
+      "endDate": "2026-12-08",
+      "note": ""
+     },
+     {
+      "id": "839ffff4-7d7c-479f-a342-84f728bea4ab",
+      "name": "צ'יאנג מאי",
+      "startDate": "2026-12-08",
+      "endDate": "2026-12-11",
+      "note": ""
+     },
+     {
+      "id": "9ad7cdc4-f289-464d-b7a8-53870e14427b",
+      "name": "פאי",
+      "startDate": "2026-12-11",
+      "endDate": "2026-12-13",
+      "note": ""
+     },
+     {
+      "id": "4aa41dd8-6adb-4e4d-a214-b4b74e7b1868",
+      "name": "פוקט",
+      "startDate": "2026-12-13",
+      "endDate": "2026-12-16",
+      "note": ""
+     },
+     {
+      "id": "48f0228e-6ab0-4a80-b2d4-ea875daa1be8",
+      "name": "קראבי",
+      "startDate": "2026-12-16",
+      "endDate": "2026-12-19",
+      "note": ""
+     },
+     {
+      "id": "4a6ef01f-cb70-4e75-9417-5ad281da31ec",
+      "name": "קו פי פי",
+      "startDate": "2026-12-19",
+      "endDate": "2026-12-21",
+      "note": ""
+     },
+     {
+      "id": "6a2997ea-4035-49c7-a91e-1318c26a2c48",
+      "name": "קו לנטה",
+      "startDate": "2026-12-21",
+      "endDate": "2026-12-24",
+      "note": ""
+     },
+     {
+      "id": "f198a09c-0f72-4dac-bae6-bd36f1045e48",
+      "name": "קו סמוי",
+      "startDate": "2026-12-24",
+      "endDate": "2026-12-28",
+      "note": ""
+     },
+     {
+      "id": "f2feca74-5d30-4f56-b4fa-a1502ea36c2b",
+      "name": "קופנגן",
+      "startDate": "2026-12-28",
+      "endDate": "2027-01-01",
+      "note": ""
+     },
+     {
+      "id": "23dceb2a-e5bd-4f35-a182-0e5fd1a93476",
+      "name": "קו טאו",
+      "startDate": "2027-01-01",
+      "endDate": "2027-01-02",
+      "note": "",
+      "flexible": true,
+      "nightsRange": [
+       1,
+       2
+      ]
+     },
+     {
+      "id": "66dfe746-35bc-4209-a7cb-918f1741ae76",
+      "name": "בנגקוק",
+      "startDate": "2027-01-02",
+      "endDate": "2027-01-03",
+      "note": ""
+     }
+    ],
+    "expenses": [],
+    "transfers": [],
+    "checklist": [],
+    "events": [],
+    "budget": {
+     "amount": 12000,
+     "currency": "ILS"
+    },
+    "rates": {},
+    "info": {},
+    "assistant": {},
+    "itinerarySeeded": true
+   },
+   "kpi": "‏12,000 ‏₪",
+   "theme": "dark"
+  }
+ },
+ "corruptInBrowser": {
+  "result": "PASS",
+  "corrupt": {
+   "banner": "הנתונים השמורים לא נקראים. לא מחקנו אותם: שמרנו עותק בצד. אפשר לייבא גיבוי או להתחיל מחדש.לייבא גיבוילהתחיל מחדש",
+   "mainKey": "{\"schemaVersion\":1, broken",
+   "copies": 1
+  },
+  "errors": []
+ },
+ "B15": {
+  "result": "PASS",
+  "banner": "הדפדפן חוסם שמירה במכשיר. אפשר להמשיך לעבוד, אבל מה שתזינו יימחק כשתסגרו את הדף.",
+  "errors": [],
+  "inMemory": "2026-12-05",
+  "homeStatus": true
+ },
+ "B18": {
+  "result": "PASS",
+  "installabilityErrors": [],
+  "manifestErrors": [],
+  "manifestUrl": "http://127.0.0.1:8091/manifest.webmanifest"
+ },
+ "B16": {
+  "result": "PASS",
+  "offline": {
+   "home": {
+    "hash": "#/home",
+    "font": true,
+    "styled": true,
+    "icons": true
+   },
+   "itinerary": {
+    "hash": "#/itinerary",
+    "font": true,
+    "styled": true,
+    "icons": true
+   },
+   "money": {
+    "hash": "#/money",
+    "font": true,
+    "styled": true,
+    "icons": true
+   },
+   "checklist": {
+    "hash": "#/checklist",
+    "font": true,
+    "styled": true,
+    "icons": true
+   },
+   "transfers": {
+    "hash": "#/transfers",
+    "font": true,
+    "styled": true,
+    "icons": true
+   },
+   "info": {
+    "hash": "#/info",
+    "font": true,
+    "styled": true,
+    "icons": true
+   },
+   "assistant": {
+    "hash": "#/assistant",
+    "font": true,
+    "styled": true,
+    "icons": true
+   },
+   "settings": {
+    "hash": "#/settings",
+    "font": true,
+    "styled": true,
+    "icons": true
+   }
+  },
+  "fontsLoaded": [
+   "Heebo",
+   "Plex Mono"
+  ],
+  "failedRequests": [],
+  "errors": [],
+  "banner": [
+   "אין חיבור לאינטרנט. הכול שמור במכשיר וממשיך לעבוד."
+  ]
+ },
+ "B17": {
+  "result": "PASS",
+  "cacheBefore": [
+   "tisa-0.3.0"
+  ],
+  "after": {
+   "caches": [
+    "tisa-9.9.9-test"
+   ],
+   "start": "2026-12-05",
+   "banner": false
+  },
+  "errors": []
+ },
+ "B20": {
+  "result": "PASS",
+  "shots": [
+   "home-375.png",
+   "settings-375-dark.png",
+   "import-dialog.png",
+   "banner-offline.png",
+   "banner-update.png"
+  ]
+ }
+}

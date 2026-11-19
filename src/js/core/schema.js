@@ -1,6 +1,7 @@
 // The app's data model (one object, saved under one key) and its version migrations. Pure functions, no DOM.
 // Shape and rules are documented in docs/BACKUP_FORMAT.md; a backup file carries this same object.
 import { isIsoDate, daysBetween } from './trip.js';
+import { isStop } from './itinerary.js';
 
 export const SCHEMA_VERSION = 1;
 export const DEFAULT_QUESTION_LIMIT = 50;
@@ -58,6 +59,7 @@ export function validateState(state) {
     if (trip.startDate && trip.endDate && daysBetween(trip.startDate, trip.endDate) < 0) errors.push(`trip.${id}.range`);
     for (const f of ARRAY_FIELDS) if (!Array.isArray(trip[f])) errors.push(`trip.${id}.${f}`);
     for (const f of OBJECT_FIELDS) if (!isObj(trip[f])) errors.push(`trip.${id}.${f}`);
+    if (Array.isArray(trip.destinations) && !trip.destinations.every(isStop)) errors.push(`trip.${id}.destinations.item`);
   }
   return errors;
 }

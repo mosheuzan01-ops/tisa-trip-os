@@ -57,17 +57,17 @@ const visible = (page, sel) => page.locator(sel).isVisible();
       if (route === 'settings') await page.click('.settings-btn');
       else if (route === 'home') await page.click('[data-tab="home"]');
       else if (await page.locator(`[role="tab"][data-route="${route}"]`).count()) await page.click(`[role="tab"][data-route="${route}"]`);
-      else { await page.click('[data-tab="itinerary"]'); await page.click(`.soon-link[data-route="${route}"]`); }
+      else { await page.click('[data-tab="lists"]'); await page.click(`.soon-link[data-route="${route}"]`); } // Stage 3: the route tab is a real screen now
       await page.waitForFunction((r) => location.hash === `#/${r}`, route);
       await page.waitForSelector(`[data-route="${route}"][aria-current="page"]`, { state: "attached" }); // hashchange is handled a moment later
     };
     for (const route of ROUTES) {
       await open(route);
-      const panel = route === 'home' ? '#panel-home' : route === 'settings' ? '#panel-settings' : '#panel-soon';
+      const panel = ['home', 'settings', 'itinerary'].includes(route) ? `#panel-${route}` : '#panel-soon';
       const current = await page.locator(`[data-route="${route}"][aria-current="page"]`).count();
       const hscroll = await page.evaluate(() => document.documentElement.scrollWidth > innerWidth);
       nav[route] = { hash: await page.evaluate(() => location.hash), panelVisible: await visible(page, panel), ariaCurrent: current, hscroll };
-      if (route !== 'home' && route !== 'settings') {
+      if (!['home', 'settings', 'itinerary'].includes(route)) {
         // B12: no fake action buttons on an empty screen (only "back to home" and real links)
         nav[route].buttons = await page.locator('#panel-soon button').evaluateAll((b) => b.map((x) => x.dataset.go ?? 'NO-DESTINATION'));
         nav[route].text = await page.locator('[data-slot="soon-text"]').textContent();
@@ -86,10 +86,10 @@ const visible = (page, sel) => page.locator(sel).isVisible();
     const legacyHash = await page.evaluate(() => location.hash);
     const b11 = Object.values(nav).every((n) => n.panelVisible && n.ariaCurrent > 0 && !n.hscroll) && afterBack === '#/transfers' && afterReload === '#/transfers' && transfersVisible && legacyHash === '#/money';
     pass('B11', b11, { nav, afterBack, afterReload, legacyHash });
-    const soon = Object.entries(nav).filter(([r]) => !['home', 'settings'].includes(r));
+    const soon = Object.entries(nav).filter(([r]) => !['home', 'settings', 'itinerary'].includes(r));
     pass('B12', soon.every(([, n]) => n.buttons.length === 1 && n.buttons[0] === 'home' && /שלב \d/.test(n.text)), { screens: Object.fromEntries(soon.map(([r, n]) => [r, { buttons: n.buttons, text: n.text }])) });
-    await open('itinerary');
-    await page.screenshot({ path: `${OUT}/empty-screen-itinerary.png`, fullPage: false });
+    await open('money');
+    await page.screenshot({ path: `${OUT}/empty-screen-money.png`, fullPage: false });
 
     // B13: settings survive a refresh
     await open('settings');
@@ -122,6 +122,10 @@ const visible = (page, sel) => page.locator(sel).isVisible();
     await page.fill('[data-form="settings-dates"] [name="start"]', '2027-02-01');
     await page.fill('[data-form="settings-dates"] [name="end"]', '2027-02-10');
     await page.click('[data-form="settings-dates"] [type="submit"]');
+    if (await page.locator('#dlg-plan[open]').count()) { // Stage 3: with a route, new dates ask how to replan first
+      await page.check('[data-form="plan"] input[value="datesOnly"]');
+      await page.click('[data-form="plan"] [type="submit"]');
+    }
     await sleep(300);
     const before = await page.evaluate(() => localStorage.getItem('tisa:v1'));
     await page.setInputFiles('#import-file', backupPath);

@@ -1,0 +1,190 @@
+{
+  "seed": {
+    "result": "PASS",
+    "stops": 11,
+    "seededFlag": true,
+    "tripDates": [
+      null,
+      null
+    ],
+    "note": "pack stops on first open; trip dates stay unset (not invented)"
+  },
+  "S3-1": {
+    "result": "PASS",
+    "added": {
+      "id": "50934ca0-3c8a-4639-b22b-871f891d772e",
+      "name": "איוטאיה",
+      "startDate": "2027-01-02",
+      "endDate": "2027-01-03",
+      "note": "יום מקדשים"
+    },
+    "keys": [
+      "tisa:v1"
+    ]
+  },
+  "S3-4": {
+    "result": "PASS",
+    "delTitle": "למחוק את בנגקוק?",
+    "focusOnOpen": "ביטול",
+    "afterCancel": 11,
+    "afterDelete": 10,
+    "editedNote": "שוק לילה"
+  },
+  "S3-2": {
+    "result": "PASS",
+    "summary": "11 תחנות, 29 לילות",
+    "firstAfterAddingEarlier": "קודם",
+    "yearCrossing": {
+      "name": "קופנגן",
+      "dates": "28 בדצמ׳ 2026 – 1 בינו׳ 2027",
+      "nights": "4 לילות"
+    }
+  },
+  "S3-8": {
+    "result": "PASS",
+    "shown": "5 בדצמ׳ – 8 בדצמ׳",
+    "intl": "5 בדצמ׳ – 8 בדצמ׳"
+  },
+  "S3-9": {
+    "result": "PASS",
+    "dir": "rtl",
+    "hscroll": false,
+    "visibleH1": 1,
+    "small": [],
+    "tiny": []
+  },
+  "errors": {
+    "result": "PASS",
+    "errors": [],
+    "external": []
+  },
+  "S3-3": {
+    "result": "PASS",
+    "error": "תאריך העזיבה לפני תאריך ההגעה. תקנו אחד מהם.",
+    "ariaInvalid": "true",
+    "savedAfterError": true,
+    "warn": "שימו לב: הלילות חופפים לבנגקוק. אפשר לתקן, או לשמור בכל זאת.",
+    "button": "לשמור בכל זאת",
+    "savedAfterWarningOnly": true,
+    "savedAfterSecondTap": true,
+    "flags": [
+      "חופף לתחנה אחרת",
+      "חופף לתחנה אחרת"
+    ],
+    "banner": "יש תחנות עם לילות חופפים. הן מסומנות ברשימה."
+  },
+  "errors-2": {
+    "result": "PASS",
+    "errors": [],
+    "external": []
+  },
+  "S3-5": {
+    "result": "PASS",
+    "before": {
+      "date": "2026-11-19",
+      "text": "עוד 16 ימים לתחנה הראשונה, בנגקוק.",
+      "highlighted": [],
+      "ariaCurrent": 0
+    },
+    "during": {
+      "date": "2026-12-09",
+      "text": "היום אתם בצ'יאנג מאי, לילה 2 מתוך 3.",
+      "highlighted": [
+        "צ'יאנג מאי"
+      ],
+      "ariaCurrent": 1
+    },
+    "travelDay": {
+      "date": "2026-12-08",
+      "text": "היום אתם בצ'יאנג מאי, לילה 1 מתוך 3.",
+      "highlighted": [
+        "צ'יאנג מאי"
+      ],
+      "ariaCurrent": 1
+    },
+    "lastDay": {
+      "date": "2027-01-03",
+      "text": "היום עוזבים את בנגקוק.",
+      "highlighted": [
+        "בנגקוק"
+      ],
+      "ariaCurrent": 1
+    },
+    "after": {
+      "date": "2027-01-10",
+      "text": "המסלול הסתיים.",
+      "highlighted": [],
+      "ariaCurrent": 0
+    },
+    "bangkokClock": {
+      "utc": "2026-12-07T22:30:00Z",
+      "highlighted": [
+        "צ'יאנג מאי"
+      ]
+    }
+  },
+  "replan": {
+    "result": "PASS",
+    "noDialogWhenMatching": true,
+    "previewOpened": true,
+    "defaultMode": "fit",
+    "cancelChangesNothing": true,
+    "fitOk": true,
+    "kohTao": {
+      "id": "758be78e-3a08-4eff-8892-5458d8716c4e",
+      "name": "קו טאו",
+      "startDate": "2027-01-03",
+      "endDate": "2027-01-05",
+      "note": "",
+      "flexible": true,
+      "nightsRange": [
+        1,
+        2
+      ]
+    },
+    "shiftOk": true,
+    "datesOnlyWarning": "תחנה אחת תהיה מחוץ לתאריכי הטיול.",
+    "onlyOk": true,
+    "fitDisabled": true,
+    "fitWhy": "קו טאו יכול להיות 1 עד 2 לילות, וזה לא מספיק לשינוי הזה."
+  },
+  "reorder": {
+    "result": "PASS",
+    "before": [
+      "בנגקוק",
+      "צ'יאנג מאי",
+      "פאי"
+    ],
+    "after": [
+      "צ'יאנג מאי",
+      "בנגקוק",
+      "פאי"
+    ]
+  },
+  "errors-3": {
+    "result": "PASS",
+    "errors": [],
+    "external": []
+  },
+  "S3-7": {
+    "result": "PASS",
+    "stops": 12,
+    "afterResetPackOnly": 11,
+    "sameAfterImport": true
+  },
+  "S3-6": {
+    "result": "PASS",
+    "caches": {
+      "names": [
+        "tisa-0.3.0"
+      ],
+      "has": true
+    },
+    "offline": {
+      "stops": 11,
+      "today": "היום אתם בצ'יאנג מאי, לילה 2 מתוך 3."
+    },
+    "savedOffline": true,
+    "version": "0.3.0"
+  }
+}
