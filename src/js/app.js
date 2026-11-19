@@ -11,6 +11,7 @@ import { needsBackupReminder } from './core/schema.js';
 import { exportBackup, parseBackup, backupFileName } from './core/backup.js';
 import { makeId } from './core/ids.js';
 import { createAutosave } from './core/autosave.js';
+import { setupItinerary, renderItinerary } from './itinerary-view.js';
 
 const $ = (sel, root = document) => root.querySelector(sel);
 const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
@@ -19,7 +20,7 @@ const ICONS = './assets/icons.svg#';
 // Every screen has an address (#/name). Stage numbers follow the work plan.
 const SCREENS = {
   home: { tab: 'home' },
-  itinerary: { tab: 'itinerary', title: 'nav.itinerary', icon: 'i-route', stage: 3 },
+  itinerary: { tab: 'itinerary', title: 'nav.itinerary', icon: 'i-route' },
   money: { tab: 'budget', title: 'screen.money', icon: 'i-wallet', stage: 4 },
   checklist: { tab: 'lists', title: 'screen.checklist', icon: 'i-list', stage: 5 },
   transfers: { title: 'screen.transfers', icon: 'i-plane', stage: 5 },
@@ -92,6 +93,7 @@ async function boot() {
     applyTheme(ctx.state.settings.theme);
     renderTrip({ t, locale, country, trip: tripView(ctx.trip()) });
     renderSettings(ctx);
+    renderItinerary(ctx);
     renderBanners(ctx);
   };
   addEventListener('pagehide', () => autosave.flush());
@@ -107,11 +109,12 @@ async function boot() {
   setupRouter(ctx);
   setupSheets(ctx);
   setupSettings(ctx);
+  setupItinerary(ctx, { wireDialog, showFormErrors });
   setupServiceWorker(ctx);
   addEventListener('online', () => renderBanners(ctx));
   addEventListener('offline', () => renderBanners(ctx));
   ctx.render();
-  setInterval(() => renderTrip({ t, locale, country, trip: tripView(ctx.trip()) }), 60_000); // keeps "today" right across midnight
+  setInterval(() => { renderTrip({ t, locale, country, trip: tripView(ctx.trip()) }); renderItinerary(ctx); }, 60_000); // keeps "today" right across midnight
 }
 
 /** The Stage 1 home screen reads { dates, budget }; the data model keeps startDate / endDate on the trip. */
@@ -292,8 +295,8 @@ function renderTrip({ t, locale, country, trip }) {
 
 
 // ---------- Setup sheets on the home screen (native <dialog>: focus trap, Esc to close) ----------
-function showFormErrors(t, form, errors) {
-  form.querySelector('.form-error').textContent = errors.map((e) => t(`err.${e}`)).join(' ');
+function showFormErrors(t, form, errors, prefix = 'err') {
+  form.querySelector('.form-error').textContent = errors.map((e) => t(`${prefix}.${e}`)).join(' ');
   for (const input of form.querySelectorAll('input, select')) {
     const bad = errors.some((e) => e.startsWith(`${input.name}.`) || (input.name === 'end' && e === 'range.tooLong'));
     input.setAttribute('aria-invalid', String(bad));
@@ -391,7 +394,7 @@ function setupSheets(ctx) {
 function setupRouter(ctx) {
   const { t } = ctx;
   const tabs = $$('[role="tab"]');
-  const panels = { home: $('#panel-home'), soon: $('#panel-soon'), settings: $('#panel-settings') };
+  const panels = { home: $('#panel-home'), itinerary: $('#panel-itinerary'), soon: $('#panel-soon'), settings: $('#panel-settings') };
   const main = $('#main');
   const rtl = () => document.documentElement.dir === 'rtl';
 
@@ -412,7 +415,7 @@ function setupRouter(ctx) {
   function show(route, { focus = true } = {}) {
     ctx.route = route;
     const screen = SCREENS[route];
-    const kind = route === 'home' || route === 'settings' ? route : 'soon';
+    const kind = route in panels ? route : 'soon';
     for (const [name, panel] of Object.entries(panels)) panel.hidden = name !== kind;
     const activeTab = tabs.find((x) => x.dataset.tab === screen.tab);
     for (const x of tabs) {

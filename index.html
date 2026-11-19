@@ -198,6 +198,52 @@
         </nav>
       </section>
 
+      <!-- ITINERARY (feature 1, Stage 3): stops, nights, today. No calendar, no map. -->
+      <section class="panel itinerary" id="panel-itinerary" role="tabpanel" aria-labelledby="tab-itinerary" hidden>
+        <div class="itin-head">
+          <h1 class="display itin-title" data-i18n="itin.title">המסלול</h1>
+          <p class="muted" data-slot="itin-summary"></p>
+        </div>
+
+        <section class="card surface itin-now" data-slot="itin-now" aria-labelledby="itin-now-title" hidden>
+          <h2 class="itin-now-label" id="itin-now-title" data-slot="itin-now-label"></h2>
+          <p class="itin-now-place" data-slot="itin-now-place"></p>
+          <p class="muted" data-slot="itin-now-sub"></p>
+        </section>
+
+        <div class="itin-warn" role="status" data-slot="itin-warn" hidden></div>
+
+        <section class="card surface itin-empty" data-slot="itin-empty" aria-labelledby="itin-empty-title" hidden>
+          <h2 id="itin-empty-title" data-i18n="itin.empty.title">עוד אין תחנות</h2>
+          <p data-i18n="itin.empty.text">מוסיפים תחנה: מקום, תאריך הגעה ותאריך עזיבה.</p>
+          <div class="settings-actions">
+            <button class="btn btn-primary" type="button" data-action="stop-add">
+              <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-plus"/></svg>
+              <span data-i18n="itin.add">הוספת תחנה</span>
+            </button>
+            <button class="btn btn-ghost" type="button" data-action="seed-open" data-i18n="itin.seed.open">מסלול מוצע</button>
+          </div>
+        </section>
+
+        <ol class="stops" data-slot="stops" aria-label="תחנות" data-i18n-label="itin.listLabel"></ol>
+
+        <div class="itin-actions" data-slot="itin-actions" hidden>
+          <button class="btn btn-primary" type="button" data-action="stop-add">
+            <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-plus"/></svg>
+            <span data-i18n="itin.add">הוספת תחנה</span>
+          </button>
+        </div>
+
+        <section class="card surface settings-card itin-trip" aria-labelledby="itin-trip-title">
+          <h2 id="itin-trip-title" data-i18n="itin.trip.title">תאריכי הטיול</h2>
+          <p data-slot="itin-trip-dates"></p>
+          <button class="btn btn-ghost" type="button" data-action="replan-open">
+            <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-calendar"/></svg>
+            <span data-i18n="itin.replan.open">שינוי תאריכים ותכנון מחדש</span>
+          </button>
+        </section>
+      </section>
+
       <!-- SETTINGS (feature 8) -->
       <section class="panel settings" id="panel-settings" aria-labelledby="settings-title" hidden>
         <h1 class="display settings-title" id="settings-title" data-i18n="settings.title">הגדרות</h1>
@@ -295,7 +341,7 @@
           <span class="tab-chip"><svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-home"/></svg></span>
           <span data-i18n="nav.home">בית</span>
         </button>
-        <button class="tab" role="tab" id="tab-itinerary" data-tab="itinerary" data-route="itinerary" data-icon="i-route" aria-selected="false" aria-controls="panel-soon" tabindex="-1" type="button">
+        <button class="tab" role="tab" id="tab-itinerary" data-tab="itinerary" data-route="itinerary" data-icon="i-route" aria-selected="false" aria-controls="panel-itinerary" tabindex="-1" type="button">
           <span class="tab-chip"><svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-route"/></svg></span>
           <span data-i18n="nav.itinerary">מסלול</span>
         </button>
@@ -375,6 +421,73 @@
         <label class="field"><span data-slot="reset-type-label"></span><input type="text" data-slot="reset-input" autocomplete="off" autocapitalize="off" spellcheck="false"></label>
         <div class="sheet-actions">
           <button class="btn metal-btn btn-danger-solid" type="submit" data-action="reset-confirm" data-i18n="reset.confirm" disabled>למחוק הכול</button>
+          <button class="btn btn-ghost" type="button" data-close data-i18n="form.cancel">ביטול</button>
+        </div>
+      </form>
+    </dialog>
+
+    <!-- Itinerary: add or edit a stop -->
+    <dialog class="sheet dmetal" id="dlg-stop" aria-labelledby="dlg-stop-title">
+      <form class="sheet-form" data-form="stop" novalidate>
+        <h2 id="dlg-stop-title" data-slot="stop-title"></h2>
+        <label class="field"><span data-i18n="stop.name">שם המקום</span><input type="text" name="name" maxlength="60" autocomplete="off" aria-describedby="stop-error"></label>
+        <div class="field-row">
+          <label class="field"><span data-i18n="stop.start">הגעה</span><input class="ltr" type="date" name="start" aria-describedby="stop-error"></label>
+          <label class="field"><span data-i18n="stop.end">עזיבה</span><input class="ltr" type="date" name="end" aria-describedby="stop-error"></label>
+        </div>
+        <label class="field"><span data-i18n="stop.note">הערה (לא חובה)</span><input type="text" name="note" maxlength="140" autocomplete="off" aria-describedby="stop-error"></label>
+        <p class="sheet-hint" data-slot="stop-nights" aria-live="polite"></p>
+        <p class="form-error" id="stop-error" role="alert"></p>
+        <p class="form-warn" role="status" data-slot="stop-warn"></p>
+        <div class="sheet-actions">
+          <button class="btn metal-btn" type="submit" data-slot="stop-save" data-i18n="form.save">שמירה</button>
+          <button class="btn btn-ghost" type="button" data-close data-i18n="form.cancel">ביטול</button>
+        </div>
+      </form>
+    </dialog>
+
+    <!-- Itinerary: delete only after a yes -->
+    <dialog class="sheet dmetal" id="dlg-stop-delete" aria-labelledby="dlg-stop-delete-title" aria-describedby="dlg-stop-delete-text">
+      <div class="sheet-form">
+        <h2 id="dlg-stop-delete-title" data-i18n="stop.delete.title">מחיקת תחנה</h2>
+        <p class="sheet-hint" id="dlg-stop-delete-text" data-slot="stop-delete-text"></p>
+        <div class="sheet-actions">
+          <button class="btn metal-btn btn-danger-solid" type="button" data-action="stop-delete-confirm" data-i18n="stop.delete.confirm">למחוק</button>
+          <button class="btn btn-ghost" type="button" data-close data-i18n="form.cancel">ביטול</button>
+        </div>
+      </div>
+    </dialog>
+
+    <!-- Itinerary: the suggested route goes in only after a yes -->
+    <dialog class="sheet dmetal" id="dlg-seed" aria-labelledby="dlg-seed-title" aria-describedby="dlg-seed-text">
+      <div class="sheet-form">
+        <h2 id="dlg-seed-title" data-i18n="itin.seed.title">מסלול מוצע</h2>
+        <p class="sheet-hint" id="dlg-seed-text" data-slot="seed-text"></p>
+        <div class="sheet-actions">
+          <button class="btn metal-btn" type="button" data-action="seed-confirm" data-i18n="itin.seed.confirm">לטעון את המסלול</button>
+          <button class="btn btn-ghost" type="button" data-close data-i18n="form.cancel">ביטול</button>
+        </div>
+      </div>
+    </dialog>
+
+    <!-- Itinerary: new trip dates, three ways to replan, before and after shown, saved only after a yes -->
+    <dialog class="sheet dmetal" id="dlg-replan" aria-labelledby="dlg-replan-title">
+      <form class="sheet-form" data-form="replan" novalidate>
+        <h2 id="dlg-replan-title" data-i18n="replan.title">תכנון מחדש</h2>
+        <div class="field-row">
+          <label class="field"><span data-i18n="dates.start">יציאה</span><input class="ltr" type="date" name="start" aria-describedby="replan-error"></label>
+          <label class="field"><span data-i18n="dates.end">חזרה</span><input class="ltr" type="date" name="end" aria-describedby="replan-error"></label>
+        </div>
+        <fieldset class="replan-modes">
+          <legend data-i18n="replan.modeTitle">מה לעשות עם התחנות?</legend>
+          <label class="replan-mode"><input type="radio" name="mode" value="shift" checked><span><b data-i18n="replan.shift">להזיז את כל המסלול</b><small data-i18n="replan.shift.hint">כל תחנה זזה באותו מספר ימים.</small></span></label>
+          <label class="replan-mode"><input type="radio" name="mode" value="flex"><span><b data-i18n="replan.flex">לשנות את התחנה הגמישה</b><small data-i18n="replan.flex.hint">רק היעד הגמיש מתארך או מתקצר.</small></span></label>
+          <label class="replan-mode"><input type="radio" name="mode" value="datesOnly"><span><b data-i18n="replan.datesOnly">רק תאריכי הטיול</b><small data-i18n="replan.datesOnly.hint">התחנות לא זזות. תקבלו אזהרה על מה שבחוץ.</small></span></label>
+        </fieldset>
+        <p class="form-error" id="replan-error" role="alert"></p>
+        <div class="replan-preview" data-slot="replan-preview" aria-live="polite"></div>
+        <div class="sheet-actions">
+          <button class="btn metal-btn" type="submit" data-slot="replan-save" data-i18n="replan.save">לאשר ולשמור</button>
           <button class="btn btn-ghost" type="button" data-close data-i18n="form.cancel">ביטול</button>
         </div>
       </form>
