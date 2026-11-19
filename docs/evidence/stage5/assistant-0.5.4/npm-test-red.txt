@@ -1,0 +1,120 @@
+TAP version 13
+# Subtest: A-1: money advice repeats the real figures and the arithmetic behind them
+not ok 1 - A-1: money advice repeats the real figures and the arithmetic behind them
+  ---
+  duration_ms: 2.425174
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/assistant.test.js:10:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      [
+    +   undefined,
+    +   undefined,
+    +   undefined,
+    +   undefined
+    -   1227000,
+    -   927000,
+    -   61800,
+    -   15
+      ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 1227000
+    1: 927000
+    2: 61800
+    3: 15
+  actual:
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/assistant.test.js:12:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.start (node:internal/test_runner/test:944:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+  ...
+# Subtest: A-1: over budget, no budget, and no dates are said plainly; nothing is guessed
+not ok 2 - A-1: over budget, no budget, and no dates are said plainly; nothing is guessed
+  ---
+  duration_ms: 0.367898
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/assistant.test.js:18:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + undefined
+    - 'over'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'over'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/assistant.test.js:19:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: A-2: tasks due: overdue, today, and the next days in a stated window; done and undated are left out
+not ok 3 - A-2: tasks due: overdue, today, and the next days in a stated window; done and undated are left out
+  ---
+  duration_ms: 0.195946
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/assistant.test.js:35:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    0 !== 7
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 7
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/assistant.test.js:36:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: A-3: what to do today: the stop, the transfers and the tasks of that day, from real data only
+not ok 4 - A-3: what to do today: the stop, the transfers and the tasks of that day, from real data only
+  ---
+  duration_ms: 0.188973
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/assistant.test.js:44:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of undefined (reading 'name')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/assistant.test.js:48:23)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..4
+# tests 4
+# suites 0
+# pass 0
+# fail 4
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 68.110036
