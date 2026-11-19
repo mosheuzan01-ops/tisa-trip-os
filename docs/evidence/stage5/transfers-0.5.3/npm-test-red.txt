@@ -1,0 +1,205 @@
+TAP version 13
+# Subtest: T-1: kinds and statuses; statuses map onto the budget statuses
+not ok 1 - T-1: kinds and statuses; statuses map onto the budget statuses
+  ---
+  duration_ms: 2.137808
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/transfers.test.js:16:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + []
+    - [
+    -   'flight',
+    -   'bus',
+    -   'train',
+    -   'boat',
+    -   'car',
+    -   'other'
+    - ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 'flight'
+    1: 'bus'
+    2: 'train'
+    3: 'boat'
+    4: 'car'
+    5: 'other'
+  actual:
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/transfers.test.js:17:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.start (node:internal/test_runner/test:944:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+  ...
+# Subtest: T-1: validateTransfer checks every field the user can type
+not ok 2 - T-1: validateTransfer checks every field the user can type
+  ---
+  duration_ms: 0.456104
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/transfers.test.js:21:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + []
+    - [
+    -   'from.missing'
+    - ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 'from.missing'
+  actual:
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/transfers.test.js:23:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: T-2: a priced transfer makes a linked expense: flight -> flight, others -> transport; status maps
+not ok 3 - T-2: a priced transfer makes a linked expense: flight -> flight, others -> transport; status maps
+  ---
+  duration_ms: 0.177692
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/transfers.test.js:38:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of undefined (reading 'id')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/transfers.test.js:41:23)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: T-3: saving keeps transfer and expense in sync; the budget sees it exactly once
+not ok 4 - T-3: saving keeps transfer and expense in sync; the budget sees it exactly once
+  ---
+  duration_ms: 0.305327
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/transfers.test.js:48:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    0 !== 1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/transfers.test.js:51:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: T-3: clearing the price unlinks but never deletes the expense silently; a deleted expense is re-created on save
+not ok 5 - T-3: clearing the price unlinks but never deletes the expense silently; a deleted expense is re-created on save
+  ---
+  duration_ms: 0.156757
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/transfers.test.js:69:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    the expense stays on the money screen
+    
+    0 !== 1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/transfers.test.js:73:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: T-4: removing a transfer removes its expense only when asked
+not ok 6 - T-4: removing a transfer removes its expense only when asked
+  ---
+  duration_ms: 0.12161
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/transfers.test.js:83:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of undefined (reading 'id')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/transfers.test.js:86:39)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: T-5: transfers sort by date then time; each stop shows the transfers on its days
+not ok 7 - T-5: transfers sort by date then time; each stop shows the transfers on its days
+  ---
+  duration_ms: 0.288803
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/transfers.test.js:93:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + []
+    - [
+    -   '2026-12-05 ',
+    -   '2026-12-08 07:00',
+    -   '2026-12-08 14:00'
+    - ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: '2026-12-05 '
+    1: '2026-12-08 07:00'
+    2: '2026-12-08 14:00'
+  actual:
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/transfers.test.js:99:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..7
+# tests 7
+# suites 0
+# pass 0
+# fail 7
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 67.570213

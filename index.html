@@ -254,6 +254,10 @@
           </button>
         </div>
 
+        <button class="btn btn-ghost itin-transfers-link" type="button" data-go="transfers">
+          <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-plane"/></svg><span data-i18n="transfers.open">טיסות ומעברים</span>
+        </button>
+
         <section class="card surface settings-card itin-trip" aria-labelledby="itin-trip-title">
           <h2 id="itin-trip-title" data-i18n="itin.trip.title">תאריכי הטיול</h2>
           <p data-slot="itin-trip-dates"></p>
@@ -458,6 +462,29 @@
           <ul class="task-list" data-slot="task-list"></ul>
         </section>
         </div>
+      </section>
+
+      <!-- FLIGHTS AND TRANSFERS (0.5.3): entered by hand. Search and live prices are a future version. -->
+      <section class="panel transfers" id="panel-transfers" role="tabpanel" aria-labelledby="transfers-title" hidden>
+        <div class="itin-head">
+          <h1 class="display" id="transfers-title" data-i18n="transfers.title">טיסות ומעברים</h1>
+          <p class="muted" data-i18n="transfers.lead">הטיסות והמעברים שלכם, בהזנה ידנית. מחיר נכנס לתקציב, ותאריך מופיע במסלול.</p>
+        </div>
+        <div class="money-card-head">
+          <h2 class="section-title" data-i18n="transfers.mine">הטיסות והמעברים שלי</h2>
+          <button class="btn btn-primary btn-small" type="button" data-action="transfer-add">
+            <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-plus"/></svg><span data-i18n="transfers.add">הוספה</span>
+          </button>
+        </div>
+        <section class="card surface money-empty" data-slot="transfers-empty" aria-labelledby="transfers-empty-title" hidden>
+          <h3 class="tool-title" id="transfers-empty-title" data-i18n="transfers.empty.title">עוד אין טיסות או מעברים</h3>
+          <p data-i18n="transfers.empty.text">מוסיפים טיסה, אוטובוס, רכבת, מעבורת או נסיעה. כל הפרטים נכתבים ידנית.</p>
+        </section>
+        <ul class="transfer-list" data-slot="transfer-list"></ul>
+        <section class="card surface future-card" aria-labelledby="transfers-future-title">
+          <h2 class="tool-title" id="transfers-future-title" data-i18n="transfers.future.title">חיפוש והשוואה של טיסות ומלונות</h2>
+          <p class="muted" data-slot="transfers-future" data-i18n="transfers.future.text">חיפוש במחירים חיים יגיע בגרסה עתידית. עד אז כל טיסה ומלון נכתבים כאן ידנית, בלי מחירים, שעות או זמינות מומצאים.</p>
+        </section>
       </section>
 
       <!-- SETTINGS (feature 8) -->
@@ -876,6 +903,54 @@
         <p class="sheet-hint" id="dlg-list-confirm-text" data-slot="list-confirm-text"></p>
         <div class="sheet-actions">
           <button class="btn metal-btn" type="button" data-action="list-confirm-yes" data-slot="list-confirm-yes"></button>
+          <button class="btn btn-ghost" type="button" data-close data-i18n="form.cancel">ביטול</button>
+        </div>
+      </div>
+    </dialog>
+
+    <!-- Transfers: add or edit (all by hand) -->
+    <dialog class="sheet dmetal" id="dlg-transfer" aria-labelledby="dlg-transfer-title">
+      <form class="sheet-form" data-form="transfer" novalidate>
+        <h2 id="dlg-transfer-title" data-slot="transfer-title"></h2>
+        <div class="field-row">
+          <label class="field"><span data-i18n="transfer.kind">סוג</span><select name="kind" data-slot="transfer-kind"></select></label>
+          <label class="field"><span data-i18n="transfer.status">סטטוס</span><select name="status" data-slot="transfer-status"></select></label>
+        </div>
+        <div class="field-row">
+          <label class="field"><span data-i18n="transfer.from">מוצא</span><input type="text" name="from" maxlength="60" autocomplete="off" aria-describedby="transfer-error"></label>
+          <label class="field"><span data-i18n="transfer.to">יעד</span><input type="text" name="to" maxlength="60" autocomplete="off" aria-describedby="transfer-error"></label>
+        </div>
+        <div class="field-row">
+          <label class="field"><span data-i18n="transfer.date">תאריך</span><input class="ltr" type="date" name="date" aria-describedby="transfer-error"></label>
+          <label class="field"><span data-i18n="transfer.time">שעה (לא חובה)</span><input class="ltr" type="time" name="time" aria-describedby="transfer-error"></label>
+        </div>
+        <div class="field-row">
+          <label class="field"><span data-i18n="transfer.company">חברה</span><input type="text" name="company" maxlength="60" autocomplete="off"></label>
+          <label class="field"><span data-i18n="transfer.booking">מספר הזמנה</span><input class="ltr" type="text" name="booking" maxlength="40" autocomplete="off" aria-describedby="transfer-error"></label>
+        </div>
+        <div class="field-row field-row-money">
+          <label class="field field-grow"><span data-i18n="transfer.price">מחיר (לא חובה)</span><input class="ltr" type="text" name="price" inputmode="decimal" autocomplete="off" aria-describedby="transfer-error"></label>
+          <label class="field"><span data-i18n="exp.currency">מטבע</span><select name="currency" data-slot="transfer-currency"></select></label>
+        </div>
+        <p class="sheet-hint" data-i18n="transfer.priceHint">מחיר נכנס לתקציב כהוצאה אחת, בקטגוריה טיסה או נסיעות, לפי הסטטוס.</p>
+        <label class="field"><span data-i18n="transfer.link">קישור להזמנה (לא חובה)</span><input class="ltr" type="url" name="link" maxlength="300" autocomplete="off" aria-describedby="transfer-error"></label>
+        <label class="field"><span data-i18n="transfer.note">הערה (לא חובה)</span><input type="text" name="note" maxlength="140" autocomplete="off"></label>
+        <p class="form-error" id="transfer-error" role="alert"></p>
+        <div class="sheet-actions">
+          <button class="btn metal-btn" type="submit" data-i18n="form.save">שמירה</button>
+          <button class="btn btn-ghost" type="button" data-close data-i18n="form.cancel">ביטול</button>
+        </div>
+      </form>
+    </dialog>
+
+    <!-- Transfers: delete after a yes; the linked expense goes too only if ticked -->
+    <dialog class="sheet dmetal" id="dlg-transfer-delete" aria-labelledby="dlg-transfer-delete-title" aria-describedby="dlg-transfer-delete-text">
+      <div class="sheet-form">
+        <h2 id="dlg-transfer-delete-title" data-i18n="transfer.delete.title">מחיקה</h2>
+        <p class="sheet-hint" id="dlg-transfer-delete-text" data-slot="transfer-delete-text"></p>
+        <label class="split-check" data-slot="transfer-delete-expense"><input type="checkbox" name="withExpense" checked><span data-i18n="transfer.delete.withExpense">למחוק גם את ההוצאה המקושרת במסך הכסף</span></label>
+        <div class="sheet-actions">
+          <button class="btn metal-btn btn-danger-solid" type="button" data-action="transfer-delete-confirm" data-i18n="stop.delete.confirm">למחוק</button>
           <button class="btn btn-ghost" type="button" data-close data-i18n="form.cancel">ביטול</button>
         </div>
       </div>

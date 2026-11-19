@@ -8,6 +8,7 @@ import {
   whereToday, moveStop, replan, seedFromPack, formatDate, formatRange,
 } from './core/itinerary.js';
 import { makeId } from './core/ids.js';
+import { transfersForStop } from './core/transfers.js';
 
 const $ = (sel, root = document) => root.querySelector(sel);
 const ICONS = './assets/icons.svg#';
@@ -105,6 +106,14 @@ export function renderItinerary(ctx) {
     const meta = el('p', 'stop-meta');
     meta.append(el('span', 'stop-dates', formatRange(stop, fmtLocale)), el('span', 'stop-nights', nightsText(t, stopNights(stop))));
     li.append(head, meta);
+    // 0.5.3: transfers on this stop's days (arrival and departure days included). Display only, no date changes.
+    for (const x of transfersForStop(Array.isArray(trip.transfers) ? trip.transfers.filter((y) => y && y.date) : [], stop)) {
+      const line = el('p', 'stop-transfer');
+      line.innerHTML = `<svg class="icon" aria-hidden="true"><use href="${ICONS}${x.kind === 'flight' ? 'i-plane' : 'i-route'}"/></svg>`;
+      line.append(el('span', '', interpolate(t('transfer.route'), { from: x.from, to: x.to })), el('span', 'muted', formatDate(x.date, fmtLocale)));
+      if (x.time) line.append(el('span', 'ltr muted', x.time));
+      li.append(line);
+    }
     if (stop.note) li.append(el('p', 'stop-note', stop.note));
     const actions = el('div', 'stop-actions');
     const up = iconButton('i-up', interpolate(t('stop.upLabel'), { name: stop.name }), 'stop-up', stop.id);

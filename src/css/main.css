@@ -769,3 +769,17 @@ body::before {
 .lists-body { display: grid; gap: var(--space-4); }
 .filter-toggles { display: flex; flex-wrap: wrap; gap: 0 var(--space-4); }
 .filter-toggles .filter-toggle { justify-self: auto; }
+
+/* ---------- 0.5.3: flights and transfers (same calm surface language) ---------- */
+.transfers { display: grid; gap: var(--space-4); }
+.transfer-list { display: grid; gap: var(--space-2); margin: 0; padding: 0; list-style: none; }
+.transfer { display: grid; gap: var(--space-1); padding: var(--space-3) var(--space-4); border-radius: var(--radius-md); }
+.transfer-kind { display: inline-flex; color: var(--accent); flex: none; }
+.transfer-route { flex: 1 1 auto; min-width: 0; font-weight: 700; color: var(--title); overflow-wrap: anywhere; }
+.transfer-price { font-weight: 700; color: var(--ink); }
+.transfer-link { justify-self: start; display: inline-flex; align-items: center; min-height: var(--tap); color: var(--accent); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+.transfer-link:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; border-radius: var(--radius-sm); }
+.future-card { display: grid; gap: var(--space-2); border-style: dashed; }
+.itin-transfers-link { justify-self: start; }
+.stop-transfer { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-1) var(--space-2); color: var(--ink); }
+.stop-transfer .icon { width: 18px; height: 18px; color: var(--accent); }
