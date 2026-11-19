@@ -1,0 +1,190 @@
+TAP version 13
+# Subtest: S6-2: schema is v4, and a fresh trip starts with an empty journal, no check-ins and no bags
+not ok 1 - S6-2: schema is v4, and a fresh trip starts with an empty journal, no check-ins and no bags
+  ---
+  duration_ms: 1.09026
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage6-data.test.js:37:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    3 !== 4
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 4
+  actual: 3
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage6-data.test.js:38:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.start (node:internal/test_runner/test:944:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+  ...
+# Subtest: S6-2: real v3 data migrates to v4: nothing lost or changed, the three new fields are added
+not ok 2 - S6-2: real v3 data migrates to v4: nothing lost or changed, the three new fields are added
+  ---
+  duration_ms: 0.706713
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage6-data.test.js:49:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    3 !== 4
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 4
+  actual: 3
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage6-data.test.js:52:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: S6-2: migration keeps fields that already exist and unknown fields
+not ok 3 - S6-2: migration keeps fields that already exist and unknown fields
+  ---
+  duration_ms: 0.217468
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage6-data.test.js:63:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    3 !== 4
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 4
+  actual: 3
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage6-data.test.js:69:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: S6-2: data from every older version reaches v4 (v0 Stage 1, v2)
+not ok 4 - S6-2: data from every older version reaches v4 (v0 Stage 1, v2)
+  ---
+  duration_ms: 0.424845
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage6-data.test.js:76:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    3 !== 4
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 4
+  actual: 3
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage6-data.test.js:78:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: S6-2: validateState rejects a v4 trip whose new fields have the wrong shape
+not ok 5 - S6-2: validateState rejects a v4 trip whose new fields have the wrong shape
+  ---
+  duration_ms: 0.481482
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage6-data.test.js:89:1'
+  failureType: 'testCodeFailure'
+  error: 'journal = [] should be rejected'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage6-data.test.js:93:12)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: S6-1: a note, a check-in and a bag are saved through storage.js under tisa: and survive a reload; v3 data in storage upgrades
+not ok 6 - S6-1: a note, a check-in and a bag are saved through storage.js under tisa: and survive a reload; v3 data in storage upgrades
+  ---
+  duration_ms: 0.599984
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage6-data.test.js:103:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    'ok' !== 'migrated'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'migrated'
+  actual: 'ok'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage6-data.test.js:108:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: S6-12: backup round trip keeps journal, check-ins and luggage with all earlier data; a v3 backup still imports
+not ok 7 - S6-12: backup round trip keeps journal, check-ins and luggage with all earlier data; a v3 backup still imports
+  ---
+  duration_ms: 1.639683
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage6-data.test.js:125:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + undefined
+    - {
+    -   bags: []
+    - }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    bags:
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage6-data.test.js:141:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..7
+# tests 7
+# suites 0
+# pass 0
+# fail 7
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 59.331267

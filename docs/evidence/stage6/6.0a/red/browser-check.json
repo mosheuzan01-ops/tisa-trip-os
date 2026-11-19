@@ -1,0 +1,95 @@
+{
+  "S6-2 mobile": {
+    "result": "PASS",
+    "schemaVersion": 4,
+    "kept": {
+      "name": true,
+      "countryCode": true,
+      "startDate": true,
+      "endDate": true,
+      "destinations": true,
+      "budget": true,
+      "rates": true,
+      "expenses": true,
+      "people": true,
+      "repayments": true,
+      "transfers": true,
+      "checklist": true,
+      "tasks": true,
+      "events": true,
+      "info": true,
+      "assistant": true
+    },
+    "added": true,
+    "shown": {
+      "itinerary": true,
+      "transfers": true,
+      "money": true,
+      "checklist": true
+    }
+  },
+  "S6-1 mobile": {
+    "result": "PASS",
+    "survived": true,
+    "keysOk": true
+  },
+  "S6-12 round trip mobile": {
+    "result": "FAIL",
+    "error": "the settings export button gave no file"
+  },
+  "S6-2 desktop": {
+    "result": "PASS",
+    "schemaVersion": 4,
+    "kept": {
+      "name": true,
+      "countryCode": true,
+      "startDate": true,
+      "endDate": true,
+      "destinations": true,
+      "budget": true,
+      "rates": true,
+      "expenses": true,
+      "people": true,
+      "repayments": true,
+      "transfers": true,
+      "checklist": true,
+      "tasks": true,
+      "events": true,
+      "info": true,
+      "assistant": true
+    },
+    "added": true,
+    "shown": {
+      "itinerary": true,
+      "transfers": true,
+      "money": true,
+      "checklist": true
+    }
+  },
+  "S6-1 desktop": {
+    "result": "PASS",
+    "survived": true,
+    "keysOk": true
+  },
+  "S6-12 round trip desktop": {
+    "result": "FAIL",
+    "error": "the settings export button gave no file"
+  },
+  "export once with the reminder mobile": {
+    "result": "FAIL",
+    "fromBanner": 2,
+    "fromSettingsAfterBanner": 1,
+    "fromSettingsWhileReminderDue": 1
+  },
+  "export once with the reminder desktop": {
+    "result": "FAIL",
+    "fromBanner": 2,
+    "fromSettingsAfterBanner": 1,
+    "fromSettingsWhileReminderDue": 1
+  },
+  "no JS errors, no outside requests": {
+    "result": "PASS",
+    "errors": [],
+    "external": []
+  }
+}
