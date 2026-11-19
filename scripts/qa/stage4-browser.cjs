@@ -83,7 +83,7 @@ async function addExpense(page, o) {
     await page.click('#dlg-cats [type="submit"]');
     await closed(page, '#dlg-cats');
     const edited = (await trip(page)).budget;
-    pass('S4-7', Object.keys(afterCancel).length === 0 && loaded.profileId === 'realistic' && loaded.estimate === true && loaded.categoriesMinor.flight === 390000
+    pass('S4-7', Object.keys(afterCancel).length === 0 && loaded.profileId === 'realistic' && loaded.estimate === true && loaded.categoriesMinor.flight === 390000 && loaded.categoriesMinor.emergency === 250000
       && label && /הערכת תכנון, לא מאומת/.test(labelText) && edited.categoriesMinor.food === 250050 && edited.categoriesMinor.emergency === 100000,
     { afterCancel, loaded: { profileId: loaded.profileId, estimate: loaded.estimate, flight: loaded.categoriesMinor.flight }, labelText, editedFood: edited.categoriesMinor.food, emergency: edited.categoriesMinor.emergency });
 
@@ -271,7 +271,7 @@ async function addExpense(page, o) {
       const keys = await caches.keys();
       const c = await caches.open(keys.find((k) => k.startsWith('tisa-')));
       const urls = (await c.keys()).map((r) => new URL(r.url).pathname);
-      return { keys, files: ['/src/js/money-view.js', '/src/js/core/money.js', '/data/packs/th.js'].filter((f) => urls.includes(f)) };
+      return { keys, files: ['/src/js/money-view.js', '/src/js/core/money.js', '/src/js/core/split.js', '/data/packs/th.js'].filter((f) => urls.includes(f)) };
     });
     await ctx.setOffline(true);
     await page.reload();
@@ -281,7 +281,7 @@ async function addExpense(page, o) {
     const offline = (await trip(page)).expenses.length;
     const version = await page.locator('[data-slot="version-app"]').textContent();
     await shot(page, 'after-offline-375', false);
-    pass('S4-10', caches.keys.includes(`tisa-${version}`) && version === '0.4.0' && caches.files.length === 3 && offline === 1, { caches, version, offlineExpenses: offline });
+    pass('S4-10', caches.keys.includes(`tisa-${version}`) && version === JSON.parse(fs.readFileSync(path.join(ROOT, 'config/app.config.json'), 'utf8')).appVersion && caches.files.length === 4 && offline === 1, { caches, version, offlineExpenses: offline });
     await ctx.close();
   }
 

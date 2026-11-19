@@ -75,14 +75,14 @@ test('nine categories: the pack\'s eight plus emergency', () => {
   assert.equal(categoryIds(TH).length, 9);
 });
 
-test('S4-7: a profile becomes an editable budget marked as an estimate; emergency starts at 0', () => {
+test('S4-7: a profile becomes an editable budget marked as an estimate; emergency 2,500 (owner, 2026-11-19)', () => {
   const b = profileToBudget(TH.budgetProfiles[1]);
   assert.equal(b.profileId, 'realistic');
   assert.equal(b.estimate, true);
   assert.equal(b.currency, 'ILS');
   assert.equal(b.categoriesMinor.flight, 390000);
-  assert.equal(b.categoriesMinor[EMERGENCY], 0);
-  assert.equal(Object.values(b.categoriesMinor).reduce((s, v) => s + v, 0), 1527000);
+  assert.equal(b.categoriesMinor[EMERGENCY], 250000);
+  assert.equal(Object.entries(b.categoriesMinor).filter(([k]) => k !== EMERGENCY).reduce((s, [, v]) => s + v, 0), 1527000, 'running budget unchanged');
 });
 
 const budget = { currency: 'ILS', totalMinor: null, profileId: null, estimate: false, categoriesMinor: { food: 100000, lodging: 200000, transport: 0, [EMERGENCY]: 50000 } };
