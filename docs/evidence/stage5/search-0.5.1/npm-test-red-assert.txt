@@ -1,0 +1,125 @@
+TAP version 13
+# Subtest: S51-1: normalize: trims, collapses spaces, ignores letter case
+not ok 1 - S51-1: normalize: trims, collapses spaces, ignores letter case
+  ---
+  duration_ms: 1.474854
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/search.test.js:6:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    '' !== 'מלון בבנגקוק'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'מלון בבנגקוק'
+  actual: ''
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/search.test.js:7:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.start (node:internal/test_runner/test:944:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+  ...
+# Subtest: S51-1: partial, case-insensitive match over any of the fields; empty query matches everything
+not ok 2 - S51-1: partial, case-insensitive match over any of the fields; empty query matches everything
+  ---
+  duration_ms: 0.30906
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/search.test.js:12:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    false !== true
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/search.test.js:14:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: S51-1: no fuzzy matching: a typo does not match
+ok 3 - S51-1: no fuzzy matching: a typo does not match
+  ---
+  duration_ms: 0.179681
+  type: 'test'
+  ...
+# Subtest: S51-2: searchList keeps order, does not touch the input, and uses the fields the caller gives
+not ok 4 - S51-2: searchList keeps order, does not touch the input, and uses the fields the caller gives
+  ---
+  duration_ms: 1.054182
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/search.test.js:29:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + []
+    - [
+    -   'a',
+    -   'c'
+    - ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 'a'
+    1: 'c'
+  actual:
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/search.test.js:31:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: S51-3: the filtered sum is in whole agorot and only for the shown items
+not ok 5 - S51-3: the filtered sum is in whole agorot and only for the shown items
+  ---
+  duration_ms: 0.227363
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/search.test.js:36:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    NaN !== 215000
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 215000
+  actual: NaN
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/search.test.js:37:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 1
+# fail 4
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 68.042152

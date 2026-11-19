@@ -9,6 +9,8 @@ import {
 } from './core/checklist.js';
 import { formatDate } from './core/itinerary.js';
 import { makeId } from './core/ids.js';
+import { searchList } from './core/search.js';
+import { setupSearch } from './search-view.js';
 
 const $ = (sel, root = document) => root.querySelector(sel);
 const ICONS = './assets/icons.svg#';
@@ -37,7 +39,7 @@ const checkbox = (action, id, checked, label) => {
 };
 
 /** Screen-only filters (not saved): hide what is already ticked / done. */
-const view = { items: false, tasks: false };
+const view = { items: false, tasks: false, query: '' };
 
 function listState(ctx) {
   const trip = ctx.trip();
@@ -92,7 +94,16 @@ export function renderLists(ctx) {
   // ---------- Checklist by group ----------
   $('[data-slot="list-empty"]').hidden = s.items.length > 0;
   $('[data-slot="items-filter"]').hidden = s.items.length === 0;
-  const shownItems = hideDone(s.items, view.items);
+  // Search: item name and note; task title and note. Progress bars and the home card never change with it.
+  const shownItems = searchList(hideDone(s.items, view.items), view.query, (x) => [x.name, x.note]);
+  const shownTasks = searchList(hideDone(s.tasks, view.tasks), view.query, (x) => [x.title, x.note]);
+  const searching = view.query.trim() !== '';
+  const plural = (key, n) => (n === 1 ? t(`${key}.one`) : interpolate(t(`${key}.other`), { n }));
+  const found = $('[data-slot="lists-filtered"]');
+  found.hidden = !searching || (shownItems.length + shownTasks.length === 0);
+  found.textContent = interpolate(t('lists.found'), { items: plural('lists.found.items', shownItems.length), tasks: plural('lists.found.tasks', shownTasks.length) });
+  $('[data-slot="lists-no-results"]').hidden = !searching || (shownItems.length + shownTasks.length > 0);
+  $('[data-slot="lists-bar"]').hidden = s.items.length + s.tasks.length === 0;
   $('[data-slot="groups"]').replaceChildren(...GROUPS.filter((g) => shownItems.some((x) => x.group === g)).map((g) => {
     const all = s.items.filter((x) => x.group === g);
     const list = shownItems.filter((x) => x.group === g);
@@ -131,7 +142,7 @@ export function renderLists(ctx) {
   // ---------- Tasks ----------
   $('[data-slot="tasks-empty"]').hidden = s.tasks.length > 0;
   $('[data-slot="tasks-filter"]').hidden = s.tasks.length === 0;
-  $('[data-slot="task-list"]').replaceChildren(...hideDone(s.tasks, view.tasks).map((x) => {
+  $('[data-slot="task-list"]').replaceChildren(...shownTasks.map((x) => {
     const st = taskState(x, s.today);
     const li = el('li', `task surface is-${st}`);
     li.dataset.id = x.id;
@@ -277,6 +288,7 @@ export function setupLists(ctx, { wireDialog, showFormErrors }) {
   });
 
   // ---------- One delegated handler: clicks and ticks ----------
+  setupSearch($('[data-search="lists"]'), (v) => { view.query = v; renderLists(ctx); });
   for (const [key, sel] of [['items', 'hide-done-items'], ['tasks', 'hide-done-tasks']]) {
     $(`[data-filter="${sel}"]`).addEventListener('change', (e) => { view[key] = e.target.checked; renderLists(ctx); });
   }

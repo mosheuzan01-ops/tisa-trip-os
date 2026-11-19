@@ -314,11 +314,19 @@
               <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-plus"/></svg><span data-i18n="money.exp.add">הוספת הוצאה</span>
             </button>
           </div>
+          <div class="filter-bar" data-slot="money-filter-bar">
+            <div class="search-bar" data-search="money" role="search">
+              <svg class="icon search-icon" aria-hidden="true"><use href="./assets/icons.svg#i-search"/></svg>
+              <input type="search" data-slot="search-input" autocomplete="off" enterkeyhint="search" data-i18n-label="search.money" aria-label="חיפוש" placeholder="" data-i18n-placeholder="search.money">
+              <button class="icon-btn search-clear" type="button" data-action="search-clear" data-i18n-label="search.clear" aria-label="ניקוי החיפוש"><svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-close"/></svg></button>
+            </div>
           <div class="money-filters" data-slot="money-filters">
             <label class="field"><span data-i18n="money.filter.day">יום</span><select data-filter="date"></select></label>
             <label class="field"><span data-i18n="money.filter.category">קטגוריה</span><select data-filter="category"></select></label>
             <label class="field"><span data-i18n="money.filter.stop">יעד</span><select data-filter="destinationId"></select></label>
           </div>
+          </div>
+          <p class="filtered-summary" data-slot="money-filtered" aria-live="polite" hidden></p>
           <div class="card surface money-pie-card" data-slot="pie-card" hidden>
             <svg class="money-pie" data-slot="pie" viewBox="-1.1 -1.1 2.2 2.2" role="img" aria-labelledby="pie-desc"></svg>
             <p class="sr-only" id="pie-desc" data-slot="pie-desc"></p>
@@ -406,6 +414,20 @@
           <span class="sr-only" id="pack-label" data-i18n="lists.pack">אריזה</span>
         </section>
 
+        <div class="lists-body">
+          <div class="filter-bar" data-slot="lists-bar">
+            <div class="search-bar" data-search="lists" role="search">
+              <svg class="icon search-icon" aria-hidden="true"><use href="./assets/icons.svg#i-search"/></svg>
+              <input type="search" data-slot="search-input" autocomplete="off" enterkeyhint="search" data-i18n-label="search.lists" aria-label="חיפוש" placeholder="" data-i18n-placeholder="search.lists">
+              <button class="icon-btn search-clear" type="button" data-action="search-clear" data-i18n-label="search.clear" aria-label="ניקוי החיפוש"><svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-close"/></svg></button>
+            </div>
+            <div class="filter-toggles">
+              <label class="split-check filter-toggle" data-slot="items-filter"><input type="checkbox" data-filter="hide-done-items"><span data-i18n="list.hideDone">להסתיר מה שכבר מוכן</span></label>
+              <label class="split-check filter-toggle" data-slot="tasks-filter"><input type="checkbox" data-filter="hide-done-tasks"><span data-i18n="task.hideDone">להסתיר משימות שבוצעו</span></label>
+            </div>
+          </div>
+          <p class="filtered-summary" data-slot="lists-filtered" aria-live="polite" hidden></p>
+          <p class="no-results" data-slot="lists-no-results" data-i18n="search.none" hidden>אין תוצאות</p>
         <section class="lists-block" aria-labelledby="list-title">
           <div class="money-card-head">
             <h2 class="section-title" id="list-title" data-i18n="list.title">צ'ק ליסט</h2>
@@ -418,7 +440,6 @@
             <p data-i18n="list.empty.text">טוענים רשימה מוצעת לתאילנד ומשנים אותה, או מוסיפים פריטים משלכם.</p>
             <button class="btn btn-ghost" type="button" data-action="list-seed" data-i18n="list.seed.open">לטעון רשימה מוצעת</button>
           </section>
-          <label class="split-check filter-toggle" data-slot="items-filter"><input type="checkbox" data-filter="hide-done-items"><span data-i18n="list.hideDone">להסתיר מה שכבר מוכן</span></label>
           <div class="groups" data-slot="groups"></div>
         </section>
 
@@ -434,9 +455,9 @@
             <p data-i18n="task.empty.text">טוענים משימות מוצעות לפני טיסה, או מוסיפים משלכם.</p>
             <button class="btn btn-ghost" type="button" data-action="tasks-seed" data-i18n="task.seed.open">לטעון משימות מוצעות</button>
           </section>
-          <label class="split-check filter-toggle" data-slot="tasks-filter"><input type="checkbox" data-filter="hide-done-tasks"><span data-i18n="task.hideDone">להסתיר משימות שבוצעו</span></label>
           <ul class="task-list" data-slot="task-list"></ul>
         </section>
+        </div>
       </section>
 
       <!-- SETTINGS (feature 8) -->

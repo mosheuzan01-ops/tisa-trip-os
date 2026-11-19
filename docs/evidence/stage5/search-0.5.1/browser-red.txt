@@ -1,0 +1,11 @@
+page.fill: Timeout 30000ms exceeded.
+Call log:
+[2m  - waiting for locator('[data-search="money"] [data-slot="search-input"]')[22m
+
+    at typeSearch (/home/user/tisa-trip-os/scripts/qa/search-browser.cjs:23:14)
+    at /home/user/tisa-trip-os/scripts/qa/search-browser.cjs:90:11 {
+  log: [
+    `  - waiting for locator('[data-search="money"] [data-slot="search-input"]')`
+  ],
+  name: 'TimeoutError'
+}

@@ -323,7 +323,7 @@
   "money.cat.over": "חריגה של {amount}",
   "money.cat.overBadge": "חריגה",
   "money.exp.empty": "עוד אין הוצאות.",
-  "money.exp.emptyFiltered": "אין הוצאות שמתאימות לסינון.",
+  "money.exp.emptyFiltered": "אין תוצאות",
   "money.profile.title": "תבנית תקציב",
   "money.profile.text": "תבנית לנקודת פתיחה. הסכומים הם הערכת תכנון, לא מחירים מאומתים. אחרי הטעינה כל סכום ניתן לעריכה, והחישובים לפי הסכומים שלכם.",
   "money.profile.confirm": "לטעון את התבנית",
@@ -515,5 +515,16 @@
   "taskErr.note.tooLong": "ההערה ארוכה מדי.",
   "list.hideDone": "להסתיר מה שכבר מוכן",
   "task.hideDone": "להסתיר משימות שבוצעו",
-  "money.rates.updated": "עודכן ב-{date}"
+  "money.rates.updated": "עודכן ב-{date}",
+  "search.money": "חיפוש הוצאה: תיאור, קטגוריה, יעד",
+  "search.lists": "חיפוש בפריטים ובמשימות",
+  "search.clear": "ניקוי החיפוש",
+  "search.none": "אין תוצאות",
+  "money.filtered.one": "הוצאה אחת מוצגת, סה\"כ {sum}. הסיכום למעלה לא משתנה.",
+  "money.filtered.other": "{n} הוצאות מוצגות, סה\"כ {sum}. הסיכום למעלה לא משתנה.",
+  "lists.found": "מוצגים: {items}, {tasks}.",
+  "lists.found.items.one": "פריט אחד",
+  "lists.found.items.other": "{n} פריטים",
+  "lists.found.tasks.one": "משימה אחת",
+  "lists.found.tasks.other": "{n} משימות"
 }
