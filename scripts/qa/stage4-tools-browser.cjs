@@ -45,6 +45,9 @@ const shot = async (page, name, full = false) => { if (SHOTS) await page.screens
   { options, emergency: b.categoriesMinor.emergency, emText: em.slice(0, 40) });
 
   // ---------- S4-14: converter ----------
+  // Since 0.4.2 the calculators and the split start folded: open them as a user would.
+  await page.click('[data-slot="tools-fold"] summary');
+  await page.click('[data-slot="split-fold"] summary');
   await page.fill('[data-form="convert"] [name="amount"]', '100');
   const fromIls = await page.locator('[data-slot="convert-out"] li').allTextContents();
   await page.selectOption('[data-slot="convert-currency"]', 'THB');

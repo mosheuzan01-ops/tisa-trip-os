@@ -6,9 +6,9 @@ import { todayIn, isIsoDate } from './core/trip.js';
 import {
   EMERGENCY, BASE_CURRENCY, STATUSES, METHODS, parseMoney, effectiveRates, rateToBase, currenciesFor, validateRates,
   ratesConsistent, categoryIds, validateExpense, makeExpense, editExpense, profileToBudget, summarize, daysLeft,
-  dailyAllowance, filterExpenses, pieSlices, convertAll, atmCost,
+  dailyAllowance, filterExpenses, pieSlices, convertAll, atmCost, affordability, toCsv,
 } from './core/money.js';
-import { validatePerson, balances, settle } from './core/split.js';
+import { validatePerson, balances, settle, validateSplit, SPLIT_MODES } from './core/split.js';
 import { sortStops, cleanStops, formatDate } from './core/itinerary.js';
 import { makeId } from './core/ids.js';
 
@@ -24,9 +24,10 @@ const el = (tag, className, text) => {
 /** Whole shekels when the amount is round, agorot otherwise. */
 export function formatMinor(minor, currency, locale) {
   const value = minor / 100;
-  return new Intl.NumberFormat(locale, {
+  const text = new Intl.NumberFormat(locale, {
     style: 'currency', currency, minimumFractionDigits: minor % 100 === 0 ? 0 : 2, maximumFractionDigits: 2,
   }).format(value);
+  return minor < 0 ? `\u2066${text}\u2069` : text; // keep the minus sign before the number inside Hebrew text
 }
 
 const tripDates = (trip) => (isIsoDate(trip.startDate) && isIsoDate(trip.endDate) ? { start: trip.startDate, end: trip.endDate } : null);
@@ -39,7 +40,7 @@ export function moneyState(ctx) {
   const expenses = Array.isArray(trip.expenses) ? trip.expenses.filter((e) => e && Number.isInteger(e.baseMinor)) : [];
   const summary = summarize(trip.budget, expenses, rates);
   const days = daysLeft(tripDates(trip), todayIn(ctx.country.timeZone));
-  return { trip, pack, rates, expenses, summary, daily: dailyAllowance(summary.freeMinor, days) };
+  return { trip, pack, rates, expenses, summary, days, daily: dailyAllowance(summary.freeMinor, days) };
 }
 
 function catName(ctx, id) {
@@ -69,11 +70,17 @@ export function renderMoney(ctx) {
 
   // Home: "left for today" under the clock
   const home = $('[data-slot="today-money"]');
-  if (home) { home.textContent = dailyText(ctx, m); home.hidden = false; home.dataset.kind = s.hasBudget ? m.daily.kind : 'none'; }
+  if (home) {
+    home.textContent = dailyText(ctx, m);
+    home.hidden = false;
+    home.dataset.kind = s.hasBudget ? m.daily.kind : 'none';
+    home.closest('.today')?.classList.toggle('is-over', s.hasBudget && m.daily.kind === 'over'); // soft dark red, not a shout
+  }
 
   // Hero
   $('[data-slot="money-free"]').textContent = s.hasBudget ? fm(s.freeMinor) : '—';
   $('[data-slot="money-free"]').classList.toggle('is-over', s.freeMinor < 0);
+  $('[data-slot="money-free-before"]').textContent = s.hasBudget ? interpolate(t('money.freeBefore'), { amount: fm(s.freeBeforePlanMinor) }) : '';
   const today = $('[data-slot="money-today"]');
   today.textContent = s.unconvertible ? interpolate(t('money.unconvertible'), { cur: s.unconvertible }) : dailyText(ctx, m);
   today.dataset.kind = s.hasBudget ? m.daily.kind : 'none';
@@ -226,17 +233,45 @@ export function renderMoney(ctx) {
   }));
   if (focusedPerson) peopleBox.querySelector(`[data-id="${focusedPerson}"]`)?.focus();
   const settleBox = $('[data-slot="settle"]');
+  $('[data-slot="split-sub"]').textContent = people.length ? interpolate(t('split.sub'), { n: people.length }) : '';
+  const names = new Map(people.map((p) => [p.id, p.name]));
+  const repayments = repaymentsOf(m.trip);
+  const repaidBox = $('[data-slot="repaid"]');
   if (people.length < 2) settleBox.replaceChildren(el('p', 'muted', t('split.need')));
   else {
-    const names = new Map(people.map((p) => [p.id, p.name]));
-    const moves = settle(balances(m.expenses, people));
+    const moves = settle(balances(m.expenses, people, repayments));
     const ul = el('ul', 'settle-list');
-    for (const x of moves) ul.append(el('li', '', interpolate(t('split.transfer'), { from: names.get(x.from), to: names.get(x.to), amount: fm(x.minor) })));
+    for (const x of moves) {
+      const li = el('li', 'settle-item');
+      const b = el('button', 'btn btn-ghost btn-small', t('split.markPaid'));
+      b.type = 'button';
+      Object.assign(b.dataset, { action: 'repay', from: x.from, to: x.to, minor: String(x.minor) });
+      b.setAttribute('aria-label', interpolate(t('split.markPaidLabel'), { from: names.get(x.from), to: names.get(x.to) }));
+      li.append(el('span', '', interpolate(t('split.transfer'), { from: names.get(x.from), to: names.get(x.to), amount: fm(x.minor) })), b);
+      ul.append(li);
+    }
     settleBox.replaceChildren(el('h3', 'tool-title', t('split.settleTitle')), moves.length ? ul : el('p', 'muted', t('split.none')));
   }
+  const shownRepaid = repayments.filter((r) => names.has(r.from) && names.has(r.to));
+  repaidBox.replaceChildren(...(shownRepaid.length ? [el('h3', 'tool-title', t('split.repaid.title')), (() => {
+    const ul = el('ul', 'settle-list');
+    for (const r of shownRepaid) {
+      const li = el('li', 'settle-item');
+      const b = el('button', 'icon-btn stop-btn');
+      b.type = 'button';
+      Object.assign(b.dataset, { action: 'unrepay', id: r.id });
+      b.setAttribute('aria-label', interpolate(t('split.repaid.remove'), { from: names.get(r.from), to: names.get(r.to) }));
+      b.innerHTML = `<svg class="icon" aria-hidden="true"><use href="${ICONS}i-trash"/></svg>`;
+      li.append(el('span', '', interpolate(t('split.repaid.item'), { from: names.get(r.from), to: names.get(r.to), amount: fm(r.minor) })), b);
+      ul.append(li);
+    }
+    return ul;
+  })()] : []));
+  $('[data-slot="csv-btn"]').hidden = m.expenses.length === 0;
   renderTools(ctx, m);
 }
 
+const repaymentsOf = (trip) => (Array.isArray(trip.repayments) ? trip.repayments.filter((r) => r && typeof r.id === 'string' && Number.isInteger(r.minor)) : []);
 const peopleOf = (trip) => (Array.isArray(trip.people) ? trip.people.filter((p) => p && typeof p.id === 'string' && typeof p.name === 'string') : []);
 
 /** Converter and ATM: computed from the inputs and today's rates; nothing is saved. */
@@ -252,6 +287,34 @@ function renderTools(ctx, m = moneyState(ctx)) {
   }
   const rows = convertAll(parseMoney(conv.amount.value), sel.value, m.rates);
   $('[data-slot="convert-out"]').replaceChildren(...rows.map((r) => el('li', r.currency === sel.value ? 'is-from' : '', formatMinor(r.minor, r.currency, fmtLocale))));
+
+  // "Is it worth it?": the price in shekels against free money after planning
+  const af = $('[data-form="afford"]');
+  const afSel = $('[data-slot="afford-currency"]');
+  if (afSel.options.length !== list.length) {
+    const keep = afSel.value;
+    afSel.replaceChildren(...list.map((c) => Object.assign(document.createElement('option'), { value: c, textContent: c })));
+    afSel.value = list.includes(keep) ? keep : BASE_CURRENCY;
+  }
+  const afOut = $('[data-slot="afford-out"]');
+  const priceMinor = parseMoney(af.price.value);
+  const rate = rateToBase(afSel.value, m.rates);
+  const res = affordability(m.summary, Number.isNaN(priceMinor) ? NaN : Math.round(priceMinor * rate), m.days);
+  $('[data-slot="afford-add"]').hidden = !res;
+  if (!af.price.value.trim()) afOut.replaceChildren(el('p', 'muted', t('afford.hint')));
+  else if (!res) afOut.replaceChildren(el('p', 'tool-warn', t('expErr.amount.invalid')));
+  else if (res.verdict === 'noBudget') afOut.replaceChildren(el('p', 'muted', t('afford.noBudget')));
+  else {
+    const fm = (x) => formatMinor(x, BASE_CURRENCY, fmtLocale);
+    const daily = (d) => (d.kind === 'ok' ? fm(d.minor) : d.kind === 'over' ? fm(d.minor) : '—');
+    const verdict = el('p', `afford-verdict is-${res.verdict}`, res.verdict === 'ok' ? t('afford.ok') : interpolate(t('afford.over'), { amount: fm(-res.freeAfterMinor) }));
+    afOut.replaceChildren(
+      verdict,
+      el('p', '', interpolate(t('afford.now'), { amount: fm(res.freeNowMinor) })),
+      el('p', '', interpolate(t('afford.after'), { amount: fm(res.freeAfterMinor) })),
+      el('p', '', res.dailyNow.kind === 'noDates' ? t('afford.dailyNone') : interpolate(t('afford.daily'), { before: daily(res.dailyNow), after: daily(res.dailyAfter) })),
+    );
+  }
 
   const fee = m.pack.atmFee;
   const atm = $('[data-form="atm"]');
@@ -319,11 +382,24 @@ export function setupMoney(ctx, { wireDialog, showFormErrors }) {
     const people = peopleOf(m.trip);
     $('[data-slot="exp-split"]').hidden = people.length < 2;
     $('[data-slot="exp-paid-by"]').replaceChildren(option('', t('split.noOne')), ...people.map((p) => option(p.id, p.name)));
-    const shared = exp?.sharedBy ?? people.map((p) => p.id);
+    const mode = exp?.split?.mode ?? 'equal';
+    const shares = exp?.split?.shares ?? null;
+    const shared = shares ? Object.keys(shares) : (exp?.sharedBy ?? people.map((p) => p.id));
+    $('[data-slot="exp-split-mode"]').replaceChildren(...SPLIT_MODES.map((x) => option(x, t(`split.mode.${x}`))));
+    form.splitMode.value = mode;
     $('[data-slot="exp-shared-by"]').replaceChildren(...people.map((p) => {
+      const row = el('div', 'split-row');
       const label = el('label', 'split-check');
       label.append(Object.assign(document.createElement('input'), { type: 'checkbox', name: 'sharedBy', value: p.id, checked: shared.includes(p.id) }), el('span', '', p.name));
-      return label;
+      const v = shares?.[p.id];
+      const input = Object.assign(document.createElement('input'), {
+        type: 'text', name: `share-${p.id}`, inputMode: 'decimal', autocomplete: 'off', className: 'ltr split-value',
+        value: Number.isInteger(v) ? String(v / 100) : '',
+      });
+      input.dataset.person = p.id;
+      input.setAttribute('aria-label', interpolate(t('split.shareLabel'), { name: p.name }));
+      row.append(label, input);
+      return row;
     }));
     form.paidBy.value = exp?.paidBy && people.some((p) => p.id === exp.paidBy) ? exp.paidBy : '';
     if (exp) {
@@ -341,12 +417,35 @@ export function setupMoney(ctx, { wireDialog, showFormErrors }) {
       form.destinationId.value = here?.id ?? '';
     }
     showConvert();
+    showSplit();
     dlg.showModal();
     form.amount.focus();
   }
 
-  form.addEventListener('input', showConvert);
-  form.addEventListener('change', showConvert);
+  /** The values typed for the split, in hundredths (percent) or minor units (amount). */
+  const splitValues = () => {
+    const out = {};
+    for (const box of form.querySelectorAll('input[name="sharedBy"]:checked')) {
+      const raw = form.querySelector(`[data-person="${box.value}"]`).value.trim();
+      out[box.value] = form.splitMode.value === 'equal' ? 1 : (raw === '' || /^0+(\.0+)?$/.test(raw) ? 0 : parseMoney(raw));
+    }
+    return out;
+  };
+  function showSplit() {
+    const mode = form.splitMode.value;
+    form.querySelector('[data-slot="exp-split"]').dataset.mode = mode;
+    for (const input of form.querySelectorAll('.split-value')) {
+      input.hidden = mode === 'equal';
+      input.disabled = !form.querySelector(`input[name="sharedBy"][value="${input.dataset.person}"]`).checked;
+    }
+    const sum = Object.values(splitValues()).reduce((a, v) => a + (Number.isInteger(v) ? v : 0), 0);
+    const amount = parseMoney(form.amount.value);
+    $('[data-slot="split-sum"]').textContent = mode === 'percent' ? interpolate(t('split.sum.percent'), { sum: sum / 100 })
+      : mode === 'amount' ? interpolate(t('split.sum.amount'), { sum: formatMinor(sum, form.currency.value, fmtLocale), total: Number.isNaN(amount) ? '—' : formatMinor(amount, form.currency.value, fmtLocale) }) : '';
+  }
+
+  form.addEventListener('input', () => { showConvert(); showSplit(); });
+  form.addEventListener('change', () => { showConvert(); showSplit(); });
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     const m = moneyState(ctx);
@@ -354,8 +453,15 @@ export function setupMoney(ctx, { wireDialog, showFormErrors }) {
     const errors = validateExpense(input, categoryIds(m.pack), currenciesFor(m.rates));
     if (errors.length) { showFormErrors(t, form, errors, 'expErr'); return; }
     const next = editing ? editExpense(editing, input, m.rates) : makeExpense(input, m.rates, () => makeId());
-    const sharedBy = [...form.querySelectorAll('input[name="sharedBy"]:checked')].map((x) => x.value);
-    if (peopleOf(m.trip).length >= 2 && form.paidBy.value && sharedBy.length) { next.paidBy = form.paidBy.value; next.sharedBy = sharedBy; } else { delete next.paidBy; delete next.sharedBy; }
+    delete next.paidBy; delete next.sharedBy; delete next.split;
+    if (peopleOf(m.trip).length >= 2 && form.paidBy.value) {
+      const mode = form.splitMode.value;
+      const values = splitValues();
+      const bad = Object.values(values).some((v) => Number.isNaN(v)) ? ['value.invalid'] : validateSplit(mode, values, next.amountMinor);
+      if (bad.length) { form.querySelector('.form-error').textContent = t(`splitErr.${bad[0]}`); form.querySelector('.split-value:not([hidden]):not([disabled])')?.focus(); return; }
+      next.paidBy = form.paidBy.value;
+      if (mode === 'equal') next.sharedBy = Object.keys(values); else next.split = { mode, shares: values };
+    }
     commit((st) => {
       const trip = st.trips[st.activeTripId];
       const i = trip.expenses.findIndex((x) => x?.id === next.id);
@@ -522,8 +628,28 @@ export function setupMoney(ctx, { wireDialog, showFormErrors }) {
     dlgPerson.close();
   });
 
+  // ---------- Generic yes / no for split actions ----------
+  const dlgConfirm = $('#dlg-confirm');
+  let onYes = null;
+  wireDialog(dlgConfirm, () => { onYes = null; restore(); });
+  function openConfirm(from, title, text, yes, fn) {
+    opener = from;
+    onYes = fn;
+    $('[data-slot="confirm-title"]').textContent = title;
+    $('[data-slot="confirm-text"]').textContent = text;
+    $('[data-slot="confirm-yes"]').textContent = yes;
+    dlgConfirm.showModal();
+    dlgConfirm.querySelector('[data-close]').focus();
+  }
+  $('[data-action="confirm-yes"]').addEventListener('click', () => {
+    const fn = onYes;
+    if (fn) fn();
+    opener = $('#panel-money .settle-list button') ?? $('[data-form="person"] [name="name"]');
+    dlgConfirm.close();
+  });
+
   // ---------- Calculators (nothing saved) ----------
-  for (const f of ['convert', 'atm']) {
+  for (const f of ['afford', 'convert', 'atm']) {
     const node = $(`[data-form="${f}"]`);
     node.addEventListener('input', () => renderTools(ctx));
     node.addEventListener('change', () => renderTools(ctx));
@@ -546,6 +672,28 @@ export function setupMoney(ctx, { wireDialog, showFormErrors }) {
       dlgDelete.showModal();
       dlgDelete.querySelector('[data-close]').focus(); // the safe choice has focus
     }
+    if (action === 'afford-add') {
+      const af = $('[data-form="afford"]');
+      openExpense(null, btn);
+      form.amount.value = af.price.value.trim();
+      form.currency.value = af.currency.value;
+      form.description.value = af.item.value.trim();
+      showConvert();
+      showSplit();
+    }
+    if (action === 'csv-export') exportCsv(ctx);
+    if (action === 'repay' || action === 'unrepay') {
+      const names = new Map(peopleOf(ctx.trip()).map((p) => [p.id, p.name]));
+      const r = action === 'repay' ? { from: btn.dataset.from, to: btn.dataset.to, minor: Number(btn.dataset.minor) } : repaymentsOf(ctx.trip()).find((x) => x.id === id);
+      if (!r) return;
+      const vars = { from: names.get(r.from), to: names.get(r.to), amount: formatMinor(r.minor, BASE_CURRENCY, fmtLocale) };
+      const k = action === 'repay' ? 'repay' : 'unrepay';
+      openConfirm(btn, t(`split.${k}.title`), interpolate(t(`split.${k}.text`), vars), t(`split.${k}.confirm`), () => commit((st) => {
+        const trip = st.trips[st.activeTripId];
+        const list = repaymentsOf(trip);
+        trip.repayments = action === 'repay' ? [...list, { id: makeId(), from: r.from, to: r.to, minor: r.minor, date: todayIn(ctx.country.timeZone) }] : list.filter((x) => x.id !== r.id);
+      }, action === 'repay' ? 'split.repaidDone' : 'split.unrepaidDone'));
+    }
     if (action === 'person-delete') {
       opener = btn;
       removing = id;
@@ -558,4 +706,29 @@ export function setupMoney(ctx, { wireDialog, showFormErrors }) {
     if (action === 'cats-open') openCats(btn);
     if (action === 'rates-open') openRates(btn);
   });
+}
+
+/** Expenses as CSV for Excel, in the screen's language. Nothing leaves the device but the downloaded file. */
+function exportCsv(ctx) {
+  const { t } = ctx;
+  const m = moneyState(ctx);
+  const stops = new Map(cleanStops(m.trip.destinations).map((x) => [x.id, x.name]));
+  const people = new Map(peopleOf(m.trip).map((p) => [p.id, p.name]));
+  const amount = (minor) => (minor / 100).toFixed(2);
+  const splitText = (e) => {
+    if (e.split?.shares) return Object.entries(e.split.shares).map(([id, v]) => `${people.get(id) ?? '?'} ${e.split.mode === 'percent' ? `${v / 100}%` : amount(v)}`).join('; ');
+    return (e.sharedBy ?? []).map((id) => people.get(id) ?? '?').join('; ');
+  };
+  const head = ['date', 'description', 'category', 'amount', 'currency', 'rate', 'base', 'status', 'method', 'stop', 'paidBy', 'split', 'note'].map((k) => t(`csv.h.${k}`));
+  const rows = [...m.expenses].sort((a, b) => (a.date < b.date ? -1 : a.date > b.date ? 1 : 0)).map((e) => [
+    e.date, e.description, catName(ctx, e.category), amount(e.amountMinor), e.currency, String(Math.round(e.rate * 1e6) / 1e6), amount(e.baseMinor),
+    t(`exp.status.${e.status}`), t(`exp.method.${e.method}`), stops.get(e.destinationId) ?? '', people.get(e.paidBy) ?? '', splitText(e), e.note,
+  ]);
+  const url = URL.createObjectURL(new Blob([toCsv([head, ...rows])], { type: 'text/csv;charset=utf-8' }));
+  const a = Object.assign(document.createElement('a'), { href: url, download: `tisa-expenses-${todayIn(ctx.country.timeZone)}.csv` });
+  document.body.append(a);
+  a.click();
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 2000);
+  ctx.toast('csv.done');
 }
