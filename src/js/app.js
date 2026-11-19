@@ -4,7 +4,7 @@ import { loadConfig, loadLocale, loadCountry } from './core/load.js';
 import { createTranslator, resolveLocale, interpolate } from './core/i18n.js';
 import { buildTitle, validateCountry } from './core/country.js';
 import {
-  todayIn, tripStatus, validateDates, validateBudget, parseAmount, budgetSummary, setupProgress,
+  todayIn, tripStatus, validateDates, validateBudget, setupProgress,
 } from './core/trip.js';
 import { createStorage, browserBackend, requestPersistence, isPersisted } from './core/storage.js';
 import { needsBackupReminder } from './core/schema.js';
@@ -12,6 +12,8 @@ import { exportBackup, parseBackup, backupFileName } from './core/backup.js';
 import { makeId } from './core/ids.js';
 import { createAutosave } from './core/autosave.js';
 import { setupItinerary, renderItinerary } from './itinerary-view.js';
+import { setupMoney, renderMoney, moneyState, formatMinor } from './money-view.js';
+import { parseMoney } from './core/money.js';
 
 const $ = (sel, root = document) => root.querySelector(sel);
 const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
@@ -21,7 +23,7 @@ const ICONS = './assets/icons.svg#';
 const SCREENS = {
   home: { tab: 'home' },
   itinerary: { tab: 'itinerary', title: 'nav.itinerary', icon: 'i-route' },
-  money: { tab: 'budget', title: 'screen.money', icon: 'i-wallet', stage: 4 },
+  money: { tab: 'budget', title: 'screen.money', icon: 'i-wallet' },
   checklist: { tab: 'lists', title: 'screen.checklist', icon: 'i-list', stage: 5 },
   transfers: { title: 'screen.transfers', icon: 'i-plane', stage: 5 },
   info: { title: 'screen.info', icon: 'i-doc', stage: 7 },
@@ -39,7 +41,10 @@ function parseRoute(hash) {
 async function boot() {
   const config = await loadConfig();
   const locale = resolveLocale(document.documentElement.lang, config);
-  const [dict, country] = await Promise.all([loadLocale(locale), loadCountry(config.activeCountry)]);
+  const [dict, country, packModule] = await Promise.all([
+    loadLocale(locale), loadCountry(config.activeCountry), import(`../../data/packs/${config.activeCountry}.js`).catch(() => ({})),
+  ]);
+  const pack = Object.values(packModule)[0] ?? null; // planning data: categories, profiles, rates (estimates, not verified)
   const problems = validateCountry(country);
   if (problems.length) throw new Error(`Invalid country data: ${problems.join(', ')}`);
 
@@ -71,7 +76,7 @@ async function boot() {
   const loaded = storage.load();
   const fmtLocale = country.dateFormatLocale?.[locale] ?? locale;
   const ctx = {
-    t, locale, fmtLocale, country, config, storage,
+    t, locale, fmtLocale, country, config, storage, pack,
     state: loaded.state, status: loaded.status, lastSave: null, route: 'home', waitingWorker: null,
   };
   ctx.trip = () => ctx.state.trips[ctx.state.activeTripId];
@@ -91,9 +96,10 @@ async function boot() {
   };
   ctx.render = () => {
     applyTheme(ctx.state.settings.theme);
-    renderTrip({ t, locale, country, trip: tripView(ctx.trip()) });
+    renderTrip({ t, locale, country, trip: tripView(ctx) });
     renderSettings(ctx);
     renderItinerary(ctx);
+    renderMoney(ctx);
     renderBanners(ctx);
   };
   addEventListener('pagehide', () => autosave.flush());
@@ -110,19 +116,26 @@ async function boot() {
   setupSheets(ctx);
   setupSettings(ctx);
   setupItinerary(ctx, { wireDialog, showFormErrors });
+  setupMoney(ctx, { wireDialog, showFormErrors });
   setupServiceWorker(ctx);
   addEventListener('online', () => renderBanners(ctx));
   addEventListener('offline', () => renderBanners(ctx));
   ctx.render();
-  setInterval(() => { renderTrip({ t, locale, country, trip: tripView(ctx.trip()) }); renderItinerary(ctx); }, 60_000); // keeps "today" right across midnight
+  setInterval(() => { renderTrip({ t, locale, country, trip: tripView(ctx) }); renderItinerary(ctx); renderMoney(ctx); }, 60_000); // keeps "today" right across midnight
 }
 
-/** The Stage 1 home screen reads { dates, budget }; the data model keeps startDate / endDate on the trip. */
-function tripView(trip) {
+/** The home screen reads { dates, budget, money }. Money comes from the Stage 4 summary (whole agorot). */
+function tripView(ctx) {
+  const trip = ctx.trip();
+  const m = moneyState(ctx);
+  const total = trip.budget?.totalMinor;
   return {
     dates: trip.startDate && trip.endDate ? { start: trip.startDate, end: trip.endDate } : undefined,
-    budget: Number(trip.budget?.amount) > 0 && trip.budget.currency
-      ? { amount: Number(trip.budget.amount), currency: trip.budget.currency } : undefined,
+    budget: m.summary.hasBudget ? { amount: m.summary.totalMinor / 100, currency: 'ILS' } : undefined,
+    homeTotal: Number.isInteger(total) && total > 0 ? { amount: total / 100, currency: trip.budget.currency } : undefined,
+    hasCategories: m.summary.hasCategories,
+    money: m.summary,
+    fmtLocale: ctx.fmtLocale,
   };
 }
 
@@ -219,13 +232,6 @@ function formatDay(iso, locale, opts = { day: 'numeric', month: 'long' }) {
   return new Intl.DateTimeFormat(locale, { ...opts, timeZone: 'UTC' }).format(new Date(`${iso}T00:00:00Z`));
 }
 
-function formatMoney(value, currency, locale) {
-  return new Intl.NumberFormat(locale, {
-    style: 'currency', currency, notation: Math.abs(value) >= 1e6 ? 'compact' : 'standard',
-    maximumFractionDigits: Number.isInteger(value) ? 0 : 2,
-  }).format(value);
-}
-
 function renderTrip({ t, locale, country, trip }) {
   const fmtLocale = country.dateFormatLocale?.[locale] ?? locale;
   const progress = setupProgress(trip);
@@ -286,10 +292,11 @@ function renderTrip({ t, locale, country, trip }) {
   }
 
   // Budget on the back of the pass
-  const summary = budgetSummary(trip.budget);
-  $('[data-slot="budget-empty"]').hidden = Boolean(summary);
+  const money = trip.money;
+  $('[data-slot="budget-empty"]').hidden = money.hasBudget;
+  const kpis = { total: money.totalMinor, spent: money.paidMinor, left: money.freeMinor };
   for (const key of ['total', 'spent', 'left']) {
-    $(`[data-slot="kpi-${key}"]`).textContent = summary ? formatMoney(summary[key], summary.currency, fmtLocale) : '—';
+    $(`[data-slot="kpi-${key}"]`).textContent = money.hasBudget ? formatMinor(kpis[key], 'ILS', fmtLocale) : '—';
   }
 }
 
@@ -331,7 +338,8 @@ function setupSheets(ctx) {
     opener = from ?? document.activeElement;
     const dlg = sheets[name];
     const form = dlg.querySelector('form');
-    const view = tripView(ctx.trip());
+    const view = tripView(ctx);
+    if (name === 'budget' && view.hasCategories) { ctx.go('money'); return; } // the split by category lives on the money screen
     form.reset();
     showFormErrors(t, form, []);
     if (name === 'dates' && view.dates) {
@@ -339,10 +347,10 @@ function setupSheets(ctx) {
       form.end.value = view.dates.end;
     }
     if (name === 'budget') {
-      form.currency.value = view.budget?.currency ?? config.budgetCurrencies[0];
-      if (view.budget) form.amount.value = String(view.budget.amount);
+      form.currency.value = config.budgetCurrencies.includes(view.homeTotal?.currency) ? view.homeTotal.currency : config.budgetCurrencies[0];
+      if (view.homeTotal) form.amount.value = String(view.homeTotal.amount);
     }
-    dlg.querySelector('[data-clear]').hidden = !view[name];
+    dlg.querySelector('[data-clear]').hidden = !(name === 'budget' ? view.homeTotal : view.dates);
     dlg.showModal();
     form.querySelector('input').focus();
   }
@@ -375,10 +383,11 @@ function setupSheets(ctx) {
     const form = e.currentTarget;
     const entry = { amount: form.amount.value, currency: form.currency.value };
     const errors = validateBudget(entry, config.budgetCurrencies);
+    if (!errors.length && Number.isNaN(parseMoney(entry.amount))) errors.push('amount.invalid'); // stored as whole agorot
     if (errors.length) { showFormErrors(t, form, errors); return; }
     commit((s) => {
       const trip = s.trips[s.activeTripId];
-      trip.budget = { ...trip.budget, amount: parseAmount(entry.amount), currency: entry.currency };
+      trip.budget = { ...trip.budget, totalMinor: parseMoney(entry.amount), currency: entry.currency };
     }, sheets.budget, 'toast.saved');
   });
 
@@ -388,7 +397,7 @@ function setupSheets(ctx) {
       commit((s) => {
         const trip = s.trips[s.activeTripId];
         if (part === 'dates') { trip.startDate = null; trip.endDate = null; }
-        if (part === 'budget') { delete trip.budget.amount; delete trip.budget.currency; }
+        if (part === 'budget') { trip.budget.totalMinor = null; trip.budget.currency = 'ILS'; }
       }, sheets[part], 'toast.cleared');
     });
   }
@@ -400,7 +409,7 @@ function setupSheets(ctx) {
 function setupRouter(ctx) {
   const { t } = ctx;
   const tabs = $$('[role="tab"]');
-  const panels = { home: $('#panel-home'), itinerary: $('#panel-itinerary'), soon: $('#panel-soon'), settings: $('#panel-settings') };
+  const panels = { home: $('#panel-home'), itinerary: $('#panel-itinerary'), money: $('#panel-money'), soon: $('#panel-soon'), settings: $('#panel-settings') };
   const main = $('#main');
   const rtl = () => document.documentElement.dir === 'rtl';
 

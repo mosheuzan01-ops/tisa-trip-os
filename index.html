@@ -123,6 +123,7 @@
               </div>
               <p class="today-status" data-slot="today-status" hidden></p>
               <p class="today-stop" data-slot="today-stop" hidden></p>
+              <p class="today-money" data-slot="today-money" hidden></p>
               <p class="today-time"><span class="clock ltr" data-slot="clock">--:--</span><span class="today-where" data-slot="clock-label"></span></p>
               <p class="muted" data-i18n="today.empty" data-slot="today-sub">כשתקבעו תאריכים, כאן יופיע מה מחכה לכם היום.</p>
             </section>
@@ -245,6 +246,81 @@
         </section>
       </section>
 
+      <!-- MONEY (features 2-4, Stage 4): budget, expenses, planning rates. Amounts are whole agorot. -->
+      <section class="panel money" id="panel-money" role="tabpanel" aria-labelledby="tab-budget" hidden>
+        <div class="itin-head">
+          <h1 class="display" data-i18n="money.title">כסף</h1>
+        </div>
+
+        <section class="card surface money-hero" aria-labelledby="money-free-label">
+          <h2 class="money-hero-label" id="money-free-label" data-i18n="money.free.title">כמה כסף נשאר</h2>
+          <p class="money-big ltr" data-slot="money-free">—</p>
+          <p class="money-today" data-slot="money-today"></p>
+          <div class="money-bar" data-slot="money-bar" aria-hidden="true"></div>
+          <dl class="money-split">
+            <div><dt><span class="dot dot-paid" aria-hidden="true"></span><span data-i18n="money.paid">שולם</span></dt><dd class="ltr" data-slot="money-paid"></dd></div>
+            <div><dt><span class="dot dot-planned" aria-hidden="true"></span><span data-i18n="money.planned">מתוכנן</span></dt><dd class="ltr" data-slot="money-planned"></dd></div>
+            <div><dt><span class="dot dot-committed" aria-hidden="true"></span><span data-i18n="money.committed">התחייבות עתידית</span></dt><dd class="ltr" data-slot="money-committed"></dd></div>
+            <div><dt><span class="dot dot-free" aria-hidden="true"></span><span data-i18n="money.freeShort">פנוי באמת</span></dt><dd class="ltr" data-slot="money-free-small"></dd></div>
+            <div class="money-split-total"><dt data-i18n="money.total">תקציב שוטף</dt><dd class="ltr" data-slot="money-total"></dd></div>
+          </dl>
+          <p class="money-estimate" data-slot="money-estimate" data-i18n="money.estimate" hidden>הערכת תכנון, לא מאומת</p>
+        </section>
+
+        <section class="card surface money-empty" data-slot="money-empty" aria-labelledby="money-empty-title" hidden>
+          <h2 id="money-empty-title" data-i18n="money.empty.title">עוד אין חלוקה לקטגוריות</h2>
+          <p data-i18n="money.empty.text">טוענים פרופיל מוכן ומשנים את הסכומים, או כותבים סכומים משלכם.</p>
+          <div class="settings-actions">
+            <button class="btn btn-primary" type="button" data-action="profile-open" data-i18n="money.profile.open">לבחור פרופיל</button>
+            <button class="btn btn-ghost" type="button" data-action="cats-open" data-i18n="money.cats.edit">עריכת סכומים</button>
+          </div>
+        </section>
+
+        <section class="card surface settings-card money-cats" data-slot="money-cats" aria-labelledby="money-cats-title" hidden>
+          <div class="money-card-head">
+            <h2 id="money-cats-title" data-i18n="money.cats.title">לפי קטגוריה</h2>
+            <button class="btn btn-ghost btn-small" type="button" data-action="cats-open">
+              <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-edit"/></svg><span data-i18n="money.cats.edit">עריכת סכומים</span>
+            </button>
+          </div>
+          <ul class="cat-list" data-slot="cat-list"></ul>
+          <div class="cat-emergency" data-slot="cat-emergency"></div>
+          <button class="link-btn link-btn-calm" type="button" data-action="profile-open" data-i18n="money.profile.change">לטעון פרופיל אחר</button>
+        </section>
+
+        <section class="money-expenses" aria-labelledby="money-exp-title">
+          <div class="money-card-head">
+            <h2 class="section-title" id="money-exp-title" data-i18n="money.exp.title">הוצאות</h2>
+            <button class="btn btn-primary btn-small" type="button" data-action="expense-add">
+              <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-plus"/></svg><span data-i18n="money.exp.add">הוספת הוצאה</span>
+            </button>
+          </div>
+          <div class="money-filters" data-slot="money-filters">
+            <label class="field"><span data-i18n="money.filter.day">יום</span><select data-filter="date"></select></label>
+            <label class="field"><span data-i18n="money.filter.category">קטגוריה</span><select data-filter="category"></select></label>
+            <label class="field"><span data-i18n="money.filter.stop">יעד</span><select data-filter="destinationId"></select></label>
+          </div>
+          <div class="card surface money-pie-card" data-slot="pie-card" hidden>
+            <svg class="money-pie" data-slot="pie" viewBox="-1.1 -1.1 2.2 2.2" role="img" aria-labelledby="pie-desc"></svg>
+            <p class="sr-only" id="pie-desc" data-slot="pie-desc"></p>
+            <ul class="pie-legend" data-slot="pie-legend" aria-hidden="true"></ul>
+          </div>
+          <p class="muted money-exp-empty" data-slot="exp-empty"></p>
+          <ul class="exp-list" data-slot="exp-list"></ul>
+        </section>
+
+        <section class="card surface settings-card" aria-labelledby="money-rates-title">
+          <div class="money-card-head">
+            <h2 id="money-rates-title" data-i18n="money.rates.title">שערים</h2>
+            <span class="badge" data-slot="rates-badge"></span>
+          </div>
+          <ul class="settings-list rates-list ltr-nums" data-slot="rates-list"></ul>
+          <p class="form-warn-calm" data-slot="rates-warn" hidden></p>
+          <p data-i18n="money.rates.note">שער חדש חל רק על הוצאות חדשות. הוצאות שכבר נשמרו שומרות את השער שלהן.</p>
+          <button class="btn btn-ghost" type="button" data-action="rates-open" data-i18n="money.rates.edit">עריכת שערים</button>
+        </section>
+      </section>
+
       <!-- SETTINGS (feature 8) -->
       <section class="panel settings" id="panel-settings" aria-labelledby="settings-title" hidden>
         <h1 class="display settings-title" id="settings-title" data-i18n="settings.title">הגדרות</h1>
@@ -346,7 +422,7 @@
           <span class="tab-chip"><svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-route"/></svg></span>
           <span data-i18n="nav.itinerary">מסלול</span>
         </button>
-        <button class="tab" role="tab" id="tab-budget" data-tab="budget" data-route="money" data-icon="i-wallet" aria-selected="false" aria-controls="panel-soon" tabindex="-1" type="button">
+        <button class="tab" role="tab" id="tab-budget" data-tab="budget" data-route="money" data-icon="i-wallet" aria-selected="false" aria-controls="panel-money" tabindex="-1" type="button">
           <span class="tab-chip"><svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-wallet"/></svg></span>
           <span data-i18n="nav.budget">תקציב</span>
         </button>
@@ -492,6 +568,90 @@
           <button class="btn metal-btn" type="submit" data-slot="replan-save" data-i18n="replan.save">לאשר ולשמור</button>
           <button class="btn btn-ghost" type="button" data-close data-i18n="form.cancel">ביטול</button>
         </div>
+      </form>
+    </dialog>
+
+    <!-- Money: add or edit an expense -->
+    <dialog class="sheet dmetal" id="dlg-expense" aria-labelledby="dlg-expense-title">
+      <form class="sheet-form" data-form="expense" novalidate>
+        <h2 id="dlg-expense-title" data-slot="expense-title"></h2>
+        <div class="field-row field-row-money">
+          <label class="field field-grow"><span data-i18n="exp.amount">סכום</span><input class="ltr" type="text" name="amount" inputmode="decimal" autocomplete="off" aria-describedby="expense-error"></label>
+          <label class="field"><span data-i18n="exp.currency">מטבע</span><select name="currency" data-slot="exp-currency"></select></label>
+        </div>
+        <p class="sheet-hint" data-slot="exp-convert" aria-live="polite"></p>
+        <label class="field"><span data-i18n="exp.category">קטגוריה</span><select name="category" data-slot="exp-category"></select></label>
+        <div class="field-row">
+          <label class="field"><span data-i18n="exp.date">תאריך</span><input class="ltr" type="date" name="date" aria-describedby="expense-error"></label>
+          <label class="field"><span data-i18n="exp.status">סטטוס</span><select name="status" data-slot="exp-status"></select></label>
+        </div>
+        <label class="field"><span data-i18n="exp.stop">יעד (לא חובה)</span><select name="destinationId" data-slot="exp-stop"></select></label>
+        <label class="field"><span data-i18n="exp.description">תיאור</span><input type="text" name="description" maxlength="80" autocomplete="off" aria-describedby="expense-error"></label>
+        <label class="field"><span data-i18n="exp.method">אמצעי תשלום</span><select name="method" data-slot="exp-method"></select></label>
+        <label class="field"><span data-i18n="exp.note">הערה (לא חובה)</span><input type="text" name="note" maxlength="140" autocomplete="off" aria-describedby="expense-error"></label>
+        <p class="form-error" id="expense-error" role="alert"></p>
+        <div class="sheet-actions">
+          <button class="btn metal-btn" type="submit" data-i18n="form.save">שמירה</button>
+          <button class="btn btn-ghost" type="button" data-close data-i18n="form.cancel">ביטול</button>
+        </div>
+      </form>
+    </dialog>
+
+    <!-- Money: delete only after a yes -->
+    <dialog class="sheet dmetal" id="dlg-expense-delete" aria-labelledby="dlg-expense-delete-title" aria-describedby="dlg-expense-delete-text">
+      <div class="sheet-form">
+        <h2 id="dlg-expense-delete-title" data-i18n="exp.delete.title">מחיקת הוצאה</h2>
+        <p class="sheet-hint" id="dlg-expense-delete-text" data-slot="expense-delete-text"></p>
+        <div class="sheet-actions">
+          <button class="btn metal-btn btn-danger-solid" type="button" data-action="expense-delete-confirm" data-i18n="stop.delete.confirm">למחוק</button>
+          <button class="btn btn-ghost" type="button" data-close data-i18n="form.cancel">ביטול</button>
+        </div>
+      </div>
+    </dialog>
+
+    <!-- Money: a planning profile goes in only after a yes -->
+    <dialog class="sheet dmetal" id="dlg-profile" aria-labelledby="dlg-profile-title" aria-describedby="dlg-profile-text">
+      <form class="sheet-form" data-form="profile" novalidate>
+        <h2 id="dlg-profile-title" data-i18n="money.profile.title">פרופיל תקציב</h2>
+        <p class="sheet-hint" id="dlg-profile-text" data-i18n="money.profile.text">סכומי תכנון מתוכנית הטיול. הם הערכה ולא מחירים מאומתים. אחרי הטעינה אפשר לשנות כל סכום.</p>
+        <fieldset class="replan-modes">
+          <legend class="sr-only" data-i18n="money.profile.title">פרופיל תקציב</legend>
+          <div class="profile-options" data-slot="profile-options"></div>
+        </fieldset>
+        <p class="form-warn" role="status" data-slot="profile-warn"></p>
+        <div class="sheet-actions">
+          <button class="btn metal-btn" type="submit" data-i18n="money.profile.confirm">לטעון את הפרופיל</button>
+          <button class="btn btn-ghost" type="button" data-close data-i18n="form.cancel">ביטול</button>
+        </div>
+      </form>
+    </dialog>
+
+    <!-- Money: edit the nine category amounts -->
+    <dialog class="sheet dmetal" id="dlg-cats" aria-labelledby="dlg-cats-title">
+      <form class="sheet-form" data-form="cats" novalidate>
+        <h2 id="dlg-cats-title" data-i18n="money.cats.dialog">סכומים לפי קטגוריה (₪)</h2>
+        <div class="cats-fields" data-slot="cats-fields"></div>
+        <p class="sheet-hint" data-slot="cats-sum" aria-live="polite"></p>
+        <p class="form-error" role="alert"></p>
+        <div class="sheet-actions">
+          <button class="btn metal-btn" type="submit" data-i18n="form.save">שמירה</button>
+          <button class="btn btn-ghost" type="button" data-close data-i18n="form.cancel">ביטול</button>
+        </div>
+      </form>
+    </dialog>
+
+    <!-- Money: planning rates, editable, with a way back to the defaults -->
+    <dialog class="sheet dmetal" id="dlg-rates" aria-labelledby="dlg-rates-title">
+      <form class="sheet-form" data-form="rates" novalidate>
+        <h2 id="dlg-rates-title" data-i18n="money.rates.title">שערים</h2>
+        <div class="cats-fields" data-slot="rates-fields"></div>
+        <p class="sheet-hint" data-i18n="money.rates.note">שער חדש חל רק על הוצאות חדשות. הוצאות שכבר נשמרו שומרות את השער שלהן.</p>
+        <p class="form-error" role="alert"></p>
+        <div class="sheet-actions">
+          <button class="btn metal-btn" type="submit" data-i18n="form.save">שמירה</button>
+          <button class="btn btn-ghost" type="button" data-close data-i18n="form.cancel">ביטול</button>
+        </div>
+        <button class="link-btn" type="button" data-action="rates-restore" data-i18n="money.rates.restore">חזרה לשערי התכנון</button>
       </form>
     </dialog>
 
