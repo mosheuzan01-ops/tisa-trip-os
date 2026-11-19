@@ -1,0 +1,62 @@
+TAP version 13
+# Subtest: soon screens carry no stage number in code
+not ok 1 - soon screens carry no stage number in code
+  ---
+  duration_ms: 2.704182
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/soon-screens.test.js:7:1'
+  failureType: 'testCodeFailure'
+  error: 'no screen promises a stage'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    const SCREENS = {
+      home: { tab: 'home' },
+      itinerary: { tab: 'itinerary', title: 'nav.itinerary', icon: 'i-route' },
+      money: { tab: 'budget', title: 'screen.money', icon: 'i-wallet' },
+      checklist: { tab: 'lists', title: 'screen.checklist', icon: 'i-list' },
+      transfers: { title: 'screen.transfers', icon: 'i-plane', stage: 5 },
+      info: { title: 'screen.info', icon: 'i-doc', stage: 7 },
+      assistant: { title: 'screen.assistant', icon: 'i-chat', stage: 7 },
+      settings: {},
+    
+  operator: 'doesNotMatch'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/soon-screens.test.js:10:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.start (node:internal/test_runner/test:944:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+  ...
+# Subtest: soon copy says "a future version", with no stage number, in both languages
+not ok 2 - soon copy says "a future version", with no stage number, in both languages
+  ---
+  duration_ms: 1.091807
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/soon-screens.test.js:13:1'
+  failureType: 'testCodeFailure'
+  error: 'he soon.text: "המסך הזה ייבנה בשלב הבא. בינתיים הכול מחכה לכם במסך הבית."'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: 'המסך הזה ייבנה בשלב הבא. בינתיים הכול מחכה לכם במסך הבית.'
+  operator: 'doesNotMatch'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/soon-screens.test.js:17:14)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+1..2
+# tests 2
+# suites 0
+# pass 0
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 77.363341

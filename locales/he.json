@@ -39,7 +39,7 @@
   "nav.itinerary": "מסלול",
   "nav.budget": "תקציב",
   "nav.lists": "רשימות",
-  "soon.text": "המסך הזה ייבנה בשלב הבא. בינתיים הכול מחכה לכם במסך הבית.",
+  "soon.text": "המסך הזה יגיע בגרסה עתידית. בינתיים הכול מחכה לכם במסך הבית.",
   "soon.home": "חזרה לבית",
   "toast.next": "זה ייבנה בשלב הבא.",
   "setup.textDone": "הכול מוכן. אפשר לערוך בכל רגע.",
@@ -82,7 +82,7 @@
   "today.title.after": "אחרי הטיול",
   "today.before.caption": "ימים לטיול",
   "today.during.caption": "מתוך {length} ימים",
-  "tools.note": "ייפתחו בשלבים הבאים",
+  "tools.note": "מסמכים: בגרסה עתידית",
   "form.currencyOption": "{name} ({code})",
   "pass.flipLabelBack": "תקציב הטיול. הקישו כדי לחזור למיקום",
   "screen.money": "כסף",
@@ -91,9 +91,7 @@
   "screen.info": "מידע לתאילנד",
   "screen.assistant": "עוזר",
   "screen.settings": "הגדרות",
-  "soon.stage": "המסך הזה ייבנה בשלב {n}. בינתיים הכול מחכה לכם במסך הבית.",
   "soon.more": "מסכים שבדרך",
-  "soon.linkStage": "שלב {n}",
   "settings.open": "הגדרות",
   "banner.storageOff": "הדפדפן חוסם שמירה במכשיר. אפשר להמשיך לעבוד, אבל מה שתזינו יימחק כשתסגרו את הדף.",
   "banner.storageFull": "אין מקום לשמור במכשיר. השינויים האחרונים נשמרו רק עד שתסגרו את הדף. מומלץ לייצא גיבוי עכשיו.",
@@ -526,5 +524,7 @@
   "lists.found.items.one": "פריט אחד",
   "lists.found.items.other": "{n} פריטים",
   "lists.found.tasks.one": "משימה אחת",
-  "lists.found.tasks.other": "{n} משימות"
+  "lists.found.tasks.other": "{n} משימות",
+  "soon.future": "המסך הזה יגיע בגרסה עתידית. בינתיים הכול מחכה לכם במסך הבית.",
+  "soon.linkFuture": "בגרסה עתידית"
 }

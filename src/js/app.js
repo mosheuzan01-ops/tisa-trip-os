@@ -26,9 +26,9 @@ const SCREENS = {
   itinerary: { tab: 'itinerary', title: 'nav.itinerary', icon: 'i-route' },
   money: { tab: 'budget', title: 'screen.money', icon: 'i-wallet' },
   checklist: { tab: 'lists', title: 'screen.checklist', icon: 'i-list' },
-  transfers: { title: 'screen.transfers', icon: 'i-plane', stage: 5 },
-  info: { title: 'screen.info', icon: 'i-doc', stage: 7 },
-  assistant: { title: 'screen.assistant', icon: 'i-chat', stage: 7 },
+  transfers: { title: 'screen.transfers', icon: 'i-plane', soon: true },
+  info: { title: 'screen.info', icon: 'i-doc', soon: true },
+  assistant: { title: 'screen.assistant', icon: 'i-chat', soon: true },
   settings: {},
 };
 const LEGACY_ROUTES = { budget: 'money', lists: 'checklist', map: 'home' }; // Stage 1 used #budget and #lists; the map tab was removed in 0.2.2
@@ -420,14 +420,14 @@ function setupRouter(ctx) {
   // Links to every screen that is not built yet, so each one is reachable from the navigation.
   const more = $('[data-slot="soon-links"]');
   for (const [name, screen] of Object.entries(SCREENS)) {
-    if (!screen.stage) continue;
+    if (!screen.soon) continue;
     const a = document.createElement('a');
     a.className = 'soon-link';
     a.href = `#/${name}`;
     a.dataset.route = name;
     a.innerHTML = `<svg class="icon" aria-hidden="true"><use href="${ICONS}${screen.icon}"/></svg><span></span><span class="soon-link-stage"></span>`;
     a.querySelector('span').textContent = t(screen.title);
-    a.querySelector('.soon-link-stage').textContent = interpolate(t('soon.linkStage'), { n: screen.stage });
+    a.querySelector('.soon-link-stage').textContent = t('soon.linkFuture');
     more.append(a);
   }
 
@@ -451,7 +451,7 @@ function setupRouter(ctx) {
       panels.soon.setAttribute('aria-label', t(screen.title));
       $('[data-slot="soon-title"]').textContent = t(screen.title);
       $('[data-slot="soon-icon"]').setAttribute('href', ICONS + screen.icon);
-      $('[data-slot="soon-text"]').textContent = interpolate(t('soon.stage'), { n: screen.stage });
+      $('[data-slot="soon-text"]').textContent = t('soon.future'); // no stage numbers: a future version (owner, 2026-11-19)
       for (const a of $$('.soon-link', more)) a.hidden = a.dataset.route === route;
     }
     renderBanners(ctx);

@@ -39,7 +39,7 @@
   "nav.itinerary": "Itinerary",
   "nav.budget": "Budget",
   "nav.lists": "Lists",
-  "soon.text": "This screen is built in the next stage. Everything else waits on the home screen.",
+  "soon.text": "This screen comes in a future version. Meanwhile everything is on the home screen.",
   "soon.home": "Back home",
   "toast.next": "This is built in the next stage.",
   "setup.textDone": "All set. You can edit anytime.",
@@ -82,7 +82,7 @@
   "today.title.after": "After the trip",
   "today.before.caption": "days to go",
   "today.during.caption": "of {length} days",
-  "tools.note": "Opening in the next stages",
+  "tools.note": "Documents: future version",
   "form.currencyOption": "{name} ({code})",
   "pass.flipLabelBack": "Trip budget. Tap to go back to the location",
   "screen.money": "Money",
@@ -91,9 +91,7 @@
   "screen.info": "Thailand info",
   "screen.assistant": "Assistant",
   "screen.settings": "Settings",
-  "soon.stage": "This screen will be built in stage {n}. Until then, everything is on the home screen.",
   "soon.more": "Screens on the way",
-  "soon.linkStage": "Stage {n}",
   "settings.open": "Settings",
   "banner.storageOff": "This browser blocks saving on the device. You can keep working, but what you enter is lost when you close the page.",
   "banner.storageFull": "There is no room to save on this device. Your latest changes last only until you close the page. Export a backup now.",
@@ -526,5 +524,7 @@
   "lists.found.items.one": "one item",
   "lists.found.items.other": "{n} items",
   "lists.found.tasks.one": "one task",
-  "lists.found.tasks.other": "{n} tasks"
+  "lists.found.tasks.other": "{n} tasks",
+  "soon.future": "This screen comes in a future version. Meanwhile everything is on the home screen.",
+  "soon.linkFuture": "Future version"
 }
