@@ -88,7 +88,7 @@ function setupTilt(pass) {
       pass.style.setProperty('--ty', y.toFixed(3));
       pass.style.setProperty('--gx', `${((x + 1) * 50).toFixed(1)}%`);
       pass.style.setProperty('--gy', `${((y + 1) * 50).toFixed(1)}%`);
-      pass.style.setProperty('--glare', String(glare));
+      pass.style.setProperty('--glare-o', String(glare));
     });
   };
   const follow = (e) => {
@@ -101,7 +101,7 @@ function setupTilt(pass) {
   };
   const rest = () => {
     pass.classList.remove('is-tilting');
-    set(0, 0, 0.35);
+    set(0, 0, 0);
   };
   pass.addEventListener('pointermove', (e) => { if (e.pointerType === 'mouse' || e.buttons) follow(e); });
   pass.addEventListener('pointerdown', follow);

@@ -6,205 +6,205 @@ TAP version 13
 # Subtest: translator returns value, and the key itself when missing
 ok 1 - translator returns value, and the key itself when missing
   ---
-  duration_ms: 1.749497
+  duration_ms: 1.495529
   type: 'test'
   ...
 # Subtest: resolveLocale falls back to the default locale
 ok 2 - resolveLocale falls back to the default locale
   ---
-  duration_ms: 0.167461
+  duration_ms: 0.150102
   type: 'test'
   ...
 # Subtest: validateCountry reports missing fields and bad currency codes
 ok 3 - validateCountry reports missing fields and bad currency codes
   ---
-  duration_ms: 0.689226
+  duration_ms: 0.511931
   type: 'test'
   ...
 # Subtest: buildTitle produces the Stage 0 title from config + Thailand data
 ok 4 - buildTitle produces the Stage 0 title from config + Thailand data
   ---
-  duration_ms: 0.179693
+  duration_ms: 0.200788
   type: 'test'
   ...
 # Subtest: titleParts splits the Latin brand from the localized place name
 ok 5 - titleParts splits the Latin brand from the localized place name
   ---
-  duration_ms: 0.331586
+  duration_ms: 0.13707
   type: 'test'
   ...
 # Subtest: interpolate fills {placeholders} and leaves unknown ones visible
 ok 6 - interpolate fills {placeholders} and leaves unknown ones visible
   ---
-  duration_ms: 0.295719
+  duration_ms: 0.247634
   type: 'test'
   ...
 # Subtest: contrastRatio follows the WCAG 2 formula
 ok 7 - contrastRatio follows the WCAG 2 formula
   ---
-  duration_ms: 1.321711
+  duration_ms: 1.261391
   type: 'test'
   ...
 # Subtest: parseThemes reads custom properties per theme block
 ok 8 - parseThemes reads custom properties per theme block
   ---
-  duration_ms: 0.797072
+  duration_ms: 0.760463
   type: 'test'
   ...
 # Subtest: S1: tokens.css is the only place that defines colors
 ok 9 - S1: tokens.css is the only place that defines colors
   ---
-  duration_ms: 1.932662
+  duration_ms: 1.244165
   type: 'test'
   ...
 # Subtest: S2: fonts and icons are local; no external URLs anywhere in the view
 ok 10 - S2: fonts and icons are local; no external URLs anywhere in the view
   ---
-  duration_ms: 4.129465
+  duration_ms: 2.332365
   type: 'test'
   ...
 # Subtest: S6: every text/background token pair passes WCAG AA in light and dark
 ok 11 - S6: every text/background token pair passes WCAG AA in light and dark
   ---
-  duration_ms: 1.304089
+  duration_ms: 1.418716
   type: 'test'
   ...
 # Subtest: S9: app text comes from the locale files; no placeholder copy
 ok 12 - S9: app text comes from the locale files; no placeholder copy
   ---
-  duration_ms: 0.610837
+  duration_ms: 0.712482
   type: 'test'
   ...
 # Subtest: S10: no invented dates or prices in the view or the copy
 ok 13 - S10: no invented dates or prices in the view or the copy
   ---
-  duration_ms: 0.474052
+  duration_ms: 0.566754
   type: 'test'
   ...
 # Subtest: S11: every bundled font has its license and a CREDITS.md entry
 ok 14 - S11: every bundled font has its license and a CREDITS.md entry
   ---
-  duration_ms: 0.342269
+  duration_ms: 0.269285
   type: 'test'
   ...
 # Subtest: theme-boot uses the same storage key as the app config
 ok 15 - theme-boot uses the same storage key as the app config
   ---
-  duration_ms: 0.233975
+  duration_ms: 0.335551
   type: 'test'
   ...
 # Subtest: P10: UI copy has no template chrome (middle-dot meta strings, spaced em dashes, arrows on buttons)
 ok 16 - P10: UI copy has no template chrome (middle-dot meta strings, spaced em dashes, arrows on buttons)
   ---
-  duration_ms: 0.628072
+  duration_ms: 0.681691
   type: 'test'
   ...
 # Subtest: G5: zero dependencies
 ok 17 - G5: zero dependencies
   ---
-  duration_ms: 0.661882
+  duration_ms: 0.702342
   type: 'test'
   ...
 # Subtest: G8: page is Hebrew and RTL
 ok 18 - G8: page is Hebrew and RTL
   ---
-  duration_ms: 0.418498
+  duration_ms: 0.433419
   type: 'test'
   ...
 # Subtest: G9: no external URLs (no CDN) in app code
 ok 19 - G9: no external URLs (no CDN) in app code
   ---
-  duration_ms: 1.093272
+  duration_ms: 0.792708
   type: 'test'
   ...
 # Subtest: G11: country facts live in data, not in code
 ok 20 - G11: country facts live in data, not in code
   ---
-  duration_ms: 1.119869
+  duration_ms: 1.783081
   type: 'test'
   ...
 # Subtest: G12: settings and locales are complete
 ok 21 - G12: settings and locales are complete
   ---
-  duration_ms: 1.487982
+  duration_ms: 1.412154
   type: 'test'
   ...
 # Subtest: G14 + G15: no secrets, cookies or analytics
 ok 22 - G14 + G15: no secrets, cookies or analytics
   ---
-  duration_ms: 0.612391
+  duration_ms: 0.71352
   type: 'test'
   ...
 # Subtest: G16: no prices or dates in data (Stage 0 must not invent them)
 ok 23 - G16: no prices or dates in data (Stage 0 must not invent them)
   ---
-  duration_ms: 0.438846
+  duration_ms: 0.329027
   type: 'test'
   ...
 # Subtest: todayIn returns the calendar date in the destination time zone
 ok 24 - todayIn returns the calendar date in the destination time zone
   ---
-  duration_ms: 12.803069
+  duration_ms: 13.328159
   type: 'test'
   ...
 # Subtest: daysBetween counts calendar days, across months, years and leap days
 ok 25 - daysBetween counts calendar days, across months, years and leap days
   ---
-  duration_ms: 0.300905
+  duration_ms: 0.373905
   type: 'test'
   ...
 # Subtest: tripStatus: before, first day, middle, last day, after, and no dates
 ok 26 - tripStatus: before, first day, middle, last day, after, and no dates
   ---
-  duration_ms: 0.742355
+  duration_ms: 1.060572
   type: 'test'
   ...
 # Subtest: validateDates blocks missing, impossible, reversed and overlong ranges
 ok 27 - validateDates blocks missing, impossible, reversed and overlong ranges
   ---
-  duration_ms: 0.157991
+  duration_ms: 0.282954
   type: 'test'
   ...
 # Subtest: validateBudget accepts positive amounts in an allowed currency only
 ok 28 - validateBudget accepts positive amounts in an allowed currency only
   ---
-  duration_ms: 0.25263
+  duration_ms: 0.439001
   type: 'test'
   ...
 # Subtest: budgetSummary: nothing invented; spent is the sum of recorded expenses
 ok 29 - budgetSummary: nothing invented; spent is the sum of recorded expenses
   ---
-  duration_ms: 0.214563
+  duration_ms: 0.333654
   type: 'test'
   ...
 # Subtest: setupProgress counts the two setup steps
 ok 30 - setupProgress counts the two setup steps
   ---
-  duration_ms: 0.237336
+  duration_ms: 0.2312
   type: 'test'
   ...
 # Subtest: store saves under the configured prefix and survives a reload
 ok 31 - store saves under the configured prefix and survives a reload
   ---
-  duration_ms: 0.269703
+  duration_ms: 0.395448
   type: 'test'
   ...
 # Subtest: store ignores corrupt or foreign data instead of crashing
 ok 32 - store ignores corrupt or foreign data instead of crashing
   ---
-  duration_ms: 0.291836
+  duration_ms: 0.429887
   type: 'test'
   ...
 # Subtest: store works when storage is blocked (private mode)
 ok 33 - store works when storage is blocked (private mode)
   ---
-  duration_ms: 0.351223
+  duration_ms: 0.514183
   type: 'test'
   ...
 # Subtest: store can clear one part of the trip
 ok 34 - store can clear one part of the trip
   ---
-  duration_ms: 0.200062
+  duration_ms: 0.316402
   type: 'test'
   ...
 1..34
@@ -215,4 +215,4 @@ ok 34 - store can clear one part of the trip
 # cancelled 0
 # skipped 0
 # todo 0
-# duration_ms 131.363987
+# duration_ms 139.559236

@@ -64,7 +64,7 @@
   --metal-hi: rgba(255, 255, 255, .65);
   --metal-lo: rgba(0, 0, 0, .18);
   --metal-pill: #2A2438;
-  --shine: rgba(255, 255, 255, .5);
+  --shine: rgba(255, 255, 255, .5); --shine-peak: rgba(255, 255, 255, .85);
 
   /* Aircraft window trim (cabin plastic) */
   --trim-1: #FBF8F3; --trim-2: #E7E0D3; --trim-3: #D2C8B6; --trim-4: #B4A88F;
@@ -128,7 +128,7 @@
   --metal-hi: rgba(255, 255, 255, .35);
   --metal-lo: rgba(0, 0, 0, .2);
   --metal-pill: #2A2438;
-  --shine: rgba(255, 255, 255, .35);
+  --shine: rgba(255, 255, 255, .35); --shine-peak: rgba(255, 250, 235, .6);
 
   --trim-1: #D9D1C2; --trim-2: #BDB29E; --trim-3: #A49880; --trim-4: #84785F;
   --reveal-1: #9C907A; --reveal-2: #5E5444;
