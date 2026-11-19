@@ -10,7 +10,7 @@
   --font-mono: "Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
 
   /* Type scale (rem = 16px). Body never below 1rem. */
-  --text-caption: 0.8125rem;  /* 13px: micro labels only */
+  --text-caption: 0.875rem;   /* 14px: micro labels only (QA floor) */
   --text-body: 1rem;          /* 16px */
   --text-lead: 1.125rem;      /* 18px */
   --text-h3: 1.25rem;         /* 20px */

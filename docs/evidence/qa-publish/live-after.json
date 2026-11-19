@@ -1,0 +1,320 @@
+{
+ "360-light-#/home": {
+  "h1": [
+   "תאילנד"
+  ],
+  "sw": 360,
+  "iw": 360,
+  "small": [],
+  "tiny": [],
+  "low": []
+ },
+ "360-light-#/itinerary": {
+  "h1": [
+   "מסלול"
+  ],
+  "sw": 360,
+  "iw": 360,
+  "small": [],
+  "tiny": [],
+  "low": []
+ },
+ "360-light-#/settings": {
+  "h1": [
+   "הגדרות"
+  ],
+  "sw": 360,
+  "iw": 360,
+  "small": [
+   {
+    "t": "INPUT",
+    "w": 1,
+    "h": 1
+   }
+  ],
+  "tiny": [],
+  "low": []
+ },
+ "360-light-errors": [],
+ "360-dark-#/home": {
+  "h1": [
+   "תאילנד"
+  ],
+  "sw": 360,
+  "iw": 360,
+  "small": [],
+  "tiny": [],
+  "low": []
+ },
+ "360-dark-#/itinerary": {
+  "h1": [
+   "מסלול"
+  ],
+  "sw": 360,
+  "iw": 360,
+  "small": [],
+  "tiny": [],
+  "low": []
+ },
+ "360-dark-#/settings": {
+  "h1": [
+   "הגדרות"
+  ],
+  "sw": 360,
+  "iw": 360,
+  "small": [
+   {
+    "t": "INPUT",
+    "w": 1,
+    "h": 1
+   }
+  ],
+  "tiny": [],
+  "low": []
+ },
+ "360-dark-errors": [],
+ "390-light-#/home": {
+  "h1": [
+   "תאילנד"
+  ],
+  "sw": 390,
+  "iw": 390,
+  "small": [],
+  "tiny": [],
+  "low": []
+ },
+ "390-light-#/itinerary": {
+  "h1": [
+   "מסלול"
+  ],
+  "sw": 390,
+  "iw": 390,
+  "small": [],
+  "tiny": [],
+  "low": []
+ },
+ "390-light-#/settings": {
+  "h1": [
+   "הגדרות"
+  ],
+  "sw": 390,
+  "iw": 390,
+  "small": [
+   {
+    "t": "INPUT",
+    "w": 1,
+    "h": 1
+   }
+  ],
+  "tiny": [],
+  "low": []
+ },
+ "390-light-errors": [],
+ "390-dark-#/home": {
+  "h1": [
+   "תאילנד"
+  ],
+  "sw": 390,
+  "iw": 390,
+  "small": [],
+  "tiny": [],
+  "low": []
+ },
+ "390-dark-#/itinerary": {
+  "h1": [
+   "מסלול"
+  ],
+  "sw": 390,
+  "iw": 390,
+  "small": [],
+  "tiny": [],
+  "low": []
+ },
+ "390-dark-#/settings": {
+  "h1": [
+   "הגדרות"
+  ],
+  "sw": 390,
+  "iw": 390,
+  "small": [
+   {
+    "t": "INPUT",
+    "w": 1,
+    "h": 1
+   }
+  ],
+  "tiny": [],
+  "low": []
+ },
+ "390-dark-errors": [],
+ "768-light-#/home": {
+  "h1": [
+   "תאילנד"
+  ],
+  "sw": 768,
+  "iw": 768,
+  "small": [],
+  "tiny": [],
+  "low": []
+ },
+ "768-light-#/itinerary": {
+  "h1": [
+   "מסלול"
+  ],
+  "sw": 768,
+  "iw": 768,
+  "small": [],
+  "tiny": [],
+  "low": []
+ },
+ "768-light-#/settings": {
+  "h1": [
+   "הגדרות"
+  ],
+  "sw": 768,
+  "iw": 768,
+  "small": [
+   {
+    "t": "INPUT",
+    "w": 1,
+    "h": 1
+   }
+  ],
+  "tiny": [],
+  "low": []
+ },
+ "768-light-errors": [],
+ "768-dark-#/home": {
+  "h1": [
+   "תאילנד"
+  ],
+  "sw": 768,
+  "iw": 768,
+  "small": [],
+  "tiny": [],
+  "low": []
+ },
+ "768-dark-#/itinerary": {
+  "h1": [
+   "מסלול"
+  ],
+  "sw": 768,
+  "iw": 768,
+  "small": [],
+  "tiny": [],
+  "low": []
+ },
+ "768-dark-#/settings": {
+  "h1": [
+   "הגדרות"
+  ],
+  "sw": 768,
+  "iw": 768,
+  "small": [
+   {
+    "t": "INPUT",
+    "w": 1,
+    "h": 1
+   }
+  ],
+  "tiny": [],
+  "low": []
+ },
+ "768-dark-errors": [],
+ "1280-light-#/home": {
+  "h1": [
+   "תאילנד"
+  ],
+  "sw": 1280,
+  "iw": 1280,
+  "small": [],
+  "tiny": [],
+  "low": []
+ },
+ "1280-light-#/itinerary": {
+  "h1": [
+   "מסלול"
+  ],
+  "sw": 1280,
+  "iw": 1280,
+  "small": [],
+  "tiny": [],
+  "low": []
+ },
+ "1280-light-#/settings": {
+  "h1": [
+   "הגדרות"
+  ],
+  "sw": 1280,
+  "iw": 1280,
+  "small": [
+   {
+    "t": "INPUT",
+    "w": 1,
+    "h": 1
+   }
+  ],
+  "tiny": [],
+  "low": []
+ },
+ "1280-light-errors": [],
+ "1280-dark-#/home": {
+  "h1": [
+   "תאילנד"
+  ],
+  "sw": 1280,
+  "iw": 1280,
+  "small": [],
+  "tiny": [],
+  "low": []
+ },
+ "1280-dark-#/itinerary": {
+  "h1": [
+   "מסלול"
+  ],
+  "sw": 1280,
+  "iw": 1280,
+  "small": [],
+  "tiny": [],
+  "low": []
+ },
+ "1280-dark-#/settings": {
+  "h1": [
+   "הגדרות"
+  ],
+  "sw": 1280,
+  "iw": 1280,
+  "small": [
+   {
+    "t": "INPUT",
+    "w": 1,
+    "h": 1
+   }
+  ],
+  "tiny": [],
+  "low": []
+ },
+ "1280-dark-errors": [],
+ "keyboard": [
+  "דלגו לתוכן | outline:solid 3px shadow:false",
+  "TISA, מסך הבית | outline:solid 3px shadow:false",
+  "הגדרות | outline:solid 3px shadow:true",
+  "מצב כהה | outline:solid 3px shadow:true",
+  "כרטיס הטיול. הקישו כדי | outline:solid 3px shadow:false",
+  "קבעו תאריכים | outline:solid 3px shadow:true",
+  "הגדירו תקציב | outline:solid 3px shadow:false",
+  "מסלול\n                 | outline:solid 3px shadow:true",
+  "תקציב\n                 | outline:solid 3px shadow:true",
+  "רשימות\n                | outline:solid 3px shadow:true",
+  "מסמכים\n                | outline:solid 3px shadow:true",
+  "בית | outline:solid 3px shadow:false",
+  "דלגו לתוכן\n\n  \n    \n   | outline:none 3px shadow:false",
+  "דלגו לתוכן | outline:solid 3px shadow:false"
+ ],
+ "dialogs": [
+  "dlg-dates",
+  "dlg-budget",
+  "dlg-import",
+  "dlg-reset"
+ ]
+}
