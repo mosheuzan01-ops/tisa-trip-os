@@ -509,16 +509,16 @@ body::before {
 }
 .itin-empty { display: grid; gap: var(--space-3); }
 .itin-empty p { color: var(--muted); line-height: 1.55; }
-.stops { display: grid; gap: var(--space-3); margin: 0; padding: 0; list-style: none; }
+.stops, .cal-days { display: grid; gap: var(--space-3); margin: 0; padding: 0; list-style: none; }
 .stops:empty { display: none; }
-.stop { display: grid; gap: var(--space-2); padding: var(--space-4); border-radius: var(--radius-lg); }
-.stop.is-today { border-inline-start: 4px solid var(--accent); box-shadow: 0 10px 24px -16px var(--shadow-strong); }
+.stop, .cal-day { display: grid; gap: var(--space-2); padding: var(--space-4); border-radius: var(--radius-lg); }
+.stop.is-today, .cal-day.is-today { border-inline-start: 4px solid var(--accent); box-shadow: 0 10px 24px -16px var(--shadow-strong); }
 .stop.has-warning { border-color: var(--danger); }
-.stop-head { display: flex; align-items: center; flex-wrap: wrap; gap: var(--space-2); }
+.stop-head, .cal-head { display: flex; align-items: center; flex-wrap: wrap; gap: var(--space-2); }
 .stop-num { font: 500 var(--text-caption)/1 var(--font-mono); color: var(--muted); letter-spacing: .08em; }
-.stop-name { flex: 1 1 auto; min-width: 0; font-size: var(--text-lead); font-weight: 700; color: var(--title); overflow-wrap: anywhere; }
-.stop-badge-today { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
-.stop-meta { display: flex; flex-wrap: wrap; gap: var(--space-1) var(--space-3); color: var(--ink); }
+.stop-name, .cal-date { flex: 1 1 auto; min-width: 0; font-size: var(--text-lead); font-weight: 700; color: var(--title); overflow-wrap: anywhere; }
+.stop-badge-today, .cal-badge-today { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
+.stop-meta, .cal-where { display: flex; flex-wrap: wrap; gap: var(--space-1) var(--space-3); color: var(--ink); }
 .stop-nights { color: var(--muted); }
 .stop-note { color: var(--muted); line-height: 1.5; overflow-wrap: anywhere; }
 .stop-actions { display: flex; gap: var(--space-2); justify-content: flex-end; }
@@ -781,8 +781,8 @@ body::before {
 .transfer-link:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; border-radius: var(--radius-sm); }
 .future-card { display: grid; gap: var(--space-2); border-style: dashed; }
 .itin-transfers-link { justify-self: start; }
-.stop-transfer { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-1) var(--space-2); color: var(--ink); }
-.stop-transfer .icon { width: 18px; height: 18px; color: var(--accent); }
+.stop-transfer, .cal-transfer { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-1) var(--space-2); color: var(--ink); }
+.stop-transfer .icon, .cal-transfer .icon { width: 18px; height: 18px; color: var(--accent); }
 
 /* ---------- 0.5.4: assistant (same calm cards; red only for over-budget and overdue) ---------- */
 .assistant { display: grid; gap: var(--space-4); }
@@ -800,3 +800,22 @@ body::before {
 .ast-group { display: grid; gap: var(--space-1); }
 .ast-group.is-overdue .tool-title { color: var(--danger); }
 .home-lists .btn-small + .btn-small { margin-top: calc(-1 * var(--space-1)); }
+
+/* ---------- 6.0b: calendar (the stop cards, one per day; red only for overdue tasks) ---------- */
+.calendar { display: grid; gap: var(--space-4); }
+.cal-day { scroll-margin-top: var(--space-4); }
+.cal-num { font-size: var(--text-caption); color: var(--muted); }
+.cal-where { gap: var(--space-1) var(--space-4); }
+.cal-stop { display: inline-flex; flex-wrap: wrap; gap: var(--space-1) var(--space-2); }
+.cal-stop-name { font-weight: 700; color: var(--title); overflow-wrap: anywhere; }
+.cal-icon { display: inline-flex; flex: none; }
+.cal-icon .icon { width: 18px; height: 18px; color: var(--accent); }
+.cal-task { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-1) var(--space-2); color: var(--ink); }
+.cal-task-title { overflow-wrap: anywhere; }
+.cal-task.is-overdue { color: var(--danger); font-weight: 600; }
+.cal-task.is-overdue .cal-icon .icon { color: var(--danger); }
+.cal-task.is-done .cal-task-title { color: var(--muted); text-decoration: line-through; text-decoration-color: var(--line-strong); }
+.cal-task-state { color: inherit; font-weight: 600; }
+.cal-task.is-done .cal-task-state { color: var(--muted); font-weight: 400; }
+.cal-planned { font-weight: 700; color: var(--ink); padding-top: var(--space-2); border-top: 1px solid var(--line); }
+.cal-planned.muted { font-weight: 400; color: var(--muted); }

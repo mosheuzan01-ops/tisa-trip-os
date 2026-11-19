@@ -17,6 +17,7 @@ import { parseMoney } from './core/money.js';
 import { setupLists, renderLists } from './checklist-view.js';
 import { setupTransfers, renderTransfers } from './transfers-view.js';
 import { renderAssistant } from './assistant-view.js';
+import { renderCalendar, revealToday } from './calendar-view.js';
 
 const $ = (sel, root = document) => root.querySelector(sel);
 const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
@@ -29,6 +30,7 @@ const SCREENS = {
   money: { tab: 'budget', title: 'screen.money', icon: 'i-wallet' },
   checklist: { tab: 'lists', title: 'screen.checklist', icon: 'i-list' },
   transfers: { tab: 'itinerary', title: 'screen.transfers', icon: 'i-plane' }, // opened from the itinerary; that tab stays lit
+  calendar: { tab: 'itinerary', title: 'screen.calendar', icon: 'i-calendar' }, // 6.0b, opened from the itinerary; that tab stays lit
   info: { title: 'screen.info', icon: 'i-doc', soon: true },
   assistant: { tab: 'home', title: 'screen.assistant', icon: 'i-chat' }, // opened from home; the home tab stays lit
   settings: {},
@@ -106,6 +108,7 @@ async function boot() {
     renderMoney(ctx);
     renderLists(ctx);
     renderTransfers(ctx);
+    renderCalendar(ctx);
     renderAssistant(ctx);
     renderBanners(ctx);
   };
@@ -130,7 +133,7 @@ async function boot() {
   addEventListener('online', () => renderBanners(ctx));
   addEventListener('offline', () => renderBanners(ctx));
   ctx.render();
-  setInterval(() => { renderTrip({ t, locale, country, trip: tripView(ctx) }); renderItinerary(ctx); renderMoney(ctx); renderLists(ctx); renderAssistant(ctx); }, 60_000); // keeps "today" right across midnight
+  setInterval(() => { renderTrip({ t, locale, country, trip: tripView(ctx) }); renderItinerary(ctx); renderMoney(ctx); renderLists(ctx); renderCalendar(ctx); renderAssistant(ctx); }, 60_000); // keeps "today" right across midnight
 }
 
 /** The home screen reads { dates, budget, money }. Money comes from the Stage 4 summary (whole agorot). */
@@ -418,7 +421,7 @@ function setupSheets(ctx) {
 function setupRouter(ctx) {
   const { t } = ctx;
   const tabs = $$('[role="tab"]');
-  const panels = { home: $('#panel-home'), itinerary: $('#panel-itinerary'), money: $('#panel-money'), checklist: $('#panel-checklist'), transfers: $('#panel-transfers'), assistant: $('#panel-assistant'), soon: $('#panel-soon'), settings: $('#panel-settings') };
+  const panels = { home: $('#panel-home'), itinerary: $('#panel-itinerary'), money: $('#panel-money'), checklist: $('#panel-checklist'), transfers: $('#panel-transfers'), calendar: $('#panel-calendar'), assistant: $('#panel-assistant'), soon: $('#panel-soon'), settings: $('#panel-settings') };
   const main = $('#main');
   const rtl = () => document.documentElement.dir === 'rtl';
 
@@ -461,6 +464,7 @@ function setupRouter(ctx) {
     }
     renderBanners(ctx);
     if (focus) { main.focus({ preventScroll: true }); window.scrollTo(0, 0); }
+    if (route === 'calendar') revealToday(); // the calendar opens on today while the trip is on
   }
 
   // Tabs keep keyboard focus on the tab bar (Stage 1 behavior); other links move focus to the new screen.
