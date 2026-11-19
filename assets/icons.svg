@@ -14,4 +14,8 @@
   <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></symbol>
   <symbol id="i-back" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></symbol>
   <symbol id="i-plane" viewBox="0 0 24 24"><path d="M21 4.5 3.5 11l6.2 2.3L12 19.5z"/><path d="m9.7 13.3 5.1-4.6"/></symbol>
+  <symbol id="i-gear" viewBox="0 0 24 24"><path d="m12 2.8 1.6 2.3 2.7-.7.6 2.7 2.6 1-.9 2.6 1.9 2.1-1.9 2.1.9 2.6-2.6 1-.6 2.7-2.7-.7L12 21.2l-1.6-2.3-2.7.7-.6-2.7-2.6-1 .9-2.6L3.5 12l1.9-2.1-.9-2.6 2.6-1 .6-2.7 2.7.7z"/><circle cx="12" cy="12" r="3.2"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4v11M7.5 10.5 12 15l4.5-4.5M5 19.5h14"/></symbol>
+  <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 15V4M7.5 8.5 12 4l4.5 4.5M5 19.5h14"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24"><path d="M6.5 4.5h11A2.5 2.5 0 0 1 20 7v6.5a2.5 2.5 0 0 1-2.5 2.5H11l-4.5 4v-4A2.5 2.5 0 0 1 4 13.5V7a2.5 2.5 0 0 1 2.5-2.5z"/><path d="M8.5 9.5h7M8.5 12.5h4"/></symbol>
 </svg>

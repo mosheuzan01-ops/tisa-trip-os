@@ -23,6 +23,7 @@ const TYPES = {
   '.ttf': 'font/ttf',
   '.txt': 'text/plain; charset=utf-8',
   '.ico': 'image/x-icon',
+  '.webmanifest': 'application/manifest+json',
 };
 
 const server = createServer(async (req, res) => {

@@ -1,0 +1,101 @@
+// The app's data model (one object, saved under one key) and its version migrations. Pure functions, no DOM.
+// Shape and rules are documented in docs/BACKUP_FORMAT.md; a backup file carries this same object.
+import { isIsoDate, daysBetween } from './trip.js';
+
+export const SCHEMA_VERSION = 1;
+export const DEFAULT_QUESTION_LIMIT = 50;
+export const BACKUP_REMINDER_DAYS = 7;
+
+const ARRAY_FIELDS = ['destinations', 'expenses', 'transfers', 'checklist', 'events'];
+const OBJECT_FIELDS = ['budget', 'rates', 'info', 'assistant'];
+/** Empty slots for later features, so later stages add data without changing the shape. */
+export const TRIP_FEATURE_FIELDS = ['destinations', 'expenses', 'budget', 'rates', 'transfers', 'checklist', 'events', 'info', 'assistant'];
+const THEMES = [null, 'light', 'dark'];
+
+const isObj = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
+
+export function createTrip({ makeId, countryCode, tripName }) {
+  const trip = { id: makeId(), countryCode, name: tripName, startDate: null, endDate: null };
+  for (const f of ARRAY_FIELDS) trip[f] = [];
+  for (const f of OBJECT_FIELDS) trip[f] = {};
+  return trip;
+}
+
+export function createDefaultState({ now, appVersion, makeId, countryCode, tripName, language = 'he' }) {
+  const at = now().toISOString();
+  const trip = createTrip({ makeId, countryCode, tripName });
+  return {
+    schemaVersion: SCHEMA_VERSION,
+    appVersion,
+    createdAt: at,
+    updatedAt: at,
+    settings: { language, theme: null, lastBackupAt: null, assistantQuestionLimit: DEFAULT_QUESTION_LIMIT },
+    activeTripId: trip.id,
+    trips: { [trip.id]: trip },
+  };
+}
+
+/** Problems with a state object, as short codes. Empty array = valid. */
+export function validateState(state) {
+  if (!isObj(state)) return ['state.notObject'];
+  const errors = [];
+  if (state.schemaVersion !== SCHEMA_VERSION) errors.push('schemaVersion');
+  for (const f of ['appVersion', 'createdAt', 'updatedAt']) if (typeof state[f] !== 'string') errors.push(f);
+  const s = state.settings;
+  if (!isObj(s)) errors.push('settings');
+  else {
+    if (typeof s.language !== 'string') errors.push('settings.language');
+    if (!THEMES.includes(s.theme ?? null)) errors.push('settings.theme');
+    if (s.lastBackupAt !== null && typeof s.lastBackupAt !== 'string') errors.push('settings.lastBackupAt');
+    if (!Number.isInteger(s.assistantQuestionLimit) || s.assistantQuestionLimit < 0) errors.push('settings.assistantQuestionLimit');
+  }
+  if (!isObj(state.trips)) return [...errors, 'trips'];
+  if (!(state.activeTripId in state.trips)) errors.push('activeTripId');
+  for (const [id, trip] of Object.entries(state.trips)) {
+    if (!isObj(trip) || trip.id !== id) { errors.push(`trip.${id}`); continue; }
+    if (typeof trip.countryCode !== 'string' || typeof trip.name !== 'string') errors.push(`trip.${id}.meta`);
+    for (const f of ['startDate', 'endDate']) if (trip[f] !== null && !isIsoDate(trip[f])) errors.push(`trip.${id}.${f}`);
+    if (trip.startDate && trip.endDate && daysBetween(trip.startDate, trip.endDate) < 0) errors.push(`trip.${id}.range`);
+    for (const f of ARRAY_FIELDS) if (!Array.isArray(trip[f])) errors.push(`trip.${id}.${f}`);
+    for (const f of OBJECT_FIELDS) if (!isObj(trip[f])) errors.push(`trip.${id}.${f}`);
+  }
+  return errors;
+}
+
+// One function per version step. Never delete user data; carry unknown fields over.
+const MIGRATIONS = {
+  // 0 -> 1: the Stage 1 format ("tisa:trip" { dates, budget } + "tisa:theme") becomes one versioned object.
+  0(old, opts) {
+    const next = createDefaultState(opts);
+    const trip = next.trips[next.activeTripId];
+    const { dates, budget, ...rest } = isObj(old.trip) ? old.trip : {};
+    for (const [k, v] of Object.entries(rest)) if (!(k in trip)) trip[k] = v;
+    if (isObj(dates)) {
+      if (isIsoDate(dates.start)) trip.startDate = dates.start;
+      if (isIsoDate(dates.end)) trip.endDate = dates.end;
+    }
+    if (isObj(budget)) trip.budget = { ...budget };
+    if (old.theme === 'light' || old.theme === 'dark') next.settings.theme = old.theme;
+    return next;
+  },
+};
+
+/** Bring older data up to SCHEMA_VERSION. Data that is already current is returned unchanged. */
+export function migrate(data, opts) {
+  let out = data;
+  let v = Number.isInteger(out?.schemaVersion) ? out.schemaVersion : 0;
+  while (v < SCHEMA_VERSION) {
+    const step = MIGRATIONS[v];
+    if (!step) throw new Error(`no migration from schema ${v}`);
+    out = step(out, opts);
+    v = out.schemaVersion;
+  }
+  return out;
+}
+
+/** True when no backup was made in the last 7 days (counting from install when there was never one). */
+export function needsBackupReminder(state, now) {
+  const since = state.settings?.lastBackupAt ?? state.createdAt;
+  const ms = now.getTime() - new Date(since).getTime();
+  return Number.isFinite(ms) && ms >= BACKUP_REMINDER_DAYS * 86_400_000;
+}

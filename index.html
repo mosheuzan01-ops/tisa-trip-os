@@ -6,6 +6,10 @@
   <meta name="color-scheme" content="light dark">
   <meta name="referrer" content="no-referrer">
   <title>TISA</title>
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" href="./icons/icon-192.png" type="image/png">
+  <link rel="apple-touch-icon" href="./icons/apple-touch-icon-180.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
   <script src="./src/js/theme-boot.js"></script>
   <link rel="preload" href="./assets/fonts/Heebo-VF.ttf" as="font" type="font/ttf" crossorigin>
   <link rel="stylesheet" href="./src/css/fonts.css">
@@ -18,17 +22,23 @@
 
   <div class="app">
     <header class="topbar">
-      <a class="brand" href="#home" data-i18n-label="a11y.brand" aria-label="TISA, מסך הבית">
+      <a class="brand" href="#/home" data-i18n-label="a11y.brand" aria-label="TISA, מסך הבית">
         <svg class="icon brand-mark" aria-hidden="true"><use href="./assets/icons.svg#i-mark"/></svg>
         <span class="brand-word ltr">TISA</span>
+      </a>
+      <div class="topbar-actions">
+      <a class="icon-btn settings-btn" href="#/settings" data-route="settings" data-i18n-label="settings.open" aria-label="הגדרות">
+        <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-gear"/></svg>
       </a>
       <button class="icon-btn theme-btn" type="button" aria-pressed="false" data-i18n-label="theme.toggle" aria-label="מצב כהה">
         <svg class="icon only-light" aria-hidden="true"><use href="./assets/icons.svg#i-moon"/></svg>
         <svg class="icon only-dark" aria-hidden="true"><use href="./assets/icons.svg#i-sun"/></svg>
       </button>
+      </div>
     </header>
 
     <main id="main" tabindex="-1">
+      <div class="banners" data-slot="banners" hidden></div>
       <!-- HOME -->
       <section class="panel home" data-setup="open" id="panel-home" role="tabpanel" aria-labelledby="tab-home">
         <div class="home-grid">
@@ -142,17 +152,17 @@
                   <span class="tile-name" data-i18n="tools.itinerary">מסלול</span>
                   <span class="tile-desc" data-i18n="tools.itinerary.desc">יום אחרי יום</span>
                 </button>
-                <button class="tile tile-2 dmetal" type="button" data-go="budget">
+                <button class="tile tile-2 dmetal" type="button" data-go="money">
                   <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-wallet"/></svg>
                   <span class="tile-name" data-i18n="tools.budget">תקציב</span>
                   <span class="tile-desc" data-i18n="tools.budget.desc">כמה יצא ונשאר</span>
                 </button>
-                <button class="tile tile-3 dmetal" type="button" data-go="lists">
+                <button class="tile tile-3 dmetal" type="button" data-go="checklist">
                   <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-list"/></svg>
                   <span class="tile-name" data-i18n="tools.lists">רשימות</span>
                   <span class="tile-desc" data-i18n="tools.lists.desc">אריזה ומשימות</span>
                 </button>
-                <button class="tile tile-4 dmetal" type="button" data-toast>
+                <button class="tile tile-4 dmetal" type="button" data-go="info">
                   <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-doc"/></svg>
                   <span class="tile-name" data-i18n="tools.docs">מסמכים</span>
                   <span class="tile-desc" data-i18n="tools.docs.desc">מסמכי הנסיעה</span>
@@ -170,34 +180,128 @@
           <span class="soon-icon dmetal"><svg class="icon" aria-hidden="true"><use data-slot="soon-icon" href="./assets/icons.svg#i-route"/></svg></span>
           <span class="badge" data-i18n="common.soon">בקרוב</span>
           <h1 class="soon-title" data-slot="soon-title"></h1>
-          <p class="muted" data-i18n="soon.text">המסך הזה ייבנה בשלב הבא. בינתיים הכול מחכה לכם במסך הבית.</p>
+          <p class="muted" data-slot="soon-text"></p>
           <button class="btn btn-solid metal-btn" type="button" data-go="home">
             <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-home"/></svg>
             <span data-i18n="soon.home">חזרה לבית</span>
           </button>
         </div>
+        <nav class="soon-more" aria-labelledby="soon-more-title">
+          <h2 class="section-title" id="soon-more-title" data-i18n="soon.more">מסכים שבדרך</h2>
+          <div class="soon-links" data-slot="soon-links"></div>
+        </nav>
+      </section>
+
+      <!-- SETTINGS (feature 8) -->
+      <section class="panel settings" id="panel-settings" aria-labelledby="settings-title" hidden>
+        <h1 class="display settings-title" id="settings-title" data-i18n="settings.title">הגדרות</h1>
+
+        <section class="card dmetal settings-card" aria-labelledby="set-dates-title">
+          <h2 id="set-dates-title" data-i18n="settings.dates.title">תאריכי הטיול</h2>
+          <form class="sheet-form" data-form="settings-dates" novalidate>
+            <div class="field-row">
+              <label class="field"><span data-i18n="dates.start">יציאה</span><input class="ltr" type="date" name="start" aria-describedby="set-dates-error"></label>
+              <label class="field"><span data-i18n="dates.end">חזרה</span><input class="ltr" type="date" name="end" aria-describedby="set-dates-error"></label>
+            </div>
+            <p class="sheet-hint" data-i18n="settings.dates.hint">התאריכים נשמרים בטיול.</p>
+            <p class="form-error" id="set-dates-error" role="alert"></p>
+            <button class="btn metal-btn" type="submit" data-i18n="form.save">שמירה</button>
+          </form>
+        </section>
+
+        <section class="card dmetal settings-card" aria-labelledby="set-theme-title">
+          <fieldset class="choice-group">
+            <legend id="set-theme-title" data-i18n="settings.theme.title">מראה</legend>
+            <div class="choices">
+              <label class="choice"><input type="radio" name="theme" value="system"><span data-i18n="settings.theme.system">אוטומטי</span></label>
+              <label class="choice"><input type="radio" name="theme" value="light"><span data-i18n="settings.theme.light">בהיר</span></label>
+              <label class="choice"><input type="radio" name="theme" value="dark"><span data-i18n="settings.theme.dark">כהה</span></label>
+            </div>
+          </fieldset>
+        </section>
+
+        <section class="card dmetal settings-card" aria-labelledby="set-backup-title" id="backup">
+          <h2 id="set-backup-title" data-i18n="settings.backup.title">גיבוי ושחזור</h2>
+          <p data-i18n="settings.backup.text">קובץ JSON עם כל הנתונים.</p>
+          <p class="settings-meta" data-slot="last-backup"></p>
+          <div class="settings-actions">
+            <button class="btn metal-btn" type="button" data-action="export">
+              <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-download"/></svg>
+              <span data-i18n="settings.backup.export">ייצוא גיבוי</span>
+            </button>
+            <button class="btn btn-ghost" type="button" data-action="import-pick">
+              <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-upload"/></svg>
+              <span data-i18n="settings.backup.import">ייבוא גיבוי</span>
+            </button>
+          </div>
+          <input class="sr-only" type="file" id="import-file" accept="application/json,.json" tabindex="-1" aria-hidden="true">
+          <p class="form-error" role="alert" data-slot="import-error"></p>
+        </section>
+
+        <section class="card dmetal settings-card" aria-labelledby="set-install-title">
+          <h2 id="set-install-title" data-i18n="settings.install.title">התקנה למסך הבית</h2>
+          <p data-i18n="settings.install.text">אחרי התקנה האפליקציה עובדת גם בלי קליטה.</p>
+          <p class="settings-meta" data-slot="install-done" data-i18n="settings.install.done" hidden>האפליקציה מותקנת.</p>
+          <ul class="settings-list">
+            <li data-i18n="settings.install.iphone">באייפון: Safari, שיתוף, הוספה למסך הבית.</li>
+            <li data-i18n="settings.install.android">באנדרואיד: כפתור ההתקנה.</li>
+          </ul>
+          <button class="btn metal-btn" type="button" data-slot="install-btn" hidden>
+            <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-download"/></svg>
+            <span data-i18n="settings.install.button">התקנת האפליקציה</span>
+          </button>
+        </section>
+
+        <section class="card dmetal settings-card" aria-labelledby="set-storage-title">
+          <h2 id="set-storage-title" data-i18n="settings.storage.title">שמירה במכשיר</h2>
+          <p data-slot="persist-status"></p>
+        </section>
+
+        <section class="card dmetal settings-card" aria-labelledby="set-limits-title">
+          <h2 id="set-limits-title" data-i18n="settings.limits.title">מגבלות האפליקציה</h2>
+          <ul class="settings-list">
+            <li data-i18n="settings.limits.device">הנתונים נשמרים רק במכשיר הזה.</li>
+            <li data-i18n="settings.limits.sync">אין סנכרון.</li>
+            <li data-i18n="settings.limits.encryption">הנתונים לא מוצפנים.</li>
+            <li data-i18n="settings.limits.iphone">באייפון חובה להתקין למסך הבית.</li>
+          </ul>
+        </section>
+
+        <section class="card dmetal settings-card" aria-labelledby="set-reset-title">
+          <h2 id="set-reset-title" data-i18n="settings.reset.title">התחלה מחדש</h2>
+          <p data-i18n="settings.reset.text">מוחק את כל הנתונים במכשיר הזה.</p>
+          <button class="btn btn-ghost btn-danger" type="button" data-action="reset-open" data-i18n="settings.reset.open">איפוס הנתונים</button>
+        </section>
+
+        <section class="settings-version" aria-labelledby="set-version-title">
+          <h2 class="section-title" id="set-version-title" data-i18n="settings.version.title">גרסה</h2>
+          <dl class="version-list">
+            <div><dt data-i18n="settings.version.app">גרסת האפליקציה</dt><dd class="ltr" data-slot="version-app"></dd></div>
+            <div><dt data-i18n="settings.version.schema">גרסת הנתונים</dt><dd class="ltr" data-slot="version-schema"></dd></div>
+          </dl>
+        </section>
       </section>
     </main>
 
     <nav class="tabbar dmetal" data-i18n-label="nav.label" aria-label="ניווט ראשי">
       <div class="tabbar-list" role="tablist" aria-orientation="horizontal">
-        <button class="tab" role="tab" id="tab-home" data-tab="home" aria-selected="true" aria-controls="panel-home" tabindex="0" type="button">
+        <button class="tab" role="tab" id="tab-home" data-tab="home" data-route="home" aria-selected="true" aria-controls="panel-home" tabindex="0" type="button">
           <span class="tab-chip"><svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-home"/></svg></span>
           <span data-i18n="nav.home">בית</span>
         </button>
-        <button class="tab" role="tab" id="tab-itinerary" data-tab="itinerary" data-icon="i-route" aria-selected="false" aria-controls="panel-soon" tabindex="-1" type="button">
+        <button class="tab" role="tab" id="tab-itinerary" data-tab="itinerary" data-route="itinerary" data-icon="i-route" aria-selected="false" aria-controls="panel-soon" tabindex="-1" type="button">
           <span class="tab-chip"><svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-route"/></svg></span>
           <span data-i18n="nav.itinerary">מסלול</span>
         </button>
-        <button class="tab" role="tab" id="tab-budget" data-tab="budget" data-icon="i-wallet" aria-selected="false" aria-controls="panel-soon" tabindex="-1" type="button">
+        <button class="tab" role="tab" id="tab-budget" data-tab="budget" data-route="money" data-icon="i-wallet" aria-selected="false" aria-controls="panel-soon" tabindex="-1" type="button">
           <span class="tab-chip"><svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-wallet"/></svg></span>
           <span data-i18n="nav.budget">תקציב</span>
         </button>
-        <button class="tab" role="tab" id="tab-lists" data-tab="lists" data-icon="i-list" aria-selected="false" aria-controls="panel-soon" tabindex="-1" type="button">
+        <button class="tab" role="tab" id="tab-lists" data-tab="lists" data-route="checklist" data-icon="i-list" aria-selected="false" aria-controls="panel-soon" tabindex="-1" type="button">
           <span class="tab-chip"><svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-list"/></svg></span>
           <span data-i18n="nav.lists">רשימות</span>
         </button>
-        <button class="tab" role="tab" id="tab-map" data-tab="map" data-icon="i-map" aria-selected="false" aria-controls="panel-soon" tabindex="-1" type="button">
+        <button class="tab" role="tab" id="tab-map" data-tab="map" data-route="map" data-icon="i-map" aria-selected="false" aria-controls="panel-soon" tabindex="-1" type="button">
           <span class="tab-chip"><svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-map"/></svg></span>
           <span data-i18n="nav.map">מפה</span>
         </button>
@@ -237,6 +341,40 @@
           <button class="btn btn-ghost" type="button" data-close data-i18n="form.cancel">ביטול</button>
         </div>
         <button class="link-btn" type="button" data-clear="budget" data-i18n="form.clearBudget" hidden>ניקוי התקציב</button>
+      </form>
+    </dialog>
+
+    <!-- Import: show what the file holds, replace only after an explicit yes -->
+    <dialog class="sheet dmetal" id="dlg-import" aria-labelledby="dlg-import-title" aria-describedby="dlg-import-text">
+      <div class="sheet-form">
+        <h2 id="dlg-import-title" data-i18n="import.title">ייבוא גיבוי</h2>
+        <p class="sheet-hint" id="dlg-import-text" data-i18n="import.text">הנתונים מהקובץ יחליפו את כל מה ששמור עכשיו.</p>
+        <dl class="import-summary">
+          <div><dt data-i18n="import.trip">טיול</dt><dd data-slot="import-trip"></dd></div>
+          <div><dt data-i18n="import.dates">תאריכים</dt><dd data-slot="import-dates"></dd></div>
+          <div><dt data-i18n="import.updated">עודכן לאחרונה</dt><dd data-slot="import-updated"></dd></div>
+        </dl>
+        <div class="sheet-actions">
+          <button class="btn metal-btn" type="button" data-action="import-confirm" data-i18n="import.confirm">להחליף את הנתונים</button>
+          <button class="btn btn-ghost" type="button" data-close data-i18n="form.cancel">ביטול</button>
+        </div>
+      </div>
+    </dialog>
+
+    <!-- Reset: backup offered first, then the word must be typed -->
+    <dialog class="sheet dmetal" id="dlg-reset" aria-labelledby="dlg-reset-title" aria-describedby="dlg-reset-text">
+      <form class="sheet-form" novalidate>
+        <h2 id="dlg-reset-title" data-i18n="reset.title">איפוס כל הנתונים</h2>
+        <p class="sheet-hint" id="dlg-reset-text" data-i18n="reset.text">הכול יימחק מהמכשיר הזה.</p>
+        <button class="btn btn-ghost" type="button" data-action="reset-backup">
+          <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-download"/></svg>
+          <span data-i18n="reset.backupFirst">קודם לייצא גיבוי</span>
+        </button>
+        <label class="field"><span data-slot="reset-type-label"></span><input type="text" data-slot="reset-input" autocomplete="off" autocapitalize="off" spellcheck="false"></label>
+        <div class="sheet-actions">
+          <button class="btn metal-btn btn-danger-solid" type="submit" data-action="reset-confirm" data-i18n="reset.confirm" disabled>למחוק הכול</button>
+          <button class="btn btn-ghost" type="button" data-close data-i18n="form.cancel">ביטול</button>
+        </div>
       </form>
     </dialog>
 

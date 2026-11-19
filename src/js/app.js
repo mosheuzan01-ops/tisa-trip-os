@@ -1,16 +1,40 @@
-// App entry point: wires settings, data and copy into the home screen.
-// Trip setup (dates + budget) is stored on this device only. Later-stage actions show a "next stage" note.
+// App entry point: data, navigation, settings, offline. Screens never touch storage directly;
+// they change ctx.state through ctx.change(), and the storage layer saves it after a short pause.
 import { loadConfig, loadLocale, loadCountry } from './core/load.js';
 import { createTranslator, resolveLocale, interpolate } from './core/i18n.js';
 import { buildTitle, validateCountry } from './core/country.js';
 import {
   todayIn, tripStatus, validateDates, validateBudget, parseAmount, budgetSummary, setupProgress,
 } from './core/trip.js';
-import { createStore } from './core/store.js';
+import { createStorage, browserBackend, requestPersistence, isPersisted } from './core/storage.js';
+import { needsBackupReminder } from './core/schema.js';
+import { exportBackup, parseBackup, backupFileName } from './core/backup.js';
+import { makeId } from './core/ids.js';
+import { createAutosave } from './core/autosave.js';
 
 const $ = (sel, root = document) => root.querySelector(sel);
 const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
 const ICONS = './assets/icons.svg#';
+
+// Every screen has an address (#/name). Stage numbers follow the work plan.
+const SCREENS = {
+  home: { tab: 'home' },
+  itinerary: { tab: 'itinerary', title: 'nav.itinerary', icon: 'i-route', stage: 3 },
+  money: { tab: 'budget', title: 'screen.money', icon: 'i-wallet', stage: 4 },
+  checklist: { tab: 'lists', title: 'screen.checklist', icon: 'i-list', stage: 5 },
+  transfers: { title: 'screen.transfers', icon: 'i-plane', stage: 5 },
+  info: { title: 'screen.info', icon: 'i-doc', stage: 7 },
+  assistant: { title: 'screen.assistant', icon: 'i-chat', stage: 7 },
+  map: { tab: 'map', title: 'nav.map', icon: 'i-map', stage: null },
+  settings: {},
+};
+const LEGACY_ROUTES = { budget: 'money', lists: 'checklist' }; // Stage 1 used #budget and #lists
+
+function parseRoute(hash) {
+  const m = /^#\/?([\w-]+)/.exec(hash ?? '');
+  const name = m ? (LEGACY_ROUTES[m[1]] ?? m[1]) : 'home';
+  return Object.hasOwn(SCREENS, name) ? name : 'home';
+}
 
 async function boot() {
   const config = await loadConfig();
@@ -31,35 +55,92 @@ async function boot() {
   for (const el of $$('[data-slot="country"]')) el.textContent = place;
   for (const el of $$('[data-slot="country-latin"]')) el.textContent = country.names.en ?? country.id;
 
-  setupTheme(config);
+  const prefix = config.storageKeyPrefix;
+  const storage = createStorage({
+    backend: browserBackend(),
+    key: `${prefix}v1`,
+    legacy: { trip: `${prefix}trip`, theme: `${prefix}theme` },
+    corruptPrefix: `${prefix}corrupt:`,
+    now: () => new Date(),
+    appVersion: config.appVersion,
+    makeId: () => makeId(),
+    countryCode: country.id.toUpperCase(),
+    tripName: place,
+    language: locale,
+  });
+  const loaded = storage.load();
+  const fmtLocale = country.dateFormatLocale?.[locale] ?? locale;
+  const ctx = {
+    t, locale, fmtLocale, country, config, storage,
+    state: loaded.state, status: loaded.status, lastSave: null, route: 'home', waitingWorker: null,
+  };
+  ctx.trip = () => ctx.state.trips[ctx.state.activeTripId];
+
+  const autosave = createAutosave((state) => {
+    ctx.lastSave = storage.save(state);
+    renderBanners(ctx);
+  });
+  ctx.autosave = autosave;
+  /** Change the data, redraw, and save after a short pause (or right away with { now: true }). */
+  ctx.change = (fn, { now = false } = {}) => {
+    fn(ctx.state);
+    ctx.render();
+    autosave.schedule(ctx.state);
+    if (now) autosave.flush();
+    return ctx.lastSave;
+  };
+  ctx.render = () => {
+    applyTheme(ctx.state.settings.theme);
+    renderTrip({ t, locale, country, trip: tripView(ctx.trip()) });
+    renderSettings(ctx);
+    renderBanners(ctx);
+  };
+  addEventListener('pagehide', () => autosave.flush());
+  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') autosave.flush(); });
+
+  if (loaded.status === 'migrated') ctx.lastSave = storage.save(ctx.state); // move Stage 1 data to the new key (old keys stay)
+  if (loaded.status === 'new' || loaded.status === 'migrated') requestPersistence().then(() => renderSettings(ctx));
+
+  setupTheme(ctx);
   setupPass(t);
   setupClock(country, locale, t);
-  const toast = setupToast(t);
-  const tabs = setupTabs(t);
-  for (const el of $$('[data-go]')) el.addEventListener('click', () => tabs.select(el.dataset.go, { focusPanel: true }));
-  for (const el of $$('[data-toast]')) el.addEventListener('click', () => toast('toast.next'));
-
-  let storage = null;
-  try { storage = window.localStorage; } catch { /* blocked: keep working without saving */ }
-  const store = createStore(storage, config.storageKeyPrefix);
-  const ctx = { t, locale, country, config, store, toast, trip: store.load() };
-  ctx.render = () => renderTrip(ctx);
+  ctx.toast = setupToast(t);
+  setupRouter(ctx);
   setupSheets(ctx);
+  setupSettings(ctx);
+  setupServiceWorker(ctx);
+  addEventListener('online', () => renderBanners(ctx));
+  addEventListener('offline', () => renderBanners(ctx));
   ctx.render();
-  setInterval(ctx.render, 60_000); // keeps "today" right across midnight at the destination
+  setInterval(() => renderTrip({ t, locale, country, trip: tripView(ctx.trip()) }), 60_000); // keeps "today" right across midnight
 }
 
-function setupTheme(config) {
+/** The Stage 1 home screen reads { dates, budget }; the data model keeps startDate / endDate on the trip. */
+function tripView(trip) {
+  return {
+    dates: trip.startDate && trip.endDate ? { start: trip.startDate, end: trip.endDate } : undefined,
+    budget: Number(trip.budget?.amount) > 0 && trip.budget.currency
+      ? { amount: Number(trip.budget.amount), currency: trip.budget.currency } : undefined,
+  };
+}
+
+// ---------- Theme: null = follow the device ----------
+function systemTheme() {
+  return window.matchMedia?.('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+}
+
+function applyTheme(theme) {
   const root = document.documentElement;
-  const button = $('.theme-btn');
-  const key = `${config.storageKeyPrefix}theme`;
-  const sync = () => button.setAttribute('aria-pressed', String(root.dataset.theme === 'dark'));
-  sync();
-  button.addEventListener('click', () => {
-    root.dataset.theme = root.dataset.theme === 'dark' ? 'light' : 'dark';
-    try { localStorage.setItem(key, root.dataset.theme); } catch { /* private mode: theme just won't persist */ }
-    sync();
+  root.dataset.theme = theme ?? systemTheme();
+  $('.theme-btn')?.setAttribute('aria-pressed', String(root.dataset.theme === 'dark'));
+}
+
+function setupTheme(ctx) {
+  $('.theme-btn').addEventListener('click', () => {
+    const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+    ctx.change((s) => { s.settings.theme = next; });
   });
+  window.matchMedia?.('(prefers-color-scheme: dark)').addEventListener?.('change', () => applyTheme(ctx.state.settings.theme));
 }
 
 function setupPass(t) {
@@ -84,11 +165,11 @@ function setupTilt(pass) {
   const set = (x, y, glare) => {
     cancelAnimationFrame(frame);
     frame = requestAnimationFrame(() => {
-      pass.style.setProperty('--tx', x.toFixed(3));
-      pass.style.setProperty('--ty', y.toFixed(3));
-      pass.style.setProperty('--gx', `${((x + 1) * 50).toFixed(1)}%`);
-      pass.style.setProperty('--gy', `${((y + 1) * 50).toFixed(1)}%`);
-      pass.style.setProperty('--glare-o', String(glare));
+      pass.style.setProperty('--tx-s', x.toFixed(3));
+      pass.style.setProperty('--ty-s', y.toFixed(3));
+      pass.style.setProperty('--gx-s', `${((x + 1) * 50).toFixed(1)}%`);
+      pass.style.setProperty('--gy-s', `${((y + 1) * 50).toFixed(1)}%`);
+      pass.style.setProperty('--glare-s', String(glare));
     });
   };
   const follow = (e) => {
@@ -210,11 +291,27 @@ function renderTrip({ t, locale, country, trip }) {
   }
 }
 
-// ---------- Setup sheets (native <dialog>: focus trap, Esc to close) ----------
+
+// ---------- Setup sheets on the home screen (native <dialog>: focus trap, Esc to close) ----------
+function showFormErrors(t, form, errors) {
+  form.querySelector('.form-error').textContent = errors.map((e) => t(`err.${e}`)).join(' ');
+  for (const input of form.querySelectorAll('input, select')) {
+    const bad = errors.some((e) => e.startsWith(`${input.name}.`) || (input.name === 'end' && e === 'range.tooLong'));
+    input.setAttribute('aria-invalid', String(bad));
+  }
+  form.querySelector('[aria-invalid="true"]')?.focus();
+}
+
+function wireDialog(dlg, onClose) {
+  dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); }); // tap outside the sheet
+  for (const b of dlg.querySelectorAll('[data-close]')) b.addEventListener('click', () => dlg.close());
+  dlg.addEventListener('close', onClose);
+}
+
 function setupSheets(ctx) {
   const { t, locale, country, config } = ctx;
   const city = country.timeZoneCity?.[locale] ?? country.timeZone;
-  $('[data-slot="dates-hint"]').textContent = interpolate(t('dates.hint'), { city });
+  for (const el of $$('[data-slot="dates-hint"]')) el.textContent = interpolate(t('dates.hint'), { city });
 
   const select = $('[data-slot="currency-select"]');
   const names = typeof Intl.DisplayNames === 'function' ? new Intl.DisplayNames([locale], { type: 'currency' }) : null;
@@ -228,46 +325,32 @@ function setupSheets(ctx) {
   const sheets = { dates: $('#dlg-dates'), budget: $('#dlg-budget') };
   let opener = null;
 
-  function showErrors(form, errors) {
-    form.querySelector('.form-error').textContent = errors.map((e) => t(`err.${e}`)).join(' ');
-    for (const input of form.querySelectorAll('input, select')) {
-      const bad = errors.some((e) => e.startsWith(`${input.name}.`) || (input.name === 'end' && e === 'range.tooLong'));
-      input.setAttribute('aria-invalid', String(bad));
-    }
-    form.querySelector('[aria-invalid="true"]')?.focus();
-  }
-
   function open(name, from) {
     opener = from ?? document.activeElement;
     const dlg = sheets[name];
     const form = dlg.querySelector('form');
+    const view = tripView(ctx.trip());
     form.reset();
-    showErrors(form, []);
-    if (name === 'dates' && ctx.trip.dates) {
-      form.start.value = ctx.trip.dates.start;
-      form.end.value = ctx.trip.dates.end;
+    showFormErrors(t, form, []);
+    if (name === 'dates' && view.dates) {
+      form.start.value = view.dates.start;
+      form.end.value = view.dates.end;
     }
     if (name === 'budget') {
-      form.currency.value = ctx.trip.budget?.currency ?? config.budgetCurrencies[0];
-      if (ctx.trip.budget) form.amount.value = String(ctx.trip.budget.amount);
+      form.currency.value = view.budget?.currency ?? config.budgetCurrencies[0];
+      if (view.budget) form.amount.value = String(view.budget.amount);
     }
-    dlg.querySelector('[data-clear]').hidden = !ctx.trip[name];
+    dlg.querySelector('[data-clear]').hidden = !view[name];
     dlg.showModal();
     form.querySelector('input').focus();
   }
 
-  for (const dlg of Object.values(sheets)) {
-    dlg.addEventListener('close', () => { if (opener?.isConnected) opener.focus(); });
-    dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); }); // tap outside the sheet
-    for (const b of dlg.querySelectorAll('[data-close]')) b.addEventListener('click', () => dlg.close());
-  }
+  for (const dlg of Object.values(sheets)) wireDialog(dlg, () => { if (opener?.isConnected) opener.focus(); });
 
-  function commit(next, dlg, message) {
-    ctx.trip = next;
-    const saved = ctx.store.save(next);
-    ctx.render();
+  function commit(fn, dlg, message) {
+    const result = ctx.change(fn, { now: true });
     dlg.close();
-    ctx.toast(saved ? message : 'form.saveFailed');
+    ctx.toast(result?.ok ? message : 'form.saveFailed');
   }
 
   $('[data-form="dates"]').addEventListener('submit', (e) => {
@@ -275,8 +358,8 @@ function setupSheets(ctx) {
     const form = e.currentTarget;
     const dates = { start: form.start.value, end: form.end.value };
     const errors = validateDates(dates);
-    if (errors.length) { showErrors(form, errors); return; }
-    commit({ ...ctx.trip, dates }, sheets.dates, 'toast.saved');
+    if (errors.length) { showFormErrors(t, form, errors); return; }
+    commit((s) => { const trip = s.trips[s.activeTripId]; trip.startDate = dates.start; trip.endDate = dates.end; }, sheets.dates, 'toast.saved');
   });
 
   $('[data-form="budget"]').addEventListener('submit', (e) => {
@@ -284,50 +367,87 @@ function setupSheets(ctx) {
     const form = e.currentTarget;
     const entry = { amount: form.amount.value, currency: form.currency.value };
     const errors = validateBudget(entry, config.budgetCurrencies);
-    if (errors.length) { showErrors(form, errors); return; }
-    commit({ ...ctx.trip, budget: { amount: parseAmount(entry.amount), currency: entry.currency } }, sheets.budget, 'toast.saved');
+    if (errors.length) { showFormErrors(t, form, errors); return; }
+    commit((s) => {
+      const trip = s.trips[s.activeTripId];
+      trip.budget = { ...trip.budget, amount: parseAmount(entry.amount), currency: entry.currency };
+    }, sheets.budget, 'toast.saved');
   });
 
   for (const b of $$('[data-clear]')) {
     b.addEventListener('click', () => {
-      const next = { ...ctx.trip };
-      delete next[b.dataset.clear];
-      commit(next, sheets[b.dataset.clear], 'toast.cleared');
+      const part = b.dataset.clear;
+      commit((s) => {
+        const trip = s.trips[s.activeTripId];
+        if (part === 'dates') { trip.startDate = null; trip.endDate = null; }
+        if (part === 'budget') { delete trip.budget.amount; delete trip.budget.currency; }
+      }, sheets[part], 'toast.cleared');
     });
   }
 
   for (const b of $$('[data-open]')) b.addEventListener('click', () => open(b.dataset.open, b));
 }
 
-// Accessible tabs: click, Enter/Space, arrow keys (RTL-aware), Home/End; roving tabindex; URL hash.
-function setupTabs(t) {
+// ---------- Navigation: #/screen addresses, phone Back button, refresh keeps the screen ----------
+function setupRouter(ctx) {
+  const { t } = ctx;
   const tabs = $$('[role="tab"]');
-  const home = $('#panel-home');
-  const soon = $('#panel-soon');
+  const panels = { home: $('#panel-home'), soon: $('#panel-soon'), settings: $('#panel-settings') };
   const main = $('#main');
   const rtl = () => document.documentElement.dir === 'rtl';
 
-  function select(name, { focusPanel = false, updateHash = true } = {}) {
-    const tab = tabs.find((x) => x.dataset.tab === name) ?? tabs[0];
-    for (const x of tabs) {
-      const on = x === tab;
-      x.setAttribute('aria-selected', String(on));
-      x.tabIndex = on ? 0 : -1;
-    }
-    const isHome = tab.dataset.tab === 'home';
-    home.hidden = !isHome;
-    soon.hidden = isHome;
-    if (!isHome) {
-      soon.setAttribute('aria-labelledby', tab.id);
-      $('[data-slot="soon-title"]').textContent = t(`nav.${tab.dataset.tab}`);
-      $('[data-slot="soon-icon"]').setAttribute('href', ICONS + tab.dataset.icon);
-    }
-    if (updateHash) history.replaceState(null, '', isHome ? location.pathname : `#${tab.dataset.tab}`);
-    if (focusPanel) { main.focus({ preventScroll: true }); window.scrollTo(0, 0); }
+  // Links to every screen that is not built yet, so each one is reachable from the navigation.
+  const more = $('[data-slot="soon-links"]');
+  for (const [name, screen] of Object.entries(SCREENS)) {
+    if (!screen.stage) continue;
+    const a = document.createElement('a');
+    a.className = 'soon-link';
+    a.href = `#/${name}`;
+    a.dataset.route = name;
+    a.innerHTML = `<svg class="icon" aria-hidden="true"><use href="${ICONS}${screen.icon}"/></svg><span></span><span class="soon-link-stage"></span>`;
+    a.querySelector('span').textContent = t(screen.title);
+    a.querySelector('.soon-link-stage').textContent = interpolate(t('soon.linkStage'), { n: screen.stage });
+    more.append(a);
   }
 
+  function show(route, { focus = true } = {}) {
+    ctx.route = route;
+    const screen = SCREENS[route];
+    const kind = route === 'home' || route === 'settings' ? route : 'soon';
+    for (const [name, panel] of Object.entries(panels)) panel.hidden = name !== kind;
+    const activeTab = tabs.find((x) => x.dataset.tab === screen.tab);
+    for (const x of tabs) {
+      const on = x === activeTab;
+      x.setAttribute('aria-selected', String(on));
+      x.tabIndex = on || (!activeTab && x === tabs[0]) ? 0 : -1;
+      if (on) x.setAttribute('aria-current', 'page'); else x.removeAttribute('aria-current');
+    }
+    for (const el of $$('[data-route]')) {
+      if (el.dataset.route === route) el.setAttribute('aria-current', 'page'); else el.removeAttribute('aria-current');
+    }
+    if (kind === 'soon') {
+      if (activeTab) panels.soon.setAttribute('aria-labelledby', activeTab.id); else panels.soon.removeAttribute('aria-labelledby');
+      panels.soon.setAttribute('aria-label', t(screen.title));
+      $('[data-slot="soon-title"]').textContent = t(screen.title);
+      $('[data-slot="soon-icon"]').setAttribute('href', ICONS + screen.icon);
+      $('[data-slot="soon-text"]').textContent = screen.stage ? interpolate(t('soon.stage'), { n: screen.stage }) : t('soon.notPlanned');
+      for (const a of $$('.soon-link', more)) a.hidden = a.dataset.route === route;
+    }
+    renderBanners(ctx);
+    if (focus) { main.focus({ preventScroll: true }); window.scrollTo(0, 0); }
+  }
+
+  // Tabs keep keyboard focus on the tab bar (Stage 1 behavior); other links move focus to the new screen.
+  let focusNext = true;
+  const go = (route, { focusMain = true } = {}) => {
+    focusNext = focusMain;
+    if (location.hash === `#/${route}`) { show(route, { focus: focusMain }); return; }
+    location.hash = `#/${route}`; // a new history entry, so the phone's Back button returns here
+  };
+  ctx.go = go;
+
   for (const tab of tabs) {
-    tab.addEventListener('click', () => select(tab.dataset.tab));
+    tab.addEventListener('click', () => go(parseRoute(`#${tab.dataset.route}`), { focusMain: false }));
     tab.addEventListener('keydown', (e) => {
       const i = tabs.indexOf(tab);
       const step = { ArrowLeft: rtl() ? 1 : -1, ArrowRight: rtl() ? -1 : 1, ArrowDown: 1, ArrowUp: -1 }[e.key];
@@ -341,12 +461,250 @@ function setupTabs(t) {
       next.focus();
     });
   }
+  for (const el of $$('[data-go]')) el.addEventListener('click', () => go(el.dataset.go));
+  $('.brand').addEventListener('click', (e) => { e.preventDefault(); go('home'); });
 
-  $('.brand').addEventListener('click', (e) => { e.preventDefault(); select('home', { focusPanel: true }); });
-  const fromHash = () => select(location.hash.slice(1) || 'home', { updateHash: false });
-  window.addEventListener('hashchange', fromHash);
-  fromHash();
-  return { select };
+  window.addEventListener('hashchange', () => {
+    const route = parseRoute(location.hash);
+    if (location.hash !== `#/${route}`) history.replaceState(null, '', `#/${route}`); // old #budget links, typos
+    show(route, { focus: focusNext });
+    focusNext = true;
+  });
+  const first = parseRoute(location.hash);
+  if (location.hash !== `#/${first}`) history.replaceState(null, '', `#/${first}`); // tidy old or empty addresses
+  show(first, { focus: false });
+}
+
+// ---------- Banners: storage problems, update, offline, backup reminder ----------
+function renderBanners(ctx) {
+  const box = $('[data-slot="banners"]');
+  if (!box) return;
+  const { t, storage, status } = ctx;
+  const list = [];
+  if (status === 'corrupt' && storage.mode === 'readonly') {
+    list.push({ kind: 'warn', text: t('banner.corrupt'), actions: [['banner.importAction', 'import'], ['banner.resetAction', 'reset']] });
+  } else if (status === 'future' && storage.mode === 'readonly') {
+    list.push({ kind: 'warn', text: t('banner.future'), actions: [] });
+  } else if (storage.mode === 'unavailable' || ctx.lastSave?.reason === 'unavailable') {
+    list.push({ kind: 'warn', text: t('banner.storageOff'), actions: [] });
+  } else if (ctx.lastSave?.reason === 'quota') {
+    list.push({ kind: 'warn', text: t('banner.storageFull'), actions: [['banner.backupAction', 'export']] });
+  }
+  if (ctx.waitingWorker) list.push({ kind: 'info', text: t('banner.update'), actions: [['banner.updateAction', 'update']] });
+  if (navigator.onLine === false) list.push({ kind: 'info', text: t('banner.offline'), actions: [] });
+  if (ctx.route === 'home' && storage.mode === 'ok' && needsBackupReminder(ctx.state, new Date())) {
+    list.push({ kind: 'soft', text: t('banner.backup'), actions: [['banner.backupAction', 'export']] });
+  }
+  const key = JSON.stringify(list);
+  if (box.dataset.key === key) return; // nothing changed: keep focus and screen-reader state
+  box.dataset.key = key;
+  box.replaceChildren(...list.map((b) => {
+    const el = document.createElement('div');
+    el.className = `banner banner-${b.kind}`;
+    el.setAttribute('role', b.kind === 'warn' ? 'alert' : 'status');
+    const p = document.createElement('p');
+    p.textContent = b.text;
+    el.append(p);
+    if (b.actions.length) {
+      const row = document.createElement('div');
+      row.className = 'banner-actions';
+      for (const [label, action] of b.actions) {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'banner-btn';
+        btn.dataset.action = action;
+        btn.textContent = t(label);
+        row.append(btn);
+      }
+      el.append(row);
+    }
+    return el;
+  }));
+  box.hidden = list.length === 0;
+}
+
+// ---------- Settings (feature 8): dates, theme, backup, import, reset, install, limits, version ----------
+function formatStamp(iso, locale) {
+  return new Intl.DateTimeFormat(locale, { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' }).format(new Date(iso));
+}
+
+function renderSettings(ctx) {
+  const { t, state, fmtLocale } = ctx;
+  const panel = $('#panel-settings');
+  if (!panel) return;
+  const trip = ctx.trip();
+  const form = $('[data-form="settings-dates"]');
+  if (document.activeElement?.form !== form) {
+    form.start.value = trip.startDate ?? '';
+    form.end.value = trip.endDate ?? '';
+  }
+  const theme = state.settings.theme ?? 'system';
+  for (const r of $$('input[name="theme"]', panel)) r.checked = r.value === theme;
+  $('[data-slot="last-backup"]').textContent = state.settings.lastBackupAt
+    ? interpolate(t('settings.backup.last'), { date: formatStamp(state.settings.lastBackupAt, fmtLocale) })
+    : t('settings.backup.never');
+  $('[data-slot="version-app"]').textContent = ctx.config.appVersion;
+  $('[data-slot="version-schema"]').textContent = String(state.schemaVersion);
+  const installed = window.matchMedia?.('(display-mode: standalone)').matches || navigator.standalone === true;
+  $('[data-slot="install-done"]').hidden = !installed;
+  $('[data-slot="install-btn"]').hidden = installed || !ctx.installPrompt;
+  const persistEl = $('[data-slot="persist-status"]');
+  if (ctx.storage.mode === 'unavailable') persistEl.textContent = t('settings.storage.off');
+  else {
+    isPersisted().then((p) => {
+      persistEl.textContent = t(p === true ? 'settings.storage.persisted' : p === false ? 'settings.storage.notPersisted' : 'settings.storage.unknown');
+    });
+  }
+}
+
+function downloadBackup(ctx) {
+  const now = new Date();
+  const text = JSON.stringify(exportBackup(ctx.state, now), null, 2);
+  const url = URL.createObjectURL(new Blob([text], { type: 'application/json' }));
+  const a = Object.assign(document.createElement('a'), { href: url, download: backupFileName(now) });
+  document.body.append(a);
+  a.click();
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 2000);
+  ctx.change((s) => { s.settings.lastBackupAt = now.toISOString(); }, { now: true });
+  ctx.toast('backup.done');
+}
+
+function setupSettings(ctx) {
+  const { t, config } = ctx;
+  const panel = $('#panel-settings');
+  const word = t('reset.word');
+  $('[data-slot="reset-type-label"]').textContent = interpolate(t('reset.typeLabel'), { word });
+
+  // Dates
+  const datesForm = $('[data-form="settings-dates"]');
+  datesForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const dates = { start: datesForm.start.value, end: datesForm.end.value };
+    const errors = validateDates(dates);
+    if (errors.length) { showFormErrors(t, datesForm, errors); return; }
+    showFormErrors(t, datesForm, []);
+    const result = ctx.change((s) => { const trip = s.trips[s.activeTripId]; trip.startDate = dates.start; trip.endDate = dates.end; }, { now: true });
+    ctx.toast(result?.ok ? 'toast.saved' : 'form.saveFailed');
+  });
+
+  // Theme
+  for (const r of $$('input[name="theme"]', panel)) {
+    r.addEventListener('change', () => ctx.change((s) => { s.settings.theme = r.value === 'system' ? null : r.value; }));
+  }
+
+  // Import: check the file, show what it holds, and replace only after an explicit yes.
+  const fileInput = $('#import-file');
+  const importError = $('[data-slot="import-error"]');
+  const dlgImport = $('#dlg-import');
+  let pending = null;
+  let opener = null;
+  wireDialog(dlgImport, () => { pending = null; fileInput.value = ''; if (opener?.isConnected) opener.focus(); });
+  const pickFile = () => { importError.textContent = ''; fileInput.click(); };
+  $('[data-action="import-pick"]').addEventListener('click', pickFile);
+  fileInput.addEventListener('change', async () => {
+    const file = fileInput.files?.[0];
+    if (!file) return;
+    let text;
+    try { text = await file.text(); } catch { importError.textContent = t('import.err.read'); return; }
+    const opts = { now: () => new Date(), appVersion: config.appVersion, makeId: () => makeId(), countryCode: ctx.country.id.toUpperCase(), tripName: ctx.trip().name };
+    const result = parseBackup(text, opts);
+    if (!result.ok) {
+      importError.textContent = interpolate(t(`import.err.${result.error}`), { app: config.appName });
+      fileInput.value = '';
+      return;
+    }
+    pending = result;
+    const s = result.summary;
+    $('[data-slot="import-trip"]').textContent = s.tripName;
+    $('[data-slot="import-dates"]').textContent = s.startDate && s.endDate
+      ? `${formatDay(s.startDate, ctx.fmtLocale, { day: 'numeric', month: 'short', year: 'numeric' })} – ${formatDay(s.endDate, ctx.fmtLocale, { day: 'numeric', month: 'short', year: 'numeric' })}`
+      : t('import.noDates');
+    $('[data-slot="import-updated"]').textContent = formatStamp(s.updatedAt, ctx.fmtLocale);
+    opener = $('[data-action="import-pick"]');
+    dlgImport.showModal();
+    $('[data-action="import-confirm"]').focus();
+  });
+  $('[data-action="import-confirm"]').addEventListener('click', () => {
+    if (!pending) return;
+    ctx.state = pending.state;
+    ctx.status = 'ok';
+    ctx.lastSave = ctx.storage.replace(ctx.state);
+    dlgImport.close();
+    ctx.render();
+    ctx.toast(ctx.lastSave.ok ? 'import.done' : 'form.saveFailed');
+  });
+
+  // Reset: typed confirmation, with a backup offered first.
+  const dlgReset = $('#dlg-reset');
+  const resetInput = $('[data-slot="reset-input"]');
+  const resetConfirm = $('[data-action="reset-confirm"]');
+  let resetOpener = null;
+  wireDialog(dlgReset, () => { resetInput.value = ''; resetConfirm.disabled = true; if (resetOpener?.isConnected) resetOpener.focus(); });
+  const openReset = (from) => { resetOpener = from; resetConfirm.disabled = true; dlgReset.showModal(); resetInput.focus(); };
+  $('[data-action="reset-open"]').addEventListener('click', (e) => openReset(e.currentTarget));
+  resetInput.addEventListener('input', () => { resetConfirm.disabled = resetInput.value.trim() !== word; });
+  $('[data-action="reset-backup"]').addEventListener('click', () => downloadBackup(ctx));
+  dlgReset.querySelector('form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (resetInput.value.trim() !== word) return;
+    const { state, result } = ctx.storage.reset();
+    ctx.state = state;
+    ctx.status = 'ok';
+    ctx.lastSave = result;
+    dlgReset.close();
+    ctx.render();
+    ctx.toast('reset.done');
+  });
+
+  $('[data-action="export"]').addEventListener('click', () => downloadBackup(ctx));
+
+  // Banner buttons (rendered later) use one delegated handler.
+  $('[data-slot="banners"]').addEventListener('click', (e) => {
+    const action = e.target.closest('[data-action]')?.dataset.action;
+    if (action === 'export') downloadBackup(ctx);
+    if (action === 'import') { ctx.go('settings'); pickFile(); }
+    if (action === 'reset') openReset(e.target);
+    if (action === 'update' && ctx.waitingWorker) {
+      ctx.autosave.flush();
+      ctx.updating = true;
+      ctx.waitingWorker.postMessage({ type: 'SKIP_WAITING' });
+    }
+  });
+
+  // Install (Android / desktop Chrome offer a prompt; iPhone uses Safari's Share menu).
+  addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    ctx.installPrompt = e;
+    renderSettings(ctx);
+  });
+  addEventListener('appinstalled', () => { ctx.installPrompt = null; renderSettings(ctx); });
+  $('[data-slot="install-btn"]').addEventListener('click', async () => {
+    const prompt = ctx.installPrompt;
+    if (!prompt) return;
+    ctx.installPrompt = null;
+    await prompt.prompt();
+    renderSettings(ctx);
+  });
+}
+
+// ---------- Offline: service worker with a precached copy; a new version waits until the user agrees ----------
+function setupServiceWorker(ctx) {
+  if (!('serviceWorker' in navigator)) return;
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    if (ctx.updating) location.reload(); // only after "Update"; the first install must not reload the page
+  });
+  navigator.serviceWorker.register('./sw.js').then((reg) => {
+    const offer = (worker) => { ctx.waitingWorker = worker; renderBanners(ctx); };
+    if (reg.waiting && navigator.serviceWorker.controller) offer(reg.waiting);
+    reg.addEventListener('updatefound', () => {
+      const worker = reg.installing;
+      worker?.addEventListener('statechange', () => {
+        if (worker.state === 'installed' && navigator.serviceWorker.controller) offer(worker);
+      });
+    });
+    document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') reg.update().catch(() => {}); });
+  }).catch((error) => console.warn('[TISA] offline mode unavailable:', error.message));
 }
 
 boot().catch((error) => {
