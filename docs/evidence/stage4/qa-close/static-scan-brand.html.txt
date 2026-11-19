@@ -1,0 +1,21 @@
+PASS  | a11y   | html lang=he
+PASS  | mobile | dir=rtl
+PASS  | mobile | viewport meta
+PASS  | seo    | title length 17
+PASS  | seo    | meta description length 96
+PASS  | seo    | h1 count 1
+PASS  | seo    | og:title
+PASS  | seo    | og:description
+PASS  | seo    | og:image
+PASS  | seo    | favicon
+PASS  | a11y   | images without alt: 0 []
+PASS  | speed  | images below the fold without loading=lazy: 0
+PASS  | speed  | images without width/height (layout shift): 0
+INFO  | links  | 0 external links to check online: []
+PASS  | a11y   | inputs without label: 0
+PASS  | a11y   | clickable div/span (use button/a): 0
+WARN  | a11y   | prefers-reduced-motion handled
+PASS  | speed  | Tailwind Play CDN in use (fine for prototypes; for a public launch consider a built CSS file)
+PASS  | speed  | web font families: 0
+PASS  | speed  | font-display swap
+PASS  | speed  | HTML size 6KB
