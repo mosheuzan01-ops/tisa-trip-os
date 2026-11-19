@@ -1,0 +1,39 @@
+$ ls -a
+.
+..
+.git
+.gitignore
+GOALS.md
+README.md
+SESSION_0_SUMMARY.md
+config
+data
+docs
+index.html
+locales
+package.json
+scripts
+src
+tests
+
+$ ls -d */
+config/
+data/
+docs/
+locales/
+scripts/
+src/
+tests/
+
+$ git check-ignore -v .env node_modules/x
+.gitignore:2:.env	.env
+.gitignore:7:node_modules/	node_modules/x
+
+$ git log --oneline
+0d0fa71 chore: Stage 0 setup - structure, docs, tests, skeleton page
+
+$ git remote -v  (empty = no remote)
+(end)
+
+$ ls node_modules
+ls: cannot access 'node_modules': No such file or directory

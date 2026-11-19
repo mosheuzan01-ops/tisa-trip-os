@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="he" dir="rtl" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <meta name="referrer" content="no-referrer">
+  <title>TISA</title>
+  <script src="./src/js/theme-boot.js"></script>
+  <link rel="preload" href="./assets/fonts/Heebo-VF.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="stylesheet" href="./src/css/fonts.css">
+  <link rel="stylesheet" href="./src/css/tokens.css">
+  <link rel="stylesheet" href="./src/css/main.css">
+  <script type="module" src="./src/js/app.js"></script>
+</head>
+<body>
+  <a class="skip" href="#main" data-i18n="a11y.skip">דלגו לתוכן</a>
+
+  <div class="app">
+    <header class="topbar">
+      <a class="brand" href="#home" data-i18n-label="a11y.brand" aria-label="TISA, מסך הבית">
+        <svg class="icon brand-mark" aria-hidden="true"><use href="./assets/icons.svg#i-mark"/></svg>
+        <span class="brand-word ltr">TISA</span>
+      </a>
+      <button class="icon-btn theme-btn" type="button" aria-pressed="false" data-i18n-label="theme.toggle" aria-label="מצב כהה">
+        <svg class="icon only-light" aria-hidden="true"><use href="./assets/icons.svg#i-moon"/></svg>
+        <svg class="icon only-dark" aria-hidden="true"><use href="./assets/icons.svg#i-sun"/></svg>
+      </button>
+    </header>
+
+    <main id="main" tabindex="-1">
+      <!-- HOME -->
+      <section class="panel home" data-setup="open" id="panel-home" role="tabpanel" aria-labelledby="tab-home">
+        <div class="home-grid">
+          <div class="col">
+            <div class="hero">
+              <p class="eyebrow" data-i18n="home.eyebrow">הטיול הבא שלכם</p>
+              <h1 class="display" data-slot="country"></h1>
+            </div>
+
+            <button class="pass" type="button" aria-pressed="false" data-i18n-label="pass.flipLabel" aria-label="כרטיס הטיול. הקישו כדי לראות את התקציב">
+              <span class="pass-inner">
+                <!-- Front: platinum-gold trip pass with an aircraft window -->
+                <span class="face front metal">
+                  <span class="porthole" aria-hidden="true">
+                    <span class="porthole-reveal">
+                      <span class="porthole-pane">
+                        <svg class="scene" viewBox="70 38 112 168" preserveAspectRatio="xMidYMid slice" focusable="false">
+                          <defs>
+                            <linearGradient id="g-sky" x1="0" x2="0" y1="0" y2="1"><stop class="st-sky1" offset="0"/><stop class="st-sky2" offset=".45"/><stop class="st-sky3" offset=".8"/><stop class="st-sky4" offset="1"/></linearGradient>
+                            <linearGradient id="g-sea" x1="0" x2="0" y1="0" y2="1"><stop class="st-sea1" offset="0"/><stop class="st-sea2" offset=".35"/><stop class="st-sea3" offset="1"/></linearGradient>
+                            <radialGradient id="g-sun"><stop class="st-sun-core" offset="0"/><stop class="st-sun-glow" offset=".35"/><stop class="st-sun-fade" offset="1"/></radialGradient>
+                            <linearGradient id="g-rock" x1="0" x2="1"><stop class="st-rock1" offset="0"/><stop class="st-rock2" offset=".75"/><stop class="st-rock3" offset="1"/></linearGradient>
+                            <linearGradient id="g-rim" x1="0" x2="0" y1="0" y2="1"><stop class="st-rim" offset="0"/><stop class="st-rim-fade" offset="1"/></linearGradient>
+                          </defs>
+                          <rect width="350" height="132" fill="url(#g-sky)"/>
+                          <circle cx="160" cy="130" r="70" fill="url(#g-sun)" opacity=".75"/>
+                          <circle class="f-sun" cx="160" cy="131" r="13"/>
+                          <path class="f-islands" d="M214 132c2-10 5-14 8-14s4 4 6 6c2-6 5-9 8-9 4 0 5 8 6 17zM262 132c1-6 3-9 5-9s3 3 4 9z"/>
+                          <rect y="131" width="350" height="75" fill="url(#g-sea)"/>
+                          <g class="f-glint">
+                            <rect x="146" y="135" width="28" height="1.6" rx=".8" opacity=".9"/><rect x="141" y="140" width="38" height="1.6" rx=".8" opacity=".75"/>
+                            <rect x="150" y="146" width="22" height="1.6" rx=".8" opacity=".7"/><rect x="136" y="152" width="46" height="1.6" rx=".8" opacity=".5"/>
+                            <rect x="148" y="159" width="28" height="1.6" rx=".8" opacity=".45"/><rect x="132" y="167" width="52" height="1.6" rx=".8" opacity=".3"/>
+                            <rect x="152" y="176" width="20" height="1.6" rx=".8" opacity=".3"/><rect x="128" y="186" width="58" height="1.6" rx=".8" opacity=".2"/>
+                          </g>
+                          <path d="M0 206V40c10-10 22-14 34-10 10 3 16 0 26 6 12 7 14 20 22 30 9 12 4 22 10 34 6 12 14 18 12 32-2 12-8 18-6 30 1 10 6 16 10 24z" fill="url(#g-rock)"/>
+                          <path d="M60 36c12 7 14 20 22 30 9 12 4 22 10 34 6 12 14 18 12 32" fill="none" stroke="url(#g-rim)" stroke-width="1.6" opacity=".85"/>
+                          <path class="s-foam" d="M96 192c8-2 14 1 22-1" fill="none" stroke-width="1.2" opacity=".35"/>
+                        </svg>
+                        <span class="porthole-shade"><span class="porthole-grip"></span></span>
+                        <span class="porthole-hole"></span>
+                      </span>
+                    </span>
+                  </span>
+                  <span class="pass-name">
+                    <span class="pass-latin ltr" data-slot="country-latin"></span>
+                    <span class="pass-dates ltr" data-slot="pass-dates" hidden></span>
+                  </span>
+                  <span class="chip-btn on-metal">
+                    <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-flip"/></svg>
+                    <span data-i18n="pass.hint">הקישו לתקציב</span>
+                  </span>
+                </span>
+
+                <!-- Back: budget (empty until the traveler sets it; nothing invented) -->
+                <span class="face back metal">
+                  <span class="back-title" data-i18n="budget.title">תקציב הטיול</span>
+                  <span class="back-empty" data-i18n="budget.empty" data-slot="budget-empty">עוד לא הוגדר</span>
+                  <span class="kpis">
+                    <span class="kpi"><span class="kpi-label" data-i18n="budget.total">תקציב</span><span class="kpi-value" data-slot="kpi-total">—</span></span>
+                    <span class="kpi"><span class="kpi-label" data-i18n="budget.spent">הוצא</span><span class="kpi-value" data-slot="kpi-spent">—</span></span>
+                    <span class="kpi"><span class="kpi-label" data-i18n="budget.left">נשאר</span><span class="kpi-value" data-slot="kpi-left">—</span></span>
+                  </span>
+                  <span class="chip-btn on-metal">
+                    <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-flip"/></svg>
+                    <span data-i18n="budget.back">חזרה לכרטיס</span>
+                  </span>
+                </span>
+              </span>
+            </button>
+
+            <section class="card today dmetal" aria-labelledby="today-title">
+              <div class="card-head">
+                <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-clock"/></svg>
+                <h2 id="today-title" data-i18n="today.title.unset" data-slot="today-title">מה מחכה לכם</h2>
+              </div>
+              <p class="today-status" data-slot="today-status" hidden></p>
+              <p class="today-time"><span class="clock ltr" data-slot="clock">--:--</span><span class="today-where" data-slot="clock-label"></span></p>
+              <p class="muted" data-i18n="today.empty" data-slot="today-sub">כשתקבעו תאריכים, כאן יופיע מה מחכה לכם היום.</p>
+            </section>
+          </div>
+
+          <div class="col">
+            <section class="card setup dmetal" aria-labelledby="setup-title">
+              <div class="setup-head">
+                <h2 id="setup-title" data-i18n="setup.title">הקמת הטיול</h2>
+                <span class="setup-count ltr" data-slot="setup-count">0 / 2</span>
+              </div>
+              <span class="progress" aria-hidden="true"><span class="progress-fill" data-slot="setup-fill"></span></span>
+              <p data-i18n="setup.text" data-slot="setup-text">שני צעדים קטנים, והמסך הזה מתחיל לעבוד בשבילכם.</p>
+              <div class="setup-actions">
+                <button class="btn btn-solid metal-btn" type="button" data-open="dates" data-step="dates">
+                  <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-calendar"/></svg>
+                  <span data-i18n="setup.dates" data-label-set="setup.datesEdit">קבעו תאריכים</span>
+                </button>
+                <button class="btn btn-ghost" type="button" data-open="budget" data-step="budget">
+                  <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-wallet"/></svg>
+                  <span data-i18n="setup.budget" data-label-set="setup.budgetEdit">הגדירו תקציב</span>
+                </button>
+              </div>
+            </section>
+
+            <section class="tools" aria-labelledby="tools-title">
+              <div class="tools-head">
+                <h2 id="tools-title" class="section-title" data-i18n="tools.title">הכלים שלכם</h2>
+                <p class="tools-note" data-i18n="tools.note">ייפתחו בשלבים הבאים</p>
+              </div>
+              <div class="tiles">
+                <button class="tile tile-1 dmetal" type="button" data-go="itinerary">
+                  <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-route"/></svg>
+                  <span class="tile-name" data-i18n="tools.itinerary">מסלול</span>
+                  <span class="tile-desc" data-i18n="tools.itinerary.desc">יום אחרי יום</span>
+                </button>
+                <button class="tile tile-2 dmetal" type="button" data-go="budget">
+                  <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-wallet"/></svg>
+                  <span class="tile-name" data-i18n="tools.budget">תקציב</span>
+                  <span class="tile-desc" data-i18n="tools.budget.desc">כמה יצא ונשאר</span>
+                </button>
+                <button class="tile tile-3 dmetal" type="button" data-go="lists">
+                  <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-list"/></svg>
+                  <span class="tile-name" data-i18n="tools.lists">רשימות</span>
+                  <span class="tile-desc" data-i18n="tools.lists.desc">אריזה ומשימות</span>
+                </button>
+                <button class="tile tile-4 dmetal" type="button" data-toast>
+                  <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-doc"/></svg>
+                  <span class="tile-name" data-i18n="tools.docs">מסמכים</span>
+                  <span class="tile-desc" data-i18n="tools.docs.desc">מסמכי הנסיעה</span>
+                </button>
+              </div>
+            </section>
+          </div>
+        </div>
+        <p class="footnote" data-i18n="app.stage">גרסה ניסיונית</p>
+      </section>
+
+      <!-- Placeholder for the tabs that are not built yet -->
+      <section class="panel soon" id="panel-soon" role="tabpanel" hidden>
+        <div class="soon-box">
+          <span class="soon-icon dmetal"><svg class="icon" aria-hidden="true"><use data-slot="soon-icon" href="./assets/icons.svg#i-route"/></svg></span>
+          <span class="badge" data-i18n="common.soon">בקרוב</span>
+          <h1 class="soon-title" data-slot="soon-title"></h1>
+          <p class="muted" data-i18n="soon.text">המסך הזה ייבנה בשלב הבא. בינתיים הכול מחכה לכם במסך הבית.</p>
+          <button class="btn btn-solid metal-btn" type="button" data-go="home">
+            <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-home"/></svg>
+            <span data-i18n="soon.home">חזרה לבית</span>
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <nav class="tabbar dmetal" data-i18n-label="nav.label" aria-label="ניווט ראשי">
+      <div class="tabbar-list" role="tablist" aria-orientation="horizontal">
+        <button class="tab" role="tab" id="tab-home" data-tab="home" aria-selected="true" aria-controls="panel-home" tabindex="0" type="button">
+          <span class="tab-chip"><svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-home"/></svg></span>
+          <span data-i18n="nav.home">בית</span>
+        </button>
+        <button class="tab" role="tab" id="tab-itinerary" data-tab="itinerary" data-icon="i-route" aria-selected="false" aria-controls="panel-soon" tabindex="-1" type="button">
+          <span class="tab-chip"><svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-route"/></svg></span>
+          <span data-i18n="nav.itinerary">מסלול</span>
+        </button>
+        <button class="tab" role="tab" id="tab-budget" data-tab="budget" data-icon="i-wallet" aria-selected="false" aria-controls="panel-soon" tabindex="-1" type="button">
+          <span class="tab-chip"><svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-wallet"/></svg></span>
+          <span data-i18n="nav.budget">תקציב</span>
+        </button>
+        <button class="tab" role="tab" id="tab-lists" data-tab="lists" data-icon="i-list" aria-selected="false" aria-controls="panel-soon" tabindex="-1" type="button">
+          <span class="tab-chip"><svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-list"/></svg></span>
+          <span data-i18n="nav.lists">רשימות</span>
+        </button>
+        <button class="tab" role="tab" id="tab-map" data-tab="map" data-icon="i-map" aria-selected="false" aria-controls="panel-soon" tabindex="-1" type="button">
+          <span class="tab-chip"><svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-map"/></svg></span>
+          <span data-i18n="nav.map">מפה</span>
+        </button>
+      </div>
+    </nav>
+
+
+    <!-- Trip setup dialogs (data stays on this device) -->
+    <dialog class="sheet dmetal" id="dlg-dates" aria-labelledby="dlg-dates-title">
+      <form class="sheet-form" data-form="dates" novalidate>
+        <h2 id="dlg-dates-title" data-i18n="dates.title">תאריכי הטיול</h2>
+        <div class="field-row">
+          <label class="field"><span data-i18n="dates.start">יציאה</span><input class="ltr" type="date" name="start" aria-describedby="dates-error"></label>
+          <label class="field"><span data-i18n="dates.end">חזרה</span><input class="ltr" type="date" name="end" aria-describedby="dates-error"></label>
+        </div>
+        <p class="sheet-hint" data-slot="dates-hint"></p>
+        <p class="form-error" id="dates-error" role="alert" data-slot="dates-error"></p>
+        <div class="sheet-actions">
+          <button class="btn metal-btn" type="submit" data-i18n="form.save">שמירה</button>
+          <button class="btn btn-ghost" type="button" data-close data-i18n="form.cancel">ביטול</button>
+        </div>
+        <button class="link-btn" type="button" data-clear="dates" data-i18n="form.clearDates" hidden>ניקוי התאריכים</button>
+      </form>
+    </dialog>
+
+    <dialog class="sheet dmetal" id="dlg-budget" aria-labelledby="dlg-budget-title">
+      <form class="sheet-form" data-form="budget" novalidate>
+        <h2 id="dlg-budget-title" data-i18n="budget.dialogTitle">תקציב הטיול</h2>
+        <div class="field-row">
+          <label class="field field-grow"><span data-i18n="budget.amount">סכום כולל</span><input class="ltr" type="text" name="amount" inputmode="decimal" autocomplete="off" aria-describedby="budget-error"></label>
+          <label class="field"><span data-i18n="budget.currency">מטבע</span><select name="currency" data-slot="currency-select"></select></label>
+        </div>
+        <p class="sheet-hint" data-i18n="budget.hint">הסכום לכל הטיול. רישום הוצאות יגיע בשלב הבא.</p>
+        <p class="form-error" id="budget-error" role="alert" data-slot="budget-error"></p>
+        <div class="sheet-actions">
+          <button class="btn metal-btn" type="submit" data-i18n="form.save">שמירה</button>
+          <button class="btn btn-ghost" type="button" data-close data-i18n="form.cancel">ביטול</button>
+        </div>
+        <button class="link-btn" type="button" data-clear="budget" data-i18n="form.clearBudget" hidden>ניקוי התקציב</button>
+      </form>
+    </dialog>
+
+    <div class="toast" role="status" aria-live="polite" data-slot="toast"></div>
+  </div>
+</body>
+</html>

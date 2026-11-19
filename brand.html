@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="he" dir="rtl" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <meta name="referrer" content="no-referrer">
+  <title>TISA · ערכת המותג</title>
+  <script src="./src/js/theme-boot.js"></script>
+  <link rel="stylesheet" href="./src/css/fonts.css">
+  <link rel="stylesheet" href="./src/css/tokens.css">
+  <link rel="stylesheet" href="./src/css/main.css">
+  <link rel="stylesheet" href="./src/css/brand.css">
+  <script type="module" src="./src/js/brand.js"></script>
+</head>
+<body class="brand-page">
+  <header class="bk-head">
+    <div class="bk-wrap">
+      <a class="brand" href="./index.html">
+        <svg class="icon brand-mark" aria-hidden="true"><use href="./assets/icons.svg#i-mark"/></svg>
+        <span class="brand-word ltr">TISA</span>
+      </a>
+      <h1 class="bk-title">ערכת המותג</h1>
+      <p class="bk-lead">מקור אחד לכל ההחלטות העיצוביות של TISA: צבעים, טיפוגרפיה, אייקונים, רכיבים ותנועה. כל צבע באפליקציה מגיע מ-<code class="ltr">src/css/tokens.css</code>, ובדיקה אוטומטית מוודאת שאין צבע בשום מקום אחר.</p>
+    </div>
+  </header>
+
+  <main class="bk-wrap">
+    <section class="bk-sec" aria-labelledby="s-logo">
+      <h2 id="s-logo"><span class="bk-num ltr">01</span>סימן ושם</h2>
+      <p class="bk-note">הסימן הוא חלון מטוס: הרגע שבו הטיול מתחיל. בשם משתמשים ב-Plex Mono במרווח רחב.</p>
+      <div class="bk-duo">
+        <div class="bk-ctx" data-theme="light"><div class="bk-logo"><svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-mark"/></svg><span class="brand-word ltr">TISA</span></div></div>
+        <div class="bk-ctx" data-theme="dark"><div class="bk-logo"><svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-mark"/></svg><span class="brand-word ltr">TISA</span></div></div>
+      </div>
+    </section>
+
+    <section class="bk-sec" aria-labelledby="s-color">
+      <h2 id="s-color"><span class="bk-num ltr">02</span>צבע</h2>
+      <p class="bk-note">פלטת שקיעה מתוך תמונת הייחוס, ופלטינה-זהב לכרטיס הטיול. כל זוג טקסט ורקע עובר ניגודיות AA בשני המצבים (נבדק ב-<code class="ltr">npm test</code>).</p>
+      <div class="bk-duo" data-swatches></div>
+    </section>
+
+    <section class="bk-sec" aria-labelledby="s-type">
+      <h2 id="s-type"><span class="bk-num ltr">03</span>טיפוגרפיה</h2>
+      <p class="bk-note">Heebo לכל הטקסט העברי, Plex Mono לתוויות לטיניות ולמספרים. טקסט רגיל לעולם לא קטן מ-16px.</p>
+      <div class="bk-type">
+        <div><span class="bk-spec ltr">DISPLAY · 44–60 / 800</span><p class="display">תאילנד</p></div>
+        <div><span class="bk-spec ltr">H2 · 24 / 800</span><p class="soon-title">כותרת מסך</p></div>
+        <div><span class="bk-spec ltr">H3 · 20 / 700</span><p class="section-title">הכלים שלכם</p></div>
+        <div><span class="bk-spec ltr">LEAD · 18 / 500</span><p class="eyebrow">הטיול הבא שלכם</p></div>
+        <div><span class="bk-spec ltr">BODY · 16 / 400</span><p>שני צעדים קטנים, והמסך הזה מתחיל לעבוד בשבילכם.</p></div>
+        <div><span class="bk-spec ltr">CAPTION · 13 / 600</span><p class="bk-caption">בקרוב · תוויות קצרות בלבד</p></div>
+        <div><span class="bk-spec ltr">MONO · 13–32 / 500</span><p class="clock ltr">TRIP PASS 20:45</p></div>
+      </div>
+    </section>
+
+    <section class="bk-sec" aria-labelledby="s-icons">
+      <h2 id="s-icons"><span class="bk-num ltr">04</span>אייקונים</h2>
+      <p class="bk-note">סט מקורי שצויר לפרויקט: רשת 24, קו 1.8, קצוות מעוגלים. הצבע תמיד יורש מהטקסט.</p>
+      <div class="bk-icons" data-icons></div>
+    </section>
+
+    <section class="bk-sec" aria-labelledby="s-comp">
+      <h2 id="s-comp"><span class="bk-num ltr">05</span>רכיבים</h2>
+      <p class="bk-note">הרכיבים כאן הם אותם רכיבים ממסך הבית: הם נטענים ישירות מ-<code class="ltr">index.html</code>, כך שהמסמך הזה לא יכול להתיישן.</p>
+      <h3 class="bk-sub">כרטיס הטיול</h3>
+      <div class="bk-duo" data-clone=".pass"></div>
+      <h3 class="bk-sub">הקמת הטיול</h3>
+      <div class="bk-duo" data-clone=".setup"></div>
+      <h3 class="bk-sub">אריחי כלים</h3>
+      <div class="bk-duo" data-clone=".tiles"></div>
+      <h3 class="bk-sub">סרגל ניווט</h3>
+      <div class="bk-duo" data-clone=".tabbar"></div>
+    </section>
+
+    <section class="bk-sec" aria-labelledby="s-rules">
+      <h2 id="s-rules"><span class="bk-num ltr">06</span>חוקים</h2>
+      <div class="bk-rules">
+        <div class="card today"><h3 class="section-title">ריווח וצורה</h3><p>רשת של 4px. רדיוסים: 10, 16, 22, 28. משטח מגע מינימלי 44px.</p></div>
+        <div class="card today"><h3 class="section-title">תנועה</h3><p>תנועה רק כשהיא מסבירה משהו: היפוך הכרטיס (0.7 שניות) וברק אחד על הפלטינה בכניסה. מי שביקש "פחות תנועה" במכשיר מקבל אפס אנימציות.</p></div>
+        <div class="card today"><h3 class="section-title">נגישות</h3><p>ניגודיות AA, מיקוד גלוי בכל רכיב, ניווט מלא במקלדת (Tab, Enter, חיצים), עברית מימין לשמאל.</p></div>
+        <div class="card today"><h3 class="section-title">אמת בנתונים</h3><p>אין מחירים, שערים או תאריכים מומצאים. מה שלא הוגדר מוצג כ"—" או "עוד לא הוגדר".</p></div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

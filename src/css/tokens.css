@@ -1,0 +1,158 @@
+/*
+  TISA design tokens. The ONLY file allowed to contain color values (enforced by tests).
+  Palette sampled from the dusk-sky reference photo; platinum-gold for the trip pass.
+  Theme is set on <html data-theme="light|dark"> by src/js/theme-boot.js.
+*/
+
+/* ---------- Non-color tokens (shared) ---------- */
+:root {
+  --font-sans: "Heebo", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+  --font-mono: "Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  /* Type scale (rem = 16px). Body never below 1rem. */
+  --text-caption: 0.8125rem;  /* 13px: micro labels only */
+  --text-body: 1rem;          /* 16px */
+  --text-lead: 1.125rem;      /* 18px */
+  --text-h3: 1.25rem;         /* 20px */
+  --text-h2: 1.5rem;          /* 24px */
+  --text-display: clamp(2.75rem, 9vw, 3.75rem);
+
+  /* 4px spacing grid */
+  --space-1: 0.25rem; --space-2: 0.5rem; --space-3: 0.75rem; --space-4: 1rem;
+  --space-5: 1.25rem; --space-6: 1.5rem; --space-8: 2rem; --space-10: 2.5rem; --space-12: 3rem;
+
+  --radius-sm: 10px; --radius-md: 16px; --radius-lg: 22px; --radius-xl: 28px; --radius-pill: 999px;
+
+  --ease-out: cubic-bezier(.2, .7, .2, 1);
+  --dur-fast: 160ms; --dur-base: 280ms; --dur-flip: 700ms;
+
+  --tap: 44px;               /* minimum touch target */
+  --nav-height: 68px;
+}
+
+/* ---------- Light ---------- */
+:root, [data-theme="light"] {
+  color-scheme: light;
+  --bg: #FCF9F7;
+  --glow-1: #F7E5E3; --glow-2: #EFE9F1; /* dusk light behind the hero (peak colors) */
+  --surface: #FFFFFF;
+  --surface-2: #F6F1EE;
+  --line: #EDE4E1;
+  --ink: #1A1418;
+  --muted: #63575E;
+  --title: #7A1F3D;
+  --accent: #8B5868;
+  --on-accent: #FFFFFF;
+  --focus: #464164;
+  --shadow: rgba(42, 30, 40, .10);
+  --shadow-strong: rgba(42, 30, 40, .22);
+
+  --deep: #2A2438;
+  --on-deep: #F6EFE2;
+  --on-deep-muted: #C9C0D6;
+  --deep-line: #433A54;
+  --deep-btn: #F6EFE2;
+  --deep-btn-ink: #2A2438;
+
+
+  --toast-bg: #2A2438; --toast-ink: #F6EFE2;
+
+  /* Platinum-gold metal */
+  --metal-1: #D9D2C6; --metal-2: #F3EEE6; --metal-3: #CBBFA8; --metal-4: #EFE6D4;
+  --metal-5: #B9A684; --metal-6: #E4D8C0; --metal-7: #C7B79A;
+  --metal-ink: #3B3123;
+  --metal-hi: rgba(255, 255, 255, .65);
+  --metal-lo: rgba(0, 0, 0, .18);
+  --metal-pill: #2A2438;
+  --shine: rgba(255, 255, 255, .5);
+
+  /* Aircraft window trim (cabin plastic) */
+  --trim-1: #FBF8F3; --trim-2: #E7E0D3; --trim-3: #D2C8B6; --trim-4: #B4A88F;
+  --reveal-1: #CFC5B3; --reveal-2: #8F846F;
+  --shade-1: #FAF7F2; --shade-2: #E3DCCF; --shade-lip: #A79B84;
+  --pane-edge: rgba(40, 30, 20, .35);
+  --glare: rgba(255, 255, 255, .26);
+  --hole: rgba(30, 22, 30, .55);
+
+  /* Seascape (same in both themes; dimmed in dark via filter) */
+  --sky-1: #3E3A5E; --sky-2: #5E4766; --sky-3: #A3606A; --sky-4: #D58E78;
+  --sea-1: #7A5468; --sea-2: #4E3E5C; --sea-3: #262036;
+  --sun-core: #FFE9C4; --sun-glow: #FFD9A8; --sun-fade: #F0A080;
+  --rock-1: #1C1724; --rock-2: #2B2232; --rock-3: #4A3442;
+  --rim: #F7DDA8; --islands: #5A4560; --glint: #FFDDB0; --foam: #F6E6DA;
+  --scene-dim: 1;
+  /* Darker metals: one hue per surface (champagne, smoked gold, antique gold, rose gold, titanium, copper) */
+  --m-today-1: #5C4F3A; --m-today-2: #6C5D44; --m-today-3: #4B402E; --m-today-4: #655640; --m-today-5: #403628;
+  --m-setup-1: #362F25; --m-setup-2: #483F31; --m-setup-3: #28231C; --m-setup-4: #40382C; --m-setup-5: #211C16;
+  --m-t1-1: #5F4D37; --m-t1-2: #6C5B41; --m-t1-3: #493B28; --m-t1-4: #66563E; --m-t1-5: #3C3121;
+  --m-t2-1: #694D47; --m-t2-2: #73574E; --m-t2-3: #513B36; --m-t2-4: #6C5149; --m-t2-5: #43312D;
+  --m-t3-1: #524D59; --m-t3-2: #5D5865; --m-t3-3: #3D3A44; --m-t3-4: #56525E; --m-t3-5: #322E38;
+  --m-t4-1: #654E3A; --m-t4-2: #70573F; --m-t4-3: #4D3A2C; --m-t4-4: #69513B; --m-t4-5: #403024;
+  --m-nav-1: #322C24; --m-nav-2: #40382E; --m-nav-3: #26211C; --m-nav-4: #3A3329; --m-nav-5: #1E1B16;
+  --field-bg: rgba(255, 248, 236, .08); --field-line: rgba(255, 248, 236, .45); --on-dmetal-error: #FFC2B4;
+  --backdrop: rgba(20, 14, 20, .55);
+  --on-dmetal: #FFF8EC; --on-dmetal-muted: #E8DCC6;
+  --dmetal-edge: rgba(255, 244, 222, .22); --dmetal-shade: rgba(0, 0, 0, .25);
+}
+
+/* ---------- Dark ---------- */
+[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #141118;
+  --glow-1: #2A1A25; --glow-2: #1D1B2D; /* dusk light behind the hero (peak colors) */
+  --surface: #1E1A24;
+  --surface-2: #26212D;
+  --line: #342C3B;
+  --ink: #F3EDF0;
+  --muted: #B6AAB3;
+  --title: #F0A5B8;
+  --accent: #C9BCEB;
+  --on-accent: #141118;
+  --focus: #C9BCEB;
+  --shadow: rgba(0, 0, 0, .35);
+  --shadow-strong: rgba(0, 0, 0, .6);
+
+  --deep: #2C2538;
+  --on-deep: #F6EFE2;
+  --on-deep-muted: #C9C0D6;
+  --deep-line: #463C55;
+  --deep-btn: #C9BCEB;
+  --deep-btn-ink: #141118;
+
+
+  --toast-bg: #C9BCEB; --toast-ink: #141118;
+
+  --metal-1: #B3AA98; --metal-2: #D6CDBB; --metal-3: #A99C80; --metal-4: #CBBFA6;
+  --metal-5: #998A6C; --metal-6: #BCAE91; --metal-7: #A29479;
+  --metal-ink: #1F1A12;
+  --metal-hi: rgba(255, 255, 255, .35);
+  --metal-lo: rgba(0, 0, 0, .2);
+  --metal-pill: #2A2438;
+  --shine: rgba(255, 255, 255, .35);
+
+  --trim-1: #D9D1C2; --trim-2: #BDB29E; --trim-3: #A49880; --trim-4: #84785F;
+  --reveal-1: #9C907A; --reveal-2: #5E5444;
+  --shade-1: #D6CEBF; --shade-2: #B8AD98; --shade-lip: #7C705A;
+  --pane-edge: rgba(0, 0, 0, .45);
+  --glare: rgba(255, 255, 255, .16);
+  --hole: rgba(0, 0, 0, .6);
+
+  --sky-1: #3E3A5E; --sky-2: #5E4766; --sky-3: #A3606A; --sky-4: #D58E78;
+  --sea-1: #7A5468; --sea-2: #4E3E5C; --sea-3: #262036;
+  --sun-core: #FFE9C4; --sun-glow: #FFD9A8; --sun-fade: #F0A080;
+  --rock-1: #1C1724; --rock-2: #2B2232; --rock-3: #4A3442;
+  --rim: #F7DDA8; --islands: #5A4560; --glint: #FFDDB0; --foam: #F6E6DA;
+  --scene-dim: .86;
+  /* Darker metals: one hue per surface (champagne, smoked gold, antique gold, rose gold, titanium, copper) */
+  --m-today-1: #514634; --m-today-2: #60523C; --m-today-3: #423829; --m-today-4: #594C38; --m-today-5: #383023;
+  --m-setup-1: #302A21; --m-setup-2: #40372B; --m-setup-3: #241F18; --m-setup-4: #393127; --m-setup-5: #1D1914;
+  --m-t1-1: #544431; --m-t1-2: #60513A; --m-t1-3: #413424; --m-t1-4: #5A4C37; --m-t1-5: #352B1D;
+  --m-t2-1: #5D443E; --m-t2-2: #664D45; --m-t2-3: #473430; --m-t2-4: #5F4741; --m-t2-5: #3B2B28;
+  --m-t3-1: #48444F; --m-t3-2: #524E5A; --m-t3-3: #36333C; --m-t3-4: #4C4853; --m-t3-5: #2C2931;
+  --m-t4-1: #5A4534; --m-t4-2: #634D37; --m-t4-3: #443427; --m-t4-4: #5D4734; --m-t4-5: #382B20;
+  --m-nav-1: #2C2720; --m-nav-2: #383128; --m-nav-3: #211D18; --m-nav-4: #332D24; --m-nav-5: #1B1814;
+  --field-bg: rgba(255, 248, 236, .07); --field-line: rgba(255, 248, 236, .4); --on-dmetal-error: #FFC2B4;
+  --backdrop: rgba(0, 0, 0, .65);
+  --on-dmetal: #FFF8EC; --on-dmetal-muted: #E8DCC6;
+  --dmetal-edge: rgba(255, 244, 222, .22); --dmetal-shade: rgba(0, 0, 0, .25);
+}

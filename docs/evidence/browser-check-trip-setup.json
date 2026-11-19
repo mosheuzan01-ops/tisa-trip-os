@@ -1,0 +1,69 @@
+{
+ "external": [],
+ "errors": [],
+ "console": [],
+ "r": {
+  "initial": {
+   "count": "0 / 2",
+   "statusHidden": true
+  },
+  "datesOpen": {
+   "open": true,
+   "focus": "start"
+  },
+  "emptyError": {
+   "text": "בחרו תאריך יציאה. בחרו תאריך חזרה.",
+   "invalid": "true"
+  },
+  "reversedError": "החזרה לא יכולה להיות לפני היציאה.",
+  "datesSaved": {
+   "closed": true,
+   "focusBack": "dates",
+   "status": "עוד 9 ימים לטיול",
+   "sub": "10 במרץ – 19 במרץ 2027 · 10 ימים",
+   "pass": "10 Mar – 19 Mar",
+   "count": "1 / 2",
+   "btn": "עריכת תאריכים",
+   "toast": "נשמר במכשיר שלכם."
+  },
+  "budgetOpen": true,
+  "currencies": [
+   "ILS · שקל חדש",
+   "THB · בהט תאילנדי",
+   "USD · דולר אמריקאי",
+   "EUR · אירו"
+  ],
+  "escape": {
+   "closed": true,
+   "focusBack": "budget"
+  },
+  "badAmount": "כתבו סכום חיובי במספרים, עד שתי ספרות אחרי הנקודה.",
+  "budgetSaved": {
+   "total": "‏12,000 ‏₪",
+   "spent": "‏0 ‏₪",
+   "left": "‏12,000 ‏₪",
+   "emptyHidden": true,
+   "count": "2 / 2",
+   "text": "הכול מוכן. אפשר לערוך בכל רגע."
+  },
+  "storage": "{\"v\":1,\"trip\":{\"dates\":{\"start\":\"2027-03-10\",\"end\":\"2027-03-19\"},\"budget\":{\"amount\":12000,\"currency\":\"ILS\"}}}",
+  "afterReload": {
+   "status": "עוד 9 ימים לטיול",
+   "count": "2 / 2"
+  },
+  "during": "יום 5 מתוך 10",
+  "lastDay": "יום 10 מתוך 10",
+  "after": "הטיול הסתיים. ברוכים השבים!",
+  "hscroll360": false,
+  "cleared": {
+   "statusHidden": true,
+   "count": "1 / 2",
+   "stored": "{\"v\":1,\"trip\":{\"budget\":{\"amount\":250000,\"currency\":\"THB\"}}}"
+  },
+  "corrupt": {
+   "count": "0 / 2",
+   "country": "תאילנד"
+  },
+  "hscroll1280": false
+ }
+}

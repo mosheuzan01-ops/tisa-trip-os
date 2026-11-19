@@ -1,0 +1,109 @@
+{
+ "external": [],
+ "errors": [],
+ "console": [],
+ "r": {
+  "p1_empty": [
+   "pass",
+   "setup",
+   "today",
+   "tools"
+  ],
+  "p1_half": [
+   "pass",
+   "setup",
+   "today",
+   "tools"
+  ],
+  "p1_done": [
+   "pass",
+   "today",
+   "tools",
+   "setup"
+  ],
+  "p1_desktop_done": {
+   "setupBelowTools": true
+  },
+  "p6": {
+   "height": 396,
+   "top": 252,
+   "viewport": 900,
+   "centered": true
+  },
+  "p23_unset": {
+   "title": "מה מחכה לכם",
+   "hidden": true,
+   "srText": null,
+   "visualHidden": null,
+   "num": null,
+   "numPx": null,
+   "cap": null,
+   "plain": ""
+  },
+  "p23_before": {
+   "title": "ספירה לאחור",
+   "hidden": false,
+   "srText": "עוד 9 ימים לטיול",
+   "visualHidden": "true",
+   "num": "9",
+   "numPx": 58.5,
+   "cap": "ימים לטיול",
+   "plain": null
+  },
+  "p23_tomorrow": {
+   "title": "ספירה לאחור",
+   "hidden": false,
+   "srText": null,
+   "visualHidden": null,
+   "num": null,
+   "numPx": null,
+   "cap": null,
+   "plain": "מחר טסים!"
+  },
+  "p23_during": {
+   "title": "היום בטיול",
+   "hidden": false,
+   "srText": "יום 5 מתוך 10",
+   "visualHidden": "true",
+   "num": "5",
+   "numPx": 58.5,
+   "cap": "מתוך 10 ימים",
+   "plain": null
+  },
+  "p23_after": {
+   "title": "אחרי הטיול",
+   "hidden": false,
+   "srText": null,
+   "visualHidden": null,
+   "num": null,
+   "numPx": null,
+   "cap": null,
+   "plain": "הטיול הסתיים. ברוכים השבים!"
+  },
+  "p9_shadeEarly": 100,
+  "p9_shadeEnd": 27,
+  "p9_running": [
+   "shade-lift"
+  ],
+  "p9_animated": [
+   "porthole-shade"
+  ],
+  "p9_shine": "none",
+  "p9_reduced": {
+   "anim": "none",
+   "pct": 27
+  },
+  "p5_light": true,
+  "p7_light": {
+   "open": true,
+   "handle": true,
+   "blur": "blur(6px)"
+  },
+  "p5_dark": true,
+  "p7_dark": {
+   "open": true,
+   "handle": true,
+   "blur": "blur(6px)"
+  }
+ }
+}

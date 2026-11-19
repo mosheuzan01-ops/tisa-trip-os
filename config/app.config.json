@@ -1,0 +1,17 @@
+{
+  "appName": "TISA",
+  "buildLabel": "Experimental",
+  "defaultLocale": "he",
+  "supportedLocales": [
+    "he",
+    "en"
+  ],
+  "activeCountry": "th",
+  "storageKeyPrefix": "tisa:",
+  "budgetCurrencies": [
+    "ILS",
+    "THB",
+    "USD",
+    "EUR"
+  ]
+}

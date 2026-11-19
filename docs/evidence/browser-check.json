@@ -1,0 +1,27 @@
+{
+  "served": {
+    "h1": "TISA — Experimental — תאילנד",
+    "title": "TISA — Experimental — תאילנד",
+    "lang": "he",
+    "dir": "rtl",
+    "noHScroll": true,
+    "factsVisible": true,
+    "facts": "מטבע מקומי\nTHB\nאזור זמן\nAsia/Bangkok",
+    "consoleErrors": [],
+    "externalRequests": []
+  },
+  "file": {
+    "h1": "TISA — Experimental — תאילנד",
+    "title": "TISA — Experimental — תאילנד",
+    "lang": "he",
+    "dir": "rtl",
+    "noHScroll": true,
+    "factsVisible": false,
+    "facts": "",
+    "consoleErrors": [
+      "Access to script at 'file:///home/user/tisa-trip-os/src/js/app.js' from origin 'null' has been blocked by CORS policy: Cross origin requests are only supported for protocol schemes: chrome, chrome-untrusted, data, http, https.",
+      "Failed to load resource: net::ERR_FAILED"
+    ],
+    "externalRequests": []
+  }
+}

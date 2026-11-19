@@ -1,0 +1,16 @@
+{
+  "name": "tisa-trip-os",
+  "version": "0.0.0",
+  "private": true,
+  "description": "TISA — Trip OS. Experimental prototype: Thailand.",
+  "type": "module",
+  "license": "UNLICENSED",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "start": "node scripts/serve.js",
+    "phone": "node scripts/serve.js --lan",
+    "test": "node --test"
+  }
+}

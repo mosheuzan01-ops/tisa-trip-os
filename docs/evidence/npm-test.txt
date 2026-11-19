@@ -1,0 +1,86 @@
+
+> tisa-trip-os@0.0.0 test
+> node --test
+
+TAP version 13
+# Subtest: translator returns value, and the key itself when missing
+ok 1 - translator returns value, and the key itself when missing
+  ---
+  duration_ms: 1.50314
+  type: 'test'
+  ...
+# Subtest: resolveLocale falls back to the default locale
+ok 2 - resolveLocale falls back to the default locale
+  ---
+  duration_ms: 0.12289
+  type: 'test'
+  ...
+# Subtest: validateCountry reports missing fields and bad currency codes
+ok 3 - validateCountry reports missing fields and bad currency codes
+  ---
+  duration_ms: 0.588594
+  type: 'test'
+  ...
+# Subtest: buildTitle produces the Stage 0 title from config + Thailand data
+ok 4 - buildTitle produces the Stage 0 title from config + Thailand data
+  ---
+  duration_ms: 0.181238
+  type: 'test'
+  ...
+# Subtest: titleParts splits the Latin brand from the localized place name
+ok 5 - titleParts splits the Latin brand from the localized place name
+  ---
+  duration_ms: 0.187851
+  type: 'test'
+  ...
+# Subtest: G5: zero dependencies
+ok 6 - G5: zero dependencies
+  ---
+  duration_ms: 0.925944
+  type: 'test'
+  ...
+# Subtest: G8: page is Hebrew and RTL
+ok 7 - G8: page is Hebrew and RTL
+  ---
+  duration_ms: 0.323486
+  type: 'test'
+  ...
+# Subtest: G9: no external URLs (no CDN) in app code
+ok 8 - G9: no external URLs (no CDN) in app code
+  ---
+  duration_ms: 0.445338
+  type: 'test'
+  ...
+# Subtest: G11: country facts live in data, not in code
+ok 9 - G11: country facts live in data, not in code
+  ---
+  duration_ms: 1.357555
+  type: 'test'
+  ...
+# Subtest: G12: settings and locales are complete
+ok 10 - G12: settings and locales are complete
+  ---
+  duration_ms: 0.866279
+  type: 'test'
+  ...
+# Subtest: G14 + G15: no secrets, cookies or analytics
+ok 11 - G14 + G15: no secrets, cookies or analytics
+  ---
+  duration_ms: 0.729154
+  type: 'test'
+  ...
+# Subtest: G16: no prices or dates in data (Stage 0 must not invent them)
+ok 12 - G16: no prices or dates in data (Stage 0 must not invent them)
+  ---
+  duration_ms: 0.397861
+  type: 'test'
+  ...
+1..12
+# tests 12
+# suites 0
+# pass 12
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 77.030608

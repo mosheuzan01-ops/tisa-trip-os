@@ -1,0 +1,87 @@
+{
+ "iPhone SE": {
+  "viewport": {
+   "width": 320,
+   "height": 568
+  },
+  "dpr": 2,
+  "hscroll": false,
+  "smallTargets": [],
+  "navCoversFootnote": false,
+  "flip": "true",
+  "sheetFits": true,
+  "status": "עוד 9 ימים לטיול",
+  "count": "2 / 2",
+  "tab": "#budget",
+  "errors": [],
+  "external": []
+ },
+ "iPhone 13": {
+  "viewport": {
+   "width": 390,
+   "height": 664
+  },
+  "dpr": 3,
+  "hscroll": false,
+  "smallTargets": [],
+  "navCoversFootnote": false,
+  "flip": "true",
+  "sheetFits": true,
+  "status": "עוד 9 ימים לטיול",
+  "count": "2 / 2",
+  "tab": "#budget",
+  "errors": [],
+  "external": []
+ },
+ "iPhone 15 Pro Max": {
+  "viewport": {
+   "width": 430,
+   "height": 739
+  },
+  "dpr": 3,
+  "hscroll": false,
+  "smallTargets": [],
+  "navCoversFootnote": false,
+  "flip": "true",
+  "sheetFits": true,
+  "status": "עוד 9 ימים לטיול",
+  "count": "2 / 2",
+  "tab": "#budget",
+  "errors": [],
+  "external": []
+ },
+ "Pixel 7": {
+  "viewport": {
+   "width": 412,
+   "height": 839
+  },
+  "dpr": 2.625,
+  "hscroll": false,
+  "smallTargets": [],
+  "navCoversFootnote": false,
+  "flip": "true",
+  "sheetFits": true,
+  "status": "עוד 9 ימים לטיול",
+  "count": "2 / 2",
+  "tab": "#budget",
+  "errors": [],
+  "external": []
+ },
+ "Galaxy S9+": {
+  "viewport": {
+   "width": 320,
+   "height": 658
+  },
+  "dpr": 4.5,
+  "hscroll": false,
+  "smallTargets": [],
+  "navCoversFootnote": false,
+  "flip": "true",
+  "sheetFits": true,
+  "status": "עוד 9 ימים לטיול",
+  "count": "2 / 2",
+  "tab": "#budget",
+  "errors": [],
+  "external": []
+ }
+}

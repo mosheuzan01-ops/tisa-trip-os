@@ -1,0 +1,172 @@
+{
+ "sizes": {
+  "360-light": {
+   "theme": "light",
+   "hscroll": false,
+   "overflow": [],
+   "small": [
+    "footnote"
+   ],
+   "fonts": [
+    "Heebo",
+    "Plex Mono"
+   ],
+   "country": "תאילנד",
+   "clock": "21:05"
+  },
+  "360-dark": {
+   "theme": "dark",
+   "hscroll": false,
+   "overflow": [],
+   "small": [
+    "footnote"
+   ],
+   "fonts": [
+    "Heebo",
+    "Plex Mono"
+   ],
+   "country": "תאילנד",
+   "clock": "21:05"
+  },
+  "390-light": {
+   "theme": "light",
+   "hscroll": false,
+   "overflow": [],
+   "small": [
+    "footnote"
+   ],
+   "fonts": [
+    "Heebo",
+    "Plex Mono"
+   ],
+   "country": "תאילנד",
+   "clock": "21:06"
+  },
+  "390-dark": {
+   "theme": "dark",
+   "hscroll": false,
+   "overflow": [],
+   "small": [
+    "footnote"
+   ],
+   "fonts": [
+    "Heebo",
+    "Plex Mono"
+   ],
+   "country": "תאילנד",
+   "clock": "21:06"
+  },
+  "768-light": {
+   "theme": "light",
+   "hscroll": false,
+   "overflow": [],
+   "small": [
+    "footnote"
+   ],
+   "fonts": [
+    "Heebo",
+    "Plex Mono"
+   ],
+   "country": "תאילנד",
+   "clock": "21:06"
+  },
+  "768-dark": {
+   "theme": "dark",
+   "hscroll": false,
+   "overflow": [],
+   "small": [
+    "footnote"
+   ],
+   "fonts": [
+    "Heebo",
+    "Plex Mono"
+   ],
+   "country": "תאילנד",
+   "clock": "21:06"
+  },
+  "1280-light": {
+   "theme": "light",
+   "hscroll": false,
+   "overflow": [],
+   "small": [
+    "footnote"
+   ],
+   "fonts": [
+    "Heebo",
+    "Plex Mono"
+   ],
+   "country": "תאילנד",
+   "clock": "21:06"
+  },
+  "1280-dark": {
+   "theme": "dark",
+   "hscroll": false,
+   "overflow": [],
+   "small": [
+    "footnote"
+   ],
+   "fonts": [
+    "Heebo",
+    "Plex Mono"
+   ],
+   "country": "תאילנד",
+   "clock": "21:06"
+  }
+ },
+ "external": [],
+ "errors": [],
+ "console": [],
+ "interactions": {
+  "flipClick": "true",
+  "flipEnter": "false",
+  "flipSpace": "true",
+  "themeAfterClick": "dark",
+  "themePersisted": "dark",
+  "mouseTab": {
+   "selected": "true",
+   "soonVisible": true,
+   "title": "תקציב",
+   "hash": "#budget"
+  },
+  "arrowLeftFocus": "tab-lists",
+  "enterSelects": "true",
+  "arrowRight2": "tab-itinerary",
+  "end": "tab-map",
+  "homeSpace": {
+   "focus": "tab-home",
+   "homeVisible": true
+  },
+  "tabStops": 1,
+  "tile": "true",
+  "backHome": true,
+  "toast": {
+   "text": "זה ייבנה בשלב הבא.",
+   "visible": "1"
+  },
+  "deepLink": "true",
+  "focusRing": {
+   "el": "brand",
+   "outline": "solid 3px"
+  }
+ },
+ "reducedMotion": {
+  "shine": "none",
+  "flip": "0.001s"
+ },
+ "normalMotion": {
+  "shine": "shine",
+  "flip": "0.7s"
+ },
+ "brand390": {
+  "hscroll": false,
+  "passes": 2,
+  "icons": 14,
+  "swatchSample": ""
+ },
+ "brand1280": {
+  "hscroll": false,
+  "passes": 2,
+  "icons": 14,
+  "swatchSample": ""
+ }
+}

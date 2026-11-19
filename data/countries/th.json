@@ -1,0 +1,17 @@
+{
+  "id": "th",
+  "names": {
+    "he": "תאילנד",
+    "en": "Thailand"
+  },
+  "currency": "THB",
+  "timeZone": "Asia/Bangkok",
+  "dateFormatLocale": {
+    "he": "he-IL",
+    "en": "en-GB"
+  },
+  "timeZoneCity": {
+    "he": "בנגקוק",
+    "en": "Bangkok"
+  }
+}
