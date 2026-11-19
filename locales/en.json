@@ -512,5 +512,8 @@
   "taskErr.title.tooLong": "The title is too long.",
   "taskErr.status.invalid": "Choose a status.",
   "taskErr.due.invalid": "The date is not valid.",
-  "taskErr.note.tooLong": "The note is too long."
+  "taskErr.note.tooLong": "The note is too long.",
+  "list.hideDone": "Hide what is ready",
+  "task.hideDone": "Hide done tasks",
+  "money.rates.updated": "Last updated {date}"
 }

@@ -28,8 +28,8 @@ test('S4-2: money is parsed to whole minor units; 0.1 + 0.2 has no rounding erro
 });
 
 test('rates: planning defaults, overrides, conversion to shekels, validation', () => {
-  assert.deepEqual(RATES, { ILS_THB: 10, USD_ILS: 3.7, USD_THB: 37, planning: true });
-  assert.deepEqual(effectiveRates({ ILS_THB: 12 }, TH.planningRates), { ILS_THB: 12, USD_ILS: 3.7, USD_THB: 37, planning: false });
+  assert.deepEqual(RATES, { ILS_THB: 10, USD_ILS: 3.7, USD_THB: 37, planning: true, updatedAt: null });
+  assert.deepEqual(effectiveRates({ ILS_THB: 12 }, TH.planningRates), { ILS_THB: 12, USD_ILS: 3.7, USD_THB: 37, planning: false, updatedAt: null });
   assert.equal(rateToBase('ILS', RATES), 1);
   assert.equal(rateToBase('THB', RATES), 0.1);
   assert.equal(rateToBase('USD', RATES), 3.7);

@@ -5,7 +5,7 @@ import { interpolate } from './core/i18n.js';
 import { todayIn } from './core/trip.js';
 import {
   GROUPS, TASK_STATUSES, validateItem, makeItem, progress, needsCheck, validateVerify, seedChecklist, seedTasks,
-  validateTask, makeTask, taskState, openTasks, nextTask, cleanItems, cleanTasks,
+  validateTask, makeTask, taskState, openTasks, nextTask, cleanItems, cleanTasks, hideDone,
 } from './core/checklist.js';
 import { formatDate } from './core/itinerary.js';
 import { makeId } from './core/ids.js';
@@ -35,6 +35,9 @@ const checkbox = (action, id, checked, label) => {
   wrap.append(input, el('span', 'item-name', label));
   return wrap;
 };
+
+/** Screen-only filters (not saved): hide what is already ticked / done. */
+const view = { items: false, tasks: false };
 
 function listState(ctx) {
   const trip = ctx.trip();
@@ -88,11 +91,14 @@ export function renderLists(ctx) {
 
   // ---------- Checklist by group ----------
   $('[data-slot="list-empty"]').hidden = s.items.length > 0;
-  $('[data-slot="groups"]').replaceChildren(...GROUPS.filter((g) => s.items.some((x) => x.group === g)).map((g) => {
-    const list = s.items.filter((x) => x.group === g);
+  $('[data-slot="items-filter"]').hidden = s.items.length === 0;
+  const shownItems = hideDone(s.items, view.items);
+  $('[data-slot="groups"]').replaceChildren(...GROUPS.filter((g) => shownItems.some((x) => x.group === g)).map((g) => {
+    const all = s.items.filter((x) => x.group === g);
+    const list = shownItems.filter((x) => x.group === g);
     const card = el('section', 'card surface list-group');
     const head = el('div', 'list-group-head');
-    head.append(el('h3', 'tool-title', t(`list.group.${g}`)), el('span', 'bar-num', interpolate(t('lists.barNum'), { done: list.filter((x) => x.done).length, total: list.length })));
+    head.append(el('h3', 'tool-title', t(`list.group.${g}`)), el('span', 'bar-num', interpolate(t('lists.barNum'), { done: all.filter((x) => x.done).length, total: all.length })));
     const ul = el('ul', 'items');
     for (const x of list) {
       const li = el('li', `item${x.done ? ' is-done' : ''}`);
@@ -124,7 +130,8 @@ export function renderLists(ctx) {
 
   // ---------- Tasks ----------
   $('[data-slot="tasks-empty"]').hidden = s.tasks.length > 0;
-  $('[data-slot="task-list"]').replaceChildren(...s.tasks.map((x) => {
+  $('[data-slot="tasks-filter"]').hidden = s.tasks.length === 0;
+  $('[data-slot="task-list"]').replaceChildren(...hideDone(s.tasks, view.tasks).map((x) => {
     const st = taskState(x, s.today);
     const li = el('li', `task surface is-${st}`);
     li.dataset.id = x.id;
@@ -270,6 +277,9 @@ export function setupLists(ctx, { wireDialog, showFormErrors }) {
   });
 
   // ---------- One delegated handler: clicks and ticks ----------
+  for (const [key, sel] of [['items', 'hide-done-items'], ['tasks', 'hide-done-tasks']]) {
+    $(`[data-filter="${sel}"]`).addEventListener('change', (e) => { view[key] = e.target.checked; renderLists(ctx); });
+  }
   panel.addEventListener('change', (e) => {
     const box = e.target.closest('input[type="checkbox"][data-action]');
     if (!box) return;

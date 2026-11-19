@@ -512,5 +512,8 @@
   "taskErr.title.tooLong": "הכותרת ארוכה מדי.",
   "taskErr.status.invalid": "בחרו סטטוס.",
   "taskErr.due.invalid": "התאריך לא תקין.",
-  "taskErr.note.tooLong": "ההערה ארוכה מדי."
+  "taskErr.note.tooLong": "ההערה ארוכה מדי.",
+  "list.hideDone": "להסתיר מה שכבר מוכן",
+  "task.hideDone": "להסתיר משימות שבוצעו",
+  "money.rates.updated": "עודכן ב-{date}"
 }

@@ -6,7 +6,7 @@ import { todayIn, isIsoDate } from './core/trip.js';
 import {
   EMERGENCY, BASE_CURRENCY, STATUSES, METHODS, parseMoney, effectiveRates, rateToBase, currenciesFor, validateRates,
   ratesConsistent, categoryIds, validateExpense, makeExpense, editExpense, profileToBudget, summarize, daysLeft,
-  dailyAllowance, filterExpenses, pieSlices, convertAll, atmCost, affordability, toCsv,
+  dailyAllowance, filterExpenses, pieSlices, convertAll, atmCost, affordability, toCsv, stampRates,
 } from './core/money.js';
 import { validatePerson, balances, settle, validateSplit, SPLIT_MODES } from './core/split.js';
 import { sortStops, cleanStops, formatDate } from './core/itinerary.js';
@@ -215,6 +215,9 @@ export function renderMoney(ctx) {
   }));
   $('[data-slot="rates-warn"]').textContent = t('money.rates.warn');
   $('[data-slot="rates-warn"]').hidden = ratesConsistent(m.rates);
+  const upd = $('[data-slot="rates-updated"]');
+  upd.hidden = !m.rates.updatedAt;
+  upd.textContent = m.rates.updatedAt ? interpolate(t('money.rates.updated'), { date: formatDate(m.rates.updatedAt, fmtLocale, { day: 'numeric', month: 'long', year: 'numeric' }) }) : '';
 
   // Split: people and who pays whom (paid expenses only)
   const people = peopleOf(m.trip);
@@ -597,7 +600,7 @@ export function setupMoney(ctx, { wireDialog, showFormErrors }) {
     const defaults = ctx.pack.planningRates;
     const own = {};
     for (const [k, v] of Object.entries(input)) if (Number(v) !== defaults[k]) own[k] = Number(v);
-    commit((st) => { st.trips[st.activeTripId].rates = own; }, 'money.rates.saved');
+    commit((st) => { st.trips[st.activeTripId].rates = stampRates(own, todayIn(ctx.country.timeZone)); }, 'money.rates.saved');
     dlgRates.close();
   });
   $('[data-action="rates-restore"]').addEventListener('click', () => {

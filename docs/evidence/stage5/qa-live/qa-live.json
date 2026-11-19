@@ -42,7 +42,7 @@
       "bodyText": 16,
       "lowContrast": [],
       "contrastEstimated": 0,
-      "checkedTexts": 70
+      "checkedTexts": 72
     },
     "360-light-settings": {
       "dir": "rtl",
@@ -108,7 +108,7 @@
       "bodyText": 16,
       "lowContrast": [],
       "contrastEstimated": 0,
-      "checkedTexts": 70
+      "checkedTexts": 72
     },
     "360-dark-settings": {
       "dir": "rtl",
@@ -174,7 +174,7 @@
       "bodyText": 16,
       "lowContrast": [],
       "contrastEstimated": 0,
-      "checkedTexts": 70
+      "checkedTexts": 72
     },
     "390-light-settings": {
       "dir": "rtl",
@@ -240,7 +240,7 @@
       "bodyText": 16,
       "lowContrast": [],
       "contrastEstimated": 0,
-      "checkedTexts": 70
+      "checkedTexts": 72
     },
     "390-dark-settings": {
       "dir": "rtl",
@@ -306,7 +306,7 @@
       "bodyText": 16,
       "lowContrast": [],
       "contrastEstimated": 0,
-      "checkedTexts": 70
+      "checkedTexts": 72
     },
     "768-light-settings": {
       "dir": "rtl",
@@ -372,7 +372,7 @@
       "bodyText": 16,
       "lowContrast": [],
       "contrastEstimated": 0,
-      "checkedTexts": 70
+      "checkedTexts": 72
     },
     "768-dark-settings": {
       "dir": "rtl",
@@ -438,7 +438,7 @@
       "bodyText": 16,
       "lowContrast": [],
       "contrastEstimated": 0,
-      "checkedTexts": 70
+      "checkedTexts": 72
     },
     "1280-light-settings": {
       "dir": "rtl",
@@ -504,7 +504,7 @@
       "bodyText": 16,
       "lowContrast": [],
       "contrastEstimated": 0,
-      "checkedTexts": 70
+      "checkedTexts": 72
     },
     "1280-dark-settings": {
       "dir": "rtl",

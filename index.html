@@ -383,6 +383,7 @@
             <span class="badge" data-slot="rates-badge"></span>
           </div>
           <ul class="settings-list rates-list ltr-nums" data-slot="rates-list"></ul>
+          <p class="settings-meta" data-slot="rates-updated" hidden></p>
           <p class="form-warn-calm" data-slot="rates-warn" hidden></p>
           <p data-i18n="money.rates.note">שער חדש חל רק על הוצאות חדשות. הוצאות שכבר נשמרו שומרות את השער שלהן.</p>
           <button class="btn btn-ghost" type="button" data-action="rates-open" data-i18n="money.rates.edit">עריכת שערים</button>
@@ -417,6 +418,7 @@
             <p data-i18n="list.empty.text">טוענים רשימה מוצעת לתאילנד ומשנים אותה, או מוסיפים פריטים משלכם.</p>
             <button class="btn btn-ghost" type="button" data-action="list-seed" data-i18n="list.seed.open">לטעון רשימה מוצעת</button>
           </section>
+          <label class="split-check filter-toggle" data-slot="items-filter"><input type="checkbox" data-filter="hide-done-items"><span data-i18n="list.hideDone">להסתיר מה שכבר מוכן</span></label>
           <div class="groups" data-slot="groups"></div>
         </section>
 
@@ -432,6 +434,7 @@
             <p data-i18n="task.empty.text">טוענים משימות מוצעות לפני טיסה, או מוסיפים משלכם.</p>
             <button class="btn btn-ghost" type="button" data-action="tasks-seed" data-i18n="task.seed.open">לטעון משימות מוצעות</button>
           </section>
+          <label class="split-check filter-toggle" data-slot="tasks-filter"><input type="checkbox" data-filter="hide-done-tasks"><span data-i18n="task.hideDone">להסתיר משימות שבוצעו</span></label>
           <ul class="task-list" data-slot="task-list"></ul>
         </section>
       </section>

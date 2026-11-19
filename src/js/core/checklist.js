@@ -116,3 +116,6 @@ export const cleanItems = (list) => (Array.isArray(list)
   ? list.filter((x) => x && typeof x === 'object' && typeof x.id === 'string' && typeof x.name === 'string' && GROUPS.includes(x.group)) : []);
 export const cleanTasks = (list) => (Array.isArray(list)
   ? list.filter((x) => x && typeof x === 'object' && typeof x.id === 'string' && typeof x.title === 'string' && TASK_STATUSES.includes(x.status)) : []);
+
+/** The status filter: when on, ticked items and done tasks are hidden (the data is not touched). */
+export const hideDone = (list = [], on = false) => (on ? list.filter((x) => !(x.done === true || x.status === 'done')) : list);

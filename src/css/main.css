@@ -743,3 +743,5 @@ body::before {
 .item-top .badge { flex: none; }
 .row-actions { flex: none; gap: var(--space-1); }
 .item .item-verify, .item .item-note, .task .task-due, .task .item-note { margin-inline-start: calc(24px + var(--space-3)); }
+.filter-toggle { justify-self: start; color: var(--muted); font-weight: 600; }
+.filter-toggle input { accent-color: var(--accent); }

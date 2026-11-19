@@ -142,6 +142,39 @@
     },
     "version": "0.5.0"
   },
+  "S5-13": {
+    "result": "PASS",
+    "before": {
+      "items": 21,
+      "tasks": 7
+    },
+    "hidden": {
+      "items": 20,
+      "tasks": 6,
+      "bar": "1 מתוך 10 (10%)"
+    },
+    "back": 21
+  },
+  "S5-15": {
+    "result": "PASS",
+    "ltrNums": 0,
+    "rowsOk": true,
+    "order": {
+      "pass": 184.796875,
+      "today": 717.984375,
+      "lists": 959.359375,
+      "tools": 1216.140625
+    }
+  },
+  "S5-14": {
+    "result": "PASS",
+    "stamped": "עודכן ב-25 בנובמבר 2026",
+    "stored": {
+      "ILS_THB": 9.8,
+      "updatedAt": "2026-11-25"
+    },
+    "cleared": true
+  },
   "S5-11 (no JS errors, no outside requests)": {
     "result": "PASS",
     "errors": [],

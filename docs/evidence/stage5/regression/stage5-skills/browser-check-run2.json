@@ -1,0 +1,183 @@
+{
+  "S5-3": {
+    "result": "PASS",
+    "afterNo": 0,
+    "items": 21,
+    "emptyHidden": true,
+    "tasks": 7
+  },
+  "S5-8": {
+    "result": "PASS",
+    "toCheck": 5,
+    "verifyItems": 5,
+    "checkedText": "נבדק ב-24 בנוב׳, אתר רשמי"
+  },
+  "S5-4": {
+    "result": "PASS",
+    "b0": {
+      "prep": "0 מתוך 10 (0%)",
+      "pack": "0 מתוך 11 (0%)"
+    },
+    "b1": {
+      "prep": "1 מתוך 10 (10%)",
+      "pack": "2 מתוך 11 (18%)"
+    },
+    "b2": {
+      "prep": "1 מתוך 10 (10%)",
+      "pack": "1 מתוך 11 (9%)"
+    }
+  },
+  "S5-5": {
+    "result": "PASS",
+    "qtyErr": "כמות: מספר שלם, מאחד ומעלה.",
+    "edited": {
+      "qty": 2,
+      "note": "אחת קטנה"
+    },
+    "askItem": "למחוק את סוללה ניידת? אי אפשר לבטל את זה.",
+    "keptItem": 21,
+    "afterDelItem": 20,
+    "keptTask": 7,
+    "afterDelTask": 6
+  },
+  "S5-6 (screen)": {
+    "result": "PASS",
+    "overdue": [
+      "הזמנת טיסות"
+    ],
+    "todayDue": "היום"
+  },
+  "S5-7": {
+    "result": "PASS",
+    "screen": {
+      "open": 5,
+      "prep": "1 מתוך 10 (10%)",
+      "pack": "1 מתוך 10 (10%)"
+    },
+    "home": {
+      "open": "5 משימות פתוחות.",
+      "next": "הבאה: הזמנת טיסות, באיחור",
+      "prep": "הכנות 10%",
+      "pack": "אריזה 10%"
+    },
+    "quickOpen": true,
+    "afterQuick": "6 משימות פתוחות."
+  },
+  "S5-1": {
+    "result": "PASS",
+    "items": 20,
+    "tasks": 7,
+    "keys": [
+      "tisa:v1"
+    ]
+  },
+  "S5-11 (layout)": {
+    "result": "PASS",
+    "a1": {
+      "hscroll": false,
+      "dir": "rtl",
+      "small": [],
+      "clipped": [],
+      "tiny": []
+    },
+    "a2": {
+      "hscroll": false,
+      "dir": "rtl",
+      "small": [],
+      "clipped": [],
+      "tiny": []
+    },
+    "a3": {
+      "hscroll": false,
+      "dir": "rtl",
+      "small": [],
+      "clipped": [],
+      "tiny": []
+    }
+  },
+  "S5-9": {
+    "result": "PASS",
+    "same": {
+      "destinations": true,
+      "budget": true,
+      "expenses": true,
+      "checklist": true,
+      "tasks": true
+    }
+  },
+  "S5-6": {
+    "result": "PASS",
+    "before": {
+      "state": "task surface is-upcoming",
+      "doneState": "task surface is-done",
+      "ok": true
+    },
+    "due-day": {
+      "state": "task surface is-today",
+      "doneState": "task surface is-done",
+      "ok": true
+    },
+    "after": {
+      "state": "task surface is-overdue",
+      "doneState": "task surface is-done",
+      "ok": true
+    },
+    "bangkok-midnight": {
+      "state": "task surface is-overdue",
+      "doneState": "task surface is-done",
+      "ok": true
+    }
+  },
+  "S5-10": {
+    "result": "PASS",
+    "caches": {
+      "keys": [
+        "tisa-0.5.0"
+      ],
+      "files": [
+        "/src/js/checklist-view.js",
+        "/src/js/core/checklist.js",
+        "/data/packs/th.js"
+      ]
+    },
+    "version": "0.5.0"
+  },
+  "S5-13": {
+    "result": "PASS",
+    "before": {
+      "items": 21,
+      "tasks": 7
+    },
+    "hidden": {
+      "items": 20,
+      "tasks": 6,
+      "bar": "1 מתוך 10 (10%)"
+    },
+    "back": 21
+  },
+  "S5-15": {
+    "result": "PASS",
+    "ltrNums": 0,
+    "rowsOk": true,
+    "order": {
+      "pass": 184.796875,
+      "today": 717.984375,
+      "lists": 959.359375,
+      "tools": 1216.140625
+    }
+  },
+  "S5-14": {
+    "result": "PASS",
+    "stamped": "עודכן ב-25 בנובמבר 2026",
+    "stored": {
+      "ILS_THB": 9.8,
+      "updatedAt": "2026-11-25"
+    },
+    "cleared": true
+  },
+  "S5-11 (no JS errors, no outside requests)": {
+    "result": "PASS",
+    "errors": [],
+    "external": []
+  }
+}

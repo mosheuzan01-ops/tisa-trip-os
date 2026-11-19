@@ -7,7 +7,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 
 const ROOT = path.join(__dirname, '..', '..');
-const OUT = path.join(ROOT, process.env.QA_OUT ?? 'docs/evidence/stage5');
+const OUT = path.resolve(ROOT, process.env.QA_OUT ?? 'docs/evidence/stage5'); // absolute or relative to the repo
 fs.mkdirSync(OUT, { recursive: true });
 const SHOTS = process.env.SHOTS !== '0';
 const PORT = 8088;
@@ -284,6 +284,49 @@ async function addTask(page, { title, due, status }) {
     await toastGone(page);
     await shot(page, 'after-offline-375', false);
     pass('S5-10', caches.keys.includes(`tisa-${version}`) && caches.files.length === 3 && t.checklist.some((x) => x.done) && t.tasks.length === 1, { caches, version });
+    await ctx.close();
+  }
+
+  // ---------- S5-13 status filter, S5-14 rates "last updated", S5-15 regressions for the three layout bugs ----------
+  {
+    const { ctx, page } = await fresh(browser, '2026-11-25T09:00:00+07:00');
+    await seed(page, 'list-seed');
+    await seed(page, 'tasks-seed');
+    await page.locator('[data-action="item-toggle"]').nth(0).check();
+    await page.locator('[data-action="task-toggle"]').nth(0).check();
+    const before = { items: await page.locator('.item').count(), tasks: await page.locator('.task').count() };
+    await page.check('[data-filter="hide-done-items"]');
+    await page.check('[data-filter="hide-done-tasks"]');
+    const hidden = { items: await page.locator('.item').count(), tasks: await page.locator('.task').count(), bar: (await page.locator('[data-slot="prep-num"]').textContent()).trim() };
+    await page.uncheck('[data-filter="hide-done-items"]');
+    const back = await page.locator('.item').count();
+    pass('S5-13', before.items === 21 && hidden.items === 20 && before.tasks === 7 && hidden.tasks === 6 && back === 21 && /1 מתוך 10/.test(hidden.bar), { before, hidden, back });
+
+    // S5-15 regressions: (1) bar numbers are not forced left-to-right, (2) row buttons sit on the item's own row,
+    // (3) on a phone the home card sits right after "today", below the pass.
+    const ltrNums = await page.locator('.bar-num.ltr').count();
+    const rowsOk = await page.evaluate(() => [...document.querySelectorAll('.item, .task')].every((li) => li.querySelector(':scope > .item-top > .row-actions') && !li.querySelector(':scope > .stop-actions')));
+    await page.click('[data-tab="home"]');
+    await page.waitForSelector('#panel-home .home-lists', { state: 'visible' }); // measure only once home is on screen
+    const order = await page.evaluate(() => {
+      const top = (sel) => document.querySelector(sel).getBoundingClientRect().top;
+      return { pass: top('.pass'), today: top('.today'), lists: top('.home-lists'), tools: top('.tools') };
+    });
+    pass('S5-15', ltrNums === 0 && rowsOk && order.pass < order.today && order.today < order.lists && order.lists < order.tools, { ltrNums, rowsOk, order });
+
+    // S5-14: edited rates show the date; back to planning rates shows no date
+    await page.click('[data-tab="budget"]');
+    await page.click('[data-action="rates-open"]');
+    await page.fill('#dlg-rates [name="ILS_THB"]', '9.8');
+    await page.click('#dlg-rates [type="submit"]');
+    await closed(page, '#dlg-rates');
+    const stamped = (await page.locator('[data-slot="rates-updated"]').textContent()).trim();
+    const stored = (await trip(page)).rates;
+    await page.click('[data-action="rates-open"]');
+    await page.click('[data-action="rates-restore"]');
+    await closed(page, '#dlg-rates');
+    const cleared = await page.locator('[data-slot="rates-updated"]').isHidden();
+    pass('S5-14', /עודכן/.test(stamped) && /25/.test(stamped) && stored.updatedAt === '2026-11-25' && cleared, { stamped, stored, cleared });
     await ctx.close();
   }
 
