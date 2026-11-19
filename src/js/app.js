@@ -67,6 +67,39 @@ function setupPass() {
   pass.addEventListener('click', () => {
     pass.setAttribute('aria-pressed', String(pass.getAttribute('aria-pressed') !== 'true'));
   });
+  setupTilt(pass);
+}
+
+// Small 3D tilt: the card leans toward the finger or pointer, and the glare follows it.
+// Only CSS variables change; with reduced motion the card keeps its resting pose.
+function setupTilt(pass) {
+  const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)');
+  let frame = 0;
+  const set = (x, y, glare) => {
+    cancelAnimationFrame(frame);
+    frame = requestAnimationFrame(() => {
+      pass.style.setProperty('--tx', x.toFixed(3));
+      pass.style.setProperty('--ty', y.toFixed(3));
+      pass.style.setProperty('--gx', `${((x + 1) * 50).toFixed(1)}%`);
+      pass.style.setProperty('--gy', `${((y + 1) * 50).toFixed(1)}%`);
+      pass.style.setProperty('--glare', String(glare));
+    });
+  };
+  const follow = (e) => {
+    if (reduce?.matches) return;
+    const r = pass.getBoundingClientRect();
+    const x = Math.max(-1, Math.min(1, ((e.clientX - r.left) / r.width) * 2 - 1));
+    const y = Math.max(-1, Math.min(1, ((e.clientY - r.top) / r.height) * 2 - 1));
+    pass.classList.add('is-tilting');
+    set(x, y, 0.6);
+  };
+  const rest = () => {
+    pass.classList.remove('is-tilting');
+    set(0, 0, 0.35);
+  };
+  pass.addEventListener('pointermove', (e) => { if (e.pointerType === 'mouse' || e.buttons) follow(e); });
+  pass.addEventListener('pointerdown', follow);
+  for (const type of ['pointerleave', 'pointerup', 'pointercancel', 'blur']) pass.addEventListener(type, rest);
 }
 
 function setupClock(country, locale, t) {
