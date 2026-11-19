@@ -46,7 +46,7 @@
 | `expenses` | מערך | הוצאות (שלב 4). ראו למטה |
 | `budget` | אובייקט | משלב 4 (גרסת נתונים 2). ראו למטה |
 | `rates` | אובייקט | שערים שהמשתמש ערך, למשל `{ "ILS_THB": 12 }`. ריק = שערי התכנון מחבילת המדינה |
-| `transfers` | מערך | שלב 5 |
+| `transfers` | מערך | טיסות ומעברים (0.5.3). ראו למטה |
 | `checklist` | מערך | צ'ק ליסט (שלב 5). ראו למטה |
 | `events` | מערך | שלב 6 |
 | `info` | אובייקט | שלב 7 |
@@ -139,3 +139,11 @@
 
 ### המרה 2 ל-3
 מוסיפים `tasks: []`. פריטים קיימים ב-`checklist` מקבלים ערכי ברירת מחדל: `group: documents`, `qty: 1`, `note: ""` ו-`done: false`. שום שדה אחר לא משתנה. גם קובץ גיבוי מגרסה 2 עובר את אותה המרה.
+
+### `transfers[i]` (0.5.3, בלי שינוי בגרסת הנתונים, כי השדה כבר היה מערך ריק)
+`{ id, kind, from, to, date, time, company, booking, priceMinor, currency, link, status, note, expenseId }`
+- `kind`: `flight`, `bus`, `train`, `boat`, `car` או `other`.
+- `status`: `planned`, `booked` או `paid`.
+- `time`: `"HH:MM"`, או ריק כשלא הוזן.
+- `priceMinor`: מספר שלם או `null`.
+- `expenseId`: ההוצאה המקושרת, או `null`. להוצאה המקושרת יש `transferId`.

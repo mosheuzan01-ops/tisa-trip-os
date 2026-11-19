@@ -57,17 +57,19 @@ const visible = (page, sel) => page.locator(sel).isVisible();
       if (route === 'settings') await page.click('.settings-btn');
       else if (route === 'home') await page.click('[data-tab="home"]');
       else if (await page.locator(`[role="tab"][data-route="${route}"]`).count()) await page.click(`[role="tab"][data-route="${route}"]`);
+      else if (route === 'transfers') { await page.click('[data-tab="itinerary"]'); await page.click('#panel-itinerary [data-go="transfers"]'); } // a real screen since 0.5.3, opened from the itinerary
       else { await page.click('[data-tab="home"]'); await page.click('.tile[data-go="info"]'); if (route !== 'info') await page.click(`.soon-link[data-route="${route}"]`); } // all tabs are real screens since Stage 5; soon screens open from the home tile
       await page.waitForFunction((r) => location.hash === `#/${r}`, route);
-      await page.waitForSelector(`[data-route="${route}"][aria-current="page"]`, { state: "attached" }); // hashchange is handled a moment later
+      if (route === 'transfers') await page.waitForSelector('#panel-transfers', { state: 'visible' }); // no tab of its own: the itinerary tab stays selected
+      else await page.waitForSelector(`[data-route="${route}"][aria-current="page"]`, { state: "attached" }); // hashchange is handled a moment later
     };
     for (const route of ROUTES) {
       await open(route);
-      const panel = { home: '#panel-home', settings: '#panel-settings', itinerary: '#panel-itinerary', money: '#panel-money', checklist: '#panel-checklist' }[route] ?? '#panel-soon';
-      const current = await page.locator(`[data-route="${route}"][aria-current="page"]`).count();
+      const panel = { home: '#panel-home', settings: '#panel-settings', itinerary: '#panel-itinerary', money: '#panel-money', checklist: '#panel-checklist', transfers: '#panel-transfers' }[route] ?? '#panel-soon';
+      const current = route === 'transfers' ? await page.locator('[data-tab="itinerary"][aria-selected="true"]').count() : await page.locator(`[data-route="${route}"][aria-current="page"]`).count();
       const hscroll = await page.evaluate(() => document.documentElement.scrollWidth > innerWidth);
       nav[route] = { hash: await page.evaluate(() => location.hash), panelVisible: await visible(page, panel), ariaCurrent: current, hscroll };
-      if (!['home', 'settings', 'itinerary', 'money', 'checklist'].includes(route)) {
+      if (!['home', 'settings', 'itinerary', 'money', 'checklist', 'transfers'].includes(route)) {
         // B12: no fake action buttons on an empty screen (only "back to home" and real links)
         nav[route].buttons = await page.locator('#panel-soon button').evaluateAll((b) => b.map((x) => x.dataset.go ?? 'NO-DESTINATION'));
         nav[route].text = await page.locator('[data-slot="soon-text"]').textContent();
@@ -80,13 +82,13 @@ const visible = (page, sel) => page.locator(sel).isVisible();
     await page.reload();
     await ready(page);
     const afterReload = await page.evaluate(() => location.hash);
-    const transfersVisible = await visible(page, '#panel-soon');
+    const transfersVisible = await visible(page, '#panel-transfers');
     await page.goto(`${base}#budget`); // Stage 1 address still works
     await ready(page);
     const legacyHash = await page.evaluate(() => location.hash);
     const b11 = Object.values(nav).every((n) => n.panelVisible && n.ariaCurrent > 0 && !n.hscroll) && afterBack === '#/transfers' && afterReload === '#/transfers' && transfersVisible && legacyHash === '#/money';
     pass('B11', b11, { nav, afterBack, afterReload, legacyHash });
-    const soon = Object.entries(nav).filter(([r]) => !['home', 'settings', 'itinerary', 'money', 'checklist'].includes(r));
+    const soon = Object.entries(nav).filter(([r]) => !['home', 'settings', 'itinerary', 'money', 'checklist', 'transfers'].includes(r));
     pass('B12', soon.every(([, n]) => n.buttons.length === 1 && n.buttons[0] === 'home' && /בגרסה עתידית/.test(n.text) /* since 0.5.2: no stage numbers */), { screens: Object.fromEntries(soon.map(([r, n]) => [r, { buttons: n.buttons, text: n.text }])) });
     await open('info');
     await page.screenshot({ path: `${OUT}/empty-screen-info.png`, fullPage: false });
