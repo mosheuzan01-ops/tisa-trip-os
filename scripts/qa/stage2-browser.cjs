@@ -87,7 +87,7 @@ const visible = (page, sel) => page.locator(sel).isVisible();
     const b11 = Object.values(nav).every((n) => n.panelVisible && n.ariaCurrent > 0 && !n.hscroll) && afterBack === '#/transfers' && afterReload === '#/transfers' && transfersVisible && legacyHash === '#/money';
     pass('B11', b11, { nav, afterBack, afterReload, legacyHash });
     const soon = Object.entries(nav).filter(([r]) => !['home', 'settings', 'itinerary', 'money', 'checklist'].includes(r));
-    pass('B12', soon.every(([, n]) => n.buttons.length === 1 && n.buttons[0] === 'home' && /שלב \d/.test(n.text)), { screens: Object.fromEntries(soon.map(([r, n]) => [r, { buttons: n.buttons, text: n.text }])) });
+    pass('B12', soon.every(([, n]) => n.buttons.length === 1 && n.buttons[0] === 'home' && /בגרסה עתידית/.test(n.text) /* since 0.5.2: no stage numbers */), { screens: Object.fromEntries(soon.map(([r, n]) => [r, { buttons: n.buttons, text: n.text }])) });
     await open('info');
     await page.screenshot({ path: `${OUT}/empty-screen-info.png`, fullPage: false });
 
