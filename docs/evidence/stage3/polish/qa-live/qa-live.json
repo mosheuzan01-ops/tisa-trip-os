@@ -1,0 +1,387 @@
+{
+  "widths": {
+    "360-light-home": {
+      "dir": "rtl",
+      "width": 360,
+      "hscroll": false,
+      "smallTargets": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 15,
+      "checkedTexts": 45
+    },
+    "360-light-itinerary": {
+      "dir": "rtl",
+      "width": 360,
+      "hscroll": false,
+      "smallTargets": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 61
+    },
+    "360-light-settings": {
+      "dir": "rtl",
+      "width": 360,
+      "hscroll": false,
+      "smallTargets": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 40
+    },
+    "360-light-replan-dialog": {
+      "dir": "rtl",
+      "width": 360,
+      "hscroll": false,
+      "smallTargets": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 14,
+      "checkedTexts": 75
+    },
+    "360-dark-home": {
+      "dir": "rtl",
+      "width": 360,
+      "hscroll": false,
+      "smallTargets": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 15,
+      "checkedTexts": 45
+    },
+    "360-dark-itinerary": {
+      "dir": "rtl",
+      "width": 360,
+      "hscroll": false,
+      "smallTargets": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 61
+    },
+    "360-dark-settings": {
+      "dir": "rtl",
+      "width": 360,
+      "hscroll": false,
+      "smallTargets": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 40
+    },
+    "360-dark-replan-dialog": {
+      "dir": "rtl",
+      "width": 360,
+      "hscroll": false,
+      "smallTargets": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 14,
+      "checkedTexts": 75
+    },
+    "390-light-home": {
+      "dir": "rtl",
+      "width": 390,
+      "hscroll": false,
+      "smallTargets": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 15,
+      "checkedTexts": 45
+    },
+    "390-light-itinerary": {
+      "dir": "rtl",
+      "width": 390,
+      "hscroll": false,
+      "smallTargets": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 61
+    },
+    "390-light-settings": {
+      "dir": "rtl",
+      "width": 390,
+      "hscroll": false,
+      "smallTargets": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 40
+    },
+    "390-light-replan-dialog": {
+      "dir": "rtl",
+      "width": 390,
+      "hscroll": false,
+      "smallTargets": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 14,
+      "checkedTexts": 75
+    },
+    "390-dark-home": {
+      "dir": "rtl",
+      "width": 390,
+      "hscroll": false,
+      "smallTargets": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 15,
+      "checkedTexts": 45
+    },
+    "390-dark-itinerary": {
+      "dir": "rtl",
+      "width": 390,
+      "hscroll": false,
+      "smallTargets": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 61
+    },
+    "390-dark-settings": {
+      "dir": "rtl",
+      "width": 390,
+      "hscroll": false,
+      "smallTargets": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 40
+    },
+    "390-dark-replan-dialog": {
+      "dir": "rtl",
+      "width": 390,
+      "hscroll": false,
+      "smallTargets": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 14,
+      "checkedTexts": 75
+    },
+    "768-light-home": {
+      "dir": "rtl",
+      "width": 768,
+      "hscroll": false,
+      "smallTargets": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 15,
+      "checkedTexts": 45
+    },
+    "768-light-itinerary": {
+      "dir": "rtl",
+      "width": 768,
+      "hscroll": false,
+      "smallTargets": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 61
+    },
+    "768-light-settings": {
+      "dir": "rtl",
+      "width": 768,
+      "hscroll": false,
+      "smallTargets": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 40
+    },
+    "768-light-replan-dialog": {
+      "dir": "rtl",
+      "width": 768,
+      "hscroll": false,
+      "smallTargets": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 14,
+      "checkedTexts": 75
+    },
+    "768-dark-home": {
+      "dir": "rtl",
+      "width": 768,
+      "hscroll": false,
+      "smallTargets": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 15,
+      "checkedTexts": 45
+    },
+    "768-dark-itinerary": {
+      "dir": "rtl",
+      "width": 768,
+      "hscroll": false,
+      "smallTargets": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 61
+    },
+    "768-dark-settings": {
+      "dir": "rtl",
+      "width": 768,
+      "hscroll": false,
+      "smallTargets": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 40
+    },
+    "768-dark-replan-dialog": {
+      "dir": "rtl",
+      "width": 768,
+      "hscroll": false,
+      "smallTargets": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 14,
+      "checkedTexts": 75
+    },
+    "1280-light-home": {
+      "dir": "rtl",
+      "width": 1280,
+      "hscroll": false,
+      "smallTargets": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 15,
+      "checkedTexts": 45
+    },
+    "1280-light-itinerary": {
+      "dir": "rtl",
+      "width": 1280,
+      "hscroll": false,
+      "smallTargets": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 61
+    },
+    "1280-light-settings": {
+      "dir": "rtl",
+      "width": 1280,
+      "hscroll": false,
+      "smallTargets": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 40
+    },
+    "1280-light-replan-dialog": {
+      "dir": "rtl",
+      "width": 1280,
+      "hscroll": false,
+      "smallTargets": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 14,
+      "checkedTexts": 75
+    },
+    "1280-dark-home": {
+      "dir": "rtl",
+      "width": 1280,
+      "hscroll": false,
+      "smallTargets": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 15,
+      "checkedTexts": 45
+    },
+    "1280-dark-itinerary": {
+      "dir": "rtl",
+      "width": 1280,
+      "hscroll": false,
+      "smallTargets": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 61
+    },
+    "1280-dark-settings": {
+      "dir": "rtl",
+      "width": 1280,
+      "hscroll": false,
+      "smallTargets": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 40
+    },
+    "1280-dark-replan-dialog": {
+      "dir": "rtl",
+      "width": 1280,
+      "hscroll": false,
+      "smallTargets": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 14,
+      "checkedTexts": 75
+    }
+  },
+  "keyboard": {
+    "tabbed": 70,
+    "withoutVisibleFocus": [
+      {
+        "el": "body.",
+        "ring": false,
+        "top": 0
+      }
+    ],
+    "uniqueStops": 12,
+    "dialogFocusSteps": [
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "in",
+      "BODY"
+    ],
+    "dialogKeepsFocus": true,
+    "escape": {
+      "closed": true,
+      "focus": "stop-edit"
+    }
+  },
+  "errors": []
+}

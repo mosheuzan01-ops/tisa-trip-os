@@ -1,0 +1,36 @@
+{
+  "format": "tisa-backup",
+  "schemaVersion": 1,
+  "exportedAt": "2026-11-19T17:50:06.350Z",
+  "data": {
+    "schemaVersion": 1,
+    "appVersion": "0.3.0",
+    "createdAt": "2026-11-19T17:50:04.319Z",
+    "updatedAt": "2026-11-19T17:50:05.986Z",
+    "settings": {
+      "language": "he",
+      "theme": "light",
+      "lastBackupAt": null,
+      "assistantQuestionLimit": 50
+    },
+    "activeTripId": "7376e163-40d8-49d2-894a-67453b09c3f9",
+    "trips": {
+      "7376e163-40d8-49d2-894a-67453b09c3f9": {
+        "id": "7376e163-40d8-49d2-894a-67453b09c3f9",
+        "countryCode": "TH",
+        "name": "תאילנד",
+        "startDate": "2026-12-05",
+        "endDate": "2027-01-03",
+        "destinations": [],
+        "expenses": [],
+        "transfers": [],
+        "checklist": [],
+        "events": [],
+        "budget": {},
+        "rates": {},
+        "info": {},
+        "assistant": {}
+      }
+    }
+  }
+}

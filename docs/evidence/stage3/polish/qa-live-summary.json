@@ -1,0 +1,42 @@
+{
+ "hscroll": [],
+ "notRtl": [],
+ "smallTargets": [],
+ "minText": 14,
+ "bodyText": [
+  16
+ ],
+ "lowContrast": [],
+ "contrastEstimated": 15,
+ "keyboard": {
+  "tabbed": 70,
+  "withoutVisibleFocus": [
+   {
+    "el": "body.",
+    "ring": false,
+    "top": 0
+   }
+  ],
+  "uniqueStops": 12,
+  "dialogFocusSteps": [
+   "in",
+   "in",
+   "in",
+   "in",
+   "in",
+   "in",
+   "in",
+   "in",
+   "in",
+   "in",
+   "in",
+   "BODY"
+  ],
+  "dialogKeepsFocus": true,
+  "escape": {
+   "closed": true,
+   "focus": "stop-edit"
+  }
+ },
+ "errors": []
+}

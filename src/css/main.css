@@ -546,3 +546,9 @@ body::before {
 .replan-name { font-weight: 700; }
 .replan-was { color: var(--on-dmetal-muted); text-decoration: line-through; }
 .replan-will { font-weight: 600; }
+.today-stop { display: flex; flex-wrap: wrap; align-items: center; gap: 0 var(--space-2); color: var(--muted); }
+.today-stop-link {
+  display: inline-flex; align-items: center; justify-content: center; min-height: var(--tap); min-width: var(--tap); padding-inline: var(--space-2); color: var(--title); font-size: var(--text-lead); font-weight: 700;
+  text-decoration: underline; text-decoration-color: var(--line-strong); text-underline-offset: 4px; border-radius: var(--radius-sm);
+}
+.today-stop-link:hover { text-decoration-color: var(--accent); }

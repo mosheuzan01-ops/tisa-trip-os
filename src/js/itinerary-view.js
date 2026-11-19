@@ -124,6 +124,19 @@ export function renderItinerary(ctx) {
     (again && !again.disabled ? again : list.querySelector(`[data-id="${focusKey[1]}"] [data-action="stop-edit"]`))?.focus();
   }
 
+  // Home "today" card: the stop of the day (or the next one), linked to this screen.
+  const homeStop = $('[data-slot="today-stop"]');
+  if (homeStop) {
+    const id = where.currentId ?? where.nextId;
+    const stop = stops.find((x) => x.id === id);
+    homeStop.hidden = !stop;
+    if (stop) {
+      const link = el('a', 'today-stop-link', stop.name);
+      link.href = '#/itinerary';
+      homeStop.replaceChildren(el('span', 'today-stop-label', t(where.currentId ? 'today.stop.during' : 'today.stop.next')), link);
+    }
+  }
+
   const dates = tripDates(trip);
   $('[data-slot="itin-trip-dates"]').textContent = dates
     ? interpolate(t('itin.trip.range'), { start: formatDate(dates.start, fmtLocale), end: formatDate(dates.end, fmtLocale) })
@@ -287,7 +300,14 @@ export function setupItinerary(ctx, { wireDialog, showFormErrors }) {
   const preview = $('[data-slot="replan-preview"]');
   const rSave = $('[data-slot="replan-save"]');
   let plan = null;
-  wireDialog(dlgReplan, () => { plan = null; restore(); });
+  let onCancel = null;
+  let saved = false;
+  wireDialog(dlgReplan, () => {
+    plan = null;
+    if (!saved) onCancel?.();
+    onCancel = null;
+    restore();
+  });
 
   function computePlan() {
     const trip = ctx.trip();
@@ -332,12 +352,15 @@ export function setupItinerary(ctx, { wireDialog, showFormErrors }) {
     rSave.disabled = Boolean(old && old.start === next.start && old.end === next.end && !result.changes.length);
   }
 
-  function openReplan(from) {
+  function openReplan(from, preset = null, cancel = null) {
     opener = from;
+    onCancel = cancel;
+    saved = false;
     const trip = ctx.trip();
     const stops = visibleStops(trip);
     rForm.reset();
-    const dates = tripDates(trip) ?? (stops.length ? { start: stops[0].startDate, end: stops[stops.length - 1].endDate } : { start: '', end: '' });
+    $('[data-slot="replan-from"]').hidden = !preset;
+    const dates = preset ?? tripDates(trip) ?? (stops.length ? { start: stops[0].startDate, end: stops[stops.length - 1].endDate } : { start: '', end: '' });
     rForm.start.value = dates.start;
     rForm.end.value = dates.end;
     const flexInput = rForm.querySelector('input[value="flex"]');
@@ -345,8 +368,15 @@ export function setupItinerary(ctx, { wireDialog, showFormErrors }) {
     flexInput.closest('.replan-mode').classList.toggle('is-disabled', flexInput.disabled);
     computePlan();
     dlgReplan.showModal();
-    rForm.start.focus();
+    (preset ? rForm.querySelector('input[name="mode"]:checked') : rForm.start).focus();
   }
+
+  // Trip dates changed from home or settings: when there are stops, the same preview opens first.
+  ctx.needsReplan = (dates) => {
+    const old = tripDates(ctx.trip());
+    return visibleStops(ctx.trip()).length > 0 && !(old && old.start === dates.start && old.end === dates.end);
+  };
+  ctx.openReplan = (dates, from, cancel) => openReplan(from, dates, cancel);
 
   rForm.addEventListener('input', computePlan);
   rForm.addEventListener('change', computePlan);
@@ -361,6 +391,7 @@ export function setupItinerary(ctx, { wireDialog, showFormErrors }) {
       trip.endDate = dates.end;
       if (result.changes.length) writeStops(trip, result.stops);
     }, 'replan.done');
+    saved = true;
     dlgReplan.close();
   });
 }
