@@ -1,0 +1,36 @@
+{
+  "texts mobile": {
+    "result": "FAIL",
+    "hint": "התאריכים נשמרים בטיול. תכנון מחדש של המסלול לפי התאריכים ייבנה בשלב 3."
+  },
+  "cache mobile": {
+    "result": "PASS",
+    "cacheKeys": [
+      "tisa-0.5.4"
+    ],
+    "version": "0.5.4"
+  },
+  "export from settings mobile": {
+    "result": "PASS",
+    "downloads": 1
+  },
+  "texts desktop": {
+    "result": "FAIL",
+    "hint": "התאריכים נשמרים בטיול. תכנון מחדש של המסלול לפי התאריכים ייבנה בשלב 3."
+  },
+  "cache desktop": {
+    "result": "PASS",
+    "cacheKeys": [
+      "tisa-0.5.4"
+    ],
+    "version": "0.5.4"
+  },
+  "export from settings desktop": {
+    "result": "PASS",
+    "downloads": 1
+  },
+  "no JS errors": {
+    "result": "PASS",
+    "errors": []
+  }
+}
