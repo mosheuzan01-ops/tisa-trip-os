@@ -9,6 +9,8 @@ import {
   dailyAllowance, filterExpenses, pieSlices, convertAll, atmCost, affordability, toCsv, stampRates,
 } from './core/money.js';
 import { validatePerson, balances, settle, validateSplit, SPLIT_MODES } from './core/split.js';
+import { searchList, sumBase } from './core/search.js';
+import { setupSearch } from './search-view.js';
 import { sortStops, cleanStops, formatDate } from './core/itinerary.js';
 import { makeId } from './core/ids.js';
 
@@ -59,6 +61,7 @@ function dailyText(ctx, m) {
 }
 
 const filters = { date: '', category: '', destinationId: '' };
+let query = ''; // 0.5.1 text search (screen only, not saved)
 
 export function renderMoney(ctx) {
   const panel = $('#panel-money');
@@ -140,9 +143,16 @@ export function renderMoney(ctx) {
   fill(categoryIds(m.pack).map((id) => [id, catName(ctx, id)]), 'category');
   fill(stops.map((x) => [x.id, x.name]), 'destinationId');
 
-  const shown = filterExpenses(m.expenses, filters).sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0));
-  const any = Object.values(filters).some(Boolean);
+  // Search: description, category, stop, payment method, note. Only the list narrows; the totals above never change.
+  const searchFields = (e) => [e.description, catName(ctx, e.category), stopName.get(e.destinationId), t(`exp.method.${e.method}`), e.note];
+  const shown = searchList(filterExpenses(m.expenses, filters), query, searchFields)
+    .sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0));
+  const any = Object.values(filters).some(Boolean) || query.trim() !== '';
   $('[data-slot="exp-empty"]').textContent = shown.length ? '' : t(m.expenses.length && any ? 'money.exp.emptyFiltered' : 'money.exp.empty');
+  const fsum = $('[data-slot="money-filtered"]');
+  fsum.hidden = !any || shown.length === 0;
+  fsum.textContent = shown.length === 1 ? interpolate(t('money.filtered.one'), { sum: fm(sumBase(shown)) })
+    : interpolate(t('money.filtered.other'), { n: shown.length, sum: fm(sumBase(shown)) });
 
   // Pie (plain SVG). The same numbers are in the screen-reader text and the legend.
   const slices = pieSlices(shown);
@@ -346,7 +356,8 @@ export function setupMoney(ctx, { wireDialog, showFormErrors }) {
   };
   const option = (value, label) => Object.assign(document.createElement('option'), { value, textContent: label });
 
-  for (const node of panel.querySelectorAll('[data-filter]')) {
+  setupSearch($('[data-search="money"]'), (v) => { query = v; renderMoney(ctx); });
+  for (const node of panel.querySelectorAll('select[data-filter]')) {
     node.addEventListener('change', () => { filters[node.dataset.filter] = node.value; renderMoney(ctx); });
   }
 

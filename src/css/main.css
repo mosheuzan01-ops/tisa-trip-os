@@ -745,3 +745,27 @@ body::before {
 .item .item-verify, .item .item-note, .task .task-due, .task .item-note { margin-inline-start: calc(24px + var(--space-3)); }
 .filter-toggle { justify-self: start; color: var(--muted); font-weight: 600; }
 .filter-toggle input { accent-color: var(--accent); }
+
+/* ---------- 0.5.1: shared search + sticky filter bar (money and lists) ---------- */
+.filter-bar {
+  position: sticky; top: 0; z-index: 6; display: grid; gap: var(--space-2);
+  margin-inline: calc(-1 * var(--space-2)); padding: var(--space-2);
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+  background: var(--bg); /* solid: rows scrolling underneath must not show through */
+  box-shadow: 0 1px 0 var(--line), 0 8px 16px -14px var(--shadow-strong);
+}
+.search-bar { position: relative; display: flex; align-items: center; }
+.search-icon { position: absolute; inset-inline-start: var(--space-3); width: 20px; height: 20px; color: var(--muted); pointer-events: none; }
+.search-bar input {
+  width: 100%; min-height: var(--tap); padding-inline: calc(var(--space-3) + 28px) calc(var(--tap) + var(--space-1));
+  border-radius: var(--radius-pill); border: 1px solid var(--line); background: var(--surface); color: var(--ink); font: inherit;
+}
+.search-bar input::placeholder { color: var(--muted); }
+.search-bar input::-webkit-search-cancel-button { display: none; } /* our own clear button, same on every browser */
+.search-bar input:focus-visible { outline: 3px solid var(--focus); outline-offset: 1px; }
+.search-clear { position: absolute; inset-inline-end: 0; width: var(--tap); height: var(--tap); border: 0; background: transparent; }
+.filtered-summary { color: var(--ink); font-weight: 600; }
+.no-results { padding: var(--space-6) var(--space-4); text-align: center; color: var(--muted); font-weight: 600; border: 1px dashed var(--line-strong); border-radius: var(--radius-md); }
+.lists-body { display: grid; gap: var(--space-4); }
+.filter-toggles { display: flex; flex-wrap: wrap; gap: 0 var(--space-4); }
+.filter-toggles .filter-toggle { justify-self: auto; }

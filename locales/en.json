@@ -323,7 +323,7 @@
   "money.cat.over": "Over by {amount}",
   "money.cat.overBadge": "Over",
   "money.exp.empty": "No expenses yet.",
-  "money.exp.emptyFiltered": "No expenses match the filter.",
+  "money.exp.emptyFiltered": "No results",
   "money.profile.title": "Budget template",
   "money.profile.text": "A starting point. The amounts are planning estimates, not verified prices. After loading, every amount can be edited and the math follows your numbers.",
   "money.profile.confirm": "Load the template",
@@ -515,5 +515,16 @@
   "taskErr.note.tooLong": "The note is too long.",
   "list.hideDone": "Hide what is ready",
   "task.hideDone": "Hide done tasks",
-  "money.rates.updated": "Last updated {date}"
+  "money.rates.updated": "Last updated {date}",
+  "search.money": "Search expenses: description, category, stop",
+  "search.lists": "Search items and tasks",
+  "search.clear": "Clear search",
+  "search.none": "No results",
+  "money.filtered.one": "1 expense shown, total {sum}. The summary above does not change.",
+  "money.filtered.other": "{n} expenses shown, total {sum}. The summary above does not change.",
+  "lists.found": "Showing: {items}, {tasks}.",
+  "lists.found.items.one": "one item",
+  "lists.found.items.other": "{n} items",
+  "lists.found.tasks.one": "one task",
+  "lists.found.tasks.other": "{n} tasks"
 }

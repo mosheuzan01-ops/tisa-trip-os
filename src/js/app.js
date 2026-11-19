@@ -56,6 +56,7 @@ async function boot() {
 
   for (const el of $$('[data-i18n]')) el.textContent = t(el.dataset.i18n);
   for (const el of $$('[data-i18n-label]')) el.setAttribute('aria-label', t(el.dataset.i18nLabel));
+  for (const el of $$('[data-i18n-placeholder]')) el.setAttribute('placeholder', t(el.dataset.i18nPlaceholder));
 
   const place = country.names[locale] ?? country.names.en;
   for (const el of $$('[data-slot="country"]')) el.textContent = place;
