@@ -1,0 +1,139 @@
+TAP version 13
+# Subtest: S4-2: money is parsed to whole minor units; 0.1 + 0.2 has no rounding error
+ok 1 - S4-2: money is parsed to whole minor units; 0.1 + 0.2 has no rounding error
+  ---
+  duration_ms: 2.355209
+  type: 'test'
+  ...
+# Subtest: rates: planning defaults, overrides, conversion to shekels, validation
+ok 2 - rates: planning defaults, overrides, conversion to shekels, validation
+  ---
+  duration_ms: 0.962074
+  type: 'test'
+  ...
+# Subtest: S4-3: an expense keeps its own rate; changing the rate later does not touch it
+ok 3 - S4-3: an expense keeps its own rate; changing the rate later does not touch it
+  ---
+  duration_ms: 0.320122
+  type: 'test'
+  ...
+# Subtest: validateExpense: every field is checked, with message keys
+ok 4 - validateExpense: every field is checked, with message keys
+  ---
+  duration_ms: 0.569506
+  type: 'test'
+  ...
+# Subtest: nine categories: the pack's eight plus emergency
+ok 5 - nine categories: the pack's eight plus emergency
+  ---
+  duration_ms: 0.113882
+  type: 'test'
+  ...
+# Subtest: S4-7: a profile becomes an editable budget marked as an estimate; emergency 2,500 (owner, 2026-11-19)
+ok 6 - S4-7: a profile becomes an editable budget marked as an estimate; emergency 2,500 (owner, 2026-11-19)
+  ---
+  duration_ms: 0.258743
+  type: 'test'
+  ...
+# Subtest: S4-4 + S4-6: paid / planned / committed / free add up to the budget; categories and overspend
+ok 7 - S4-4 + S4-6: paid / planned / committed / free add up to the budget; categories and overspend
+  ---
+  duration_ms: 0.668298
+  type: 'test'
+  ...
+# Subtest: summarize with only a home total (no categories yet) and with no budget
+ok 8 - summarize with only a home total (no categories yet) and with no budget
+  ---
+  duration_ms: 0.271979
+  type: 'test'
+  ...
+# Subtest: S4-5: days left and daily allowance by the trip clock: before, middle, last day, after
+ok 9 - S4-5: days left and daily allowance by the trip clock: before, middle, last day, after
+  ---
+  duration_ms: 0.360389
+  type: 'test'
+  ...
+# Subtest: S4-8: filters by day, category and stop; pie slices match the sums
+ok 10 - S4-8: filters by day, category and stop; pie slices match the sums
+  ---
+  duration_ms: 0.567487
+  type: 'test'
+  ...
+# Subtest: S4-13: v1 data with a Stage 1 budget migrates to v2 without losing anything
+ok 11 - S4-13: v1 data with a Stage 1 budget migrates to v2 without losing anything
+  ---
+  duration_ms: 1.056794
+  type: 'test'
+  ...
+# Subtest: S4-13: a fresh state has an empty money budget
+ok 12 - S4-13: a fresh state has an empty money budget
+  ---
+  duration_ms: 0.176034
+  type: 'test'
+  ...
+# Subtest: S4-1: an expense is saved through storage.js under the tisa: key and survives a reload
+ok 13 - S4-1: an expense is saved through storage.js under the tisa: key and survives a reload
+  ---
+  duration_ms: 0.462849
+  type: 'test'
+  ...
+# Subtest: S4-9 + S4-13: backup round trip keeps budget, rates and expenses; a v1 backup still imports
+ok 14 - S4-9 + S4-13: backup round trip keeps budget, rates and expenses; a v1 backup still imports
+  ---
+  duration_ms: 0.582346
+  type: 'test'
+  ...
+# Subtest: editExpense keeps the original rate when amount and currency did not change (S4-3 on edit)
+not ok 15 - editExpense keeps the original rate when amount and currency did not change (S4-3 on edit)
+  ---
+  duration_ms: 1.286309
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/money.test.js:222:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      [
+        'e-edit',
+    +   0.08333333333333333,
+    +   833,
+    -   0.1,
+    -   1000,
+        'ארוחת ערב',
+        'card'
+      ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 'e-edit'
+    1: 0.1
+    2: 1000
+    3: 'ארוחת ערב'
+    4: 'card'
+  actual:
+    0: 'e-edit'
+    1: 0.08333333333333333
+    2: 833
+    3: 'ארוחת ערב'
+    4: 'card'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/money.test.js:226:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..15
+# tests 15
+# suites 0
+# pass 14
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 78.917597

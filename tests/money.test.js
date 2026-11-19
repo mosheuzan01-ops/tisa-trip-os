@@ -2,7 +2,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
-  parseMoney, toMinor, effectiveRates, rateToBase, currenciesFor, validateRates, ratesConsistent, validateExpense, makeExpense,
+  parseMoney, toMinor, effectiveRates, rateToBase, currenciesFor, editExpense, validateRates, ratesConsistent, validateExpense, makeExpense,
   categoryIds, profileToBudget, summarize, daysLeft, dailyAllowance, filterExpenses, pieSlices, EMERGENCY,
 } from '../src/js/core/money.js';
 import { TH } from '../data/packs/th.js';
@@ -217,4 +217,14 @@ test('S4-9 + S4-13: backup round trip keeps budget, rates and expenses; a v1 bac
   assert.equal(old.ok, true);
   assert.equal(old.state.trips['trip-1'].budget.totalMinor, 50000);
   assert.equal(old.state.trips['trip-1'].budget.currency, 'USD');
+});
+
+test('editExpense keeps the original rate when amount and currency did not change (S4-3 on edit)', () => {
+  const old = makeExpense({ amount: '100', currency: 'THB', category: 'food', date: '2026-12-10', status: 'paid', method: 'cash', description: 'ארוחה' }, RATES, () => 'e-edit');
+  const newRates = effectiveRates({ ILS_THB: 12 }, TH.planningRates);
+  const renamed = editExpense(old, { amount: '100', currency: 'THB', category: 'food', date: '2026-12-10', status: 'paid', method: 'card', description: 'ארוחת ערב' }, newRates);
+  assert.deepEqual([renamed.id, renamed.rate, renamed.baseMinor, renamed.description, renamed.method], ['e-edit', 0.1, 1000, 'ארוחת ערב', 'card']);
+  const repriced = editExpense(old, { amount: '120', currency: 'THB', category: 'food', date: '2026-12-10', status: 'paid', method: 'cash' }, newRates);
+  assert.deepEqual([repriced.id, repriced.baseMinor], ['e-edit', 1000], 'a new amount takes today\'s rate: 120 THB / 12 = 10 ILS');
+  assert.equal(old.baseMinor, 1000, 'the saved expense object is not mutated');
 });
