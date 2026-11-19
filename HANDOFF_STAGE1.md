@@ -37,7 +37,7 @@ TISA הוא "מערכת הפעלה לטיול": מסלול, תקציב, מטבע
 - **הרצה מקומית:** `npm start` ואז פותחים את http://localhost:8080. בטלפון באותה רשת: `npm run phone`.
 
 ## 4. בעיות פתוחות
-- **GitHub Pages עוד לא הופעל.** בעל המוצר מפעיל אותו כך: Settings, Pages, Deploy from a branch, main, ‎/ (root)‎. אחר כך האתר בכתובת https://mosheuzan01-ops.github.io/tisa-trip-os/. מהשיחה בענן אי אפשר להפעיל את זה.
+- **GitHub Pages עוד לא הופעל.** בעל המוצר מפעיל אותו כך: Settings, Pages, Deploy from a branch, main, ‎/ (root)‎. אחר כך האתר יהיה בכתובת של GitHub Pages של המאגר. מהשיחה בענן אי אפשר להפעיל את זה.
 - **לא נבדק:**
   - טלפון אמיתי ו-Safari. נבדקה רק אמולציה של 5 מכשירים ב-Chromium.
   - קורא מסך אמיתי.
