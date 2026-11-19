@@ -3,26 +3,29 @@
 import { isIsoDate, daysBetween } from './trip.js';
 import { toMinor } from './money.js';
 
-export const SCHEMA_VERSION = 3;
+export const SCHEMA_VERSION = 4;
 export const DEFAULT_QUESTION_LIMIT = 50;
 export const BACKUP_REMINDER_DAYS = 7;
 
-const ARRAY_FIELDS = ['destinations', 'expenses', 'transfers', 'checklist', 'events', 'tasks'];
-const OBJECT_FIELDS = ['budget', 'rates', 'info', 'assistant'];
+const ARRAY_FIELDS = ['destinations', 'expenses', 'transfers', 'checklist', 'events', 'tasks', 'checkins'];
+const OBJECT_FIELDS = ['budget', 'rates', 'info', 'assistant', 'journal', 'luggage'];
 /** Empty slots for later features, so later stages add data without changing the shape. */
-export const TRIP_FEATURE_FIELDS = ['destinations', 'expenses', 'budget', 'rates', 'transfers', 'checklist', 'tasks', 'events', 'info', 'assistant'];
+export const TRIP_FEATURE_FIELDS = ['destinations', 'expenses', 'budget', 'rates', 'transfers', 'checklist', 'tasks', 'events', 'info', 'assistant', 'journal', 'checkins', 'luggage'];
 const THEMES = [null, 'light', 'dark'];
 
 const isObj = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
 
 /** Stage 4 budget: whole minor units in the base currency, nine categories, nothing filled in. */
 export const emptyBudget = () => ({ currency: 'ILS', totalMinor: null, categoriesMinor: {}, profileId: null, estimate: false });
+/** Stage 6 luggage: bags the user adds by hand; weights in whole grams, no limit until the user sets one. */
+export const emptyLuggage = () => ({ bags: [] });
 
 export function createTrip({ makeId, countryCode, tripName }) {
   const trip = { id: makeId(), countryCode, name: tripName, startDate: null, endDate: null };
   for (const f of ARRAY_FIELDS) trip[f] = [];
   for (const f of OBJECT_FIELDS) trip[f] = {};
   trip.budget = emptyBudget();
+  trip.luggage = emptyLuggage();
   return trip;
 }
 
@@ -63,6 +66,7 @@ export function validateState(state) {
     if (trip.startDate && trip.endDate && daysBetween(trip.startDate, trip.endDate) < 0) errors.push(`trip.${id}.range`);
     for (const f of ARRAY_FIELDS) if (!Array.isArray(trip[f])) errors.push(`trip.${id}.${f}`);
     for (const f of OBJECT_FIELDS) if (!isObj(trip[f])) errors.push(`trip.${id}.${f}`);
+    if (isObj(trip.luggage) && !Array.isArray(trip.luggage.bags)) errors.push(`trip.${id}.luggage.bags`);
   }
   return errors;
 }
@@ -106,6 +110,19 @@ const MIGRATIONS = {
         ...trip,
         tasks: Array.isArray(trip?.tasks) ? trip.tasks : [],
         checklist: list.map((x) => (isObj(x) ? { group: 'documents', qty: 1, note: '', done: false, ...x } : x)),
+      };
+    }
+    return next;
+  },
+  // 3 -> 4 (Stage 6): journal, check-ins and luggage are added empty. Fields that already exist and everything else stay.
+  3(old) {
+    const next = { ...old, schemaVersion: 4, trips: {} };
+    for (const [id, trip] of Object.entries(old.trips ?? {})) {
+      next.trips[id] = {
+        ...trip,
+        journal: isObj(trip?.journal) ? trip.journal : {},
+        checkins: Array.isArray(trip?.checkins) ? trip.checkins : [],
+        luggage: isObj(trip?.luggage) && Array.isArray(trip.luggage.bags) ? trip.luggage : emptyLuggage(),
       };
     }
     return next;

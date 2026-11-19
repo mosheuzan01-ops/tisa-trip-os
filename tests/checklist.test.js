@@ -147,10 +147,10 @@ function v2State() {
 }
 
 test('S5-2: real v2 data migrates to v3: nothing lost, tasks added, old checklist items get defaults', () => {
-  assert.equal(SCHEMA_VERSION, 3);
+  assert.ok(SCHEMA_VERSION >= 3, 'the 2 -> 3 step stays in the chain (Stage 6 added 3 -> 4)');
   const before = v2State();
   const out = migrate(structuredClone(before), opts);
-  assert.equal(out.schemaVersion, 3);
+  assert.equal(out.schemaVersion, SCHEMA_VERSION);
   const a = before.trips['trip-1'];
   const b = out.trips['trip-1'];
   for (const k of ['startDate', 'endDate', 'destinations', 'budget', 'rates', 'expenses', 'people', 'repayments']) assert.deepEqual(b[k], a[k], k);
@@ -158,7 +158,7 @@ test('S5-2: real v2 data migrates to v3: nothing lost, tasks added, old checklis
   assert.deepEqual(b.checklist, [{ id: 'old', name: 'פריט ישן', group: 'documents', qty: 1, note: '', done: false }]);
   assert.deepEqual(validateState(out), []);
   const fresh = createDefaultState(opts);
-  assert.equal(fresh.schemaVersion, 3);
+  assert.equal(fresh.schemaVersion, SCHEMA_VERSION);
   assert.deepEqual(fresh.trips['trip-1'].tasks, []);
 });
 
