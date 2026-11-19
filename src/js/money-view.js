@@ -6,8 +6,9 @@ import { todayIn, isIsoDate } from './core/trip.js';
 import {
   EMERGENCY, BASE_CURRENCY, STATUSES, METHODS, parseMoney, effectiveRates, rateToBase, currenciesFor, validateRates,
   ratesConsistent, categoryIds, validateExpense, makeExpense, editExpense, profileToBudget, summarize, daysLeft,
-  dailyAllowance, filterExpenses, pieSlices,
+  dailyAllowance, filterExpenses, pieSlices, convertAll, atmCost,
 } from './core/money.js';
+import { validatePerson, balances, settle } from './core/split.js';
 import { sortStops, cleanStops, formatDate } from './core/itinerary.js';
 import { makeId } from './core/ids.js';
 
@@ -207,6 +208,64 @@ export function renderMoney(ctx) {
   }));
   $('[data-slot="rates-warn"]').textContent = t('money.rates.warn');
   $('[data-slot="rates-warn"]').hidden = ratesConsistent(m.rates);
+
+  // Split: people and who pays whom (paid expenses only)
+  const people = peopleOf(m.trip);
+  const peopleBox = $('[data-slot="people"]');
+  const focusedPerson = peopleBox.contains(document.activeElement) ? document.activeElement.dataset.id : null;
+  peopleBox.replaceChildren(...people.map((p) => {
+    const li = el('li', 'person');
+    const b = el('button', 'icon-btn stop-btn');
+    b.type = 'button';
+    b.dataset.action = 'person-delete';
+    b.dataset.id = p.id;
+    b.setAttribute('aria-label', interpolate(t('split.removeLabel'), { name: p.name }));
+    b.innerHTML = `<svg class="icon" aria-hidden="true"><use href="${ICONS}i-trash"/></svg>`;
+    li.append(el('span', 'person-name', p.name), b);
+    return li;
+  }));
+  if (focusedPerson) peopleBox.querySelector(`[data-id="${focusedPerson}"]`)?.focus();
+  const settleBox = $('[data-slot="settle"]');
+  if (people.length < 2) settleBox.replaceChildren(el('p', 'muted', t('split.need')));
+  else {
+    const names = new Map(people.map((p) => [p.id, p.name]));
+    const moves = settle(balances(m.expenses, people));
+    const ul = el('ul', 'settle-list');
+    for (const x of moves) ul.append(el('li', '', interpolate(t('split.transfer'), { from: names.get(x.from), to: names.get(x.to), amount: fm(x.minor) })));
+    settleBox.replaceChildren(el('h3', 'tool-title', t('split.settleTitle')), moves.length ? ul : el('p', 'muted', t('split.none')));
+  }
+  renderTools(ctx, m);
+}
+
+const peopleOf = (trip) => (Array.isArray(trip.people) ? trip.people.filter((p) => p && typeof p.id === 'string' && typeof p.name === 'string') : []);
+
+/** Converter and ATM: computed from the inputs and today's rates; nothing is saved. */
+function renderTools(ctx, m = moneyState(ctx)) {
+  const { t, fmtLocale } = ctx;
+  const conv = $('[data-form="convert"]');
+  const sel = $('[data-slot="convert-currency"]');
+  const list = currenciesFor(m.rates);
+  if (sel.options.length !== list.length) {
+    const keep = sel.value;
+    sel.replaceChildren(...list.map((c) => Object.assign(document.createElement('option'), { value: c, textContent: c })));
+    sel.value = list.includes(keep) ? keep : BASE_CURRENCY;
+  }
+  const rows = convertAll(parseMoney(conv.amount.value), sel.value, m.rates);
+  $('[data-slot="convert-out"]').replaceChildren(...rows.map((r) => el('li', r.currency === sel.value ? 'is-from' : '', formatMinor(r.minor, r.currency, fmtLocale))));
+
+  const fee = m.pack.atmFee;
+  const atm = $('[data-form="atm"]');
+  $('[data-slot="atm-amount-label"]').textContent = interpolate(t('atm.amountLabel'), { cur: fee.currency });
+  $('[data-slot="atm-fee-label"]').textContent = interpolate(t('atm.feeLabel'), { cur: fee.currency });
+  if (!atm.dataset.ready) { atm.fee.value = String(fee.amount); atm.dataset.ready = '1'; }
+  const feeText = atm.fee.value.trim();
+  const feeMinor = /^0+(\.0+)?$/.test(feeText) ? 0 : parseMoney(feeText);
+  const out = $('[data-slot="atm-out"]');
+  if (!atm.amount.value.trim()) { out.textContent = t('atm.tip'); return; }
+  const r = atmCost(parseMoney(atm.amount.value), feeMinor, m.rates, fee.currency);
+  out.textContent = r ? interpolate(t('atm.result'), {
+    total: formatMinor(r.totalMinor, fee.currency, fmtLocale), base: formatMinor(r.totalBaseMinor, BASE_CURRENCY, fmtLocale), pct: r.feePct,
+  }) : t('atm.invalid');
 }
 
 export function setupMoney(ctx, { wireDialog, showFormErrors }) {
@@ -257,6 +316,16 @@ export function setupMoney(ctx, { wireDialog, showFormErrors }) {
     const stops = sortStops(cleanStops(m.trip.destinations));
     $('[data-slot="exp-stop"]').replaceChildren(option('', t('exp.noStop')), ...stops.map((x) => option(x.id, x.name)));
     const today = todayIn(ctx.country.timeZone);
+    const people = peopleOf(m.trip);
+    $('[data-slot="exp-split"]').hidden = people.length < 2;
+    $('[data-slot="exp-paid-by"]').replaceChildren(option('', t('split.noOne')), ...people.map((p) => option(p.id, p.name)));
+    const shared = exp?.sharedBy ?? people.map((p) => p.id);
+    $('[data-slot="exp-shared-by"]').replaceChildren(...people.map((p) => {
+      const label = el('label', 'split-check');
+      label.append(Object.assign(document.createElement('input'), { type: 'checkbox', name: 'sharedBy', value: p.id, checked: shared.includes(p.id) }), el('span', '', p.name));
+      return label;
+    }));
+    form.paidBy.value = exp?.paidBy && people.some((p) => p.id === exp.paidBy) ? exp.paidBy : '';
     if (exp) {
       form.amount.value = (exp.amountMinor / 100).toFixed(exp.amountMinor % 100 ? 2 : 0);
       for (const k of ['currency', 'category', 'date', 'status', 'method', 'description', 'note']) form[k].value = exp[k] ?? '';
@@ -285,6 +354,8 @@ export function setupMoney(ctx, { wireDialog, showFormErrors }) {
     const errors = validateExpense(input, categoryIds(m.pack), currenciesFor(m.rates));
     if (errors.length) { showFormErrors(t, form, errors, 'expErr'); return; }
     const next = editing ? editExpense(editing, input, m.rates) : makeExpense(input, m.rates, () => makeId());
+    const sharedBy = [...form.querySelectorAll('input[name="sharedBy"]:checked')].map((x) => x.value);
+    if (peopleOf(m.trip).length >= 2 && form.paidBy.value && sharedBy.length) { next.paidBy = form.paidBy.value; next.sharedBy = sharedBy; } else { delete next.paidBy; delete next.sharedBy; }
     commit((st) => {
       const trip = st.trips[st.activeTripId];
       const i = trip.expenses.findIndex((x) => x?.id === next.id);
@@ -319,7 +390,8 @@ export function setupMoney(ctx, { wireDialog, showFormErrors }) {
       const label = el('label', 'replan-mode');
       const input = Object.assign(document.createElement('input'), { type: 'radio', name: 'profile', value: p.id, checked: p === current });
       const text = el('span');
-      text.append(el('b', '', p.name[ctx.locale] ?? p.name.en), el('small', 'ltr', formatMinor(p.total * 100, p.currency, fmtLocale)));
+      text.append(el('b', '', `${p.name[ctx.locale] ?? p.name.en}: ${formatMinor(p.total * 100, p.currency, fmtLocale)}`));
+      if (p.description) text.append(el('small', '', p.description[ctx.locale] ?? p.description.en));
       label.append(input, text);
       return label;
     }));
@@ -335,7 +407,7 @@ export function setupMoney(ctx, { wireDialog, showFormErrors }) {
       const trip = st.trips[st.activeTripId];
       const { categoriesMinor, profileId, estimate } = profileToBudget(profile);
       const keepEmergency = trip.budget?.categoriesMinor?.[EMERGENCY];
-      if (Number.isInteger(keepEmergency)) categoriesMinor[EMERGENCY] = keepEmergency; // never wipe the user's own emergency amount
+      if (Number.isInteger(keepEmergency) && keepEmergency > 0) categoriesMinor[EMERGENCY] = keepEmergency; // never wipe the user's own emergency amount
       trip.budget = { ...trip.budget, currency: BASE_CURRENCY, categoriesMinor, profileId, estimate };
     }, 'money.profile.done');
     dlgProfile.close();
@@ -427,6 +499,37 @@ export function setupMoney(ctx, { wireDialog, showFormErrors }) {
     dlgRates.close();
   });
 
+  // ---------- Split: people ----------
+  const personForm = $('[data-form="person"]');
+  personForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name = personForm.name.value.trim();
+    const errors = validatePerson(name, peopleOf(ctx.trip()));
+    if (errors.length) { showFormErrors(t, personForm, errors, 'splitErr'); return; }
+    showFormErrors(t, personForm, [], 'splitErr');
+    commit((st) => { const trip = st.trips[st.activeTripId]; trip.people = [...peopleOf(trip), { id: makeId(), name }]; }, 'split.added');
+    personForm.reset();
+    personForm.name.focus();
+  });
+  const dlgPerson = $('#dlg-person-delete');
+  let removing = null;
+  wireDialog(dlgPerson, () => { removing = null; restore(); });
+  $('[data-action="person-delete-confirm"]').addEventListener('click', () => {
+    const id = removing;
+    if (!id) return;
+    commit((st) => { const trip = st.trips[st.activeTripId]; trip.people = peopleOf(trip).filter((p) => p.id !== id); }, 'split.removed');
+    opener = $('[data-form="person"] [name="name"]');
+    dlgPerson.close();
+  });
+
+  // ---------- Calculators (nothing saved) ----------
+  for (const f of ['convert', 'atm']) {
+    const node = $(`[data-form="${f}"]`);
+    node.addEventListener('input', () => renderTools(ctx));
+    node.addEventListener('change', () => renderTools(ctx));
+    node.addEventListener('submit', (e) => e.preventDefault());
+  }
+
   // ---------- One delegated handler for the screen ----------
   panel.addEventListener('click', (e) => {
     const btn = e.target.closest('[data-action]');
@@ -442,6 +545,14 @@ export function setupMoney(ctx, { wireDialog, showFormErrors }) {
       $('[data-slot="expense-delete-text"]').textContent = interpolate(t('exp.delete.text'), { name: exp?.description || catName(ctx, exp?.category) });
       dlgDelete.showModal();
       dlgDelete.querySelector('[data-close]').focus(); // the safe choice has focus
+    }
+    if (action === 'person-delete') {
+      opener = btn;
+      removing = id;
+      const p = peopleOf(ctx.trip()).find((x) => x.id === id);
+      $('[data-slot="person-delete-text"]').textContent = interpolate(t('split.remove.text'), { name: p?.name ?? '' });
+      dlgPerson.showModal();
+      dlgPerson.querySelector('[data-close]').focus();
     }
     if (action === 'profile-open') openProfile(btn);
     if (action === 'cats-open') openCats(btn);

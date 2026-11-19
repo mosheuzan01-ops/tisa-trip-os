@@ -628,3 +628,25 @@ body::before {
 .field-inline { grid-template-columns: 1fr 9rem; align-items: center; gap: var(--space-3); }
 .field-row-money { grid-template-columns: 1fr 7rem; }
 @media (max-width: 359px) { .money-filters { grid-template-columns: 1fr; } .money-pie-card { grid-template-columns: 1fr; justify-items: center; } }
+
+/* ---------- Stage 4 add-ons: split and calculators ---------- */
+.people { display: grid; gap: var(--space-2); margin: 0; padding: 0; list-style: none; }
+.person { display: flex; align-items: center; justify-content: space-between; gap: var(--space-2); padding: var(--space-1) var(--space-1) var(--space-1) 0; border-bottom: 1px solid var(--line); }
+.person-name { font-weight: 700; color: var(--ink); overflow-wrap: anywhere; }
+.split-add { display: grid; grid-template-columns: 1fr auto; align-items: end; gap: var(--space-2); }
+.split-add .form-error { grid-column: 1 / -1; }
+.split-add .field input { min-height: var(--tap); }
+.settle { display: grid; gap: var(--space-2); }
+.settle-list { display: grid; gap: var(--space-1); margin: 0; padding: 0; list-style: none; }
+.settings-card .settle-list li { color: var(--ink); font-weight: 600; }
+.split-who { margin: 0; padding: 0; border: 0; display: grid; gap: var(--space-1); color: var(--on-dmetal-muted); font-weight: 600; }
+.split-checks { display: flex; flex-wrap: wrap; gap: var(--space-1) var(--space-3); }
+.split-check { display: inline-flex; align-items: center; gap: var(--space-2); min-height: var(--tap); color: var(--on-dmetal); cursor: pointer; }
+.split-check input { width: 22px; height: 22px; margin: 0; accent-color: var(--metal-4); }
+.money-tools { display: grid; gap: var(--space-4); }
+.tool { display: grid; gap: var(--space-2); padding-top: var(--space-3); border-top: 1px solid var(--line); }
+.tool-title { font-size: var(--text-body); font-weight: 700; color: var(--ink); }
+.tool-out { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-2); margin: 0; padding: 0; list-style: none; }
+.tool-out li { padding: var(--space-2); border-radius: var(--radius-sm); background: var(--surface-2); color: var(--ink); font-weight: 700; font-variant-numeric: tabular-nums; text-align: center; overflow-wrap: anywhere; }
+.tool-out li.is-from { box-shadow: inset 0 0 0 1px var(--line-strong); }
+.settings-card .tool-result { color: var(--ink); font-weight: 600; }

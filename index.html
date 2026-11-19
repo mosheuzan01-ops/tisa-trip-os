@@ -309,6 +309,39 @@
           <ul class="exp-list" data-slot="exp-list"></ul>
         </section>
 
+        <section class="card surface settings-card money-split-card" aria-labelledby="money-split-title">
+          <h2 id="money-split-title" data-i18n="split.title">חלוקת הוצאות</h2>
+          <p data-i18n="split.text">מוסיפים את מי שמתחלק בהוצאות. בכל הוצאה בוחרים מי שילם ומי משתתף. נספרות רק הוצאות ששולמו.</p>
+          <ul class="people" data-slot="people"></ul>
+          <form class="split-add" data-form="person" novalidate>
+            <label class="field"><span data-i18n="split.name">שם</span><input type="text" name="name" maxlength="30" autocomplete="off" aria-describedby="person-error"></label>
+            <button class="btn btn-ghost" type="submit"><svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-plus"/></svg><span data-i18n="split.add">הוספה</span></button>
+            <p class="form-error" id="person-error" role="alert"></p>
+          </form>
+          <div class="settle" data-slot="settle" aria-live="polite"></div>
+        </section>
+
+        <section class="card surface settings-card money-tools" aria-labelledby="money-tools-title">
+          <h2 id="money-tools-title" data-i18n="tools.money.title">מחשבונים</h2>
+          <form class="tool" data-form="convert" novalidate>
+            <h3 class="tool-title" data-i18n="convert.title">ממיר מט"ח</h3>
+            <div class="field-row field-row-money">
+              <label class="field field-grow"><span data-i18n="exp.amount">סכום</span><input class="ltr" type="text" name="amount" inputmode="decimal" autocomplete="off"></label>
+              <label class="field"><span data-i18n="exp.currency">מטבע</span><select name="currency" data-slot="convert-currency"></select></label>
+            </div>
+            <ul class="tool-out ltr" data-slot="convert-out" aria-live="polite"></ul>
+          </form>
+          <form class="tool" data-form="atm" novalidate>
+            <h3 class="tool-title" data-i18n="atm.title">מחשבון כספומט</h3>
+            <div class="field-row field-row-money">
+              <label class="field field-grow"><span data-slot="atm-amount-label"></span><input class="ltr" type="text" name="amount" inputmode="decimal" autocomplete="off"></label>
+              <label class="field"><span data-slot="atm-fee-label"></span><input class="ltr" type="text" name="fee" inputmode="decimal" autocomplete="off"></label>
+            </div>
+            <p class="tool-result" data-slot="atm-out" aria-live="polite"></p>
+          </form>
+          <p class="sheet-hint" data-i18n="tools.money.note">לפי השערים במסך הזה. שער תכנון הוא הערכה, לא שער חי.</p>
+        </section>
+
         <section class="card surface settings-card" aria-labelledby="money-rates-title">
           <div class="money-card-head">
             <h2 id="money-rates-title" data-i18n="money.rates.title">שערים</h2>
@@ -586,6 +619,10 @@
           <label class="field"><span data-i18n="exp.status">סטטוס</span><select name="status" data-slot="exp-status"></select></label>
         </div>
         <label class="field"><span data-i18n="exp.stop">יעד (לא חובה)</span><select name="destinationId" data-slot="exp-stop"></select></label>
+        <div class="field-row" data-slot="exp-split" hidden>
+          <label class="field"><span data-i18n="split.paidBy">מי שילם</span><select name="paidBy" data-slot="exp-paid-by"></select></label>
+          <fieldset class="split-who"><legend data-i18n="split.sharedBy">מי משתתף</legend><div class="split-checks" data-slot="exp-shared-by"></div></fieldset>
+        </div>
         <label class="field"><span data-i18n="exp.description">תיאור</span><input type="text" name="description" maxlength="80" autocomplete="off" aria-describedby="expense-error"></label>
         <label class="field"><span data-i18n="exp.method">אמצעי תשלום</span><select name="method" data-slot="exp-method"></select></label>
         <label class="field"><span data-i18n="exp.note">הערה (לא חובה)</span><input type="text" name="note" maxlength="140" autocomplete="off" aria-describedby="expense-error"></label>
@@ -653,6 +690,18 @@
         </div>
         <button class="link-btn" type="button" data-action="rates-restore" data-i18n="money.rates.restore">חזרה לשערי התכנון</button>
       </form>
+    </dialog>
+
+    <!-- Split: removing a person only after a yes -->
+    <dialog class="sheet dmetal" id="dlg-person-delete" aria-labelledby="dlg-person-delete-title" aria-describedby="dlg-person-delete-text">
+      <div class="sheet-form">
+        <h2 id="dlg-person-delete-title" data-i18n="split.remove.title">הסרה מהחלוקה</h2>
+        <p class="sheet-hint" id="dlg-person-delete-text" data-slot="person-delete-text"></p>
+        <div class="sheet-actions">
+          <button class="btn metal-btn btn-danger-solid" type="button" data-action="person-delete-confirm" data-i18n="split.remove.confirm">להסיר</button>
+          <button class="btn btn-ghost" type="button" data-close data-i18n="form.cancel">ביטול</button>
+        </div>
+      </div>
     </dialog>
 
     <div class="toast" role="status" aria-live="polite" data-slot="toast"></div>

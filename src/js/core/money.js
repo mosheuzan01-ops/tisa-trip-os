@@ -121,7 +121,7 @@ export function editExpense(old, input, rates) {
 export function profileToBudget(profile) {
   const categoriesMinor = {};
   for (const [k, v] of Object.entries(profile.categories)) categoriesMinor[k] = toMinor(v);
-  categoriesMinor[EMERGENCY] = 0;
+  categoriesMinor[EMERGENCY] = toMinor(profile.emergency ?? 0); // owner: about one flight ticket (2026-11-19)
   return { currency: profile.currency, totalMinor: null, categoriesMinor, profileId: profile.id, estimate: true };
 }
 
@@ -205,4 +205,26 @@ export function pieSlices(list = []) {
     start = slice.end;
     return slice;
   });
+}
+
+/** One amount in every currency the rates know, through the base currency. [] if it cannot be converted. */
+export function convertAll(minor, from, rates) {
+  const r = rateToBase(from, rates);
+  if (!Number.isInteger(minor) || minor <= 0 || !Number.isFinite(r)) return [];
+  const base = minor * r;
+  return currenciesFor(rates).map((c) => ({ currency: c, minor: c === from ? minor : Math.round(base / rateToBase(c, rates)) }));
+}
+
+/** An ATM withdrawal in local currency plus the bank's fee: total, the fee as a share, both in shekels too. */
+export function atmCost(amountMinor, feeMinor, rates, currency = Object.keys(rates).map((k) => k.split('_')[1]).find((c) => c !== BASE_CURRENCY)) {
+  if (!Number.isInteger(amountMinor) || amountMinor <= 0 || !Number.isInteger(feeMinor) || feeMinor < 0) return null;
+  const r = rateToBase(currency, rates);
+  if (!Number.isFinite(r)) return null;
+  const totalMinor = amountMinor + feeMinor;
+  return {
+    totalMinor,
+    feePct: Math.round((feeMinor / amountMinor) * 1000) / 10,
+    totalBaseMinor: Math.round(totalMinor * r),
+    feeBaseMinor: Math.round(feeMinor * r),
+  };
 }

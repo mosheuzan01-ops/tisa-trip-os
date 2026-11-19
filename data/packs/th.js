@@ -36,11 +36,13 @@ export const TH = Object.freeze({
 
   // Planning defaults from the original prompt, split by category as given by the product owner on 2026-11-19.
   // These are planning numbers, NOT verified current prices (verified: false); the user can edit them in stage 4.
+  // Names (optimal / average / saving) and emergency 2,500 ILS (about one flight ticket) set by the owner on 2026-11-19.
+  // `total` is the running budget; emergency is kept apart from it.
   budgetProfilesVerified: false,
   budgetProfiles: [
-    { id: 'saver', name: { he: 'חסכוני', en: 'Saver' }, total: 9800, currency: 'ILS', categories: { flight: 2600, 'insurance-sim-gear': 700, lodging: 1500, food: 1500, transport: 900, green: 1200, attractions: 800, misc: 600 } },
-    { id: 'realistic', name: { he: 'ריאלי', en: 'Realistic' }, total: 15270, currency: 'ILS', categories: { flight: 3900, 'insurance-sim-gear': 870, lodging: 3000, food: 2100, transport: 1400, green: 1500, attractions: 1500, misc: 1000 } },
-    { id: 'comfort', name: { he: 'נוח', en: 'Comfort' }, total: 21400, currency: 'ILS', categories: { flight: 5000, 'insurance-sim-gear': 1000, lodging: 4500, food: 3000, transport: 1800, green: 2100, attractions: 2500, misc: 1500 } },
+    { id: 'saver', name: { he: 'חסכון', en: 'Saving' }, description: { he: 'כשאין הרבה כסף: לינה פשוטה, אוכל רחוב ונסיעות זולות.', en: 'When money is tight: simple stays, street food, cheap rides.' }, emergency: 2500, total: 9800, currency: 'ILS', categories: { flight: 2600, 'insurance-sim-gear': 700, lodging: 1500, food: 1500, transport: 900, green: 1200, attractions: 800, misc: 600 } },
+    { id: 'realistic', name: { he: 'ממוצע', en: 'Average' }, description: { he: 'תרחיש ממוצע: נוח אבל לא מפנק.', en: 'The middle path: comfortable, not lavish.' }, emergency: 2500, total: 15270, currency: 'ILS', categories: { flight: 3900, 'insurance-sim-gear': 870, lodging: 3000, food: 2100, transport: 1400, green: 1500, attractions: 1500, misc: 1000 } },
+    { id: 'comfort', name: { he: 'אופטימלי', en: 'Optimal' }, description: { he: 'התרחיש הטוב ביותר: לינה טובה, אטרקציות ומרווח.', en: 'The best case: good stays, attractions and room to spare.' }, emergency: 2500, total: 21400, currency: 'ILS', categories: { flight: 5000, 'insurance-sim-gear': 1000, lodging: 4500, food: 3000, transport: 1800, green: 2100, attractions: 2500, misc: 1500 } },
   ],
 
   // Planning rates from the spec (editable later; not live rates): 1 ILS = 10 THB, 1 USD = 3.7 ILS = 37 THB.
