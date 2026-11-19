@@ -1,0 +1,902 @@
+
+> tisa-trip-os@0.5.0 test
+> node --test
+
+TAP version 13
+# Subtest: six groups: three for preparation, three for packing
+ok 1 - six groups: three for preparation, three for packing
+  ---
+  duration_ms: 1.64527
+  type: 'test'
+  ...
+# Subtest: validateItem: name, quantity, note and group are checked
+ok 2 - validateItem: name, quantity, note and group are checked
+  ---
+  duration_ms: 0.539233
+  type: 'test'
+  ...
+# Subtest: S5-4: two separate progress bars, including 0 items and 100%
+ok 3 - S5-4: two separate progress bars, including 0 items and 100%
+  ---
+  duration_ms: 0.330475
+  type: 'test'
+  ...
+# Subtest: S5-8: rule-dependent items stay "to check" until a check date is written; source and date are validated
+ok 4 - S5-8: rule-dependent items stay "to check" until a check date is written; source and date are validated
+  ---
+  duration_ms: 0.356937
+  type: 'test'
+  ...
+# Subtest: S5-8: the starter list and tasks hold names only: no numbers, rules, dates or medicine names
+ok 5 - S5-8: the starter list and tasks hold names only: no numbers, rules, dates or medicine names
+  ---
+  duration_ms: 2.098883
+  type: 'test'
+  ...
+# Subtest: S5-3: seeding makes fresh items with new ids; verify items start unchecked
+ok 6 - S5-3: seeding makes fresh items with new ids; verify items start unchecked
+  ---
+  duration_ms: 0.480157
+  type: 'test'
+  ...
+# Subtest: tasks: validation and status
+ok 7 - tasks: validation and status
+  ---
+  duration_ms: 0.418307
+  type: 'test'
+  ...
+# Subtest: S5-6: overdue by the destination calendar; done is never overdue
+ok 8 - S5-6: overdue by the destination calendar; done is never overdue
+  ---
+  duration_ms: 0.187078
+  type: 'test'
+  ...
+# Subtest: S5-7: open tasks and the next task (earliest due date, then list order)
+ok 9 - S5-7: open tasks and the next task (earliest due date, then list order)
+  ---
+  duration_ms: 0.34585
+  type: 'test'
+  ...
+# Subtest: clean helpers skip broken entries without touching the data
+ok 10 - clean helpers skip broken entries without touching the data
+  ---
+  duration_ms: 0.426662
+  type: 'test'
+  ...
+# Subtest: S5-2: real v2 data migrates to v3: nothing lost, tasks added, old checklist items get defaults
+ok 11 - S5-2: real v2 data migrates to v3: nothing lost, tasks added, old checklist items get defaults
+  ---
+  duration_ms: 1.04188
+  type: 'test'
+  ...
+# Subtest: S5-1: an item and a task are saved through storage.js under tisa: and survive a reload; v2 data in storage upgrades
+ok 12 - S5-1: an item and a task are saved through storage.js under tisa: and survive a reload; v2 data in storage upgrades
+  ---
+  duration_ms: 0.592393
+  type: 'test'
+  ...
+# Subtest: S5-9: backup round trip keeps itinerary, money, checklist and tasks; a v2 backup still imports
+ok 13 - S5-9: backup round trip keeps itinerary, money, checklist and tasks; a v2 backup still imports
+  ---
+  duration_ms: 0.769778
+  type: 'test'
+  ...
+# Subtest: translator returns value, and the key itself when missing
+ok 14 - translator returns value, and the key itself when missing
+  ---
+  duration_ms: 2.012067
+  type: 'test'
+  ...
+# Subtest: resolveLocale falls back to the default locale
+ok 15 - resolveLocale falls back to the default locale
+  ---
+  duration_ms: 0.26398
+  type: 'test'
+  ...
+# Subtest: validateCountry reports missing fields and bad currency codes
+ok 16 - validateCountry reports missing fields and bad currency codes
+  ---
+  duration_ms: 1.02932
+  type: 'test'
+  ...
+# Subtest: buildTitle produces the Stage 0 title from config + Thailand data
+ok 17 - buildTitle produces the Stage 0 title from config + Thailand data
+  ---
+  duration_ms: 0.297792
+  type: 'test'
+  ...
+# Subtest: titleParts splits the Latin brand from the localized place name
+ok 18 - titleParts splits the Latin brand from the localized place name
+  ---
+  duration_ms: 0.394418
+  type: 'test'
+  ...
+# Subtest: interpolate fills {placeholders} and leaves unknown ones visible
+ok 19 - interpolate fills {placeholders} and leaves unknown ones visible
+  ---
+  duration_ms: 0.407629
+  type: 'test'
+  ...
+# Subtest: contrastRatio follows the WCAG 2 formula
+ok 20 - contrastRatio follows the WCAG 2 formula
+  ---
+  duration_ms: 1.397174
+  type: 'test'
+  ...
+# Subtest: parseThemes reads custom properties per theme block
+ok 21 - parseThemes reads custom properties per theme block
+  ---
+  duration_ms: 0.902701
+  type: 'test'
+  ...
+# Subtest: S1: tokens.css is the only place that defines colors
+ok 22 - S1: tokens.css is the only place that defines colors
+  ---
+  duration_ms: 3.154017
+  type: 'test'
+  ...
+# Subtest: S2: fonts and icons are local; no external URLs anywhere in the view
+ok 23 - S2: fonts and icons are local; no external URLs anywhere in the view
+  ---
+  duration_ms: 2.264995
+  type: 'test'
+  ...
+# Subtest: S6: every text/background token pair passes WCAG AA in light and dark
+ok 24 - S6: every text/background token pair passes WCAG AA in light and dark
+  ---
+  duration_ms: 1.07088
+  type: 'test'
+  ...
+# Subtest: S9: app text comes from the locale files; no placeholder copy
+ok 25 - S9: app text comes from the locale files; no placeholder copy
+  ---
+  duration_ms: 2.27614
+  type: 'test'
+  ...
+# Subtest: S10: no invented dates or prices in the view or the copy
+ok 26 - S10: no invented dates or prices in the view or the copy
+  ---
+  duration_ms: 3.546983
+  type: 'test'
+  ...
+# Subtest: S11: every bundled font has its license and a CREDITS.md entry
+ok 27 - S11: every bundled font has its license and a CREDITS.md entry
+  ---
+  duration_ms: 0.331593
+  type: 'test'
+  ...
+# Subtest: theme-boot uses the same storage key as the app config
+ok 28 - theme-boot uses the same storage key as the app config
+  ---
+  duration_ms: 0.29751
+  type: 'test'
+  ...
+# Subtest: P10: UI copy has no template chrome (middle-dot meta strings, spaced em dashes, arrows on buttons)
+ok 29 - P10: UI copy has no template chrome (middle-dot meta strings, spaced em dashes, arrows on buttons)
+  ---
+  duration_ms: 2.509261
+  type: 'test'
+  ...
+# Subtest: D1: dark metal only on the next-step card and its sheets
+ok 30 - D1: dark metal only on the next-step card and its sheets
+  ---
+  duration_ms: 2.665262
+  type: 'test'
+  ...
+# Subtest: D2: platinum metal only on the trip pass
+ok 31 - D2: platinum metal only on the trip pass
+  ---
+  duration_ms: 0.227853
+  type: 'test'
+  ...
+# Subtest: D3: retired dark-metal tokens are gone
+ok 32 - D3: retired dark-metal tokens are gone
+  ---
+  duration_ms: 0.710819
+  type: 'test'
+  ...
+# Subtest: D5: calm components have hover, focus-visible and active states
+ok 33 - D5: calm components have hover, focus-visible and active states
+  ---
+  duration_ms: 0.326567
+  type: 'test'
+  ...
+# Subtest: S3-2: addDays and nights cross months, years and leap days
+ok 34 - S3-2: addDays and nights cross months, years and leap days
+  ---
+  duration_ms: 1.347277
+  type: 'test'
+  ...
+# Subtest: S3-2: stops are sorted by arrival date, then by departure, and the total is the sum
+ok 35 - S3-2: stops are sorted by arrival date, then by departure, and the total is the sum
+  ---
+  duration_ms: 0.794426
+  type: 'test'
+  ...
+# Subtest: S3-2: the Thailand pack adds up to 29 nights through the month change
+ok 36 - S3-2: the Thailand pack adds up to 29 nights through the month change
+  ---
+  duration_ms: 0.422282
+  type: 'test'
+  ...
+# Subtest: S3-3: validateStop requires a name and real dates, and departure not before arrival
+ok 37 - S3-3: validateStop requires a name and real dates, and departure not before arrival
+  ---
+  duration_ms: 0.40171
+  type: 'test'
+  ...
+# Subtest: S3-3: overlaps are found; a same-day handover is not an overlap
+ok 38 - S3-3: overlaps are found; a same-day handover is not an overlap
+  ---
+  duration_ms: 0.204058
+  type: 'test'
+  ...
+# Subtest: S3-3: stops outside the trip dates are listed
+ok 39 - S3-3: stops outside the trip dates are listed
+  ---
+  duration_ms: 0.146371
+  type: 'test'
+  ...
+# Subtest: S3-5: where am I today: before, during (incl. handover day), between, after, empty
+ok 40 - S3-5: where am I today: before, during (incl. handover day), between, after, empty
+  ---
+  duration_ms: 1.283295
+  type: 'test'
+  ...
+# Subtest: S3-4: moving a stop swaps it with its neighbour and keeps each stop's nights
+ok 41 - S3-4: moving a stop swaps it with its neighbour and keeps each stop's nights
+  ---
+  duration_ms: 0.430717
+  type: 'test'
+  ...
+# Subtest: S3-11: replan "shift" moves every stop by the start-date change
+ok 42 - S3-11: replan "shift" moves every stop by the start-date change
+  ---
+  duration_ms: 0.581848
+  type: 'test'
+  ...
+# Subtest: S3-11: replan "flex" takes the length change from the flexible stop, within its range
+ok 43 - S3-11: replan "flex" takes the length change from the flexible stop, within its range
+  ---
+  duration_ms: 0.647269
+  type: 'test'
+  ...
+# Subtest: S3-11: replan "datesOnly" keeps the stops and warns about the ones outside
+ok 44 - S3-11: replan "datesOnly" keeps the stops and warns about the ones outside
+  ---
+  duration_ms: 0.218967
+  type: 'test'
+  ...
+# Subtest: S3-8: dates use Intl with he-IL, one format everywhere
+ok 45 - S3-8: dates use Intl with he-IL, one format everywhere
+  ---
+  duration_ms: 15.40646
+  type: 'test'
+  ...
+# Subtest: cleanStops keeps only usable stops for display and never mutates the data
+ok 46 - cleanStops keeps only usable stops for display and never mutates the data
+  ---
+  duration_ms: 0.13147
+  type: 'test'
+  ...
+# Subtest: S3-1: stops are saved under the tisa: key and survive a reload
+ok 47 - S3-1: stops are saved under the tisa: key and survive a reload
+  ---
+  duration_ms: 0.784547
+  type: 'test'
+  ...
+# Subtest: S3-7: the itinerary goes out in a backup and comes back unchanged
+ok 48 - S3-7: the itinerary goes out in a backup and comes back unchanged
+  ---
+  duration_ms: 0.47379
+  type: 'test'
+  ...
+# Subtest: S4-18: free before planning (budget - paid) and free after planning (also minus planned and committed)
+ok 49 - S4-18: free before planning (budget - paid) and free after planning (also minus planned and committed)
+  ---
+  duration_ms: 1.147256
+  type: 'test'
+  ...
+# Subtest: S4-19: "is it worth it?" checks a purchase against free money and the daily amount
+ok 50 - S4-19: "is it worth it?" checks a purchase against free money and the daily amount
+  ---
+  duration_ms: 0.726386
+  type: 'test'
+  ...
+# Subtest: S4-20: CSV is Excel-friendly (BOM, CRLF) and escapes commas, quotes and new lines
+ok 51 - S4-20: CSV is Excel-friendly (BOM, CRLF) and escapes commas, quotes and new lines
+  ---
+  duration_ms: 0.456982
+  type: 'test'
+  ...
+# Subtest: S4-21: uneven split by percent or by amount; shares are exact agorot
+ok 52 - S4-21: uneven split by percent or by amount; shares are exact agorot
+  ---
+  duration_ms: 0.76469
+  type: 'test'
+  ...
+# Subtest: S4-21: validateSplit: percents must add up to 100, amounts to the expense amount
+ok 53 - S4-21: validateSplit: percents must add up to 100, amounts to the expense amount
+  ---
+  duration_ms: 0.225592
+  type: 'test'
+  ...
+# Subtest: S4-22: balances with uneven splits and recorded repayments; the debt can be closed
+ok 54 - S4-22: balances with uneven splits and recorded repayments; the debt can be closed
+  ---
+  duration_ms: 0.595487
+  type: 'test'
+  ...
+# Subtest: S4-23: the over-budget alert is a soft dark red: danger text on danger-soft passes 4.5:1 in both themes
+ok 55 - S4-23: the over-budget alert is a soft dark red: danger text on danger-soft passes 4.5:1 in both themes
+  ---
+  duration_ms: 0.775348
+  type: 'test'
+  ...
+# Subtest: S4-24: calculators and split start folded (no open attribute), with a 44px summary
+ok 56 - S4-24: calculators and split start folded (no open attribute), with a 44px summary
+  ---
+  duration_ms: 1.315106
+  type: 'test'
+  ...
+# Subtest: S4-14: the converter shows one amount in every currency, from any currency
+ok 57 - S4-14: the converter shows one amount in every currency, from any currency
+  ---
+  duration_ms: 2.755914
+  type: 'test'
+  ...
+# Subtest: S4-15: ATM cost: fee in baht and shekels, and the fee as a share of the withdrawal
+ok 58 - S4-15: ATM cost: fee in baht and shekels, and the fee as a share of the withdrawal
+  ---
+  duration_ms: 0.313302
+  type: 'test'
+  ...
+# Subtest: S4-17: scenarios are renamed (optimal / average / saving), amounts unchanged, emergency 2,500 by default
+ok 59 - S4-17: scenarios are renamed (optimal / average / saving), amounts unchanged, emergency 2,500 by default
+  ---
+  duration_ms: 0.331031
+  type: 'test'
+  ...
+# Subtest: S4-16: people need a unique, short name
+ok 60 - S4-16: people need a unique, short name
+  ---
+  duration_ms: 0.162883
+  type: 'test'
+  ...
+# Subtest: S4-16: shares split whole agorot; the remainder goes to the first sharers, the sum is exact
+ok 61 - S4-16: shares split whole agorot; the remainder goes to the first sharers, the sum is exact
+  ---
+  duration_ms: 0.196072
+  type: 'test'
+  ...
+# Subtest: S4-16: balances count only paid, split expenses; settle gives the fewest transfers
+ok 62 - S4-16: balances count only paid, split expenses; settle gives the fewest transfers
+  ---
+  duration_ms: 0.507389
+  type: 'test'
+  ...
+# Subtest: S4-2: money is parsed to whole minor units; 0.1 + 0.2 has no rounding error
+ok 63 - S4-2: money is parsed to whole minor units; 0.1 + 0.2 has no rounding error
+  ---
+  duration_ms: 1.521635
+  type: 'test'
+  ...
+# Subtest: rates: planning defaults, overrides, conversion to shekels, validation
+ok 64 - rates: planning defaults, overrides, conversion to shekels, validation
+  ---
+  duration_ms: 1.75802
+  type: 'test'
+  ...
+# Subtest: S4-3: an expense keeps its own rate; changing the rate later does not touch it
+ok 65 - S4-3: an expense keeps its own rate; changing the rate later does not touch it
+  ---
+  duration_ms: 0.344817
+  type: 'test'
+  ...
+# Subtest: validateExpense: every field is checked, with message keys
+ok 66 - validateExpense: every field is checked, with message keys
+  ---
+  duration_ms: 0.601637
+  type: 'test'
+  ...
+# Subtest: nine categories: the pack's eight plus emergency
+ok 67 - nine categories: the pack's eight plus emergency
+  ---
+  duration_ms: 0.117185
+  type: 'test'
+  ...
+# Subtest: S4-7: a profile becomes an editable budget marked as an estimate; emergency 2,500 (owner, 2026-11-19)
+ok 68 - S4-7: a profile becomes an editable budget marked as an estimate; emergency 2,500 (owner, 2026-11-19)
+  ---
+  duration_ms: 0.259045
+  type: 'test'
+  ...
+# Subtest: S4-4 + S4-6: paid / planned / committed / free add up to the budget; categories and overspend
+ok 69 - S4-4 + S4-6: paid / planned / committed / free add up to the budget; categories and overspend
+  ---
+  duration_ms: 0.52083
+  type: 'test'
+  ...
+# Subtest: summarize with only a home total (no categories yet) and with no budget
+ok 70 - summarize with only a home total (no categories yet) and with no budget
+  ---
+  duration_ms: 0.188837
+  type: 'test'
+  ...
+# Subtest: S4-5: days left and daily allowance by the trip clock: before, middle, last day, after
+ok 71 - S4-5: days left and daily allowance by the trip clock: before, middle, last day, after
+  ---
+  duration_ms: 0.363485
+  type: 'test'
+  ...
+# Subtest: S4-8: filters by day, category and stop; pie slices match the sums
+ok 72 - S4-8: filters by day, category and stop; pie slices match the sums
+  ---
+  duration_ms: 2.727182
+  type: 'test'
+  ...
+# Subtest: S4-13: v1 data with a Stage 1 budget migrates to v2 without losing anything
+ok 73 - S4-13: v1 data with a Stage 1 budget migrates to v2 without losing anything
+  ---
+  duration_ms: 1.255919
+  type: 'test'
+  ...
+# Subtest: S4-13: a fresh state has an empty money budget
+ok 74 - S4-13: a fresh state has an empty money budget
+  ---
+  duration_ms: 0.181711
+  type: 'test'
+  ...
+# Subtest: S4-1: an expense is saved through storage.js under the tisa: key and survives a reload
+ok 75 - S4-1: an expense is saved through storage.js under the tisa: key and survives a reload
+  ---
+  duration_ms: 0.668297
+  type: 'test'
+  ...
+# Subtest: S4-9 + S4-13: backup round trip keeps budget, rates and expenses; a v1 backup still imports
+ok 76 - S4-9 + S4-13: backup round trip keeps budget, rates and expenses; a v1 backup still imports
+  ---
+  duration_ms: 0.561576
+  type: 'test'
+  ...
+# Subtest: M1: no map tab, route or copy
+ok 77 - M1: no map tab, route or copy
+  ---
+  duration_ms: 4.537875
+  type: 'test'
+  ...
+# Subtest: M2: the tab bar has exactly four tabs and a four-column grid
+ok 78 - M2: the tab bar has exactly four tabs and a four-column grid
+  ---
+  duration_ms: 1.619879
+  type: 'test'
+  ...
+# Subtest: M3: an old \#/map link lands on home
+ok 79 - M3: an old \#/map link lands on home
+  ---
+  duration_ms: 0.269164
+  type: 'test'
+  ...
+# Subtest: G5: zero dependencies
+ok 80 - G5: zero dependencies
+  ---
+  duration_ms: 1.107717
+  type: 'test'
+  ...
+# Subtest: G8: page is Hebrew and RTL
+ok 81 - G8: page is Hebrew and RTL
+  ---
+  duration_ms: 1.056043
+  type: 'test'
+  ...
+# Subtest: G9: no external URLs (no CDN) in app code
+ok 82 - G9: no external URLs (no CDN) in app code
+  ---
+  duration_ms: 2.439021
+  type: 'test'
+  ...
+# Subtest: G11: country facts live in data, not in code
+ok 83 - G11: country facts live in data, not in code
+  ---
+  duration_ms: 2.025863
+  type: 'test'
+  ...
+# Subtest: G12: settings and locales are complete
+ok 84 - G12: settings and locales are complete
+  ---
+  duration_ms: 2.206823
+  type: 'test'
+  ...
+# Subtest: G14 + G15: no secrets, cookies or analytics
+ok 85 - G14 + G15: no secrets, cookies or analytics
+  ---
+  duration_ms: 1.980808
+  type: 'test'
+  ...
+# Subtest: G16: no prices or dates in data (Stage 0 must not invent them)
+ok 86 - G16: no prices or dates in data (Stage 0 must not invent them)
+  ---
+  duration_ms: 0.307287
+  type: 'test'
+  ...
+# Subtest: Q1 index.html: title is 10-60 characters
+ok 87 - Q1 index.html: title is 10-60 characters
+  ---
+  duration_ms: 0.885906
+  type: 'test'
+  ...
+# Subtest: Q2 index.html: meta description is 50-160 characters
+ok 88 - Q2 index.html: meta description is 50-160 characters
+  ---
+  duration_ms: 0.234493
+  type: 'test'
+  ...
+# Subtest: Q3 index.html: Open Graph share card (title, description, image)
+ok 89 - Q3 index.html: Open Graph share card (title, description, image)
+  ---
+  duration_ms: 0.224429
+  type: 'test'
+  ...
+# Subtest: Q4 index.html: has a favicon
+ok 90 - Q4 index.html: has a favicon
+  ---
+  duration_ms: 0.186151
+  type: 'test'
+  ...
+# Subtest: Q1 brand.html: title is 10-60 characters
+ok 91 - Q1 brand.html: title is 10-60 characters
+  ---
+  duration_ms: 0.082414
+  type: 'test'
+  ...
+# Subtest: Q2 brand.html: meta description is 50-160 characters
+ok 92 - Q2 brand.html: meta description is 50-160 characters
+  ---
+  duration_ms: 0.081322
+  type: 'test'
+  ...
+# Subtest: Q3 brand.html: Open Graph share card (title, description, image)
+ok 93 - Q3 brand.html: Open Graph share card (title, description, image)
+  ---
+  duration_ms: 0.182372
+  type: 'test'
+  ...
+# Subtest: Q4 brand.html: has a favicon
+ok 94 - Q4 brand.html: has a favicon
+  ---
+  duration_ms: 0.067194
+  type: 'test'
+  ...
+# Subtest: Q5: smallest text token is at least 14px
+ok 95 - Q5: smallest text token is at least 14px
+  ---
+  duration_ms: 0.372581
+  type: 'test'
+  ...
+# Subtest: Q6: theme choice radio covers the full 44px pill, border included
+ok 96 - Q6: theme choice radio covers the full 44px pill, border included
+  ---
+  duration_ms: 0.458618
+  type: 'test'
+  ...
+# Subtest: Q7: og:image is an absolute URL on the project GitHub Pages origin
+ok 97 - Q7: og:image is an absolute URL on the project GitHub Pages origin
+  ---
+  duration_ms: 1.925464
+  type: 'test'
+  ...
+# Subtest: B2: first load creates valid defaults with exactly one trip
+ok 98 - B2: first load creates valid defaults with exactly one trip
+  ---
+  duration_ms: 2.328758
+  type: 'test'
+  ...
+# Subtest: B2: validateState reports broken structures
+ok 99 - B2: validateState reports broken structures
+  ---
+  duration_ms: 0.502601
+  type: 'test'
+  ...
+# Subtest: B3: v0 data (old tisa:trip + tisa:theme) migrates without losing any field
+ok 100 - B3: v0 data (old tisa:trip + tisa:theme) migrates without losing any field
+  ---
+  duration_ms: 0.51536
+  type: 'test'
+  ...
+# Subtest: B3: migrate() runs the chain from 0 and leaves current data as is
+ok 101 - B3: migrate() runs the chain from 0 and leaves current data as is
+  ---
+  duration_ms: 0.30815
+  type: 'test'
+  ...
+# Subtest: B4: data from a newer schema is never overwritten
+ok 102 - B4: data from a newer schema is never overwritten
+  ---
+  duration_ms: 0.285665
+  type: 'test'
+  ...
+# Subtest: B5: corrupt JSON is copied aside and not deleted or overwritten without consent
+ok 103 - B5: corrupt JSON is copied aside and not deleted or overwritten without consent
+  ---
+  duration_ms: 0.355081
+  type: 'test'
+  ...
+# Subtest: B5: valid JSON with a broken structure is treated as corrupt too
+ok 104 - B5: valid JSON with a broken structure is treated as corrupt too
+  ---
+  duration_ms: 0.20814
+  type: 'test'
+  ...
+# Subtest: B15: blocked or full storage keeps the app working in memory
+ok 105 - B15: blocked or full storage keeps the app working in memory
+  ---
+  duration_ms: 0.28171
+  type: 'test'
+  ...
+# Subtest: save writes one key and updates updatedAt; reload gives the same data
+ok 106 - save writes one key and updates updatedAt; reload gives the same data
+  ---
+  duration_ms: 0.520288
+  type: 'test'
+  ...
+# Subtest: B6: export then import gives identical data
+ok 107 - B6: export then import gives identical data
+  ---
+  duration_ms: 1.561366
+  type: 'test'
+  ...
+# Subtest: B7: broken, empty, foreign or incomplete files are rejected with a reason
+ok 108 - B7: broken, empty, foreign or incomplete files are rejected with a reason
+  ---
+  duration_ms: 0.350158
+  type: 'test'
+  ...
+# Subtest: B7: an older backup is migrated on import
+ok 109 - B7: an older backup is migrated on import
+  ---
+  duration_ms: 0.149598
+  type: 'test'
+  ...
+# Subtest: makeId uses crypto.randomUUID and falls back when it is missing
+ok 110 - makeId uses crypto.randomUUID and falls back when it is missing
+  ---
+  duration_ms: 1.580723
+  type: 'test'
+  ...
+# Subtest: B10: autosave waits for a pause and saves once
+ok 111 - B10: autosave waits for a pause and saves once
+  ---
+  duration_ms: 0.226216
+  type: 'test'
+  ...
+# Subtest: backup reminder shows after 7 days without a backup
+ok 112 - backup reminder shows after 7 days without a backup
+  ---
+  duration_ms: 0.144152
+  type: 'test'
+  ...
+# Subtest: B8: country pack matches the work plan (11 stops, 29 nights, 30 days, totals, rates)
+ok 113 - B8: country pack matches the work plan (11 stops, 29 nights, 30 days, totals, rates)
+  ---
+  duration_ms: 1.957717
+  type: 'test'
+  ...
+# Subtest: B8a: category amounts add up to each profile total, and are marked as unverified planning numbers
+ok 114 - B8a: category amounts add up to each profile total, and are marked as unverified planning numbers
+  ---
+  duration_ms: 0.237857
+  type: 'test'
+  ...
+# Subtest: B9: only the storage layer touches localStorage
+ok 115 - B9: only the storage layer touches localStorage
+  ---
+  duration_ms: 1.463913
+  type: 'test'
+  ...
+# Subtest: B9: no hard-coded Hebrew text in JavaScript (copy lives in locales)
+ok 116 - B9: no hard-coded Hebrew text in JavaScript (copy lives in locales)
+  ---
+  duration_ms: 0.839
+  type: 'test'
+  ...
+# Subtest: B9 (rule 2): state variables set from JS end in -s and never reuse a token name
+ok 117 - B9 (rule 2): state variables set from JS end in -s and never reuse a token name
+  ---
+  duration_ms: 1.265383
+  type: 'test'
+  ...
+# Subtest: B9: the service worker precaches every file the app needs
+ok 118 - B9: the service worker precaches every file the app needs
+  ---
+  duration_ms: 0.881344
+  type: 'test'
+  ...
+# Subtest: B9: one version number for app, package and cache
+ok 119 - B9: one version number for app, package and cache
+  ---
+  duration_ms: 0.199548
+  type: 'test'
+  ...
+# Subtest: B18: manifest is valid for install under a sub-path
+ok 120 - B18: manifest is valid for install under a sub-path
+  ---
+  duration_ms: 0.362537
+  type: 'test'
+  ...
+# Subtest: B19: no Google Fonts or other outside hosts anywhere the app loads
+ok 121 - B19: no Google Fonts or other outside hosts anywhere the app loads
+  ---
+  duration_ms: 1.951778
+  type: 'test'
+  ...
+# Subtest: S3-9: the itinerary tab opens its own panel, not the "coming soon" placeholder
+ok 122 - S3-9: the itinerary tab opens its own panel, not the "coming soon" placeholder
+  ---
+  duration_ms: 1.360933
+  type: 'test'
+  ...
+# Subtest: S3-4: delete asks first; the suggested route and replanning also wait for a yes
+ok 123 - S3-4: delete asks first; the suggested route and replanning also wait for a yes
+  ---
+  duration_ms: 0.473283
+  type: 'test'
+  ...
+# Subtest: S3-6: new files are cached for offline use and the cache version moved on
+ok 124 - S3-6: new files are cached for offline use and the cache version moved on
+  ---
+  duration_ms: 0.519711
+  type: 'test'
+  ...
+# Subtest: S3-8: the itinerary formats dates only through formatDate / formatRange (Intl, he-IL from the country file)
+ok 125 - S3-8: the itinerary formats dates only through formatDate / formatRange (Intl, he-IL from the country file)
+  ---
+  duration_ms: 0.327899
+  type: 'test'
+  ...
+# Subtest: S3-9: itinerary text is at least 14px and its buttons are at least 44px
+ok 126 - S3-9: itinerary text is at least 14px and its buttons are at least 44px
+  ---
+  duration_ms: 0.479462
+  type: 'test'
+  ...
+# Subtest: S4-11: the budget tab opens the money panel
+ok 127 - S4-11: the budget tab opens the money panel
+  ---
+  duration_ms: 0.976139
+  type: 'test'
+  ...
+# Subtest: S4-8: delete and profile wait for a yes in a native dialog
+ok 128 - S4-8: delete and profile wait for a yes in a native dialog
+  ---
+  duration_ms: 0.512553
+  type: 'test'
+  ...
+# Subtest: S4-2: money code never stores decimals; amounts go through parseMoney / whole minor units
+ok 129 - S4-2: money code never stores decimals; amounts go through parseMoney / whole minor units
+  ---
+  duration_ms: 0.275719
+  type: 'test'
+  ...
+# Subtest: S4-10: new files are cached for offline use and the cache version moved past 0.3.x
+ok 130 - S4-10: new files are cached for offline use and the cache version moved past 0.3.x
+  ---
+  duration_ms: 2.099524
+  type: 'test'
+  ...
+# Subtest: S4-11: chart colors (one per category) have 3:1 contrast on the card surface in both themes
+ok 131 - S4-11: chart colors (one per category) have 3:1 contrast on the card surface in both themes
+  ---
+  duration_ms: 0.91646
+  type: 'test'
+  ...
+# Subtest: S4-11: money text is at least 14px and its buttons at least 44px
+ok 132 - S4-11: money text is at least 14px and its buttons at least 44px
+  ---
+  duration_ms: 0.30625
+  type: 'test'
+  ...
+# Subtest: S5-11: the lists tab opens its own panel; every tab is a real screen now
+ok 133 - S5-11: the lists tab opens its own panel; every tab is a real screen now
+  ---
+  duration_ms: 0.992329
+  type: 'test'
+  ...
+# Subtest: S5-5: deletes and starter lists wait for a yes in a native dialog
+ok 134 - S5-5: deletes and starter lists wait for a yes in a native dialog
+  ---
+  duration_ms: 0.332303
+  type: 'test'
+  ...
+# Subtest: S5-8: no rule, number or date as fact in the checklist copy and data
+ok 135 - S5-8: no rule, number or date as fact in the checklist copy and data
+  ---
+  duration_ms: 2.618498
+  type: 'test'
+  ...
+# Subtest: S5-10: new files are cached for offline use and the version is 0.5.x
+ok 136 - S5-10: new files are cached for offline use and the version is 0.5.x
+  ---
+  duration_ms: 0.302545
+  type: 'test'
+  ...
+# Subtest: S5-11: list text is at least 14px and its controls at least 44px
+ok 137 - S5-11: list text is at least 14px and its controls at least 44px
+  ---
+  duration_ms: 0.310992
+  type: 'test'
+  ...
+# Subtest: todayIn returns the calendar date in the destination time zone
+ok 138 - todayIn returns the calendar date in the destination time zone
+  ---
+  duration_ms: 17.538009
+  type: 'test'
+  ...
+# Subtest: daysBetween counts calendar days, across months, years and leap days
+ok 139 - daysBetween counts calendar days, across months, years and leap days
+  ---
+  duration_ms: 0.358467
+  type: 'test'
+  ...
+# Subtest: tripStatus: before, first day, middle, last day, after, and no dates
+ok 140 - tripStatus: before, first day, middle, last day, after, and no dates
+  ---
+  duration_ms: 0.936008
+  type: 'test'
+  ...
+# Subtest: validateDates blocks missing, impossible, reversed and overlong ranges
+ok 141 - validateDates blocks missing, impossible, reversed and overlong ranges
+  ---
+  duration_ms: 0.211237
+  type: 'test'
+  ...
+# Subtest: validateBudget accepts positive amounts in an allowed currency only
+ok 142 - validateBudget accepts positive amounts in an allowed currency only
+  ---
+  duration_ms: 0.399518
+  type: 'test'
+  ...
+# Subtest: budgetSummary: nothing invented; spent is the sum of recorded expenses
+ok 143 - budgetSummary: nothing invented; spent is the sum of recorded expenses
+  ---
+  duration_ms: 0.24221
+  type: 'test'
+  ...
+# Subtest: setupProgress counts the two setup steps
+ok 144 - setupProgress counts the two setup steps
+  ---
+  duration_ms: 0.200135
+  type: 'test'
+  ...
+# Subtest: store saves under the configured prefix and survives a reload
+ok 145 - store saves under the configured prefix and survives a reload
+  ---
+  duration_ms: 0.332601
+  type: 'test'
+  ...
+# Subtest: store ignores corrupt or foreign data instead of crashing
+ok 146 - store ignores corrupt or foreign data instead of crashing
+  ---
+  duration_ms: 0.311014
+  type: 'test'
+  ...
+# Subtest: store works when storage is blocked (private mode)
+ok 147 - store works when storage is blocked (private mode)
+  ---
+  duration_ms: 0.338185
+  type: 'test'
+  ...
+# Subtest: store can clear one part of the trip
+ok 148 - store can clear one part of the trip
+  ---
+  duration_ms: 0.274293
+  type: 'test'
+  ...
+1..148
+# tests 148
+# suites 0
+# pass 148
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 500.494933

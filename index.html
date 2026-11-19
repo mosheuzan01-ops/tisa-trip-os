@@ -127,6 +127,24 @@
               <p class="today-time"><span class="clock ltr" data-slot="clock">--:--</span><span class="today-where" data-slot="clock-label"></span></p>
               <p class="muted" data-i18n="today.empty" data-slot="today-sub">כשתקבעו תאריכים, כאן יופיע מה מחכה לכם היום.</p>
             </section>
+
+            <section class="card surface home-lists" aria-labelledby="home-lists-title">
+              <button class="home-lists-link" type="button" data-go="checklist">
+                <span class="card-head">
+                  <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-list"/></svg>
+                  <span class="home-lists-title" id="home-lists-title" data-i18n="home.lists.title">משימות והכנות</span>
+                </span>
+                <span class="home-lists-open" data-slot="home-tasks-open"></span>
+                <span class="home-lists-next" data-slot="home-tasks-next"></span>
+                <span class="home-bars">
+                  <span class="home-bar"><span class="home-bar-label" data-slot="home-prep-label"></span><span class="mini-meter" aria-hidden="true"><span class="mini-fill" data-slot="home-prep-fill"></span></span></span>
+                  <span class="home-bar"><span class="home-bar-label" data-slot="home-pack-label"></span><span class="mini-meter" aria-hidden="true"><span class="mini-fill" data-slot="home-pack-fill"></span></span></span>
+                </span>
+              </button>
+              <button class="btn btn-ghost btn-small" type="button" data-action="task-quick">
+                <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-plus"/></svg><span data-i18n="task.new">משימה חדשה</span>
+              </button>
+            </section>
           </div>
 
           <div class="col">
@@ -365,9 +383,59 @@
             <span class="badge" data-slot="rates-badge"></span>
           </div>
           <ul class="settings-list rates-list ltr-nums" data-slot="rates-list"></ul>
+          <p class="settings-meta" data-slot="rates-updated" hidden></p>
           <p class="form-warn-calm" data-slot="rates-warn" hidden></p>
           <p data-i18n="money.rates.note">שער חדש חל רק על הוצאות חדשות. הוצאות שכבר נשמרו שומרות את השער שלהן.</p>
           <button class="btn btn-ghost" type="button" data-action="rates-open" data-i18n="money.rates.edit">עריכת שערים</button>
+        </section>
+      </section>
+
+      <!-- LISTS (feature 10, Stage 5): checklist with two progress bars, and tasks. No rule is stated as fact. -->
+      <section class="panel lists" id="panel-checklist" role="tabpanel" aria-labelledby="tab-lists" hidden>
+        <div class="itin-head">
+          <h1 class="display" data-i18n="lists.title">רשימות</h1>
+        </div>
+
+        <section class="card surface lists-progress" aria-labelledby="lists-progress-title">
+          <h2 class="sr-only" id="lists-progress-title" data-i18n="lists.progress">התקדמות</h2>
+          <div class="bar-row"><span class="bar-label" data-i18n="lists.prep">הכנות</span><span class="bar-num" data-slot="prep-num"></span></div>
+          <span class="meter" role="progressbar" aria-labelledby="prep-label" data-slot="prep-meter" aria-valuemin="0" aria-valuemax="100"><span class="meter-fill" data-slot="prep-fill"></span></span>
+          <span class="sr-only" id="prep-label" data-i18n="lists.prep">הכנות</span>
+          <div class="bar-row"><span class="bar-label" data-i18n="lists.pack">אריזה</span><span class="bar-num" data-slot="pack-num"></span></div>
+          <span class="meter" role="progressbar" aria-labelledby="pack-label" data-slot="pack-meter" aria-valuemin="0" aria-valuemax="100"><span class="meter-fill" data-slot="pack-fill"></span></span>
+          <span class="sr-only" id="pack-label" data-i18n="lists.pack">אריזה</span>
+        </section>
+
+        <section class="lists-block" aria-labelledby="list-title">
+          <div class="money-card-head">
+            <h2 class="section-title" id="list-title" data-i18n="list.title">צ'ק ליסט</h2>
+            <button class="btn btn-primary btn-small" type="button" data-action="item-add">
+              <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-plus"/></svg><span data-i18n="list.add">הוספת פריט</span>
+            </button>
+          </div>
+          <section class="card surface money-empty" data-slot="list-empty" aria-labelledby="list-empty-title" hidden>
+            <h3 class="tool-title" id="list-empty-title" data-i18n="list.empty.title">הרשימה ריקה</h3>
+            <p data-i18n="list.empty.text">טוענים רשימה מוצעת לתאילנד ומשנים אותה, או מוסיפים פריטים משלכם.</p>
+            <button class="btn btn-ghost" type="button" data-action="list-seed" data-i18n="list.seed.open">לטעון רשימה מוצעת</button>
+          </section>
+          <label class="split-check filter-toggle" data-slot="items-filter"><input type="checkbox" data-filter="hide-done-items"><span data-i18n="list.hideDone">להסתיר מה שכבר מוכן</span></label>
+          <div class="groups" data-slot="groups"></div>
+        </section>
+
+        <section class="lists-block" aria-labelledby="tasks-title">
+          <div class="money-card-head">
+            <h2 class="section-title" id="tasks-title" data-i18n="task.title">משימות</h2>
+            <button class="btn btn-primary btn-small" type="button" data-action="task-add">
+              <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-plus"/></svg><span data-i18n="task.new">משימה חדשה</span>
+            </button>
+          </div>
+          <section class="card surface money-empty" data-slot="tasks-empty" aria-labelledby="tasks-empty-title" hidden>
+            <h3 class="tool-title" id="tasks-empty-title" data-i18n="task.empty.title">אין משימות</h3>
+            <p data-i18n="task.empty.text">טוענים משימות מוצעות לפני טיסה, או מוסיפים משלכם.</p>
+            <button class="btn btn-ghost" type="button" data-action="tasks-seed" data-i18n="task.seed.open">לטעון משימות מוצעות</button>
+          </section>
+          <label class="split-check filter-toggle" data-slot="tasks-filter"><input type="checkbox" data-filter="hide-done-tasks"><span data-i18n="task.hideDone">להסתיר משימות שבוצעו</span></label>
+          <ul class="task-list" data-slot="task-list"></ul>
         </section>
       </section>
 
@@ -476,7 +544,7 @@
           <span class="tab-chip"><svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-wallet"/></svg></span>
           <span data-i18n="nav.budget">תקציב</span>
         </button>
-        <button class="tab" role="tab" id="tab-lists" data-tab="lists" data-route="checklist" data-icon="i-list" aria-selected="false" aria-controls="panel-soon" tabindex="-1" type="button">
+        <button class="tab" role="tab" id="tab-lists" data-tab="lists" data-route="checklist" data-icon="i-list" aria-selected="false" aria-controls="panel-checklist" tabindex="-1" type="button">
           <span class="tab-chip"><svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-list"/></svg></span>
           <span data-i18n="nav.lists">רשימות</span>
         </button>
@@ -732,6 +800,61 @@
         <p class="sheet-hint" id="dlg-confirm-text" data-slot="confirm-text"></p>
         <div class="sheet-actions">
           <button class="btn metal-btn" type="button" data-action="confirm-yes" data-slot="confirm-yes"></button>
+          <button class="btn btn-ghost" type="button" data-close data-i18n="form.cancel">ביטול</button>
+        </div>
+      </div>
+    </dialog>
+
+    <!-- Lists: add or edit a checklist item -->
+    <dialog class="sheet dmetal" id="dlg-item" aria-labelledby="dlg-item-title">
+      <form class="sheet-form" data-form="item" novalidate>
+        <h2 id="dlg-item-title" data-slot="item-title"></h2>
+        <label class="field"><span data-i18n="list.name">שם הפריט</span><input type="text" name="name" maxlength="60" autocomplete="off" aria-describedby="item-error"></label>
+        <div class="field-row">
+          <label class="field"><span data-i18n="list.group">קבוצה</span><select name="group" data-slot="item-group"></select></label>
+          <label class="field"><span data-i18n="list.qty">כמות</span><input class="ltr" type="text" name="qty" inputmode="numeric" autocomplete="off" aria-describedby="item-error"></label>
+        </div>
+        <label class="field"><span data-i18n="list.note">הערה (לא חובה)</span><input type="text" name="note" maxlength="140" autocomplete="off" aria-describedby="item-error"></label>
+        <label class="split-check"><input type="checkbox" name="verify"><span data-i18n="list.verify.toggle">תלוי בכללים: לבדוק במקור רשמי</span></label>
+        <fieldset class="verify-box" data-slot="verify-box">
+          <legend data-i18n="list.verify.title">בדיקה</legend>
+          <label class="field"><span data-i18n="list.verify.source">איפה בדקתם (מקור)</span><input type="text" name="source" maxlength="200" autocomplete="off" aria-describedby="item-error"></label>
+          <label class="field"><span data-i18n="list.verify.date">תאריך הבדיקה</span><input class="ltr" type="date" name="checkedAt" aria-describedby="item-error"></label>
+          <p class="sheet-hint" data-i18n="list.verify.hint">כללים משתנים. האפליקציה לא כותבת אותם כעובדה: בודקים במקור רשמי ורושמים כאן מתי.</p>
+        </fieldset>
+        <p class="form-error" id="item-error" role="alert"></p>
+        <div class="sheet-actions">
+          <button class="btn metal-btn" type="submit" data-i18n="form.save">שמירה</button>
+          <button class="btn btn-ghost" type="button" data-close data-i18n="form.cancel">ביטול</button>
+        </div>
+      </form>
+    </dialog>
+
+    <!-- Lists: add or edit a task -->
+    <dialog class="sheet dmetal" id="dlg-task" aria-labelledby="dlg-task-title">
+      <form class="sheet-form" data-form="task" novalidate>
+        <h2 id="dlg-task-title" data-slot="task-title"></h2>
+        <label class="field"><span data-i18n="task.name">משימה</span><input type="text" name="title" maxlength="80" autocomplete="off" aria-describedby="task-error"></label>
+        <div class="field-row">
+          <label class="field"><span data-i18n="task.status">סטטוס</span><select name="status" data-slot="task-status"></select></label>
+          <label class="field"><span data-i18n="task.due">תאריך יעד (לא חובה)</span><input class="ltr" type="date" name="due" aria-describedby="task-error"></label>
+        </div>
+        <label class="field"><span data-i18n="task.note">הערה (לא חובה)</span><input type="text" name="note" maxlength="140" autocomplete="off" aria-describedby="task-error"></label>
+        <p class="form-error" id="task-error" role="alert"></p>
+        <div class="sheet-actions">
+          <button class="btn metal-btn" type="submit" data-i18n="form.save">שמירה</button>
+          <button class="btn btn-ghost" type="button" data-close data-i18n="form.cancel">ביטול</button>
+        </div>
+      </form>
+    </dialog>
+
+    <!-- Lists: delete or load only after a yes -->
+    <dialog class="sheet dmetal" id="dlg-list-confirm" aria-labelledby="dlg-list-confirm-title" aria-describedby="dlg-list-confirm-text">
+      <div class="sheet-form">
+        <h2 id="dlg-list-confirm-title" data-slot="list-confirm-title"></h2>
+        <p class="sheet-hint" id="dlg-list-confirm-text" data-slot="list-confirm-text"></p>
+        <div class="sheet-actions">
+          <button class="btn metal-btn" type="button" data-action="list-confirm-yes" data-slot="list-confirm-yes"></button>
           <button class="btn btn-ghost" type="button" data-close data-i18n="form.cancel">ביטול</button>
         </div>
       </div>

@@ -33,8 +33,12 @@ export function effectiveRates(stored = {}, defaults = {}) {
     if (Number.isFinite(own) && own > 0) { out[k] = own; edited = edited || own !== defaults[k]; } else out[k] = defaults[k];
   }
   out.planning = !edited;
+  out.updatedAt = !edited ? null : (typeof stored?.updatedAt === 'string' ? stored.updatedAt : null);
   return out;
 }
+
+/** The user's own rates with the date they were set (shown as "last updated"). No own rates: no date. */
+export const stampRates = (own, date) => (Object.keys(own).length ? { ...own, updatedAt: date } : {});
 
 /** How many shekels one unit of the currency is worth. NaN when there is no rate for it. */
 // Rates are keyed "FROM_TO" (1 FROM = n TO), as in the country pack's planningRates.
