@@ -11,7 +11,7 @@ const ROOT = path.join(__dirname, '..', '..');
 const OUT = path.join(ROOT, 'docs/evidence/stage2');
 fs.mkdirSync(OUT, { recursive: true });
 const VIEW = { viewport: { width: 375, height: 812 }, deviceScaleFactor: 2, locale: 'he-IL', reducedMotion: 'reduce' };
-const ROUTES = ['home', 'itinerary', 'money', 'checklist', 'transfers', 'info', 'assistant', 'map', 'settings'];
+const ROUTES = ['home', 'itinerary', 'money', 'checklist', 'transfers', 'info', 'assistant', 'settings'];
 const results = {};
 const pass = (id, ok, detail) => { results[id] = { result: ok ? 'PASS' : 'FAIL', ...detail }; };
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -87,7 +87,7 @@ const visible = (page, sel) => page.locator(sel).isVisible();
     const b11 = Object.values(nav).every((n) => n.panelVisible && n.ariaCurrent > 0 && !n.hscroll) && afterBack === '#/transfers' && afterReload === '#/transfers' && transfersVisible && legacyHash === '#/money';
     pass('B11', b11, { nav, afterBack, afterReload, legacyHash });
     const soon = Object.entries(nav).filter(([r]) => !['home', 'settings'].includes(r));
-    pass('B12', soon.every(([, n]) => n.buttons.length === 1 && n.buttons[0] === 'home' && /שלב \d|לא נכללת/.test(n.text)), { screens: Object.fromEntries(soon.map(([r, n]) => [r, { buttons: n.buttons, text: n.text }])) });
+    pass('B12', soon.every(([, n]) => n.buttons.length === 1 && n.buttons[0] === 'home' && /שלב \d/.test(n.text)), { screens: Object.fromEntries(soon.map(([r, n]) => [r, { buttons: n.buttons, text: n.text }])) });
     await open('itinerary');
     await page.screenshot({ path: `${OUT}/empty-screen-itinerary.png`, fullPage: false });
 

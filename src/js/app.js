@@ -25,10 +25,9 @@ const SCREENS = {
   transfers: { title: 'screen.transfers', icon: 'i-plane', stage: 5 },
   info: { title: 'screen.info', icon: 'i-doc', stage: 7 },
   assistant: { title: 'screen.assistant', icon: 'i-chat', stage: 7 },
-  map: { tab: 'map', title: 'nav.map', icon: 'i-map', stage: null },
   settings: {},
 };
-const LEGACY_ROUTES = { budget: 'money', lists: 'checklist' }; // Stage 1 used #budget and #lists
+const LEGACY_ROUTES = { budget: 'money', lists: 'checklist', map: 'home' }; // Stage 1 used #budget and #lists; the map tab was removed in 0.2.2
 
 function parseRoute(hash) {
   const m = /^#\/?([\w-]+)/.exec(hash ?? '');
@@ -430,7 +429,7 @@ function setupRouter(ctx) {
       panels.soon.setAttribute('aria-label', t(screen.title));
       $('[data-slot="soon-title"]').textContent = t(screen.title);
       $('[data-slot="soon-icon"]').setAttribute('href', ICONS + screen.icon);
-      $('[data-slot="soon-text"]').textContent = screen.stage ? interpolate(t('soon.stage'), { n: screen.stage }) : t('soon.notPlanned');
+      $('[data-slot="soon-text"]').textContent = interpolate(t('soon.stage'), { n: screen.stage });
       for (const a of $$('.soon-link', more)) a.hidden = a.dataset.route === route;
     }
     renderBanners(ctx);
