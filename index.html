@@ -425,6 +425,10 @@
           <span class="sr-only" id="pack-label" data-i18n="lists.pack">אריזה</span>
         </section>
 
+        <button class="btn btn-ghost itin-transfers-link" type="button" data-go="luggage">
+          <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-bag"/></svg><span data-i18n="lug.open">משקל מזוודה</span>
+        </button>
+
         <div class="lists-body">
           <div class="filter-bar" data-slot="lists-bar">
             <div class="search-bar" data-search="lists" role="search">
@@ -526,6 +530,25 @@
           </button>
         </section>
         <ol class="cal-days" data-slot="cal-days" aria-label="ימי הטיול" data-i18n-label="cal.listLabel"></ol>
+      </section>
+
+      <!-- LUGGAGE (6.0e): weight per bag, opened from the lists. The user sets each limit; the app only adds up. -->
+      <section class="panel luggage" id="panel-luggage" role="tabpanel" aria-labelledby="luggage-title" hidden>
+        <div class="itin-head">
+          <h1 class="display" id="luggage-title" data-i18n="lug.title">משקל מזוודה</h1>
+          <p class="muted" data-i18n="lug.lead">קובעים לכל תיק את המגבלה שחברת התעופה מסרה לכם. האפליקציה רק מסכמת ומזהירה כשעוברים אותה.</p>
+        </div>
+        <div class="money-card-head">
+          <span></span>
+          <button class="btn btn-primary btn-small" type="button" data-action="bag-add">
+            <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-plus"/></svg><span data-i18n="lug.addBag">תיק חדש</span>
+          </button>
+        </div>
+        <section class="card surface money-empty" data-slot="luggage-empty" aria-labelledby="luggage-empty-title" hidden>
+          <h2 class="tool-title" id="luggage-empty-title" data-i18n="lug.empty.title">עוד אין תיקים</h2>
+          <p data-i18n="lug.empty.text">מוסיפים תיק, למשל מזוודה או תיק גב, ואז את הפריטים והמשקל של כל אחד.</p>
+        </section>
+        <div class="bags" data-slot="bags"></div>
       </section>
 
       <!-- ASSISTANT (0.5.4): rule-based, from the user's own data only. A full AI chat is a future version. -->
@@ -1037,6 +1060,48 @@
         <p class="sheet-hint" id="dlg-checkin-delete-text" data-slot="checkin-delete-text"></p>
         <div class="sheet-actions">
           <button class="btn metal-btn" type="button" data-action="checkin-delete-yes" data-i18n="checkin.deleteYes">כן, למחוק</button>
+          <button class="btn btn-ghost" type="button" data-close data-i18n="form.cancel">ביטול</button>
+        </div>
+      </div>
+    </dialog>
+
+    <!-- Luggage (6.0e): bag, item, and delete after a yes -->
+    <dialog class="sheet dmetal" id="dlg-bag" aria-labelledby="dlg-bag-title">
+      <form class="sheet-form" data-form="bag" novalidate>
+        <h2 id="dlg-bag-title" data-slot="bag-title"></h2>
+        <label class="field"><span data-i18n="lug.bag.name">שם התיק</span><input type="text" name="name" maxlength="40" autocomplete="off" aria-describedby="bag-error"></label>
+        <label class="field"><span data-i18n="lug.bag.limit">מגבלה בק״ג (לא חובה)</span><input class="ltr" type="text" name="limit" inputmode="decimal" autocomplete="off" aria-describedby="bag-error"></label>
+        <p class="sheet-hint" data-i18n="lug.bag.limitHint">לפי מה שחברת התעופה מסרה לכם. בלי מגבלה, האפליקציה רק מסכמת.</p>
+        <p class="form-error" id="bag-error" role="alert"></p>
+        <div class="sheet-actions">
+          <button class="btn metal-btn" type="submit" data-i18n="form.save">שמירה</button>
+          <button class="btn btn-ghost" type="button" data-close data-i18n="form.cancel">ביטול</button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog class="sheet dmetal" id="dlg-luggage-item" aria-labelledby="dlg-luggage-item-title">
+      <form class="sheet-form" data-form="luggage-item" novalidate>
+        <h2 id="dlg-luggage-item-title" data-slot="luggage-item-title"></h2>
+        <label class="field"><span data-i18n="lug.item.name">פריט</span><input type="text" name="name" maxlength="60" autocomplete="off" aria-describedby="luggage-item-error"></label>
+        <div class="field-row">
+          <label class="field"><span data-i18n="lug.item.weight">משקל בק״ג</span><input class="ltr" type="text" name="weight" inputmode="decimal" autocomplete="off" aria-describedby="luggage-item-error"></label>
+          <label class="field"><span data-i18n="lug.item.bag">תיק</span><select name="bagId" data-slot="luggage-item-bag"></select></label>
+        </div>
+        <p class="form-error" id="luggage-item-error" role="alert"></p>
+        <div class="sheet-actions">
+          <button class="btn metal-btn" type="submit" data-i18n="form.save">שמירה</button>
+          <button class="btn btn-ghost" type="button" data-close data-i18n="form.cancel">ביטול</button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog class="sheet dmetal" id="dlg-luggage-delete" aria-labelledby="dlg-luggage-delete-title" aria-describedby="dlg-luggage-delete-text">
+      <div class="sheet-form">
+        <h2 id="dlg-luggage-delete-title" data-i18n="lug.delete.title">למחוק?</h2>
+        <p class="sheet-hint" id="dlg-luggage-delete-text" data-slot="luggage-delete-text"></p>
+        <div class="sheet-actions">
+          <button class="btn metal-btn" type="button" data-action="luggage-delete-yes" data-i18n="lug.delete.yes">כן, למחוק</button>
           <button class="btn btn-ghost" type="button" data-close data-i18n="form.cancel">ביטול</button>
         </div>
       </div>
