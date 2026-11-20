@@ -638,5 +638,21 @@
   "cal.task.overdue": "באיחור",
   "cal.task.done": "בוצע",
   "cal.planned": "מתוכנן ליום: {amount}",
-  "cal.plannedNone": "אין תכנון ליום זה"
+  "cal.plannedNone": "אין תכנון ליום זה",
+  "note.add": "הערה ליום",
+  "note.edit": "עריכת ההערה",
+  "note.addLabel": "הערה ליום {date}",
+  "note.editLabel": "עריכת ההערה של {date}",
+  "note.title": "הערה ליום {n}",
+  "note.field": "מה היה היום?",
+  "note.where": "איפה: {where}",
+  "note.whereNone": "אין תחנה ליום הזה",
+  "note.delete": "מחיקת ההערה",
+  "note.saved": "ההערה נשמרה.",
+  "note.deleted": "ההערה נמחקה.",
+  "note.deleteTitle": "למחוק את ההערה?",
+  "note.deleteText": "ההערה של {date} תימחק. אי אפשר לבטל.",
+  "note.deleteYes": "כן, למחוק",
+  "noteErr.note.tooLong": "ההערה ארוכה מדי. עד {max} תווים.",
+  "noteErr.note.empty": "ההערה ריקה. כדי למחוק אותה לוחצים על \"מחיקת ההערה\"."
 }

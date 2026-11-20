@@ -17,7 +17,7 @@ import { parseMoney } from './core/money.js';
 import { setupLists, renderLists } from './checklist-view.js';
 import { setupTransfers, renderTransfers } from './transfers-view.js';
 import { renderAssistant } from './assistant-view.js';
-import { renderCalendar, revealToday } from './calendar-view.js';
+import { renderCalendar, revealToday, setupCalendar } from './calendar-view.js';
 
 const $ = (sel, root = document) => root.querySelector(sel);
 const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
@@ -129,6 +129,7 @@ async function boot() {
   setupMoney(ctx, { wireDialog, showFormErrors });
   setupLists(ctx, { wireDialog, showFormErrors });
   setupTransfers(ctx, { wireDialog, showFormErrors });
+  setupCalendar(ctx, { wireDialog, showFormErrors });
   setupServiceWorker(ctx);
   addEventListener('online', () => renderBanners(ctx));
   addEventListener('offline', () => renderBanners(ctx));
@@ -316,7 +317,7 @@ function renderTrip({ t, locale, country, trip }) {
 // ---------- Setup sheets on the home screen (native <dialog>: focus trap, Esc to close) ----------
 function showFormErrors(t, form, errors, prefix = 'err') {
   form.querySelector('.form-error').textContent = errors.map((e) => t(`${prefix}.${e}`)).join(' ');
-  for (const input of form.querySelectorAll('input, select')) {
+  for (const input of form.querySelectorAll('input, select, textarea')) {
     const bad = errors.some((e) => e.startsWith(`${input.name}.`) || (input.name === 'end' && e === 'range.tooLong'));
     input.setAttribute('aria-invalid', String(bad));
   }

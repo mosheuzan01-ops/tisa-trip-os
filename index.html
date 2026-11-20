@@ -959,6 +959,32 @@
       </div>
     </dialog>
 
+    <!-- Journal (6.0c): one note per day, from the calendar. Deleting asks first. -->
+    <dialog class="sheet dmetal" id="dlg-note" aria-labelledby="dlg-note-title" aria-describedby="dlg-note-where">
+      <form class="sheet-form" data-form="note" novalidate>
+        <h2 id="dlg-note-title" data-slot="note-title"></h2>
+        <p class="sheet-hint" id="dlg-note-where"><span data-slot="note-date"></span><br><span data-slot="note-where"></span></p>
+        <label class="field"><span data-i18n="note.field">מה היה היום?</span><textarea name="note" rows="6" maxlength="1000" aria-describedby="note-error"></textarea></label>
+        <p class="form-error" id="note-error" role="alert"></p>
+        <div class="sheet-actions">
+          <button class="btn metal-btn" type="submit" data-i18n="form.save">שמירה</button>
+          <button class="btn btn-ghost" type="button" data-close data-i18n="form.cancel">ביטול</button>
+          <button class="btn btn-ghost" type="button" data-action="note-delete" data-i18n="note.delete" hidden>מחיקת ההערה</button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog class="sheet dmetal" id="dlg-note-delete" aria-labelledby="dlg-note-delete-title" aria-describedby="dlg-note-delete-text">
+      <div class="sheet-form">
+        <h2 id="dlg-note-delete-title" data-i18n="note.deleteTitle">למחוק את ההערה?</h2>
+        <p class="sheet-hint" id="dlg-note-delete-text" data-slot="note-delete-text"></p>
+        <div class="sheet-actions">
+          <button class="btn metal-btn" type="button" data-action="note-delete-yes" data-i18n="note.deleteYes">כן, למחוק</button>
+          <button class="btn btn-ghost" type="button" data-close data-i18n="form.cancel">ביטול</button>
+        </div>
+      </div>
+    </dialog>
+
     <!-- Transfers: add or edit (all by hand) -->
     <dialog class="sheet dmetal" id="dlg-transfer" aria-labelledby="dlg-transfer-title">
       <form class="sheet-form" data-form="transfer" novalidate>
