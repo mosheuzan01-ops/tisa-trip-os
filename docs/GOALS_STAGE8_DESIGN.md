@@ -56,7 +56,8 @@
 | D8-2 | כל צמדי הטקסט והרקע עוברים AA בבהיר ובכהה | PASS (`npm test` S6) |
 | D8-3 | הפלטינה של הכרטיס לא השתנתה (`--metal-1..7` זהים ל-main) | PASS (`git diff`: רק `--metal-pill` השתנה, מסגול לים עמוק) |
 | D8-4 | תלת-מימד ב-CSS בלבד, כבוי ב-reduced-motion | PASS (סקירת קוד, בלי JS ובלי ספרייה) |
-| D8-5 | אין רגרסיה: `npm test` 257/257, וכל בדיקות הדפדפן 3 פעמים | ראו `docs/evidence/stage8-design/regression/` |
+| D8-5 | אין רגרסיה: `npm test`, וכל בדיקות הדפדפן 3 פעמים | PASS: `npm test` 260/260; 19 סקריפטים × 3 = 57/57 (`docs/evidence/stage8-design/regression/`); אחרי 0.7.1 שוב 3/3 לבדיקות שלב 7 ולמצב טיסה |
+| D8-6 | העיצוב מגיע לטלפונים: 0.7.1 בשלושת המקומות | PASS (`tests/stage8-design.test.js`) |
 
 ## צילומים (לפני ואחרי)
 - **לפני:** `docs/evidence/stage7/shots/after-*.png` (מצב שלב 7).

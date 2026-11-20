@@ -1,0 +1,5 @@
+not ok 1 - D8: the new design ships as 0.7.1 or later in all three places (cache-first: phones need a new version)
+ok 2 - D8-1: no pink, violet or lavender left in the theme colours (the platinum pass is gold-silver)
+ok 3 - D8-4: the 3D layer is CSS only and turns off with reduced motion
+# pass 2
+# fail 1
