@@ -1,4 +1,5 @@
 // Stage 6.0a browser checks (docs/GOALS_STAGE6.md S6-1 data part, S6-2, S6-12), at 375px and 1280px.
+// Stage 7 (schema 5): version checks read ">= 4": the 3 -> 4 step must still run, and later steps may follow.
 // Real v3 data (as 0.5.4 saves it) is put in storage, the real app loads it, and every screen still shows it.
 // Waits for UI state, not fixed sleeps (docs/RULES.md rule 6). Run 3 times before calling it PASS.
 // Writes only to QA_OUT, default docs/evidence/stage6/6.0a (rule 10). Run from the repo root (port 8089).
@@ -105,7 +106,7 @@ const textOf = (page, sel) => page.locator(sel).innerText();
       };
       await page.reload(); await ready(page);
       const again = await stored(page);
-      pass(`S6-2 ${view}`, s.schemaVersion === 4 && Object.values(kept).every(Boolean) && added && Object.values(shown).every(Boolean) && again.schemaVersion === 4 && same(again.trips['trip-1'].expenses, before.trips['trip-1'].expenses),
+      pass(`S6-2 ${view}`, s.schemaVersion >= 4 && Object.values(kept).every(Boolean) && added && Object.values(shown).every(Boolean) && again.schemaVersion >= 4 && same(again.trips['trip-1'].expenses, before.trips['trip-1'].expenses),
         { schemaVersion: s.schemaVersion, kept, added, shown });
       await ctx.close();
     }
@@ -147,7 +148,7 @@ const textOf = (page, sel) => page.locator(sel).innerText();
       fs.unlinkSync(file);
       const match = Object.fromEntries([...OLD_FIELDS, 'journal', 'checkins', 'luggage'].map((k) => [k, same(before[k], after[k])]));
       const wipedOk = same(wiped.journal, {}) && wiped.checkins.length === 0 && wiped.luggage.bags.length === 0;
-      pass(`S6-12 round trip ${view}`, exported.schemaVersion === 4 && wipedOk && Object.values(match).every(Boolean), { fileVersion: exported.schemaVersion, wipedOk, match });
+      pass(`S6-12 round trip ${view}`, exported.schemaVersion >= 4 && wipedOk && Object.values(match).every(Boolean), { fileVersion: exported.schemaVersion, wipedOk, match });
 
       // A backup file written by 0.5.4 (schema 3) still imports.
       const v3file = path.join(OUT, `v3-backup-${view}.json`);
@@ -159,7 +160,7 @@ const textOf = (page, sel) => page.locator(sel).innerText();
       const fromV3 = await stored(page);
       fs.unlinkSync(v3file);
       const t3 = fromV3.trips[fromV3.activeTripId];
-      const v3ok = fromV3.schemaVersion === 4 && same(t3.luggage, { bags: [] }) && t3.transfers[0]?.booking === 'ABC123' && t3.tasks[0]?.title === 'ביטוח';
+      const v3ok = fromV3.schemaVersion >= 4 && same(t3.luggage, { bags: [] }) && t3.transfers[0]?.booking === 'ABC123' && t3.tasks[0]?.title === 'ביטוח';
       pass(`S6-12 v3 backup ${view}`, v3ok, { schemaVersion: fromV3.schemaVersion });
       await ctx.close();
     }
