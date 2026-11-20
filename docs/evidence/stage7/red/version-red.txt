@@ -1,0 +1,4 @@
+not ok 6 - S7-10: 0.7.0 or later in all three places, so phones on the cache-first worker get Stage 7
+not ok 7 - docs: the backup format describes schema 5 and the separate photo file
+# pass 5
+# fail 2

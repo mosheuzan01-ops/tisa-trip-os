@@ -264,6 +264,12 @@
         <button class="btn btn-ghost itin-transfers-link" type="button" data-go="calendar">
           <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-calendar"/></svg><span data-i18n="cal.open">לוח שנה</span>
         </button>
+        <button class="btn btn-ghost itin-transfers-link" type="button" data-go="photos">
+          <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-image"/></svg><span data-i18n="photo.open">תמונות</span>
+        </button>
+        <button class="btn btn-ghost itin-transfers-link" type="button" data-go="summary">
+          <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-summary"/></svg><span data-i18n="sum.open">סיכום הטיול</span>
+        </button>
 
         <section class="card surface settings-card itin-trip" aria-labelledby="itin-trip-title">
           <h2 id="itin-trip-title" data-i18n="itin.trip.title">תאריכי הטיול</h2>
@@ -532,6 +538,83 @@
         <ol class="cal-days" data-slot="cal-days" aria-label="ימי הטיול" data-i18n-label="cal.listLabel"></ol>
       </section>
 
+      <!-- PHOTOS (7.0b): stored on this device in IndexedDB, never on a server. Only ids and details go into the data. -->
+      <section class="panel photos" id="panel-photos" role="tabpanel" aria-labelledby="photos-title" hidden>
+        <div class="itin-head">
+          <h1 class="display" id="photos-title" data-i18n="photo.title">תמונות</h1>
+          <p class="muted" data-i18n="photo.lead">התמונות נשמרות רק בטלפון הזה, מוקטנות. כל תמונה משויכת ליום וליעד לפי תאריך הצילום.</p>
+        </div>
+        <p class="banner photo-warn" role="status" data-slot="photo-storage-warn" hidden></p>
+        <div class="money-card-head">
+          <p class="muted" data-slot="photo-count"></p>
+          <button class="btn btn-primary btn-small" type="button" data-action="photo-add">
+            <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-plus"/></svg><span data-i18n="photo.add">הוספת תמונות</span>
+          </button>
+        </div>
+        <input class="sr-only" type="file" id="photo-file" accept="image/*" multiple tabindex="-1" aria-hidden="true">
+        <p class="muted photo-busy" role="status" data-slot="photo-busy" hidden></p>
+        <section class="card surface money-empty" data-slot="photo-empty" aria-labelledby="photo-empty-title" hidden>
+          <h2 class="tool-title" id="photo-empty-title" data-i18n="photo.empty.title">עוד אין תמונות</h2>
+          <p data-i18n="photo.empty.text">מוסיפים מהגלריה או מהמצלמה. התמונה נכנסת ליום שבו צולמה.</p>
+        </section>
+        <div class="photo-groups" data-slot="photo-groups"></div>
+      </section>
+
+      <!-- SUMMARY (7.0c): the trip at a glance. Every money figure comes from the money screen's own summary. -->
+      <section class="panel summary" id="panel-summary" role="tabpanel" aria-labelledby="summary-title" hidden>
+        <div class="itin-head">
+          <h1 class="display" id="summary-title" data-i18n="sum.title">סיכום הטיול</h1>
+          <p class="muted" data-i18n="sum.lead">הימים, המקומות, כמה הוצאתם מול התכנון, ומצגת של התמונות.</p>
+        </div>
+        <section class="card surface sum-show" aria-labelledby="sum-show-title">
+          <div class="money-card-head">
+            <h2 class="tool-title" id="sum-show-title" data-i18n="sum.show.title">מצגת</h2>
+            <button class="btn btn-primary btn-small" type="button" data-action="show-play">
+              <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-play"/></svg><span data-i18n="sum.show.play">הפעלת מצגת</span>
+            </button>
+          </div>
+          <p class="muted" data-slot="sum-show-note"></p>
+          <ul class="sum-strip" data-slot="sum-strip" aria-label="תמונות המצגת" data-i18n-label="sum.show.listLabel"></ul>
+        </section>
+        <section class="card surface sum-facts" aria-labelledby="sum-facts-title">
+          <h2 class="tool-title" id="sum-facts-title" data-i18n="sum.facts.title">במספרים</h2>
+          <dl class="sum-kpis">
+            <div class="sum-kpi"><dt data-i18n="sum.days">ימים</dt><dd data-slot="sum-days"></dd></div>
+            <div class="sum-kpi"><dt data-i18n="sum.placesCount">מקומות</dt><dd data-slot="sum-places-count"></dd></div>
+            <div class="sum-kpi"><dt data-i18n="sum.spent">הוצאות ותכנון</dt><dd data-slot="sum-spent"></dd></div>
+            <div class="sum-kpi"><dt data-i18n="sum.photos">תמונות</dt><dd data-slot="sum-photos"></dd></div>
+          </dl>
+          <h3 class="sum-sub" data-i18n="sum.places">איפה היינו</h3>
+          <p class="muted" data-slot="sum-places-empty" hidden></p>
+          <ol class="sum-places" data-slot="sum-places"></ol>
+          <h3 class="sum-sub" data-i18n="sum.byCat">הוצאות לפי קטגוריה</h3>
+          <p class="muted" data-slot="sum-cats-empty" hidden></p>
+          <ul class="sum-cats" data-slot="sum-cats"></ul>
+        </section>
+        <section class="card surface sum-budget" aria-labelledby="sum-budget-title">
+          <h2 class="tool-title" id="sum-budget-title" data-i18n="sum.budget.title">תקציב מול בפועל</h2>
+          <p class="muted" data-i18n="sum.budget.lead">אותם סכומים כמו במסך הכסף, בשקלים.</p>
+          <p class="muted" data-slot="sum-budget-empty" hidden></p>
+          <table class="sum-table" data-slot="sum-table">
+            <caption class="sr-only" data-i18n="sum.budget.title">תקציב מול בפועל</caption>
+            <thead><tr>
+              <th scope="col" data-i18n="sum.col.cat">קטגוריה</th>
+              <th scope="col" data-i18n="sum.col.plan">תקציב</th>
+              <th scope="col" data-i18n="exp.status.paid">שולם</th>
+              <th scope="col" data-i18n="exp.status.planned">מתוכנן</th>
+              <th scope="col" data-i18n="sum.col.committed">עתידי</th>
+              <th scope="col" data-i18n="sum.col.free">פנוי</th>
+            </tr></thead>
+            <tbody data-slot="sum-rows"></tbody>
+            <tfoot data-slot="sum-foot"></tfoot>
+          </table>
+          <p class="muted sum-em" data-slot="sum-emergency"></p>
+          <button class="btn btn-ghost" type="button" data-go="money">
+            <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-wallet"/></svg><span data-i18n="sum.toMoney">למסך הכסף</span>
+          </button>
+        </section>
+      </section>
+
       <!-- LUGGAGE (6.0e): weight per bag, opened from the lists. The user sets each limit; the app only adds up. -->
       <section class="panel luggage" id="panel-luggage" role="tabpanel" aria-labelledby="luggage-title" hidden>
         <div class="itin-head">
@@ -624,6 +707,24 @@
           </div>
           <input class="sr-only" type="file" id="import-file" accept="application/json,.json" tabindex="-1" aria-hidden="true">
           <p class="form-error" role="alert" data-slot="import-error"></p>
+        </section>
+
+        <section class="card surface settings-card" aria-labelledby="set-photos-title" id="photos-backup">
+          <h2 id="set-photos-title" data-i18n="photoBackup.title">גיבוי תמונות</h2>
+          <p data-i18n="photoBackup.text">התמונות לא נכנסות לגיבוי הרגיל. הן יוצאות לקובץ ZIP נפרד, שאפשר לפתוח גם במחשב.</p>
+          <p class="settings-meta" data-slot="photos-size"></p>
+          <div class="settings-actions">
+            <button class="btn btn-primary" type="button" data-action="photos-export">
+              <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-download"/></svg>
+              <span data-i18n="photoBackup.export">ייצוא תמונות</span>
+            </button>
+            <button class="btn btn-ghost" type="button" data-action="photos-import-pick">
+              <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-upload"/></svg>
+              <span data-i18n="photoBackup.import">שחזור תמונות</span>
+            </button>
+          </div>
+          <input class="sr-only" type="file" id="photos-import-file" accept="application/zip,.zip" tabindex="-1" aria-hidden="true">
+          <p class="form-error" role="alert" data-slot="photos-import-error"></p>
         </section>
 
         <section class="card surface settings-card" aria-labelledby="set-install-title">
@@ -1023,6 +1124,55 @@
         <div class="sheet-actions">
           <button class="btn metal-btn" type="button" data-action="note-delete-yes" data-i18n="note.deleteYes">כן, למחוק</button>
           <button class="btn btn-ghost" type="button" data-close data-i18n="form.cancel">ביטול</button>
+        </div>
+      </div>
+    </dialog>
+
+    <!-- Photo (7.0b): view, date, place, caption, star for the slideshow. Delete asks first. -->
+    <dialog class="sheet dmetal" id="dlg-photo" aria-labelledby="dlg-photo-title">
+      <form class="sheet-form" data-form="photo" novalidate>
+        <h2 id="dlg-photo-title" data-i18n="photo.dlgTitle">תמונה</h2>
+        <img class="photo-big" data-slot="photo-big" alt="">
+        <p class="sheet-hint" data-slot="photo-place"></p>
+        <div class="field-row">
+          <label class="field"><span data-i18n="photo.date">תאריך</span><input class="ltr" type="date" name="date" aria-describedby="photo-error photo-date-src"></label>
+          <label class="field"><span data-i18n="photo.stop">יעד</span><select name="stopId" data-slot="photo-stop"></select></label>
+        </div>
+        <p class="sheet-hint" id="photo-date-src" data-slot="photo-date-src"></p>
+        <label class="field"><span data-i18n="photo.caption">כיתוב (לא חובה)</span><input type="text" name="caption" maxlength="140" autocomplete="off" aria-describedby="photo-error"></label>
+        <label class="photo-star"><input type="checkbox" name="featured"><span data-i18n="photo.featured">להציג במצגת (עד 12)</span></label>
+        <p class="form-error" id="photo-error" role="alert"></p>
+        <div class="sheet-actions">
+          <button class="btn metal-btn" type="submit" data-i18n="form.save">שמירה</button>
+          <button class="btn btn-ghost" type="button" data-close data-i18n="form.cancel">ביטול</button>
+          <button class="btn btn-ghost" type="button" data-action="photo-delete" data-i18n="photo.delete">מחיקת התמונה</button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog class="sheet dmetal" id="dlg-photo-delete" aria-labelledby="dlg-photo-delete-title" aria-describedby="dlg-photo-delete-text">
+      <div class="sheet-form">
+        <h2 id="dlg-photo-delete-title" data-i18n="photo.deleteTitle">למחוק את התמונה?</h2>
+        <p class="sheet-hint" id="dlg-photo-delete-text" data-i18n="photo.deleteText">התמונה תימחק מהטלפון. אם היא לא נמצאת בגיבוי תמונות, אי אפשר להחזיר אותה.</p>
+        <div class="sheet-actions">
+          <button class="btn metal-btn" type="button" data-action="photo-delete-yes" data-i18n="photo.deleteYes">כן, למחוק</button>
+          <button class="btn btn-ghost" type="button" data-close data-i18n="form.cancel">ביטול</button>
+        </div>
+      </div>
+    </dialog>
+
+    <!-- Slideshow (7.0c): the summary "clip" is a slideshow, not a video file (owner decision A). -->
+    <dialog class="slides" id="dlg-show" aria-labelledby="dlg-show-title">
+      <div class="slides-inner">
+        <h2 class="sr-only" id="dlg-show-title" data-i18n="sum.show.title">מצגת</h2>
+        <img class="slides-img" data-slot="show-img" alt="">
+        <p class="slides-caption" data-slot="show-caption" aria-live="polite"></p>
+        <div class="slides-controls">
+          <button class="icon-btn slides-btn" type="button" data-action="show-prev" aria-label="הקודמת" data-i18n-label="sum.show.prev"><svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-next"/></svg></button>
+          <button class="icon-btn slides-btn" type="button" data-action="show-toggle" aria-label="עצירה" data-i18n-label="sum.show.pause"><svg class="icon" aria-hidden="true"><use data-slot="show-toggle-icon" href="./assets/icons.svg#i-pause"/></svg></button>
+          <span class="slides-count ltr" data-slot="show-count"></span>
+          <button class="icon-btn slides-btn" type="button" data-action="show-next" aria-label="הבאה" data-i18n-label="sum.show.next"><svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-prev"/></svg></button>
+          <button class="icon-btn slides-btn" type="button" data-close aria-label="סגירה" data-i18n-label="sum.show.close"><svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-close"/></svg></button>
         </div>
       </div>
     </dialog>

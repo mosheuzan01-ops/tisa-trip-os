@@ -3,14 +3,14 @@
 import { isIsoDate, daysBetween } from './trip.js';
 import { toMinor } from './money.js';
 
-export const SCHEMA_VERSION = 4;
+export const SCHEMA_VERSION = 5;
 export const DEFAULT_QUESTION_LIMIT = 50;
 export const BACKUP_REMINDER_DAYS = 7;
 
-const ARRAY_FIELDS = ['destinations', 'expenses', 'transfers', 'checklist', 'events', 'tasks', 'checkins'];
+const ARRAY_FIELDS = ['destinations', 'expenses', 'transfers', 'checklist', 'events', 'tasks', 'checkins', 'photos'];
 const OBJECT_FIELDS = ['budget', 'rates', 'info', 'assistant', 'journal', 'luggage'];
 /** Empty slots for later features, so later stages add data without changing the shape. */
-export const TRIP_FEATURE_FIELDS = ['destinations', 'expenses', 'budget', 'rates', 'transfers', 'checklist', 'tasks', 'events', 'info', 'assistant', 'journal', 'checkins', 'luggage'];
+export const TRIP_FEATURE_FIELDS = ['destinations', 'expenses', 'budget', 'rates', 'transfers', 'checklist', 'tasks', 'events', 'info', 'assistant', 'journal', 'checkins', 'luggage', 'photos'];
 const THEMES = [null, 'light', 'dark'];
 
 const isObj = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
@@ -124,6 +124,14 @@ const MIGRATIONS = {
         checkins: Array.isArray(trip?.checkins) ? trip.checkins : [],
         luggage: isObj(trip?.luggage) && Array.isArray(trip.luggage.bags) ? trip.luggage : emptyLuggage(),
       };
+    }
+    return next;
+  },
+  // 4 -> 5 (Stage 7): photo metadata is added empty. The images themselves live in IndexedDB, never here.
+  4(old) {
+    const next = { ...old, schemaVersion: 5, trips: {} };
+    for (const [id, trip] of Object.entries(old.trips ?? {})) {
+      next.trips[id] = { ...trip, photos: Array.isArray(trip?.photos) ? trip.photos : [] };
     }
     return next;
   },

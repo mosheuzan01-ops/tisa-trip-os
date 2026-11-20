@@ -1,6 +1,6 @@
 {
   "name": "tisa-trip-os",
-  "version": "0.6.1",
+  "version": "0.7.0",
   "private": true,
   "description": "TISA \u2014 Trip OS. Experimental prototype: Thailand.",
   "type": "module",

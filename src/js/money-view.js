@@ -45,7 +45,7 @@ export function moneyState(ctx) {
   return { trip, pack, rates, expenses, summary, days, daily: dailyAllowance(summary.freeMinor, days) };
 }
 
-function catName(ctx, id) {
+export function catName(ctx, id) {
   if (id === EMERGENCY) return ctx.t('money.cat.emergency');
   const c = ctx.pack?.budgetCategories.find((x) => x.id === id);
   return c ? (c.name[ctx.locale] ?? c.name.en) : id;
@@ -109,6 +109,7 @@ export function renderMoney(ctx) {
   const lines = new Map(s.categories.map((c) => [c.id, c]));
   const catLine = (c, name) => {
     const li = el('li', `cat c-${catIndex(ctx, c.id)}${c.over ? ' is-over' : ''}`);
+    Object.assign(li.dataset, { cat: c.id, planMinor: String(c.planMinor), usedMinor: String(c.usedMinor) }); // 7.0c: the summary is checked against these
     const head = el('div', 'cat-head');
     head.append(el('span', 'cat-dot'), el('span', 'cat-name', name));
     if (c.over) head.append(el('span', 'badge badge-over', t('money.cat.overBadge')));

@@ -8,6 +8,7 @@ import { formatDate } from './core/itinerary.js';
 import { formatMinor } from './money-view.js';
 import { NOTE_MAX, validateNote, noteOf, setNote, removeNote } from './core/journal.js';
 import { stopsOnDay } from './core/calendar.js';
+import { calendarPhotos, fillThumbs } from './photos-view.js';
 
 const $ = (sel, root = document) => root.querySelector(sel);
 const ICONS = './assets/icons.svg#';
@@ -101,8 +102,10 @@ export function renderCalendar(ctx) {
     noteBtn.append(el('span', '', t(d.note ? 'note.edit' : 'note.add')));
     noteBtn.setAttribute('aria-label', interpolate(t(d.note ? 'note.editLabel' : 'note.addLabel'), { date: dateText }));
     li.append(noteBtn);
+    li.append(calendarPhotos(ctx, d.date)); // 7.0b: the day's photos and an add button
     return li;
   }));
+  fillThumbs(ctx, list);
   if (focusDate) list.querySelector(`[data-action="note-edit"][data-day="${focusDate}"]`)?.focus();
 }
 

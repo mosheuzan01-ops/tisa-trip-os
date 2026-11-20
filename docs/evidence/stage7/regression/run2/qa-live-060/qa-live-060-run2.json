@@ -1,0 +1,1677 @@
+{
+  "screens": {
+    "home 360 light": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 14,
+      "checkedTexts": 53
+    },
+    "itinerary 360 light": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 41
+    },
+    "calendar 360 light": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 209
+    },
+    "transfers 360 light": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 47
+    },
+    "money 360 light": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 104
+    },
+    "checklist 360 light": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 34
+    },
+    "luggage 360 light": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 22
+    },
+    "assistant 360 light": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 30
+    },
+    "settings 360 light": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 45
+    },
+    "info 360 light": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 11
+    },
+    "home 360 dark": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 14,
+      "checkedTexts": 53
+    },
+    "itinerary 360 dark": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 41
+    },
+    "calendar 360 dark": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 209
+    },
+    "transfers 360 dark": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 47
+    },
+    "money 360 dark": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 104
+    },
+    "checklist 360 dark": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 34
+    },
+    "luggage 360 dark": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 22
+    },
+    "assistant 360 dark": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 30
+    },
+    "settings 360 dark": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 45
+    },
+    "info 360 dark": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 11
+    },
+    "home 390 light": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 14,
+      "checkedTexts": 53
+    },
+    "itinerary 390 light": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 41
+    },
+    "calendar 390 light": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 209
+    },
+    "transfers 390 light": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 47
+    },
+    "money 390 light": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 104
+    },
+    "checklist 390 light": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 34
+    },
+    "luggage 390 light": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 22
+    },
+    "assistant 390 light": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 30
+    },
+    "settings 390 light": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 45
+    },
+    "info 390 light": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 11
+    },
+    "home 390 dark": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 14,
+      "checkedTexts": 53
+    },
+    "itinerary 390 dark": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 41
+    },
+    "calendar 390 dark": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 209
+    },
+    "transfers 390 dark": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 47
+    },
+    "money 390 dark": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 104
+    },
+    "checklist 390 dark": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 34
+    },
+    "luggage 390 dark": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 22
+    },
+    "assistant 390 dark": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 30
+    },
+    "settings 390 dark": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 45
+    },
+    "info 390 dark": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 11
+    },
+    "home 768 light": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 14,
+      "checkedTexts": 53
+    },
+    "itinerary 768 light": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 41
+    },
+    "calendar 768 light": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 209
+    },
+    "transfers 768 light": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 47
+    },
+    "money 768 light": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 104
+    },
+    "checklist 768 light": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 34
+    },
+    "luggage 768 light": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 22
+    },
+    "assistant 768 light": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 30
+    },
+    "settings 768 light": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 45
+    },
+    "info 768 light": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 11
+    },
+    "home 768 dark": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 14,
+      "checkedTexts": 53
+    },
+    "itinerary 768 dark": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 41
+    },
+    "calendar 768 dark": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 209
+    },
+    "transfers 768 dark": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 47
+    },
+    "money 768 dark": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 104
+    },
+    "checklist 768 dark": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 34
+    },
+    "luggage 768 dark": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 22
+    },
+    "assistant 768 dark": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 30
+    },
+    "settings 768 dark": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 45
+    },
+    "info 768 dark": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 11
+    },
+    "home 1280 light": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 14,
+      "checkedTexts": 53
+    },
+    "itinerary 1280 light": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 41
+    },
+    "calendar 1280 light": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 209
+    },
+    "transfers 1280 light": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 47
+    },
+    "money 1280 light": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 104
+    },
+    "checklist 1280 light": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 34
+    },
+    "luggage 1280 light": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 22
+    },
+    "assistant 1280 light": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 30
+    },
+    "settings 1280 light": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 45
+    },
+    "info 1280 light": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 11
+    },
+    "home 1280 dark": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 14,
+      "checkedTexts": 53
+    },
+    "itinerary 1280 dark": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 41
+    },
+    "calendar 1280 dark": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 209
+    },
+    "transfers 1280 dark": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 47
+    },
+    "money 1280 dark": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 104
+    },
+    "checklist 1280 dark": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 34
+    },
+    "luggage 1280 dark": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 22
+    },
+    "assistant 1280 dark": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 30
+    },
+    "settings 1280 dark": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 45
+    },
+    "info 1280 dark": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 14,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 0,
+      "checkedTexts": 11
+    }
+  },
+  "dialogs": {
+    "note 360 light": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 16,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 6,
+      "checkedTexts": 6,
+      "keepsFocus": true,
+      "ringAlways": true,
+      "escCloses": true,
+      "focusReturns": true,
+      "focus": [
+        "note-edit",
+        "2026-12-12"
+      ],
+      "openerKey": [
+        "note-edit",
+        "2026-12-12"
+      ]
+    },
+    "note-delete 360 light": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 16,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 4,
+      "checkedTexts": 4,
+      "keepsFocus": true,
+      "ringAlways": true,
+      "escCloses": true,
+      "focusReturns": true,
+      "focus": [
+        "note-edit",
+        "2026-12-11"
+      ],
+      "openerKey": [
+        "note-edit",
+        "2026-12-11"
+      ]
+    },
+    "checkin 360 light": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 16,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 13,
+      "checkedTexts": 13,
+      "keepsFocus": true,
+      "ringAlways": true,
+      "escCloses": true,
+      "focusReturns": true,
+      "focus": [
+        "checkin-add",
+        ""
+      ],
+      "openerKey": [
+        "checkin-add",
+        ""
+      ]
+    },
+    "checkin-delete 360 light": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 16,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 4,
+      "checkedTexts": 4,
+      "keepsFocus": true,
+      "ringAlways": true,
+      "escCloses": true,
+      "focusReturns": true,
+      "focus": [
+        "checkin-delete",
+        "ci2"
+      ],
+      "openerKey": [
+        "checkin-delete",
+        "ci2"
+      ]
+    },
+    "bag 360 light": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 16,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 6,
+      "checkedTexts": 6,
+      "keepsFocus": true,
+      "ringAlways": true,
+      "escCloses": true,
+      "focusReturns": true,
+      "focus": [
+        "bag-add",
+        ""
+      ],
+      "openerKey": [
+        "bag-add",
+        ""
+      ]
+    },
+    "luggage-item 360 light": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 16,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 6,
+      "checkedTexts": 6,
+      "keepsFocus": true,
+      "ringAlways": true,
+      "escCloses": true,
+      "focusReturns": true,
+      "focus": [
+        "luggage-item-add",
+        "b1"
+      ],
+      "openerKey": [
+        "luggage-item-add",
+        "b1"
+      ]
+    },
+    "luggage-delete 360 light": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 16,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 4,
+      "checkedTexts": 4,
+      "keepsFocus": true,
+      "ringAlways": true,
+      "escCloses": true,
+      "focusReturns": true,
+      "focus": [
+        "bag-delete",
+        "b1"
+      ],
+      "openerKey": [
+        "bag-delete",
+        "b1"
+      ]
+    },
+    "note 360 dark": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 16,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 6,
+      "checkedTexts": 6,
+      "keepsFocus": true,
+      "ringAlways": true,
+      "escCloses": true,
+      "focusReturns": true,
+      "focus": [
+        "note-edit",
+        "2026-12-12"
+      ],
+      "openerKey": [
+        "note-edit",
+        "2026-12-12"
+      ]
+    },
+    "note-delete 360 dark": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 16,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 4,
+      "checkedTexts": 4,
+      "keepsFocus": true,
+      "ringAlways": true,
+      "escCloses": true,
+      "focusReturns": true,
+      "focus": [
+        "note-edit",
+        "2026-12-11"
+      ],
+      "openerKey": [
+        "note-edit",
+        "2026-12-11"
+      ]
+    },
+    "checkin 360 dark": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 16,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 13,
+      "checkedTexts": 13,
+      "keepsFocus": true,
+      "ringAlways": true,
+      "escCloses": true,
+      "focusReturns": true,
+      "focus": [
+        "checkin-add",
+        ""
+      ],
+      "openerKey": [
+        "checkin-add",
+        ""
+      ]
+    },
+    "checkin-delete 360 dark": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 16,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 4,
+      "checkedTexts": 4,
+      "keepsFocus": true,
+      "ringAlways": true,
+      "escCloses": true,
+      "focusReturns": true,
+      "focus": [
+        "checkin-delete",
+        "ci2"
+      ],
+      "openerKey": [
+        "checkin-delete",
+        "ci2"
+      ]
+    },
+    "bag 360 dark": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 16,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 6,
+      "checkedTexts": 6,
+      "keepsFocus": true,
+      "ringAlways": true,
+      "escCloses": true,
+      "focusReturns": true,
+      "focus": [
+        "bag-add",
+        ""
+      ],
+      "openerKey": [
+        "bag-add",
+        ""
+      ]
+    },
+    "luggage-item 360 dark": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 16,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 6,
+      "checkedTexts": 6,
+      "keepsFocus": true,
+      "ringAlways": true,
+      "escCloses": true,
+      "focusReturns": true,
+      "focus": [
+        "luggage-item-add",
+        "b1"
+      ],
+      "openerKey": [
+        "luggage-item-add",
+        "b1"
+      ]
+    },
+    "luggage-delete 360 dark": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 16,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 4,
+      "checkedTexts": 4,
+      "keepsFocus": true,
+      "ringAlways": true,
+      "escCloses": true,
+      "focusReturns": true,
+      "focus": [
+        "bag-delete",
+        "b1"
+      ],
+      "openerKey": [
+        "bag-delete",
+        "b1"
+      ]
+    },
+    "note 1280 light": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 16,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 6,
+      "checkedTexts": 6,
+      "keepsFocus": true,
+      "ringAlways": true,
+      "escCloses": true,
+      "focusReturns": true,
+      "focus": [
+        "note-edit",
+        "2026-12-12"
+      ],
+      "openerKey": [
+        "note-edit",
+        "2026-12-12"
+      ]
+    },
+    "note-delete 1280 light": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 16,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 4,
+      "checkedTexts": 4,
+      "keepsFocus": true,
+      "ringAlways": true,
+      "escCloses": true,
+      "focusReturns": true,
+      "focus": [
+        "note-edit",
+        "2026-12-11"
+      ],
+      "openerKey": [
+        "note-edit",
+        "2026-12-11"
+      ]
+    },
+    "checkin 1280 light": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 16,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 13,
+      "checkedTexts": 13,
+      "keepsFocus": true,
+      "ringAlways": true,
+      "escCloses": true,
+      "focusReturns": true,
+      "focus": [
+        "checkin-add",
+        ""
+      ],
+      "openerKey": [
+        "checkin-add",
+        ""
+      ]
+    },
+    "checkin-delete 1280 light": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 16,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 4,
+      "checkedTexts": 4,
+      "keepsFocus": true,
+      "ringAlways": true,
+      "escCloses": true,
+      "focusReturns": true,
+      "focus": [
+        "checkin-delete",
+        "ci2"
+      ],
+      "openerKey": [
+        "checkin-delete",
+        "ci2"
+      ]
+    },
+    "bag 1280 light": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 16,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 6,
+      "checkedTexts": 6,
+      "keepsFocus": true,
+      "ringAlways": true,
+      "escCloses": true,
+      "focusReturns": true,
+      "focus": [
+        "bag-add",
+        ""
+      ],
+      "openerKey": [
+        "bag-add",
+        ""
+      ]
+    },
+    "luggage-item 1280 light": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 16,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 6,
+      "checkedTexts": 6,
+      "keepsFocus": true,
+      "ringAlways": true,
+      "escCloses": true,
+      "focusReturns": true,
+      "focus": [
+        "luggage-item-add",
+        "b1"
+      ],
+      "openerKey": [
+        "luggage-item-add",
+        "b1"
+      ]
+    },
+    "luggage-delete 1280 light": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 16,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 4,
+      "checkedTexts": 4,
+      "keepsFocus": true,
+      "ringAlways": true,
+      "escCloses": true,
+      "focusReturns": true,
+      "focus": [
+        "bag-delete",
+        "b1"
+      ],
+      "openerKey": [
+        "bag-delete",
+        "b1"
+      ]
+    },
+    "note 1280 dark": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 16,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 6,
+      "checkedTexts": 6,
+      "keepsFocus": true,
+      "ringAlways": true,
+      "escCloses": true,
+      "focusReturns": true,
+      "focus": [
+        "note-edit",
+        "2026-12-12"
+      ],
+      "openerKey": [
+        "note-edit",
+        "2026-12-12"
+      ]
+    },
+    "note-delete 1280 dark": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 16,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 4,
+      "checkedTexts": 4,
+      "keepsFocus": true,
+      "ringAlways": true,
+      "escCloses": true,
+      "focusReturns": true,
+      "focus": [
+        "note-edit",
+        "2026-12-11"
+      ],
+      "openerKey": [
+        "note-edit",
+        "2026-12-11"
+      ]
+    },
+    "checkin 1280 dark": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 16,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 13,
+      "checkedTexts": 13,
+      "keepsFocus": true,
+      "ringAlways": true,
+      "escCloses": true,
+      "focusReturns": true,
+      "focus": [
+        "checkin-add",
+        ""
+      ],
+      "openerKey": [
+        "checkin-add",
+        ""
+      ]
+    },
+    "checkin-delete 1280 dark": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 16,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 4,
+      "checkedTexts": 4,
+      "keepsFocus": true,
+      "ringAlways": true,
+      "escCloses": true,
+      "focusReturns": true,
+      "focus": [
+        "checkin-delete",
+        "ci2"
+      ],
+      "openerKey": [
+        "checkin-delete",
+        "ci2"
+      ]
+    },
+    "bag 1280 dark": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 16,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 6,
+      "checkedTexts": 6,
+      "keepsFocus": true,
+      "ringAlways": true,
+      "escCloses": true,
+      "focusReturns": true,
+      "focus": [
+        "bag-add",
+        ""
+      ],
+      "openerKey": [
+        "bag-add",
+        ""
+      ]
+    },
+    "luggage-item 1280 dark": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 16,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 6,
+      "checkedTexts": 6,
+      "keepsFocus": true,
+      "ringAlways": true,
+      "escCloses": true,
+      "focusReturns": true,
+      "focus": [
+        "luggage-item-add",
+        "b1"
+      ],
+      "openerKey": [
+        "luggage-item-add",
+        "b1"
+      ]
+    },
+    "luggage-delete 1280 dark": {
+      "dir": "rtl",
+      "hscroll": false,
+      "smallTargets": [],
+      "unnamed": [],
+      "ltrWrong": [],
+      "minText": 16,
+      "bodyText": 16,
+      "lowContrast": [],
+      "contrastEstimated": 4,
+      "checkedTexts": 4,
+      "keepsFocus": true,
+      "ringAlways": true,
+      "escCloses": true,
+      "focusReturns": true,
+      "focus": [
+        "bag-delete",
+        "b1"
+      ],
+      "openerKey": [
+        "bag-delete",
+        "b1"
+      ]
+    }
+  },
+  "keyboard": {
+    "calendar": {
+      "tabbed": 40,
+      "withoutVisibleFocus": [],
+      "unique": 6
+    },
+    "transfers": {
+      "tabbed": 40,
+      "withoutVisibleFocus": [],
+      "unique": 14
+    },
+    "luggage": {
+      "tabbed": 40,
+      "withoutVisibleFocus": [],
+      "unique": 12
+    }
+  },
+  "errors": [],
+  "external": [],
+  "summary": {
+    "hscroll": [],
+    "notRtl": [],
+    "smallTargets": [],
+    "unnamed": [],
+    "ltrWrong": [],
+    "minTextUnder14": [],
+    "bodyTextUnder16": [],
+    "lowContrast": [],
+    "contrastEstimated": 284,
+    "checkedTexts": 4940,
+    "dialogsLoseFocus": [],
+    "dialogsNoRing": [],
+    "dialogsFocusNotReturned": [],
+    "keyboardNoRing": [],
+    "errors": [],
+    "external": [],
+    "screensChecked": 80,
+    "dialogsChecked": 28
+  }
+}

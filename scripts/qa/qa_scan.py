@@ -52,7 +52,7 @@ r('INFO ','links',f'{len(ext)} external links to check online: {ext[:20]}')
 for b in T('button'):
     if not b.get('aria-label') and not b.get('title'): pass
 inputs=[i for i in T('input') if i.get('type') not in ('hidden','submit','button')]
-labels={l.get('for') for l in T('label')}
+labels={l.get('for') for l in T('label') if l.get('for')}  # a label without for= must not count as labelling every id-less field (QA skill fix, approved 2026-11-20)
 nolab=[i for i in inputs if i.get('id') not in labels and not i.get('aria-label')]
 r('PASS' if not nolab else 'FAIL','a11y',f'inputs without label: {len(nolab)}')
 click_div=len(re.findall(r'<(div|span)[^>]*onclick',html,re.I))
