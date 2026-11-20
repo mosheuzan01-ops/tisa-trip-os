@@ -1,0 +1,11 @@
+PASS  S6-2 mobile
+PASS  S6-1 mobile
+PASS  S6-12 round trip mobile
+PASS  S6-12 v3 backup mobile
+PASS  S6-2 desktop
+PASS  S6-1 desktop
+PASS  S6-12 round trip desktop
+PASS  S6-12 v3 backup desktop
+PASS  export once with the reminder mobile
+PASS  export once with the reminder desktop
+PASS  no JS errors, no outside requests

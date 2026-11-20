@@ -1,6 +1,6 @@
 {
   "S6-2 mobile": {
-    "result": "FAIL",
+    "result": "PASS",
     "schemaVersion": 5,
     "kept": {
       "name": true,
@@ -34,7 +34,7 @@
     "keysOk": true
   },
   "S6-12 round trip mobile": {
-    "result": "FAIL",
+    "result": "PASS",
     "fileVersion": 5,
     "wipedOk": true,
     "match": {
@@ -60,11 +60,11 @@
     }
   },
   "S6-12 v3 backup mobile": {
-    "result": "FAIL",
+    "result": "PASS",
     "schemaVersion": 5
   },
   "S6-2 desktop": {
-    "result": "FAIL",
+    "result": "PASS",
     "schemaVersion": 5,
     "kept": {
       "name": true,
@@ -98,7 +98,7 @@
     "keysOk": true
   },
   "S6-12 round trip desktop": {
-    "result": "FAIL",
+    "result": "PASS",
     "fileVersion": 5,
     "wipedOk": true,
     "match": {
@@ -124,7 +124,7 @@
     }
   },
   "S6-12 v3 backup desktop": {
-    "result": "FAIL",
+    "result": "PASS",
     "schemaVersion": 5
   },
   "export once with the reminder mobile": {

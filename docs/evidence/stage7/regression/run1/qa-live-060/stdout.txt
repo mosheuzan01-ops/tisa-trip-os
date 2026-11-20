@@ -1,0 +1,20 @@
+{
+ "hscroll": [],
+ "notRtl": [],
+ "smallTargets": [],
+ "unnamed": [],
+ "ltrWrong": [],
+ "minTextUnder14": [],
+ "bodyTextUnder16": [],
+ "lowContrast": [],
+ "contrastEstimated": 284,
+ "checkedTexts": 4940,
+ "dialogsLoseFocus": [],
+ "dialogsNoRing": [],
+ "dialogsFocusNotReturned": [],
+ "keyboardNoRing": [],
+ "errors": [],
+ "external": [],
+ "screensChecked": 80,
+ "dialogsChecked": 28
+}

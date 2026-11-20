@@ -70,3 +70,22 @@
 - **7.0e:** גרסה 0.7.0, QA מקוצר, רגרסיה, מסירה.
 
 בגלל שבעל המוצר ישן ואישר לעבוד ברצף, כל השלבים נמצאים ב-PR אחד, עם קומיט נפרד לכל שלב.
+
+## תוצאות (2026-11-20, 0.7.0)
+| # | תוצאה | הוכחה |
+|---|---|---|
+| S7-1 | PASS | `docs/evidence/stage7/browser/run{1,2,3}/browser-check.json` ("S7-1 survives a reload") |
+| S7-2 | PASS | אותו קובץ: מקור מעל 10 MB, נשמר כ-JPEG מתחת ל-600 KB, 1280 בצד הארוך |
+| S7-3 | PASS | אותו קובץ: אין `data:` ואין base64 ארוך באף מפתח ב-localStorage |
+| S7-4 | PASS | Node (`tests/stage7-core.test.js`) + דפדפן: EXIF של 6.12 → בנגקוק, 1.11 → "לא משויך" |
+| S7-5 | PASS | דפדפן: ביטול שומר, "כן" מוחק מהנתונים ומ-IndexedDB |
+| S7-6 | PASS | Node + דפדפן: כל קטגוריה בטבלה = `data-plan-minor`/`data-used-minor` במסך הכסף, וגם הסה"כ |
+| S7-7 | PASS | Node: תקציב מאוזן וחריגה (קטגוריה בלי תכנון מוצגת כחריגה) |
+| S7-8 | PASS | Node (ZIP הלוך-חזור, קובץ פגום, גרסה עתידית) + דפדפן (ייצוא, מחיקת IndexedDB, שחזור) |
+| S7-9 | PASS | Node: `tests/fixtures/v4-stage6.json` (נתוני ה-QA של שלב 6) → v5, כל שדה נשמר |
+| S7-10 | PASS | `docs/evidence/stage7/offline/run{1,2,3}`: SW אמיתי, מצב טיסה, הוספת תמונה וסיכום; 0.7.0 בשלושת המקומות (`tests/stage7-rules.test.js`) |
+| S7-11 | PASS | דפדפן 390px: אין גלילה אופקית, יעדי הקשה 44px, טקסט 14px לפחות, 0 שגיאות JS |
+| S7-12 | PASS | `npm test` 257/257; 17 סקריפטי דפדפן ישנים 3 פעמים (`docs/evidence/stage7/regression/`). `stage6-data` ציפה לגרסה 4 בדיוק, עודכן ל-"4 ומעלה" ועבר 3/3 (`stage6-data-after-fix/`) |
+
+**צילומי לפני ואחרי:** `docs/evidence/stage7/shots/{before,after}-*-{mobile,desktop}.png`.
+**לא נבדק:** אייפון אמיתי, האתר החי, PageSpeed.
