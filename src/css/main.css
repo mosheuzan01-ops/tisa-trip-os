@@ -927,3 +927,51 @@ body::before {
 .slides-btn { color: var(--deep-btn-ink); border-color: var(--deep-line); background: var(--deep-btn); }
 .slides-count { min-width: 4ch; text-align: center; font: 500 var(--text-body)/1 var(--font-mono); }
 @media (prefers-reduced-motion: reduce) { .slides-img.is-in { animation: none; } }
+
+/* =====================================================================
+   v3 (stage 8 design, web-master direction D "clean data cards"): sea teal + sunrise, CSS-only depth.
+   Layered on top of v2 without renaming anything, so every screen and test keeps its hooks.
+   Depth = a lit top edge + a two-step shadow (each card is a physical layer), and on press/hover a
+   small move toward the viewer in real 3D (perspective + translateZ). No library, no images.
+   ===================================================================== */
+.surface {
+  box-shadow: inset 0 1px 0 var(--edge-hi), 0 1px 2px var(--lift-1), 0 8px 22px -14px var(--lift-2);
+}
+.card.surface, .stop, .cal-day, .tile, .photo-group, .bag, .transfer {
+  transform: perspective(var(--depth)) translateZ(0);
+  transition: transform var(--dur-fast) var(--ease-out), box-shadow var(--dur-base) var(--ease-out), border-color var(--dur-base);
+}
+.tile:hover { transform: perspective(var(--depth)) translateZ(14px) translateY(-2px); box-shadow: inset 0 1px 0 var(--edge-hi), 0 2px 4px var(--lift-1), 0 18px 30px -16px var(--lift-2); }
+.tile:active { transform: perspective(var(--depth)) translateZ(-6px); }
+.stop.is-today, .cal-day.is-today, .itin-now {
+  background:
+    linear-gradient(135deg, var(--sea-glow) 0%, transparent 46%),
+    linear-gradient(315deg, var(--sunrise) 0%, transparent 38%),
+    var(--surface);
+  box-shadow: inset 0 1px 0 var(--edge-hi), 0 2px 4px var(--lift-1), 0 18px 34px -18px var(--lift-2);
+}
+/* The home "today" card: an atmospheric sunrise-over-sea wash (direction D: gradients only on time cards). */
+.today.surface:not(.is-over) {
+  background:
+    radial-gradient(120% 90% at 100% 0%, var(--sunrise), transparent 55%),
+    radial-gradient(90% 80% at 0% 100%, var(--sea-glow), transparent 60%),
+    var(--surface);
+}
+/* Big numbers with small labels: tabular and slightly heavier. */
+.money-big, .status-num, .sum-kpi dd, .clock { letter-spacing: -.01em; }
+.sum-kpi { box-shadow: inset 0 1px 0 var(--edge-hi), 0 1px 2px var(--lift-1); }
+/* Buttons: a raised key that presses into the page. */
+.btn-primary { box-shadow: inset 0 1px 0 var(--edge-hi), 0 2px 0 var(--title), 0 6px 14px -8px var(--lift-2); }
+.btn-primary:active { transform: translateY(2px); box-shadow: inset 0 1px 0 var(--edge-hi), 0 0 0 var(--title); }
+/* Bottom bar: the selected tab chip stands up from the glass. */
+.tab[aria-selected="true"] .tab-chip { background: var(--surface); box-shadow: inset 0 1px 0 var(--edge-hi), 0 0 0 1px var(--line), 0 6px 12px -6px var(--lift-2); transform: translateY(-1px); }
+.tabbar.surface { box-shadow: inset 0 1px 0 var(--edge-hi), 0 14px 34px -16px var(--lift-2); }
+/* Photos lift a little toward the viewer. */
+.photo-thumb, .cal-photo, .sum-thumb { transform: perspective(var(--depth)) translateZ(0); transition: transform var(--dur-fast) var(--ease-out), border-color var(--dur-base); }
+.photo-thumb:hover, .cal-photo:hover, .sum-thumb:hover { transform: perspective(var(--depth)) translateZ(18px); }
+.photo-thumb img, .cal-photo img, .sum-thumb img { transition: transform var(--dur-base) var(--ease-out); }
+.photo-thumb:hover img, .cal-photo:hover img, .sum-thumb:hover img { transform: scale(1.03); }
+@media (prefers-reduced-motion: reduce) {
+  .card.surface, .stop, .cal-day, .tile, .photo-group, .bag, .transfer, .photo-thumb, .cal-photo, .sum-thumb { transition: none; }
+  .tile:hover, .tile:active, .photo-thumb:hover, .cal-photo:hover, .sum-thumb:hover, .photo-thumb:hover img, .cal-photo:hover img, .sum-thumb:hover img { transform: none; }
+}
