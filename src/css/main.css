@@ -294,7 +294,8 @@ h2, .section-title { font-size: var(--text-h3); font-weight: 700; line-height: 1
   font: 500 var(--text-lead) var(--font-sans);
 }
 .field select option { color: var(--ink); background: var(--surface); }
-.field input:focus-visible, .field select:focus-visible, .field textarea:focus-visible { outline: 3px solid var(--metal-4); outline-offset: 1px; }
+.field input:focus-visible, .field select:focus-visible, .field textarea:focus-visible,
+.field input:focus-within { outline: 3px solid var(--metal-4); outline-offset: 1px; }
 .field input[aria-invalid="true"], .field textarea[aria-invalid="true"] { border-color: var(--on-dmetal-error); }
 .field textarea { min-height: 140px; padding: var(--space-3); line-height: 1.5; resize: vertical; }
 .sheet-hint { color: var(--on-dmetal-muted); }
@@ -415,7 +416,9 @@ h2, .section-title { font-size: var(--text-h3); font-weight: 700; line-height: 1
 .surface .field { color: var(--muted); }
 .surface .field input, .surface .field select { background: var(--surface-2); color: var(--ink); border-color: var(--line); }
 .surface .field input:hover { border-color: var(--line-strong); }
-.surface .field input:focus-visible, .surface .field select:focus-visible { outline-color: var(--focus); }
+.surface .field input:focus-visible, .surface .field select:focus-visible, .surface .field input:focus-within { outline-color: var(--focus); }
+/* Date and time fields: the browser's own picker button sits inside the field and takes focus without :focus-visible
+   on the field, so the ring is drawn with :focus-within too (QA 0.6.0, WCAG 2.4.7). */
 .surface .sheet-hint { color: var(--muted); }
 .settings-card .field-row { grid-template-columns: 1fr; }
 .surface .form-error { color: var(--danger); }

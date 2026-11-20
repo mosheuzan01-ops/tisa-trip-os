@@ -4,10 +4,13 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readText, readJson } from './helpers.js';
 
-test('0.6.0 is set in all three places', () => {
-  assert.equal(readJson('config/app.config.json').appVersion, '0.6.0');
-  assert.equal(readJson('package.json').version, '0.6.0');
-  assert.match(readText('sw.js'), /const VERSION = '0\.6\.0';/);
+// 0.6.1 (QA before Stage 7) raised it again: this now checks 0.6.0 or later, the same in all three places.
+test('0.6.0 or later is set in all three places', () => {
+  const v = readJson('config/app.config.json').appVersion;
+  const [major, minor] = v.split('.').map(Number);
+  assert.ok(major > 0 || minor >= 6, v);
+  assert.equal(readJson('package.json').version, v);
+  assert.match(readText('sw.js'), new RegExp(`const VERSION = '${v.replace(/\./g, '\\.')}';`));
 });
 
 test('every Stage 6 file is in the offline cache', () => {
