@@ -18,6 +18,7 @@ import { setupLists, renderLists } from './checklist-view.js';
 import { setupTransfers, renderTransfers } from './transfers-view.js';
 import { renderAssistant } from './assistant-view.js';
 import { renderCalendar, revealToday, setupCalendar } from './calendar-view.js';
+import { renderCheckins, setupCheckins } from './checkins-view.js';
 
 const $ = (sel, root = document) => root.querySelector(sel);
 const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
@@ -108,6 +109,7 @@ async function boot() {
     renderMoney(ctx);
     renderLists(ctx);
     renderTransfers(ctx);
+    renderCheckins(ctx);
     renderCalendar(ctx);
     renderAssistant(ctx);
     renderBanners(ctx);
@@ -130,11 +132,12 @@ async function boot() {
   setupLists(ctx, { wireDialog, showFormErrors });
   setupTransfers(ctx, { wireDialog, showFormErrors });
   setupCalendar(ctx, { wireDialog, showFormErrors });
+  setupCheckins(ctx, { wireDialog, showFormErrors });
   setupServiceWorker(ctx);
   addEventListener('online', () => renderBanners(ctx));
   addEventListener('offline', () => renderBanners(ctx));
   ctx.render();
-  setInterval(() => { renderTrip({ t, locale, country, trip: tripView(ctx) }); renderItinerary(ctx); renderMoney(ctx); renderLists(ctx); renderCalendar(ctx); renderAssistant(ctx); }, 60_000); // keeps "today" right across midnight
+  setInterval(() => { renderTrip({ t, locale, country, trip: tripView(ctx) }); renderItinerary(ctx); renderMoney(ctx); renderLists(ctx); renderCheckins(ctx); renderCalendar(ctx); renderAssistant(ctx); }, 60_000); // keeps "today" right across midnight
 }
 
 /** The home screen reads { dates, budget, money }. Money comes from the Stage 4 summary (whole agorot). */

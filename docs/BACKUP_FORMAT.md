@@ -169,6 +169,8 @@
 | `link` | מחרוזת | רק `http://` או `https://` |
 | `done` | בוליאני | |
 
+**מ-6.0d:** אזורי הזמן שמותרים ב-`zone` מגיעים מהנתונים: אזור היעד מ-`data/countries/*.json` (`timeZone`), ואזור הבית מ-`config/app.config.json` (`homeTimeZone`). אין אזור זמן קבוע בקוד.
+
 ### `luggage` (אובייקט)
 `{ bags: [ { id, name, limitGrams, items: [ { id, name, grams } ] } ] }`. משקל בגרמים שלמים. `limitGrams` הוא `null` עד שהמשתמש קובע מגבלה.
 

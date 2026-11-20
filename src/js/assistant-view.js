@@ -6,6 +6,8 @@ import { moneyAdvice, todayAdvice, DUE_WINDOW_DAYS } from './core/assistant.js';
 import { categoryIds, EMERGENCY } from './core/money.js';
 import { formatDate } from './core/itinerary.js';
 import { cleanTasks } from './core/checklist.js';
+import { dueCheckins } from './core/checkins.js';
+import { zonesOf } from './checkins-view.js';
 import { moneyState, formatMinor } from './money-view.js';
 
 const $ = (sel, root = document) => root.querySelector(sel);
@@ -73,13 +75,19 @@ export function renderAssistant(ctx) {
   const tasks = cleanTasks(trip.tasks);
   const ta = todayAdvice({ stops: trip.destinations, transfers: Array.isArray(trip.transfers) ? trip.transfers : [], tasks, today });
   const tbox = $('[data-slot="ast-today"]');
-  if (ta.nothing) tbox.replaceChildren(el('p', 'muted', t('ast.today.nothing')));
+  const ci = dueCheckins(trip.checkins, new Date()); // 6.0d: each by the clock it was entered in
+  const zoneName = (id) => zonesOf(ctx).find((z) => z.id === id)?.name ?? id;
+  if (ta.nothing && !ci.overdue.length && !ci.today.length) tbox.replaceChildren(el('p', 'muted', t('ast.today.nothing')));
   else {
     const ul = el('ul', 'ast-list');
     if (ta.stop) ul.append(el('li', 'ast-strong', interpolate(t('ast.today.stop'), { place: ta.stop.name })));
     for (const x of ta.transfers) {
       const route = interpolate(t('transfer.route'), { from: x.from, to: x.to });
       ul.append(el('li', '', x.time ? interpolate(t('ast.today.transfer'), { route, time: x.time }) : interpolate(t('ast.today.transferNoTime'), { route })));
+    }
+    for (const c of ci.overdue) ul.append(el('li', 'is-overdue', interpolate(t('ast.today.checkinOverdue'), { title: c.title })));
+    for (const c of ci.today) {
+      ul.append(el('li', '', c.time ? interpolate(t('ast.today.checkinTime'), { title: c.title, time: c.time, zone: zoneName(c.zone) }) : interpolate(t('ast.today.checkin'), { title: c.title })));
     }
     for (const x of ta.due.overdue) ul.append(el('li', 'is-overdue', interpolate(t('ast.today.overdue'), { title: x.title })));
     for (const x of ta.due.today) ul.append(el('li', '', interpolate(t('ast.today.dueToday'), { title: x.title })));

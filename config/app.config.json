@@ -13,5 +13,10 @@
     "THB",
     "USD"
   ],
+  "homeTimeZone": "Asia/Jerusalem",
+  "homeTimeZoneCity": {
+    "he": "ישראל",
+    "en": "Israel"
+  },
   "appVersion": "0.5.5"
 }

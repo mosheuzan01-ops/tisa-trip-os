@@ -824,3 +824,16 @@ body::before {
 /* ---------- 6.0c: journal note on a calendar day ---------- */
 .cal-note { color: var(--ink); line-height: 1.55; white-space: pre-line; overflow-wrap: anywhere; padding-inline-start: var(--space-3); border-inline-start: 3px solid var(--line-strong); }
 .cal-note-btn { justify-self: start; }
+
+/* ---------- 6.0d: check-in and time difference (same cards; red only for a past-due check-in) ---------- */
+.tz-card { display: grid; gap: var(--space-2); }
+.tz-card .tool-title { display: flex; align-items: center; gap: var(--space-2); }
+.tz-card .tool-title .icon { width: 20px; height: 20px; color: var(--accent); }
+.tz-diff { font-weight: 700; color: var(--title); }
+.checkin.is-overdue { border-inline-start: 3px solid var(--danger); }
+.checkin.is-done .item-name { color: var(--muted); text-decoration: line-through; text-decoration-color: var(--line-strong); }
+.checkin-state.is-overdue { color: var(--danger); border-color: var(--danger); background: var(--surface); }
+.checkin-state.is-today { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
+.checkin-other { color: var(--muted); }
+.home-checkin { justify-self: start; }
+.home-checkin.is-overdue { color: var(--danger); border-color: var(--danger); }

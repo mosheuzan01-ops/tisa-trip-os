@@ -69,6 +69,13 @@ export function renderCalendar(ctx) {
       li.append(line);
     }
 
+    for (const c of d.checkins) { // 6.0d: as entered; the time is on the clock it was entered in
+      const line = el('p', `cal-task cal-checkin${c.done ? ' is-done' : ''}`);
+      line.append(icon('i-clock'), el('span', 'cal-task-title', interpolate(t('cal.checkin'), { title: c.title })));
+      line.append(el('span', c.time ? 'ltr muted' : 'muted', c.time || t('transfer.timeNone')));
+      li.append(line);
+    }
+
     for (const x of d.tasks) {
       const line = el('p', `cal-task is-${x.state}`);
       line.append(icon('i-list'), el('span', 'cal-task-title', x.title));
