@@ -856,3 +856,74 @@ body::before {
 .bag-item-name { flex: 1 1 auto; min-width: 0; color: var(--ink); overflow-wrap: anywhere; }
 .bag-item-kg { color: var(--muted); font-weight: 600; white-space: nowrap; }
 .bag-add-item { justify-self: start; }
+
+/* ---------- 7.0b-c: photos, the day's photos in the calendar, trip summary, slideshow (existing tokens only) ---------- */
+.photos, .summary { display: grid; gap: var(--space-4); }
+.photo-groups { display: grid; gap: var(--space-4); }
+.photo-group { display: grid; gap: var(--space-3); }
+.photo-group-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: var(--space-1) var(--space-3); }
+.photo-grid, .cal-photo-list, .sum-strip { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: var(--space-2); margin: 0; padding: 0; list-style: none; }
+.cal-photo-list { grid-template-columns: repeat(auto-fill, minmax(72px, 1fr)); }
+.sum-strip { grid-template-columns: repeat(auto-fill, minmax(64px, 1fr)); }
+.sum-strip:empty { display: none; }
+.photo-thumb, .cal-photo, .sum-thumb {
+  position: relative; display: grid; place-items: center; width: 100%; aspect-ratio: 1; min-height: var(--tap); padding: 0; overflow: hidden;
+  border: 1px solid var(--line); border-radius: var(--radius-md); background: var(--surface-2); color: var(--muted); cursor: pointer;
+}
+.photo-thumb img, .cal-photo img, .sum-thumb img { width: 100%; height: 100%; object-fit: cover; }
+.photo-thumb:hover, .cal-photo:hover, .sum-thumb:hover { border-color: var(--accent); }
+.photo-thumb.is-missing, .cal-photo.is-missing, .sum-thumb.is-missing { border-style: dashed; }
+.photo-missing { padding: var(--space-1); font-size: var(--text-caption); line-height: 1.3; text-align: center; overflow-wrap: anywhere; }
+.photo-star-mark { position: absolute; inset-block-start: 4px; inset-inline-end: 4px; display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: var(--accent); color: var(--on-accent); }
+.photo-star-mark .icon { width: 16px; height: 16px; }
+.photo-warn { border-inline-start-color: var(--danger); }
+.photo-busy { font-weight: 600; }
+.cal-photos { display: grid; gap: var(--space-2); }
+.cal-photo-add { justify-self: start; }
+.photo-big { display: block; width: 100%; max-height: 50vh; object-fit: contain; border-radius: var(--radius-md); background: var(--dmetal-shade); }
+.photo-big:not([src]) { min-height: 120px; }
+.photo-star { display: flex; align-items: center; gap: var(--space-2); min-height: var(--tap); color: var(--on-dmetal); font-weight: 600; cursor: pointer; }
+.photo-star input { width: 22px; height: 22px; accent-color: var(--metal-4); }
+
+.sum-kpis { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-3); margin: 0; }
+.sum-kpi { display: grid; gap: 2px; padding: var(--space-3); border-radius: var(--radius-md); background: var(--surface-2); }
+.sum-kpi dt { font-size: var(--text-caption); color: var(--muted); }
+.sum-kpi dd { margin: 0; font: 500 var(--text-h3)/1.2 var(--font-mono); font-variant-numeric: tabular-nums; color: var(--title); overflow-wrap: anywhere; }
+.sum-sub { margin-top: var(--space-2); font-size: var(--text-lead); font-weight: 700; color: var(--title); }
+.sum-places, .sum-cats { display: grid; gap: var(--space-2); margin: 0; padding: 0; list-style: none; }
+.sum-place, .sum-cat { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--space-1) var(--space-3); padding-block: var(--space-2); border-bottom: 1px solid var(--line); }
+.sum-place-name, .sum-cat-name { font-weight: 700; color: var(--ink); }
+.sum-cat-num { font-variant-numeric: tabular-nums; color: var(--ink); }
+.sum-budget, .sum-facts, .sum-show { display: grid; gap: var(--space-3); }
+.sum-budget .btn { justify-self: start; }
+.sum-table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+.sum-table th, .sum-table td { padding: var(--space-2); text-align: start; border-bottom: 1px solid var(--line); }
+.sum-table thead th { font-size: var(--text-caption); font-weight: 600; color: var(--muted); }
+.sum-table td { color: var(--ink); white-space: nowrap; }
+.sum-table tfoot th, .sum-table tfoot td { font-weight: 700; border-bottom: 0; border-top: 2px solid var(--line-strong); }
+.sum-cell-name { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-1) var(--space-2); font-weight: 700; color: var(--ink); }
+.sum-table td.is-over { color: var(--danger); font-weight: 700; }
+.sum-em { font-size: var(--text-body); }
+/* Narrow screens: each category becomes a small card with labelled numbers, so the page never scrolls sideways. */
+@media (max-width: 559px) {
+  .sum-table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .sum-table, .sum-table tbody, .sum-table tfoot, .sum-table tr { display: block; }
+  .sum-table tr { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-1) var(--space-3); padding-block: var(--space-3); border-bottom: 1px solid var(--line); }
+  .sum-table tfoot tr { border-bottom: 0; border-top: 2px solid var(--line-strong); }
+  .sum-table th, .sum-table td { display: flex; justify-content: space-between; gap: var(--space-2); padding: 0; border: 0; }
+  .sum-table th { grid-column: 1 / -1; justify-content: flex-start; }
+  .sum-table tfoot th, .sum-table tfoot td { border: 0; }
+  .sum-table td::before { content: attr(data-label); color: var(--muted); font-weight: 400; }
+}
+
+.slides { width: 100%; max-width: none; height: 100%; max-height: none; margin: 0; padding: 0; border: 0; background: var(--deep); color: var(--on-deep); }
+.slides::backdrop { background: var(--deep); }
+.slides-inner { display: grid; grid-template-rows: 1fr auto auto; height: 100%; padding: var(--space-3) var(--space-3) calc(var(--space-3) + env(safe-area-inset-bottom)); gap: var(--space-2); }
+.slides-img { width: 100%; height: 100%; min-height: 0; object-fit: contain; opacity: 1; }
+.slides-img.is-in { animation: slides-in 600ms var(--ease-out); }
+@keyframes slides-in { from { opacity: 0; } }
+.slides-caption { text-align: center; font-size: var(--text-lead); line-height: 1.4; min-height: 1.4em; }
+.slides-controls { display: flex; align-items: center; justify-content: center; gap: var(--space-2); }
+.slides-btn { color: var(--deep-btn-ink); border-color: var(--deep-line); background: var(--deep-btn); }
+.slides-count { min-width: 4ch; text-align: center; font: 500 var(--text-body)/1 var(--font-mono); }
+@media (prefers-reduced-motion: reduce) { .slides-img.is-in { animation: none; } }

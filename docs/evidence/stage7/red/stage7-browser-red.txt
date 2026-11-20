@@ -1,0 +1,5 @@
+FAIL  B7-0 photos screen opens
+FAIL  run
+PASS  S7-11 no JS errors
+PASS  no external requests
+FAIL 2

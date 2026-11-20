@@ -11,8 +11,11 @@ test('date and time fields show the focus ring while their picker button has foc
 });
 
 // The CSS fix only reaches phones with a new version (the service worker serves files cache first).
-test('0.6.1 is set in all three places, so the fix reaches the phone', () => {
-  assert.equal(JSON.parse(readText('config/app.config.json')).appVersion, '0.6.1');
-  assert.equal(JSON.parse(readText('package.json')).version, '0.6.1');
-  assert.match(readText('sw.js'), /const VERSION = '0\.6\.1';/);
+// 0.7.0 (Stage 7) raised it again: this now checks 0.6.1 or later, the same in all three places.
+test('0.6.1 or later is set in all three places, so the fix reaches the phone', () => {
+  const v = JSON.parse(readText('config/app.config.json')).appVersion;
+  const [a, b, c] = v.split('.').map(Number);
+  assert.ok(a > 0 || b > 6 || (b === 6 && c >= 1), v);
+  assert.equal(JSON.parse(readText('package.json')).version, v);
+  assert.match(readText('sw.js'), new RegExp(`const VERSION = '${v.replace(/\./g, '\\.')}';`));
 });

@@ -20,6 +20,8 @@ import { renderAssistant } from './assistant-view.js';
 import { renderCalendar, revealToday, setupCalendar } from './calendar-view.js';
 import { renderCheckins, setupCheckins } from './checkins-view.js';
 import { renderLuggage, setupLuggage } from './luggage-view.js';
+import { renderPhotos, setupPhotos, renderPhotoBackup, setupPhotoBackup } from './photos-view.js';
+import { renderSummary, setupSummary } from './summary-view.js';
 
 const $ = (sel, root = document) => root.querySelector(sel);
 const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
@@ -34,6 +36,8 @@ const SCREENS = {
   transfers: { tab: 'itinerary', title: 'screen.transfers', icon: 'i-plane' }, // opened from the itinerary; that tab stays lit
   calendar: { tab: 'itinerary', title: 'screen.calendar', icon: 'i-calendar' }, // 6.0b, opened from the itinerary; that tab stays lit
   luggage: { tab: 'lists', title: 'screen.luggage', icon: 'i-bag' }, // 6.0e, opened from the lists; that tab stays lit
+  photos: { tab: 'itinerary', title: 'screen.photos', icon: 'i-image' }, // 7.0b, opened from the itinerary
+  summary: { tab: 'itinerary', title: 'screen.summary', icon: 'i-summary' }, // 7.0c, opened from the itinerary
   info: { title: 'screen.info', icon: 'i-doc', soon: true },
   assistant: { tab: 'home', title: 'screen.assistant', icon: 'i-chat' }, // opened from home; the home tab stays lit
   settings: {},
@@ -114,6 +118,9 @@ async function boot() {
     renderCheckins(ctx);
     renderCalendar(ctx);
     renderLuggage(ctx);
+    renderPhotos(ctx);
+    renderSummary(ctx);
+    renderPhotoBackup(ctx);
     renderAssistant(ctx);
     renderBanners(ctx);
   };
@@ -137,11 +144,14 @@ async function boot() {
   setupCalendar(ctx, { wireDialog, showFormErrors });
   setupCheckins(ctx, { wireDialog, showFormErrors });
   setupLuggage(ctx, { wireDialog, showFormErrors });
+  setupPhotos(ctx, { wireDialog, showFormErrors });
+  setupSummary(ctx, { wireDialog, showFormErrors });
+  setupPhotoBackup(ctx);
   setupServiceWorker(ctx);
   addEventListener('online', () => renderBanners(ctx));
   addEventListener('offline', () => renderBanners(ctx));
   ctx.render();
-  setInterval(() => { renderTrip({ t, locale, country, trip: tripView(ctx) }); renderItinerary(ctx); renderMoney(ctx); renderLists(ctx); renderCheckins(ctx); renderCalendar(ctx); renderAssistant(ctx); }, 60_000); // keeps "today" right across midnight
+  setInterval(() => { renderTrip({ t, locale, country, trip: tripView(ctx) }); renderItinerary(ctx); renderMoney(ctx); renderLists(ctx); renderCheckins(ctx); renderCalendar(ctx); renderSummary(ctx); renderAssistant(ctx); }, 60_000); // keeps "today" right across midnight
 }
 
 /** The home screen reads { dates, budget, money }. Money comes from the Stage 4 summary (whole agorot). */
@@ -239,8 +249,8 @@ function setupClock(country, locale, t) {
 function setupToast(t) {
   const box = $('[data-slot="toast"]');
   let timer;
-  return (key) => {
-    box.textContent = t(key);
+  return (key, vars) => {
+    box.textContent = vars ? interpolate(t(key), vars) : t(key);
     box.classList.add('show');
     clearTimeout(timer);
     timer = setTimeout(() => box.classList.remove('show'), 2600);
@@ -429,7 +439,7 @@ function setupSheets(ctx) {
 function setupRouter(ctx) {
   const { t } = ctx;
   const tabs = $$('[role="tab"]');
-  const panels = { home: $('#panel-home'), itinerary: $('#panel-itinerary'), money: $('#panel-money'), checklist: $('#panel-checklist'), transfers: $('#panel-transfers'), calendar: $('#panel-calendar'), luggage: $('#panel-luggage'), assistant: $('#panel-assistant'), soon: $('#panel-soon'), settings: $('#panel-settings') };
+  const panels = { home: $('#panel-home'), itinerary: $('#panel-itinerary'), money: $('#panel-money'), checklist: $('#panel-checklist'), transfers: $('#panel-transfers'), calendar: $('#panel-calendar'), luggage: $('#panel-luggage'), photos: $('#panel-photos'), summary: $('#panel-summary'), assistant: $('#panel-assistant'), soon: $('#panel-soon'), settings: $('#panel-settings') };
   const main = $('#main');
   const rtl = () => document.documentElement.dir === 'rtl';
 
@@ -473,6 +483,7 @@ function setupRouter(ctx) {
     renderBanners(ctx);
     if (focus) { main.focus({ preventScroll: true }); window.scrollTo(0, 0); }
     if (route === 'calendar') revealToday(); // the calendar opens on today while the trip is on
+    if (route === 'photos') renderPhotos(ctx); // also checks how full the storage is
   }
 
   // Tabs keep keyboard focus on the tab bar (Stage 1 behavior); other links move focus to the new screen.
