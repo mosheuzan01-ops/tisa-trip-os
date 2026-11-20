@@ -1,0 +1,219 @@
+TAP version 13
+# Subtest: S6-9: weights are typed in kg and kept in whole grams, with no rounding error
+not ok 1 - S6-9: weights are typed in kg and kept in whole grams, with no rounding error
+  ---
+  duration_ms: 2.610959
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/luggage.test.js:15:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    0 !== 23000
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 23000
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/luggage.test.js:16:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.start (node:internal/test_runner/test:944:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+  ...
+# Subtest: S6-9: a bag needs a name; its limit is optional and set by the user
+not ok 2 - S6-9: a bag needs a name; its limit is optional and set by the user
+  ---
+  duration_ms: 1.042891
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/luggage.test.js:25:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + []
+    - [
+    -   'name.missing'
+    - ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 'name.missing'
+  actual:
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/luggage.test.js:28:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: S6-9: an item needs a name, a weight and a bag that exists
+not ok 3 - S6-9: an item needs a name, a weight and a bag that exists
+  ---
+  duration_ms: 0.337938
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/luggage.test.js:35:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + []
+    - [
+    -   'name.missing'
+    - ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 'name.missing'
+  actual:
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/luggage.test.js:38:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: S6-9: total, limit and over: 0 items, under, exactly at the limit (not over), over, and no limit (no warning)
+not ok 4 - S6-9: total, limit and over: 0 items, under, exactly at the limit (not over), over, and no limit (no warning)
+  ---
+  duration_ms: 0.314292
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/luggage.test.js:46:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + {}
+    - {
+    -   leftGrams: 23000,
+    -   limitGrams: 23000,
+    -   overGrams: 0,
+    -   state: 'ok',
+    -   totalGrams: 0
+    - }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    totalGrams: 0
+    limitGrams: 23000
+    state: 'ok'
+    overGrams: 0
+    leftGrams: 23000
+  actual:
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/luggage.test.js:47:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: add, edit and move between bags; nothing given is changed
+not ok 5 - add, edit and move between bags; nothing given is changed
+  ---
+  duration_ms: 0.388626
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/luggage.test.js:54:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + []
+    - [
+    -   'גדולה',
+    -   'קטנה'
+    - ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 'גדולה'
+    1: 'קטנה'
+  actual:
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/luggage.test.js:59:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: S6-10: removing an item or a bag removes only that
+not ok 6 - S6-10: removing an item or a bag removes only that
+  ---
+  duration_ms: 0.168949
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/luggage.test.js:73:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of undefined (reading 'items')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/luggage.test.js:77:49)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: broken bags and items are skipped on screen and left in the data
+not ok 7 - broken bags and items are skipped on screen and left in the data
+  ---
+  duration_ms: 0.183149
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/luggage.test.js:83:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    0 !== 1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/luggage.test.js:86:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: S6-11: no airline weight limit is written anywhere in the app
+ok 8 - S6-11: no airline weight limit is written anywhere in the app
+  ---
+  duration_ms: 1.499403
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 1
+# fail 7
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 71.046571

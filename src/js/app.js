@@ -19,6 +19,7 @@ import { setupTransfers, renderTransfers } from './transfers-view.js';
 import { renderAssistant } from './assistant-view.js';
 import { renderCalendar, revealToday, setupCalendar } from './calendar-view.js';
 import { renderCheckins, setupCheckins } from './checkins-view.js';
+import { renderLuggage, setupLuggage } from './luggage-view.js';
 
 const $ = (sel, root = document) => root.querySelector(sel);
 const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
@@ -32,6 +33,7 @@ const SCREENS = {
   checklist: { tab: 'lists', title: 'screen.checklist', icon: 'i-list' },
   transfers: { tab: 'itinerary', title: 'screen.transfers', icon: 'i-plane' }, // opened from the itinerary; that tab stays lit
   calendar: { tab: 'itinerary', title: 'screen.calendar', icon: 'i-calendar' }, // 6.0b, opened from the itinerary; that tab stays lit
+  luggage: { tab: 'lists', title: 'screen.luggage', icon: 'i-bag' }, // 6.0e, opened from the lists; that tab stays lit
   info: { title: 'screen.info', icon: 'i-doc', soon: true },
   assistant: { tab: 'home', title: 'screen.assistant', icon: 'i-chat' }, // opened from home; the home tab stays lit
   settings: {},
@@ -111,6 +113,7 @@ async function boot() {
     renderTransfers(ctx);
     renderCheckins(ctx);
     renderCalendar(ctx);
+    renderLuggage(ctx);
     renderAssistant(ctx);
     renderBanners(ctx);
   };
@@ -133,6 +136,7 @@ async function boot() {
   setupTransfers(ctx, { wireDialog, showFormErrors });
   setupCalendar(ctx, { wireDialog, showFormErrors });
   setupCheckins(ctx, { wireDialog, showFormErrors });
+  setupLuggage(ctx, { wireDialog, showFormErrors });
   setupServiceWorker(ctx);
   addEventListener('online', () => renderBanners(ctx));
   addEventListener('offline', () => renderBanners(ctx));
@@ -425,7 +429,7 @@ function setupSheets(ctx) {
 function setupRouter(ctx) {
   const { t } = ctx;
   const tabs = $$('[role="tab"]');
-  const panels = { home: $('#panel-home'), itinerary: $('#panel-itinerary'), money: $('#panel-money'), checklist: $('#panel-checklist'), transfers: $('#panel-transfers'), calendar: $('#panel-calendar'), assistant: $('#panel-assistant'), soon: $('#panel-soon'), settings: $('#panel-settings') };
+  const panels = { home: $('#panel-home'), itinerary: $('#panel-itinerary'), money: $('#panel-money'), checklist: $('#panel-checklist'), transfers: $('#panel-transfers'), calendar: $('#panel-calendar'), luggage: $('#panel-luggage'), assistant: $('#panel-assistant'), soon: $('#panel-soon'), settings: $('#panel-settings') };
   const main = $('#main');
   const rtl = () => document.documentElement.dir === 'rtl';
 

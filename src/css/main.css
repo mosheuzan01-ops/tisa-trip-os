@@ -837,3 +837,19 @@ body::before {
 .checkin-other { color: var(--muted); }
 .home-checkin { justify-self: start; }
 .home-checkin.is-overdue { color: var(--danger); border-color: var(--danger); }
+
+/* ---------- 6.0e: luggage (one card per bag; red only when over the user's own limit) ---------- */
+.luggage { display: grid; gap: var(--space-4); }
+.bags { display: grid; gap: var(--space-3); }
+.bag { display: grid; gap: var(--space-2); }
+.bag.is-over { border-inline-start: 4px solid var(--danger); }
+.bag-name { flex: 1 1 auto; min-width: 0; font-size: var(--text-lead); font-weight: 700; color: var(--title); overflow-wrap: anywhere; }
+.bag-status { font-weight: 600; color: var(--ink); }
+.bag-meter { height: 8px; }
+.bag.is-over .mini-fill { background: var(--danger); }
+.bag-over { padding: var(--space-2) var(--space-3); border-radius: var(--radius-sm); background: var(--danger-soft); color: var(--danger); font-weight: 600; }
+.bag-items { display: grid; margin: 0; padding: 0; list-style: none; }
+.bag-item { display: flex; align-items: center; gap: var(--space-2); padding: var(--space-1) 0; border-top: 1px solid var(--line); }
+.bag-item-name { flex: 1 1 auto; min-width: 0; color: var(--ink); overflow-wrap: anywhere; }
+.bag-item-kg { color: var(--muted); font-weight: 600; white-space: nowrap; }
+.bag-add-item { justify-self: start; }
