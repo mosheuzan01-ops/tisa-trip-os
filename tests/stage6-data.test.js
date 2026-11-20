@@ -35,9 +35,9 @@ function v3State() {
 const OLD_FIELDS = ['name', 'countryCode', 'startDate', 'endDate', 'destinations', 'budget', 'rates', 'expenses', 'people', 'repayments', 'transfers', 'checklist', 'tasks', 'events', 'info', 'assistant'];
 
 test('S6-2: schema is v4, and a fresh trip starts with an empty journal, no check-ins and no bags', () => {
-  assert.equal(SCHEMA_VERSION, 4);
+  assert.ok(SCHEMA_VERSION >= 4, 'the 3 -> 4 step stays in the chain (Stage 7 added 4 -> 5)');
   const fresh = createDefaultState(opts);
-  assert.equal(fresh.schemaVersion, 4);
+  assert.equal(fresh.schemaVersion, SCHEMA_VERSION);
   const trip = fresh.trips['trip-1'];
   assert.deepEqual(trip.journal, {});
   assert.deepEqual(trip.checkins, []);
@@ -49,7 +49,7 @@ test('S6-2: schema is v4, and a fresh trip starts with an empty journal, no chec
 test('S6-2: real v3 data migrates to v4: nothing lost or changed, the three new fields are added', () => {
   const before = v3State();
   const out = migrate(structuredClone(before), opts);
-  assert.equal(out.schemaVersion, 4);
+  assert.equal(out.schemaVersion, SCHEMA_VERSION);
   const a = before.trips['trip-1'];
   const b = out.trips['trip-1'];
   for (const k of OLD_FIELDS) assert.deepEqual(b[k], a[k], k);
@@ -66,7 +66,7 @@ test('S6-2: migration keeps fields that already exist and unknown fields', () =>
   trip.journal = { '2026-12-06': { note: 'יום טוב', updatedAt: '2026-12-06T15:00:00Z' } };
   trip.someFutureField = { keep: true };
   const migrated = migrate(s, opts);
-  assert.equal(migrated.schemaVersion, 4);
+  assert.equal(migrated.schemaVersion, SCHEMA_VERSION);
   const out = migrated.trips['trip-1'];
   assert.deepEqual(out.luggage, { bags: [] }, 'missing fields are still added');
   assert.deepEqual(out.journal, { '2026-12-06': { note: 'יום טוב', updatedAt: '2026-12-06T15:00:00Z' } });
@@ -75,14 +75,14 @@ test('S6-2: migration keeps fields that already exist and unknown fields', () =>
 
 test('S6-2: data from every older version reaches v4 (v0 Stage 1, v2)', () => {
   const v0 = migrate({ schemaVersion: 0, trip: { dates: { start: '2026-12-05', end: '2027-01-03' }, budget: { amount: 15270, currency: 'ILS' } }, theme: 'dark' }, opts);
-  assert.equal(v0.schemaVersion, 4);
+  assert.equal(v0.schemaVersion, SCHEMA_VERSION);
   assert.deepEqual(validateState(v0), []);
   assert.deepEqual(v0.trips[v0.activeTripId].luggage, { bags: [] });
   const v2 = v3State();
   v2.schemaVersion = 2;
   delete v2.trips['trip-1'].tasks;
   const out = migrate(v2, opts);
-  assert.equal(out.schemaVersion, 4);
+  assert.equal(out.schemaVersion, SCHEMA_VERSION);
   assert.deepEqual(validateState(out), []);
 });
 

@@ -160,7 +160,9 @@ export function summarize(budget, expenses = [], rates = null) {
   const line = (id) => {
     const planMinor = isMinor(cats[id]) ? cats[id] : 0;
     const usedMinor = used(id);
-    return { id, planMinor, usedMinor, leftMinor: planMinor - usedMinor, over: usedMinor > planMinor };
+    const st = (status) => sumBy(list.filter((e) => e.category === id && e.status === status), (e) => e.baseMinor);
+    // 7.0a: the same split per category (paid / planned / future). Added fields only; the old ones are unchanged.
+    return { id, planMinor, usedMinor, leftMinor: planMinor - usedMinor, over: usedMinor > planMinor, paidMinor: st('paid'), plannedMinor: st('planned'), committedMinor: st('committed') };
   };
   const ids = [...new Set([...Object.keys(cats), ...list.map((e) => e.category)])].filter((k) => k !== EMERGENCY);
   const em = line(EMERGENCY);
