@@ -1,6 +1,7 @@
 /*
   TISA design tokens. The ONLY file allowed to contain color values (enforced by tests).
-  Palette sampled from the dusk-sky reference photo; platinum-gold for the trip pass.
+  v3 (stage 8, web-master direction D "clean data cards"): Andaman sea teal + sunrise, no pink or violet.
+  The platinum-gold trip pass (--metal-*) is the product's signature and keeps its colours.
   Theme is set on <html data-theme="light|dark"> by src/js/theme-boot.js.
 */
 
@@ -27,43 +28,44 @@
   --dur-fast: 160ms; --dur-base: 280ms; --dur-flip: 700ms;
 
   --tap: 44px;               /* minimum touch target */
+  --depth: 900px;            /* v3: perspective for the CSS-only 3D layer */
   --nav-height: 68px;
 }
 
 /* ---------- Light ---------- */
 :root, [data-theme="light"] {
   color-scheme: light;
-  --bg: #FCF9F7;
-  --glow-1: #F7E5E3; --glow-2: #EFE9F1; /* dusk light behind the hero (peak colors) */
+  --bg: #F3F6F7;
+  --glow-1: #FBE7D6; --glow-2: #DCEEF0; /* dusk light behind the hero (peak colors) */
   --surface: #FFFFFF;
-  --surface-2: #F6F1EE;
-  --line: #EDE4E1;
-  --ink: #1A1418;
-  --muted: #63575E;
-  --title: #7A1F3D;
-  --accent: #8B5868;
+  --surface-2: #EDF2F3;
+  --line: #DCE4E7;
+  --ink: #12181D;
+  --muted: #55616A;
+  --title: #0D3B47;
+  --accent: #0B6672;
   --on-accent: #FFFFFF;
-  --focus: #464164;
-  --shadow: rgba(42, 30, 40, .10);
-  --shadow-strong: rgba(42, 30, 40, .22);
+  --focus: #B4441B;
+  --shadow: rgba(12, 32, 40, .10);
+  --shadow-strong: rgba(12, 32, 40, .22);
 
-  --deep: #2A2438;
-  --on-deep: #F6EFE2;
-  --on-deep-muted: #C9C0D6;
-  --deep-line: #433A54;
-  --deep-btn: #F6EFE2;
-  --deep-btn-ink: #2A2438;
+  --deep: #0F2B34;
+  --on-deep: #EEF5F4;
+  --on-deep-muted: #A9C3C7;
+  --deep-line: #24444E;
+  --deep-btn: #EEF5F4;
+  --deep-btn-ink: #0F2B34;
 
 
   /* Calm surfaces (design v2) */
-  --line-strong: #D8CAC6;
-  --surface-glass: rgba(255, 255, 255, .88);
-  --danger: #A3283E;
-  --danger-soft: #F8ECEE; /* 0.4.2: quiet over-budget background (dark red text on it, 4.5:1+) */
+  --line-strong: #BFCDD2;
+  --surface-glass: rgba(255, 255, 255, .86);
+  --danger: #B42318;
+  --danger-soft: #FCEBE8; /* 0.4.2: quiet over-budget background (dark red text on it, 4.5:1+) */
   /* Stage 4 chart colors, one per budget category (non-text: at least 3:1 on --surface) */
-  --chart-1: #8B5868; --chart-2: #2F6F8F; --chart-3: #B5654A; --chart-4: #4E7D4A; --chart-5: #7A5CA8;
-  --chart-6: #2E8577; --chart-7: #A07A1F; --chart-8: #6B6470; --chart-9: #A3283E;
-  --toast-bg: #2A2438; --toast-ink: #F6EFE2;
+  --chart-1: #0B6672; --chart-2: #C2491D; --chart-3: #2F5FA8; --chart-4: #3F7A3A; --chart-5: #9A741A;
+  --chart-6: #7A5230; --chart-7: #5B6B7A; --chart-8: #6B5E2E; --chart-9: #B42318;
+  --toast-bg: #0F2B34; --toast-ink: #EEF5F4;
 
   /* Platinum-gold metal */
   --metal-1: #D9D2C6; --metal-2: #F3EEE6; --metal-3: #CBBFA8; --metal-4: #EFE6D4;
@@ -71,7 +73,7 @@
   --metal-ink: #3B3123;
   --metal-hi: rgba(255, 255, 255, .65);
   --metal-lo: rgba(0, 0, 0, .18);
-  --metal-pill: #2A2438;
+  --metal-pill: #0F2B34;
   --shine: rgba(255, 255, 255, .5); --shine-peak: rgba(255, 255, 255, .85);
 
   /* Aircraft window trim (cabin plastic) */
@@ -80,19 +82,23 @@
   --shade-1: #FAF7F2; --shade-2: #E3DCCF; --shade-lip: #A79B84;
   --pane-edge: rgba(40, 30, 20, .35);
   --glare: rgba(255, 255, 255, .26);
-  --hole: rgba(30, 22, 30, .55);
+  --hole: rgba(10, 24, 30, .55);
 
   /* Seascape (same in both themes; dimmed in dark via filter) */
-  --sky-1: #3E3A5E; --sky-2: #5E4766; --sky-3: #A3606A; --sky-4: #D58E78;
-  --sea-1: #7A5468; --sea-2: #4E3E5C; --sea-3: #262036;
+  --sky-1: #17455C; --sky-2: #2F7088; --sky-3: #E08A5C; --sky-4: #F5C38E;
+  --sea-1: #2A7F8C; --sea-2: #1A5767; --sea-3: #0C2C37;
   --sun-core: #FFE9C4; --sun-glow: #FFD9A8; --sun-fade: #F0A080;
-  --rock-1: #1C1724; --rock-2: #2B2232; --rock-3: #4A3442;
-  --rim: #F7DDA8; --islands: #5A4560; --glint: #FFDDB0; --foam: #F6E6DA;
+  --rock-1: #0A1C22; --rock-2: #14303A; --rock-3: #2A4A50;
+  --rim: #F7DDA8; --islands: #1D4C57; --glint: #FFDDB0; --foam: #E6F3F1;
   --scene-dim: 1;
+  /* v3 depth: a lit top edge and a two-step shadow make every calm card read as a physical layer */
+  --edge-hi: rgba(255, 255, 255, .9);
+  --lift-1: rgba(12, 32, 40, .06); --lift-2: rgba(12, 32, 40, .12);
+  --sunrise: #F5C38E; --sea-glow: #CDE9EC;
   /* Dark metal: only the next-step card and its sheets (design v2, "metal discipline") */
   --m-setup-1: #362F25; --m-setup-2: #483F31; --m-setup-3: #28231C; --m-setup-4: #40382C; --m-setup-5: #211C16;
   --field-bg: rgba(255, 248, 236, .08); --field-line: rgba(255, 248, 236, .45); --on-dmetal-error: #FFC2B4;
-  --backdrop: rgba(20, 14, 20, .55);
+  --backdrop: rgba(8, 22, 28, .55);
   --on-dmetal: #FFF8EC; --on-dmetal-muted: #E8DCC6;
   --dmetal-edge: rgba(255, 244, 222, .22); --dmetal-shade: rgba(0, 0, 0, .25);
 }
@@ -100,43 +106,43 @@
 /* ---------- Dark ---------- */
 [data-theme="dark"] {
   color-scheme: dark;
-  --bg: #141118;
-  --glow-1: #2A1A25; --glow-2: #1D1B2D; /* dusk light behind the hero (peak colors) */
-  --surface: #1E1A24;
-  --surface-2: #26212D;
-  --line: #342C3B;
-  --ink: #F3EDF0;
-  --muted: #B6AAB3;
-  --title: #F0A5B8;
-  --accent: #C9BCEB;
-  --on-accent: #141118;
-  --focus: #C9BCEB;
+  --bg: #0A1013;
+  --glow-1: #2A1A10; --glow-2: #0F2A30; /* dusk light behind the hero (peak colors) */
+  --surface: #121A1E;
+  --surface-2: #18232A;
+  --line: #24323A;
+  --ink: #E6EDEF;
+  --muted: #9AACB3;
+  --title: #F2A673;
+  --accent: #6FCBD6;
+  --on-accent: #0A1013;
+  --focus: #F2905F;
   --shadow: rgba(0, 0, 0, .35);
   --shadow-strong: rgba(0, 0, 0, .6);
 
-  --deep: #2C2538;
-  --on-deep: #F6EFE2;
-  --on-deep-muted: #C9C0D6;
-  --deep-line: #463C55;
-  --deep-btn: #C9BCEB;
-  --deep-btn-ink: #141118;
+  --deep: #0F2B34;
+  --on-deep: #EEF5F4;
+  --on-deep-muted: #A9C3C7;
+  --deep-line: #24444E;
+  --deep-btn: #6FCBD6;
+  --deep-btn-ink: #0A1013;
 
 
   /* Calm surfaces (design v2) */
-  --line-strong: #4D4256;
-  --surface-glass: rgba(30, 26, 36, .88);
-  --danger: #FFA3B1;
-  --danger-soft: #34232A;
-  --chart-1: #E0A9BA; --chart-2: #8EC3DF; --chart-3: #F0A58B; --chart-4: #9FCF96; --chart-5: #C3AEF0;
-  --chart-6: #7FD3C3; --chart-7: #E5C46B; --chart-8: #B8B1BC; --chart-9: #FFA3B1;
-  --toast-bg: #C9BCEB; --toast-ink: #141118;
+  --line-strong: #34464F;
+  --surface-glass: rgba(18, 26, 30, .86);
+  --danger: #FF9B88;
+  --danger-soft: #3A1E19;
+  --chart-1: #6FCBD6; --chart-2: #F2905F; --chart-3: #8FB4EE; --chart-4: #9FCF96; --chart-5: #E5C46B;
+  --chart-6: #D2A47E; --chart-7: #B3C0CB; --chart-8: #C9C08A; --chart-9: #FF9B88;
+  --toast-bg: #6FCBD6; --toast-ink: #0A1013;
 
   --metal-1: #B3AA98; --metal-2: #D6CDBB; --metal-3: #A99C80; --metal-4: #CBBFA6;
   --metal-5: #998A6C; --metal-6: #BCAE91; --metal-7: #A29479;
   --metal-ink: #1F1A12;
   --metal-hi: rgba(255, 255, 255, .35);
   --metal-lo: rgba(0, 0, 0, .2);
-  --metal-pill: #2A2438;
+  --metal-pill: #0F2B34;
   --shine: rgba(255, 255, 255, .35); --shine-peak: rgba(255, 250, 235, .6);
 
   --trim-1: #D9D1C2; --trim-2: #BDB29E; --trim-3: #A49880; --trim-4: #84785F;
@@ -146,12 +152,15 @@
   --glare: rgba(255, 255, 255, .16);
   --hole: rgba(0, 0, 0, .6);
 
-  --sky-1: #3E3A5E; --sky-2: #5E4766; --sky-3: #A3606A; --sky-4: #D58E78;
-  --sea-1: #7A5468; --sea-2: #4E3E5C; --sea-3: #262036;
+  --sky-1: #17455C; --sky-2: #2F7088; --sky-3: #E08A5C; --sky-4: #F5C38E;
+  --sea-1: #2A7F8C; --sea-2: #1A5767; --sea-3: #0C2C37;
   --sun-core: #FFE9C4; --sun-glow: #FFD9A8; --sun-fade: #F0A080;
-  --rock-1: #1C1724; --rock-2: #2B2232; --rock-3: #4A3442;
-  --rim: #F7DDA8; --islands: #5A4560; --glint: #FFDDB0; --foam: #F6E6DA;
+  --rock-1: #0A1C22; --rock-2: #14303A; --rock-3: #2A4A50;
+  --rim: #F7DDA8; --islands: #1D4C57; --glint: #FFDDB0; --foam: #E6F3F1;
   --scene-dim: .86;
+  --edge-hi: rgba(255, 255, 255, .06);
+  --lift-1: rgba(0, 0, 0, .3); --lift-2: rgba(0, 0, 0, .45);
+  --sunrise: #5A3420; --sea-glow: #123A42;
   /* Dark metal: only the next-step card and its sheets (design v2, "metal discipline") */
   --m-setup-1: #302A21; --m-setup-2: #40372B; --m-setup-3: #241F18; --m-setup-4: #393127; --m-setup-5: #1D1914;
   --field-bg: rgba(255, 248, 236, .07); --field-line: rgba(255, 248, 236, .4); --on-dmetal-error: #FFC2B4;
