@@ -30,6 +30,7 @@ const PRECACHE = [
   './src/js/core/transfers.js',
   './src/js/core/assistant.js',
   './src/js/core/calendar.js',
+  './src/js/core/journal.js',
   './src/js/core/itinerary.js',
   './src/js/core/load.js',
   './src/js/core/money.js',

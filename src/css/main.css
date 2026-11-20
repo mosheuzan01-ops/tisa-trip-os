@@ -288,14 +288,15 @@ h2, .section-title { font-size: var(--text-h3); font-weight: 700; line-height: 1
 .field-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 140px), 1fr)); gap: var(--space-3); }
 .field { display: grid; gap: var(--space-1); min-width: 0; color: var(--on-dmetal-muted); font-weight: 600; }
 .field-grow { grid-column: span 1; }
-.field input, .field select {
+.field input, .field select, .field textarea {
   width: 100%; min-width: 0; max-width: 100%; min-height: 48px; padding: 0 var(--space-3); border-radius: var(--radius-md);
   border: 1px solid var(--field-line); background: var(--field-bg); color: var(--on-dmetal);
   font: 500 var(--text-lead) var(--font-sans);
 }
 .field select option { color: var(--ink); background: var(--surface); }
-.field input:focus-visible, .field select:focus-visible { outline: 3px solid var(--metal-4); outline-offset: 1px; }
-.field input[aria-invalid="true"] { border-color: var(--on-dmetal-error); }
+.field input:focus-visible, .field select:focus-visible, .field textarea:focus-visible { outline: 3px solid var(--metal-4); outline-offset: 1px; }
+.field input[aria-invalid="true"], .field textarea[aria-invalid="true"] { border-color: var(--on-dmetal-error); }
+.field textarea { min-height: 140px; padding: var(--space-3); line-height: 1.5; resize: vertical; }
 .sheet-hint { color: var(--on-dmetal-muted); }
 .form-error { color: var(--on-dmetal-error); font-weight: 600; min-height: 0; }
 .form-error:empty { display: none; }
@@ -819,3 +820,7 @@ body::before {
 .cal-task.is-done .cal-task-state { color: var(--muted); font-weight: 400; }
 .cal-planned { font-weight: 700; color: var(--ink); padding-top: var(--space-2); border-top: 1px solid var(--line); }
 .cal-planned.muted { font-weight: 400; color: var(--muted); }
+
+/* ---------- 6.0c: journal note on a calendar day ---------- */
+.cal-note { color: var(--ink); line-height: 1.55; white-space: pre-line; overflow-wrap: anywhere; padding-inline-start: var(--space-3); border-inline-start: 3px solid var(--line-strong); }
+.cal-note-btn { justify-self: start; }

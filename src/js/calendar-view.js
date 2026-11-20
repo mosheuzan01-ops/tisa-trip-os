@@ -6,6 +6,8 @@ import { todayIn } from './core/trip.js';
 import { buildCalendar } from './core/calendar.js';
 import { formatDate } from './core/itinerary.js';
 import { formatMinor } from './money-view.js';
+import { NOTE_MAX, validateNote, noteOf, setNote, removeNote } from './core/journal.js';
+import { stopsOnDay } from './core/calendar.js';
 
 const $ = (sel, root = document) => root.querySelector(sel);
 const ICONS = './assets/icons.svg#';
@@ -31,6 +33,7 @@ export function renderCalendar(ctx) {
   $('[data-slot="cal-empty"]').hidden = cal.hasDates;
 
   const list = $('[data-slot="cal-days"]');
+  const focusDate = list.contains(document.activeElement) ? document.activeElement.dataset.day : null;
   list.replaceChildren(...cal.days.map((d) => {
     const li = el('li', 'surface cal-day');
     li.dataset.date = d.date;
@@ -79,8 +82,99 @@ export function renderCalendar(ctx) {
       ? interpolate(t('cal.planned'), { amount: formatMinor(d.planned.minor, 'ILS', fmtLocale) })
       : t('cal.plannedNone');
     li.append(planned);
+
+    // 6.0c journal: the day's note, and one button to add or edit it.
+    const dateText = formatDate(d.date, fmtLocale, { weekday: 'long', day: 'numeric', month: 'long' });
+    if (d.note) li.append(el('p', 'cal-note', d.note));
+    const noteBtn = el('button', 'btn btn-ghost btn-small cal-note-btn');
+    noteBtn.type = 'button';
+    noteBtn.dataset.action = 'note-edit';
+    noteBtn.dataset.day = d.date; // not data-date: that marks the day card itself
+    noteBtn.innerHTML = `<svg class="icon" aria-hidden="true"><use href="${ICONS}i-edit"/></svg>`;
+    noteBtn.append(el('span', '', t(d.note ? 'note.edit' : 'note.add')));
+    noteBtn.setAttribute('aria-label', interpolate(t(d.note ? 'note.editLabel' : 'note.addLabel'), { date: dateText }));
+    li.append(noteBtn);
     return li;
   }));
+  if (focusDate) list.querySelector(`[data-action="note-edit"][data-day="${focusDate}"]`)?.focus();
+}
+
+/** 6.0c: the note dialog. Saving an empty note never deletes; deleting is its own step and asks first. */
+export function setupCalendar(ctx, { wireDialog, showFormErrors }) {
+  const panel = $('#panel-calendar');
+  if (!panel) return;
+  const { t } = ctx;
+  const dlg = $('#dlg-note');
+  const form = $('[data-form="note"]');
+  const delBtn = $('[data-action="note-delete"]');
+  const dlgDel = $('#dlg-note-delete');
+  let date = null;
+  let opener = null;
+  const restore = () => {
+    const btn = panel.querySelector(`[data-action="note-edit"][data-day="${date}"]`);
+    (btn ?? opener)?.focus();
+  };
+  wireDialog(dlg, () => { if (!dlgDel.open) restore(); });
+  wireDialog(dlgDel, () => restore());
+  const errors = (list) => {
+    showFormErrors(t, form, list, 'noteErr');
+    form.querySelector('.form-error').textContent = list.map((e) => interpolate(t(`noteErr.${e}`), { max: NOTE_MAX })).join(' ');
+  };
+  const dateText = (iso) => formatDate(iso, ctx.fmtLocale, { weekday: 'long', day: 'numeric', month: 'long' });
+  const commit = (fn, message) => {
+    const result = ctx.change(fn, { now: true });
+    ctx.toast(result?.ok ? message : 'form.saveFailed');
+  };
+
+  function open(iso, from) {
+    const trip = ctx.trip();
+    date = iso;
+    opener = from;
+    form.reset();
+    errors([]);
+    const n = Math.round((Date.parse(`${iso}T00:00:00Z`) - Date.parse(`${trip.startDate}T00:00:00Z`)) / 86400000) + 1;
+    $('[data-slot="note-title"]').textContent = interpolate(t('note.title'), { n });
+    $('[data-slot="note-date"]').textContent = dateText(iso);
+    const stops = stopsOnDay(trip.destinations, iso);
+    $('[data-slot="note-where"]').textContent = stops.length
+      ? interpolate(t('note.where'), { where: stops.map((x) => x.name).join(' ← ') })
+      : t('note.whereNone');
+    const current = noteOf(trip.journal, iso);
+    form.note.value = current;
+    delBtn.hidden = !current;
+    dlg.showModal();
+    form.note.focus();
+  }
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const value = form.note.value;
+    const current = noteOf(ctx.trip().journal, date);
+    const problems = validateNote(value);
+    if (problems.length) { errors(problems); return; }
+    if (value.trim() === '') {
+      if (current) { errors(['note.empty']); return; } // an empty save never deletes
+      dlg.close(); // nothing written, nothing saved
+      return;
+    }
+    commit((s) => { const trip = s.trips[s.activeTripId]; trip.journal = setNote(trip.journal, date, value, new Date().toISOString()); }, 'note.saved');
+    dlg.close();
+  });
+
+  delBtn.addEventListener('click', () => {
+    $('[data-slot="note-delete-text"]').textContent = interpolate(t('note.deleteText'), { date: dateText(date) });
+    dlg.close();
+    dlgDel.showModal();
+  });
+  $('[data-action="note-delete-yes"]').addEventListener('click', () => {
+    commit((s) => { const trip = s.trips[s.activeTripId]; trip.journal = removeNote(trip.journal, date); }, 'note.deleted');
+    dlgDel.close();
+  });
+
+  panel.addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-action="note-edit"]');
+    if (btn) open(btn.dataset.day, btn);
+  });
 }
 
 /** On opening the screen, bring today's day into view (only while the trip is on). */

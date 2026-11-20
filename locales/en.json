@@ -638,5 +638,21 @@
   "cal.task.overdue": "Overdue",
   "cal.task.done": "Done",
   "cal.planned": "Planned for the day: {amount}",
-  "cal.plannedNone": "Nothing planned for this day"
+  "cal.plannedNone": "Nothing planned for this day",
+  "note.add": "Note for the day",
+  "note.edit": "Edit the note",
+  "note.addLabel": "Note for {date}",
+  "note.editLabel": "Edit the note for {date}",
+  "note.title": "Note for day {n}",
+  "note.field": "How was the day?",
+  "note.where": "Where: {where}",
+  "note.whereNone": "No stop on this day",
+  "note.delete": "Delete the note",
+  "note.saved": "Note saved.",
+  "note.deleted": "Note deleted.",
+  "note.deleteTitle": "Delete the note?",
+  "note.deleteText": "The note for {date} will be deleted. This cannot be undone.",
+  "note.deleteYes": "Yes, delete",
+  "noteErr.note.tooLong": "The note is too long. Up to {max} characters.",
+  "noteErr.note.empty": "The note is empty. To delete it, tap \"Delete the note\"."
 }

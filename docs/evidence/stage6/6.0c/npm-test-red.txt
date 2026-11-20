@@ -1,0 +1,271 @@
+TAP version 13
+# Subtest: S6-5: a note is checked for length only; an empty note is not an error here
+not ok 1 - S6-5: a note is checked for length only; an empty note is not an error here
+  ---
+  duration_ms: 1.466526
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/journal.test.js:9:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    0 !== 1000
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1000
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/journal.test.js:10:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.start (node:internal/test_runner/test:944:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+  ...
+# Subtest: S6-5: writing a note keeps the text (trimmed, line breaks kept) and when it was saved
+not ok 2 - S6-5: writing a note keeps the text (trimmed, line breaks kept) and when it was saved
+  ---
+  duration_ms: 1.015589
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/journal.test.js:17:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + {}
+    - {
+    -   '2026-12-06': {
+    -     note: 'שוק צף\nאוכל טוב',
+    -     updatedAt: '2026-12-06T15:00:00.000Z'
+    -   }
+    - }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    2026-12-06:
+      note: |-
+        שוק צף
+        אוכל טוב
+      updatedAt: '2026-12-06T15:00:00.000Z'
+  actual:
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/journal.test.js:19:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: S6-5: editing changes only that day; the journal given is never changed
+not ok 3 - S6-5: editing changes only that day; the journal given is never changed
+  ---
+  duration_ms: 0.429318
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/journal.test.js:25:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + undefined
+    - {
+    -   note: 'נחתנו',
+    -   updatedAt: '2026-12-06T15:00:00.000Z'
+    - }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    note: 'נחתנו'
+    updatedAt: '2026-12-06T15:00:00.000Z'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/journal.test.js:30:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: S6-5: an empty note is never saved as an empty string
+not ok 4 - S6-5: an empty note is never saved as an empty string
+  ---
+  duration_ms: 0.180306
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/journal.test.js:34:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    an empty save does not delete: deleting asks first
+    + actual - expected
+    
+    + {}
+    - {
+    -   '2026-12-06': {
+    -     note: 'ישן',
+    -     updatedAt: '2026-12-06T15:00:00.000Z'
+    -   }
+    - }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    2026-12-06:
+      note: 'ישן'
+      updatedAt: '2026-12-06T15:00:00.000Z'
+  actual:
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/journal.test.js:37:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: S6-5: a bad date or a too long note changes nothing
+not ok 5 - S6-5: a bad date or a too long note changes nothing
+  ---
+  duration_ms: 0.474391
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/journal.test.js:40:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + {}
+    - {
+    -   '2026-12-06': {
+    -     note: 'ישן',
+    -     updatedAt: '2026-12-06T15:00:00.000Z'
+    -   }
+    - }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    2026-12-06:
+      note: 'ישן'
+      updatedAt: '2026-12-06T15:00:00.000Z'
+  actual:
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/journal.test.js:42:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: S6-10: removing a note removes that day only
+not ok 6 - S6-10: removing a note removes that day only
+  ---
+  duration_ms: 0.211441
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/journal.test.js:47:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + {}
+    - {
+    -   '2026-12-05': {
+    -     note: 'נחתנו',
+    -     updatedAt: '2026-12-06T15:00:00.000Z'
+    -   }
+    - }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    2026-12-05:
+      note: 'נחתנו'
+      updatedAt: '2026-12-06T15:00:00.000Z'
+  actual:
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/journal.test.js:49:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: broken entries are skipped on screen and left in the data
+not ok 7 - broken entries are skipped on screen and left in the data
+  ---
+  duration_ms: 0.206316
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/journal.test.js:54:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      [
+    +   'stub'
+    -   '2026-12-05'
+      ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: '2026-12-05'
+  actual:
+    0: 'stub'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/journal.test.js:56:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: S6-5: each calendar day carries its note; the destination comes from the itinerary, so moving a stop moves it
+not ok 8 - S6-5: each calendar day carries its note; the destination comes from the itinerary, so moving a stop moves it
+  ---
+  duration_ms: 0.887261
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/journal.test.js:61:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + undefined
+    - 'שוק צף'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'שוק צף'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/journal.test.js:68:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 0
+# fail 8
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 62.749634
