@@ -1,0 +1,288 @@
+TAP version 13
+# Subtest: S6-3: trip days run from the first date to the last, both included
+not ok 1 - S6-3: trip days run from the first date to the last, both included
+  ---
+  duration_ms: 2.923778
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/calendar.test.js:12:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + []
+    - [
+    -   '2026-12-05',
+    -   '2026-12-06',
+    -   '2026-12-07',
+    -   '2026-12-08'
+    - ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: '2026-12-05'
+    1: '2026-12-06'
+    2: '2026-12-07'
+    3: '2026-12-08'
+  actual:
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/calendar.test.js:13:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.start (node:internal/test_runner/test:944:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+  ...
+# Subtest: S6-3: across a month and a year (31.12 to 1.1), no day missing or twice
+not ok 2 - S6-3: across a month and a year (31.12 to 1.1), no day missing or twice
+  ---
+  duration_ms: 0.483661
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/calendar.test.js:18:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + []
+    - [
+    -   '2026-12-30',
+    -   '2026-12-31',
+    -   '2027-01-01',
+    -   '2027-01-02'
+    - ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: '2026-12-30'
+    1: '2026-12-31'
+    2: '2027-01-01'
+    3: '2027-01-02'
+  actual:
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/calendar.test.js:20:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: S6-3: no trip dates, or broken dates, give no days (nothing guessed)
+ok 3 - S6-3: no trip dates, or broken dates, give no days (nothing guessed)
+  ---
+  duration_ms: 0.193061
+  type: 'test'
+  ...
+# Subtest: S6-3: the stop of a day; on a travel day both, the one left first, then the one arrived at
+not ok 4 - S6-3: the stop of a day; on a travel day both, the one left first, then the one arrived at
+  ---
+  duration_ms: 0.776655
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/calendar.test.js:31:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + []
+    - [
+    -   {
+    -     id: 'd1',
+    -     name: 'בנגקוק',
+    -     role: 'stay'
+    -   }
+    - ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0:
+      id: 'd1'
+      name: 'בנגקוק'
+      role: 'stay'
+  actual:
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/calendar.test.js:32:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: S6-4: transfers of a day, sorted by time; ones without a time come first, as on the transfers screen
+not ok 5 - S6-4: transfers of a day, sorted by time; ones without a time come first, as on the transfers screen
+  ---
+  duration_ms: 0.397102
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/calendar.test.js:44:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + []
+    - [
+    -   't1',
+    -   't2'
+    - ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 't1'
+    1: 't2'
+  actual:
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/calendar.test.js:51:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: S6-4: tasks of a day are the ones due that day, with their state by the Bangkok date
+not ok 6 - S6-4: tasks of a day are the ones due that day, with their state by the Bangkok date
+  ---
+  duration_ms: 0.347712
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/calendar.test.js:55:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + []
+    - [
+    -   [
+    -     'k1',
+    -     'today'
+    -   ],
+    -   [
+    -     'k2',
+    -     'done'
+    -   ]
+    - ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0:
+      0: 'k1'
+      1: 'today'
+    1:
+      0: 'k2'
+      1: 'done'
+  actual:
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/calendar.test.js:63:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: S6-4: planned for a day = planned + future commitment of that day; paid is never in it
+not ok 7 - S6-4: planned for a day = planned + future commitment of that day; paid is never in it
+  ---
+  duration_ms: 0.167183
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/calendar.test.js:78:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + {}
+    - {
+    -   count: 2,
+    -   minor: 262000
+    - }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    minor: 262000
+    count: 2
+  actual:
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/calendar.test.js:79:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: S6-4: the days add up to the planned and committed totals of the money screen (same rule, no double count)
+not ok 8 - S6-4: the days add up to the planned and committed totals of the money screen (same rule, no double count)
+  ---
+  duration_ms: 0.658841
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/calendar.test.js:85:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    0 !== 266500
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 266500
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/calendar.test.js:89:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: S6-3/S6-4: buildCalendar puts it together, marks today, and says when there are no dates
+not ok 9 - S6-3/S6-4: buildCalendar puts it together, marks today, and says when there are no dates
+  ---
+  duration_ms: 0.290744
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/calendar.test.js:92:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + undefined
+    - true
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/calendar.test.js:99:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..9
+# tests 9
+# suites 0
+# pass 1
+# fail 8
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 86.647745

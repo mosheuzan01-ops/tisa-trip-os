@@ -260,6 +260,9 @@
         <button class="btn btn-ghost itin-transfers-link" type="button" data-go="transfers">
           <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-plane"/></svg><span data-i18n="transfers.open">טיסות ומעברים</span>
         </button>
+        <button class="btn btn-ghost itin-transfers-link" type="button" data-go="calendar">
+          <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-calendar"/></svg><span data-i18n="cal.open">לוח שנה</span>
+        </button>
 
         <section class="card surface settings-card itin-trip" aria-labelledby="itin-trip-title">
           <h2 id="itin-trip-title" data-i18n="itin.trip.title">תאריכי הטיול</h2>
@@ -488,6 +491,22 @@
           <h2 class="tool-title" id="transfers-future-title" data-i18n="transfers.future.title">חיפוש והשוואה של טיסות ומלונות</h2>
           <p class="muted" data-slot="transfers-future" data-i18n="transfers.future.text">חיפוש במחירים חיים יגיע בגרסה עתידית. עד אז כל טיסה ומלון נכתבים כאן ידנית, בלי מחירים, שעות או זמינות מומצאים.</p>
         </section>
+      </section>
+
+      <!-- CALENDAR (6.0b): the trip as a list of days, opened from the itinerary. Built from the user's own data only. -->
+      <section class="panel calendar" id="panel-calendar" role="tabpanel" aria-labelledby="calendar-title" hidden>
+        <div class="itin-head">
+          <h1 class="display" id="calendar-title" data-i18n="cal.title">לוח שנה</h1>
+          <p class="muted" data-slot="cal-lead"></p>
+        </div>
+        <section class="card surface money-empty" data-slot="cal-empty" aria-labelledby="cal-empty-title" hidden>
+          <h2 class="tool-title" id="cal-empty-title" data-i18n="cal.empty.title">עוד אין תאריכי טיול</h2>
+          <p data-i18n="cal.empty.text">קובעים תאריכים במסך המסלול, והימים יופיעו כאן.</p>
+          <button class="btn btn-ghost" type="button" data-go="itinerary">
+            <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-route"/></svg><span data-i18n="cal.empty.go">למסך המסלול</span>
+          </button>
+        </section>
+        <ol class="cal-days" data-slot="cal-days" aria-label="ימי הטיול" data-i18n-label="cal.listLabel"></ol>
       </section>
 
       <!-- ASSISTANT (0.5.4): rule-based, from the user's own data only. A full AI chat is a future version. -->
