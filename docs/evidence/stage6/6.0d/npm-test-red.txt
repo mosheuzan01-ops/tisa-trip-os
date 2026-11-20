@@ -1,0 +1,344 @@
+TAP version 13
+# Subtest: S6-6: kinds and zones are fixed lists: flight or hotel, Israel or Thailand
+not ok 1 - S6-6: kinds and zones are fixed lists: flight or hotel, Israel or Thailand
+  ---
+  duration_ms: 2.438242
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/checkins.test.js:21:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + []
+    - [
+    -   'flight',
+    -   'hotel'
+    - ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 'flight'
+    1: 'hotel'
+  actual:
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/checkins.test.js:22:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.start (node:internal/test_runner/test:944:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+  ...
+# Subtest: S6-6: every field is checked; date is required, time is not
+not ok 2 - S6-6: every field is checked; date is required, time is not
+  ---
+  duration_ms: 0.471423
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/checkins.test.js:26:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + []
+    - [
+    -   'kind.invalid'
+    - ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 'kind.invalid'
+  actual:
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/checkins.test.js:29:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: S6-6: a link is kept only if it starts with http:// or https://
+not ok 3 - S6-6: a link is kept only if it starts with http:// or https://
+  ---
+  duration_ms: 0.216116
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/checkins.test.js:40:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    javascript:alert(1)
+    + actual - expected
+    
+    + []
+    - [
+    -   'link.invalid'
+    - ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 'link.invalid'
+  actual:
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/checkins.test.js:44:12)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: S6-6: a flight keeps only a flight link, a hotel only a stop; nothing is worked out (no opening time)
+not ok 4 - S6-6: a flight keeps only a flight link, a hotel only a stop; nothing is worked out (no opening time)
+  ---
+  duration_ms: 0.22621
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/checkins.test.js:48:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    undefined !== 't1'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 't1'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/checkins.test.js:50:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: S6-7: the reminder follows the calendar of the zone that was entered
+not ok 5 - S6-7: the reminder follows the calendar of the zone that was entered
+  ---
+  duration_ms: 0.161688
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/checkins.test.js:63:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    '' !== 'upcoming'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'upcoming'
+  actual: ''
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/checkins.test.js:65:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: S6-7: due check-ins are the open ones, today or past; done ones and later ones are left out
+not ok 6 - S6-7: due check-ins are the open ones, today or past; done ones and later ones are left out
+  ---
+  duration_ms: 0.386808
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/checkins.test.js:75:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + []
+    - [
+    -   'א'
+    - ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 'א'
+  actual:
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/checkins.test.js:83:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: S6-7: no push or system notifications anywhere in the code
+ok 7 - S6-7: no push or system notifications anywhere in the code
+  ---
+  duration_ms: 2.378401
+  type: 'test'
+  ...
+# Subtest: order, the calendar day, and broken entries
+not ok 8 - order, the calendar day, and broken entries
+  ---
+  duration_ms: 0.350767
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/checkins.test.js:95:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + []
+    - [
+    -   'ג',
+    -   'ב',
+    -   'א'
+    - ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 'ג'
+    1: 'ב'
+    2: 'א'
+  actual:
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/checkins.test.js:99:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: S6-10: deleting a flight unlinks its check-in and never deletes it
+not ok 9 - S6-10: deleting a flight unlinks its check-in and never deletes it
+  ---
+  duration_ms: 0.443849
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/checkins.test.js:107:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + undefined
+    - null
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: ~
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/checkins.test.js:115:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: S6-8: the offset of a zone comes from Intl, for a given moment
+not ok 10 - S6-8: the offset of a zone comes from Intl, for a given moment
+  ---
+  duration_ms: 0.407237
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/checkins.test.js:122:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    0 !== 420
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 420
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/checkins.test.js:123:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: S6-8: the difference depends on the date: winter and summer in Israel give different answers
+not ok 11 - S6-8: the difference depends on the date: winter and summer in Israel give different answers
+  ---
+  duration_ms: 0.261625
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/checkins.test.js:129:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    0 !== 300
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 300
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/checkins.test.js:132:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: S6-8: a time entered in one zone is shown in the other, across midnight too
+not ok 12 - S6-8: a time entered in one zone is shown in the other, across midnight too
+  ---
+  duration_ms: 0.257707
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/checkins.test.js:139:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + {}
+    - {
+    -   date: '2026-12-04',
+    -   time: '11:45'
+    - }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    date: '2026-12-04'
+    time: '11:45'
+  actual:
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/checkins.test.js:140:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: S6-8 / S6-11: no fixed time difference in the app code, data or texts
+ok 13 - S6-8 / S6-11: no fixed time difference in the app code, data or texts
+  ---
+  duration_ms: 0.861489
+  type: 'test'
+  ...
+1..13
+# tests 13
+# suites 0
+# pass 2
+# fail 11
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 79.107848

@@ -144,6 +144,7 @@
               <button class="btn btn-ghost btn-small" type="button" data-go="assistant">
                 <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-chat"/></svg><span data-i18n="ast.open">עוזר: מה לעשות היום</span>
               </button>
+              <button class="btn btn-ghost btn-small home-checkin" type="button" data-go="transfers" data-slot="home-checkin" hidden></button>
               <button class="btn btn-ghost btn-small" type="button" data-action="task-quick">
                 <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-plus"/></svg><span data-i18n="task.new">משימה חדשה</span>
               </button>
@@ -487,6 +488,24 @@
           <p data-i18n="transfers.empty.text">מוסיפים טיסה, אוטובוס, רכבת, מעבורת או נסיעה. כל הפרטים נכתבים ידנית.</p>
         </section>
         <ul class="transfer-list" data-slot="transfer-list"></ul>
+
+        <!-- CHECK-IN (6.0d): flights and hotels, entered by hand. Reminders only inside the app. -->
+        <div class="money-card-head">
+          <h2 class="section-title" id="checkins-title" data-i18n="checkins.title">צ'ק-אין לטיסות ולמלונות</h2>
+          <button class="btn btn-primary btn-small" type="button" data-action="checkin-add">
+            <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-plus"/></svg><span data-i18n="checkins.add">צ'ק-אין חדש</span>
+          </button>
+        </div>
+        <p class="muted" data-i18n="checkins.lead">מזינים ידנית מתי עושים צ'ק-אין. תזכורת מופיעה רק בתוך האפליקציה, בבית, אצל העוזר ובלוח השנה.</p>
+        <section class="card surface tz-card" aria-labelledby="tz-title">
+          <h3 class="tool-title" id="tz-title"><svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-clock"/></svg><span data-i18n="tz.title">הפרש שעות</span></h3>
+          <p class="tz-diff" data-slot="tz-diff"></p>
+          <p class="muted" data-i18n="tz.note">לפי נתוני אזורי הזמן במכשיר. בישראל יש שעון קיץ, ולכן ההפרש משתנה במהלך השנה.</p>
+        </section>
+        <section class="card surface money-empty" data-slot="checkins-empty" hidden>
+          <p data-i18n="checkins.empty">עוד אין צ'ק-אין. מתי הצ'ק-אין נפתח לא מחושב כאן: כותבים את מה שחברת התעופה או המלון מסרו.</p>
+        </section>
+        <ul class="transfer-list" data-slot="checkin-list" aria-labelledby="checkins-title"></ul>
         <section class="card surface future-card" aria-labelledby="transfers-future-title">
           <h2 class="tool-title" id="transfers-future-title" data-i18n="transfers.future.title">חיפוש והשוואה של טיסות ומלונות</h2>
           <p class="muted" data-slot="transfers-future" data-i18n="transfers.future.text">חיפוש במחירים חיים יגיע בגרסה עתידית. עד אז כל טיסה ומלון נכתבים כאן ידנית, בלי מחירים, שעות או זמינות מומצאים.</p>
@@ -980,6 +999,44 @@
         <p class="sheet-hint" id="dlg-note-delete-text" data-slot="note-delete-text"></p>
         <div class="sheet-actions">
           <button class="btn metal-btn" type="button" data-action="note-delete-yes" data-i18n="note.deleteYes">כן, למחוק</button>
+          <button class="btn btn-ghost" type="button" data-close data-i18n="form.cancel">ביטול</button>
+        </div>
+      </div>
+    </dialog>
+
+    <!-- Check-in (6.0d): add or edit, all by hand. No opening time is worked out. -->
+    <dialog class="sheet dmetal" id="dlg-checkin" aria-labelledby="dlg-checkin-title">
+      <form class="sheet-form" data-form="checkin" novalidate>
+        <h2 id="dlg-checkin-title" data-slot="checkin-title"></h2>
+        <p class="sheet-hint" data-i18n="checkin.hint">לטיסה: מתי הצ'ק-אין נפתח. למלון: מתי מגיעים. כותבים את מה שנמסר לכם, בלי לנחש.</p>
+        <div class="field-row">
+          <label class="field"><span data-i18n="checkin.kind">סוג</span><select name="kind" data-slot="checkin-kind"></select></label>
+          <label class="field"><span data-i18n="checkin.zone">לפי שעון</span><select name="zone" data-slot="checkin-zone"></select></label>
+        </div>
+        <label class="field"><span data-i18n="checkin.title">שם</span><input type="text" name="title" maxlength="60" autocomplete="off" aria-describedby="checkin-error"></label>
+        <div class="field-row">
+          <label class="field"><span data-i18n="checkin.date">תאריך</span><input class="ltr" type="date" name="date" aria-describedby="checkin-error"></label>
+          <label class="field"><span data-i18n="checkin.time">שעה (לא חובה)</span><input class="ltr" type="time" name="time" aria-describedby="checkin-error"></label>
+        </div>
+        <label class="field" data-slot="checkin-flight-field"><span data-i18n="checkin.flight">טיסה מהרשימה (לא חובה)</span><select name="transferId" data-slot="checkin-flight"></select></label>
+        <label class="field" data-slot="checkin-stop-field" hidden><span data-i18n="checkin.stop">תחנה במסלול (לא חובה)</span><select name="stopId" data-slot="checkin-stop"></select></label>
+        <label class="field"><span data-i18n="checkin.booking">מספר הזמנה</span><input class="ltr" type="text" name="booking" maxlength="40" autocomplete="off" aria-describedby="checkin-error"></label>
+        <label class="field"><span data-i18n="checkin.link">קישור לצ'ק-אין (לא חובה)</span><input class="ltr" type="url" name="link" maxlength="300" autocomplete="off" aria-describedby="checkin-error"></label>
+        <label class="field"><span data-i18n="checkin.note">הערה (לא חובה)</span><input type="text" name="note" maxlength="140" autocomplete="off" aria-describedby="checkin-error"></label>
+        <p class="form-error" id="checkin-error" role="alert"></p>
+        <div class="sheet-actions">
+          <button class="btn metal-btn" type="submit" data-i18n="form.save">שמירה</button>
+          <button class="btn btn-ghost" type="button" data-close data-i18n="form.cancel">ביטול</button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog class="sheet dmetal" id="dlg-checkin-delete" aria-labelledby="dlg-checkin-delete-title" aria-describedby="dlg-checkin-delete-text">
+      <div class="sheet-form">
+        <h2 id="dlg-checkin-delete-title" data-i18n="checkin.deleteTitle">למחוק את הצ'ק-אין?</h2>
+        <p class="sheet-hint" id="dlg-checkin-delete-text" data-slot="checkin-delete-text"></p>
+        <div class="sheet-actions">
+          <button class="btn metal-btn" type="button" data-action="checkin-delete-yes" data-i18n="checkin.deleteYes">כן, למחוק</button>
           <button class="btn btn-ghost" type="button" data-close data-i18n="form.cancel">ביטול</button>
         </div>
       </div>

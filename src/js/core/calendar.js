@@ -6,6 +6,7 @@ import { sortTransfers } from './transfers.js';
 import { taskState, cleanTasks } from './checklist.js';
 import { EMERGENCY } from './money.js';
 import { noteOf } from './journal.js';
+import { checkinsOnDay } from './checkins.js';
 
 /** Every calendar day from start to end, both included. Missing or reversed dates give no days. */
 export function tripDays(start, end) {
@@ -59,6 +60,7 @@ export function buildCalendar(trip, today) {
     tasks: tasksOnDay(trip.tasks, date, today),
     planned: plannedForDay(trip.expenses, date),
     note: noteOf(trip.journal, date),
+    checkins: checkinsOnDay(trip.checkins, date),
   }));
   return { hasDates: dates.length > 0, days, todayIndex: dates.indexOf(today) };
 }

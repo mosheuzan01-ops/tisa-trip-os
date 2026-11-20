@@ -95,7 +95,9 @@ export function removeTransfer(trip, id, withExpense) {
   const expenses = (trip.expenses ?? [])
     .filter((e) => !(withExpense && t?.expenseId && e?.id === t.expenseId))
     .map((e) => (e?.transferId === id ? unlink(e) : e));
-  return { ...trip, transfers: (trip.transfers ?? []).filter((x) => x?.id !== id), expenses };
+  // 6.0d: a check-in linked to this flight stays; only the link goes.
+  const checkins = (Array.isArray(trip.checkins) ? trip.checkins : []).map((c) => (c?.transferId === id ? { ...c, transferId: null } : c));
+  return { ...trip, transfers: (trip.transfers ?? []).filter((x) => x?.id !== id), expenses, checkins };
 }
 
 const key = (t) => `${t.date} ${t.time || '00:00'}`;

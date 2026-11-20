@@ -132,6 +132,7 @@ export function setupTransfers(ctx, { wireDialog, showFormErrors }) {
       const next = removeTransfer(trip, id, withExpense);
       trip.transfers = next.transfers;
       trip.expenses = next.expenses;
+      trip.checkins = next.checkins; // 6.0d: a linked check-in stays, unlinked
     }, { now: true });
     ctx.toast(result?.ok ? 'transfer.deleted' : 'form.saveFailed');
     opener = panel.querySelector('[data-action="transfer-edit"]') ?? panel.querySelector('[data-action="transfer-add"]');
