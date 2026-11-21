@@ -1,0 +1,7 @@
+PASS  texts mobile
+PASS  cache mobile
+PASS  export from settings mobile
+PASS  texts desktop
+PASS  cache desktop
+PASS  export from settings desktop
+PASS  no JS errors

@@ -477,6 +477,9 @@
             <p data-i18n="list.empty.text">טוענים רשימה מוצעת לתאילנד ומשנים אותה, או מוסיפים פריטים משלכם.</p>
             <button class="btn btn-ghost" type="button" data-action="list-seed" data-i18n="list.seed.open">לטעון רשימה מוצעת</button>
           </section>
+          <button class="btn btn-ghost list-flight-btn" type="button" data-action="list-flight-items">
+            <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-plane"/></svg><span data-i18n="list.flight.open">הוספת פריטי טיסה</span>
+          </button>
           <div class="groups" data-slot="groups"></div>
         </section>
 
@@ -509,6 +512,11 @@
             <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-plus"/></svg><span data-i18n="transfers.add">הוספה</span>
           </button>
         </div>
+        <!-- Stage 9 PR 2: a latisa-flights file. Duplicates (number + date) are skipped, nothing is overwritten. -->
+        <button class="btn btn-ghost flights-import-btn" type="button" data-action="flights-import">
+          <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-upload"/></svg><span data-i18n="flights.import.open">ייבוא טיסות</span>
+        </button>
+        <p class="form-error" role="alert" data-slot="flights-import-error"></p>
         <section class="card surface money-empty" data-slot="transfers-empty" aria-labelledby="transfers-empty-title" hidden>
           <h3 class="tool-title" id="transfers-empty-title" data-i18n="transfers.empty.title">עוד אין טיסות או מעברים</h3>
           <p data-i18n="transfers.empty.text">מוסיפים טיסה, אוטובוס, רכבת, מעבורת או נסיעה. כל הפרטים נכתבים ידנית.</p>
@@ -1319,6 +1327,18 @@
           <label class="field"><span data-i18n="transfer.date">תאריך</span><input class="ltr" type="date" name="date" aria-describedby="transfer-error"></label>
           <label class="field"><span data-i18n="transfer.time">שעה (לא חובה)</span><input class="ltr" type="time" name="time" aria-describedby="transfer-error"></label>
         </div>
+        <div class="transfer-flight-fields" data-slot="transfer-flight">
+          <div class="field-row">
+            <label class="field"><span data-i18n="transfer.flightNo">מספר טיסה (לא חובה)</span><input class="ltr" type="text" name="flightNo" maxlength="8" autocomplete="off" autocapitalize="characters" aria-describedby="transfer-error"></label>
+            <label class="field"><span data-i18n="transfer.ticket">כרטיס</span><select name="ticket" data-slot="transfer-ticket" aria-describedby="transfer-error"></select></label>
+          </div>
+          <p class="sheet-hint" data-i18n="transfer.ticketHint">בכרטיס הלוך ושוב רושמים את המחיר פעם אחת, בטיסת ההלוך.</p>
+          <div class="field-row">
+            <label class="field"><span data-i18n="transfer.seat">מושב (לא חובה)</span><input class="ltr" type="text" name="seat" maxlength="8" autocomplete="off" autocapitalize="characters" aria-describedby="transfer-error"></label>
+            <label class="field"><span data-i18n="transfer.seatPrice">תשלום על מושב (לא חובה)</span><input class="ltr" type="text" name="seatPrice" inputmode="decimal" autocomplete="off" aria-describedby="transfer-error"></label>
+          </div>
+          <p class="sheet-hint" data-i18n="transfer.seatHint">תשלום על מושב נשמר רק בפרטי הטיסה, ולא נכנס לתקציב.</p>
+        </div>
         <div class="field-row">
           <label class="field"><span data-i18n="transfer.company">חברה</span><input type="text" name="company" maxlength="60" autocomplete="off"></label>
           <label class="field"><span data-i18n="transfer.booking">מספר הזמנה</span><input class="ltr" type="text" name="booking" maxlength="40" autocomplete="off" aria-describedby="transfer-error"></label>
@@ -1336,6 +1356,21 @@
           <button class="btn btn-ghost" type="button" data-close data-i18n="form.cancel">ביטול</button>
         </div>
       </form>
+    </dialog>
+
+    <!-- The file picker for "import flights" lives outside the panel, so it is never counted as a control there. -->
+    <input class="sr-only" type="file" id="flights-import-file" accept="application/json,.json" tabindex="-1" aria-hidden="true">
+    <!-- Stage 9 PR 2: flights import, after a yes. Shows what comes in, what is already here, and what is skipped. -->
+    <dialog class="sheet dmetal" id="dlg-flights-import" aria-labelledby="dlg-flights-import-title" aria-describedby="dlg-flights-import-text">
+      <div class="sheet-form">
+        <h2 id="dlg-flights-import-title" data-i18n="flights.import.title">ייבוא טיסות</h2>
+        <p id="dlg-flights-import-text" data-slot="flights-import-text"></p>
+        <p class="sheet-hint" data-i18n="flights.import.hint">שום טיסה, הוצאה או פריט קיים לא משתנים.</p>
+        <div class="sheet-actions">
+          <button class="btn metal-btn" type="button" data-action="flights-import-confirm" data-i18n="flights.import.confirm">לייבא</button>
+          <button class="btn btn-ghost" type="button" data-close data-i18n="form.cancel">ביטול</button>
+        </div>
+      </div>
     </dialog>
 
     <!-- Transfers: delete after a yes; the linked expense goes too only if ticked -->

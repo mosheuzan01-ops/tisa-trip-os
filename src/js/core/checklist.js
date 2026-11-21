@@ -3,8 +3,9 @@
 // until the user writes where and when they checked.
 import { isIsoDate } from './trip.js';
 
-export const GROUPS = ['documents', 'money', 'comms', 'health', 'clothing', 'chargers'];
-const PREP = new Set(['documents', 'money', 'comms']);
+// Stage 9 PR 2 added offline (downloads before the flight), flightFood and flightComfort.
+export const GROUPS = ['documents', 'money', 'comms', 'offline', 'health', 'clothing', 'chargers', 'flightFood', 'flightComfort'];
+const PREP = new Set(['documents', 'money', 'comms', 'offline']);
 export const groupKind = (g) => (PREP.has(g) ? 'prep' : 'pack');
 export const TASK_STATUSES = ['open', 'doing', 'done'];
 export const NAME_MAX = 60;
@@ -119,3 +120,18 @@ export const cleanTasks = (list) => (Array.isArray(list)
 
 /** The status filter: when on, ticked items and done tasks are hidden (the data is not touched). */
 export const hideDone = (list = [], on = false) => (on ? list.filter((x) => !(x.done === true || x.status === 'done')) : list);
+
+const sameName = (v) => String(v ?? '').trim().replace(/\s+/g, ' ').toLocaleLowerCase();
+
+/** Stage 9 PR 2: add the pack's flight items that are not on the list yet (by name, any group). Nothing else changes. */
+export function addFlightItems(items = [], pack, locale, makeId) {
+  const have = new Set(items.map((x) => sameName(x?.name)));
+  const fresh = [];
+  for (const x of pack?.flightChecklistSeed ?? []) {
+    const name = pick(x.name, locale);
+    if (have.has(sameName(name))) continue;
+    have.add(sameName(name));
+    fresh.push(makeItem({ group: x.group, name, qty: '', note: '', verify: Boolean(x.verify) }, makeId));
+  }
+  return { items: [...items, ...fresh], added: fresh.length };
+}

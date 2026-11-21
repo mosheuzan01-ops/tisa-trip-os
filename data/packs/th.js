@@ -120,6 +120,25 @@ export const TH = Object.freeze({
     { group: 'chargers', name: { he: 'מתאם לשקע החשמל', en: 'Plug adapter' }, verify: true },
     { group: 'chargers', name: { he: 'סוללה ניידת', en: 'Power bank' } },
   ],
+  // Stage 9 PR 2: flight items, added from the lists screen on request, without repeating what is already there.
+  // Generic advice only: anything that depends on airline or airport rules carries `verify`.
+  flightChecklistSeed: [
+    { group: 'offline', name: { he: 'כרטיסי עלייה למטוס שמורים בטלפון', en: 'Boarding passes saved on the phone' } },
+    { group: 'offline', name: { he: 'אישורי הזמנות שמורים בטלפון', en: 'Booking confirmations saved on the phone' } },
+    { group: 'offline', name: { he: 'קובץ גיבוי של האפליקציה', en: 'App backup file' } },
+    { group: 'offline', name: { he: 'מתרגם שעובד בלי קליטה', en: 'Translator that works offline' } },
+    { group: 'offline', name: { he: 'סרטים, מוזיקה או ספרים להורדה', en: 'Films, music or books downloaded' } },
+    { group: 'flightFood', name: { he: 'חטיפים לטיסה', en: 'Snacks for the flight' } },
+    { group: 'flightFood', name: { he: 'בקבוק ריק למילוי אחרי הבידוק', en: 'Empty bottle to fill after security' }, verify: true },
+    { group: 'flightFood', name: { he: 'מסטיק או סוכריות', en: 'Gum or sweets' } },
+    { group: 'flightFood', name: { he: 'ארוחה, אם היא לא כלולה בכרטיס', en: 'A meal, if the ticket has none' }, verify: true },
+    { group: 'flightComfort', name: { he: 'כרית צוואר', en: 'Neck pillow' } },
+    { group: 'flightComfort', name: { he: 'אטמי אוזניים', en: 'Earplugs' } },
+    { group: 'flightComfort', name: { he: 'כיסוי עיניים', en: 'Eye mask' } },
+    { group: 'flightComfort', name: { he: 'אוזניות', en: 'Headphones' } },
+    { group: 'flightComfort', name: { he: 'שכבה חמה למטוס', en: 'A warm layer for the plane' } },
+    { group: 'flightComfort', name: { he: 'גרביים נוחות', en: 'Comfortable socks' } },
+  ],
   taskSeed: [
     { title: { he: 'הזמנת טיסות', en: 'Book flights' } },
     { title: { he: 'ביטוח נסיעות', en: 'Travel insurance' } },
