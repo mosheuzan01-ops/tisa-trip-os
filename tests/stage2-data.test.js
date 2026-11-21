@@ -1,5 +1,6 @@
 // Stage 2: data model, storage, migration, backup. Written before the code (docs/GOALS_STAGE2.md B2-B8, B10).
 import { test } from 'node:test';
+import { preV6 } from './helpers.js';
 import assert from 'node:assert/strict';
 import { SCHEMA_VERSION, createDefaultState, validateState, migrate, TRIP_FEATURE_FIELDS } from '../src/js/core/schema.js';
 import { createStorage } from '../src/js/core/storage.js';
@@ -50,7 +51,7 @@ test('B2: first load creates valid defaults with exactly one trip', () => {
     assert.ok(TRIP_FEATURE_FIELDS.includes(field), field);
     assert.ok(field in trip, `trip missing ${field}`);
     const v = trip[field];
-    if (field === 'budget') { assert.deepEqual(v, { currency: 'ILS', totalMinor: null, categoriesMinor: {}, profileId: null, estimate: false }, 'Stage 4: budget starts with no amounts'); continue; }
+    if (field === 'budget') { assert.deepEqual(preV6(v), { currency: 'ILS', totalMinor: null, categoriesMinor: {}, profileId: null, estimate: false }, 'Stage 4: budget starts with no amounts'); continue; }
     assert.ok(Array.isArray(v) ? v.length === 0 : Object.keys(v).length === 0, `${field} should start empty`);
   }
   assert.deepEqual(validateState(state), []);
@@ -77,7 +78,7 @@ test('B3: v0 data (old tisa:trip + tisa:theme) migrates without losing any field
   const trip = state.trips[state.activeTripId];
   assert.equal(trip.startDate, '2027-03-10');
   assert.equal(trip.endDate, '2027-03-19');
-  assert.deepEqual(trip.budget, { currency: 'ILS', totalMinor: 1200000, categoriesMinor: {}, profileId: null, estimate: false }, 'Stage 4 (schema 2): same amount, in agorot');
+  assert.deepEqual(preV6(trip.budget), { currency: 'ILS', totalMinor: 1200000, categoriesMinor: {}, profileId: null, estimate: false }, 'Stage 4 (schema 2): same amount, in agorot');
   assert.equal(trip.note, 'keep me', 'unknown fields are carried over');
   assert.equal(state.settings.theme, 'dark');
   assert.ok(backend.map.has('tisa:trip') && backend.map.has('tisa:theme'), 'old keys are never deleted');

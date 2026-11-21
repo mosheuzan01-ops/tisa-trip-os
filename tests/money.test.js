@@ -1,5 +1,6 @@
 // Stage 4: money logic (docs/GOALS_STAGE4.md S4-1..S4-9, S4-13). Written before src/js/core/money.js.
 import { test } from 'node:test';
+import { preV6 } from './helpers.js';
 import assert from 'node:assert/strict';
 import {
   parseMoney, toMinor, effectiveRates, rateToBase, currenciesFor, editExpense, validateRates, ratesConsistent, validateExpense, makeExpense,
@@ -9,6 +10,7 @@ import { TH } from '../data/packs/th.js';
 import { SCHEMA_VERSION, migrate, validateState, createDefaultState } from '../src/js/core/schema.js';
 import { createStorage } from '../src/js/core/storage.js';
 import { exportBackup, parseBackup } from '../src/js/core/backup.js';
+// Stage 9 (owner, 2026-11-21): the old route, dates and profiles moved to TH.archive (kept, not the default).
 
 const RATES = effectiveRates({}, TH.planningRates);
 let n = 0;
@@ -76,7 +78,7 @@ test('nine categories: the pack\'s eight plus emergency', () => {
 });
 
 test('S4-7: a profile becomes an editable budget marked as an estimate; emergency 2,500 (owner, 2026-11-19)', () => {
-  const b = profileToBudget(TH.budgetProfiles[1]);
+  const b = profileToBudget(TH.archive.budgetProfiles[1]);
   assert.equal(b.profileId, 'realistic');
   assert.equal(b.estimate, true);
   assert.equal(b.currency, 'ILS');
@@ -168,18 +170,18 @@ test('S4-13: v1 data with a Stage 1 budget migrates to v2 without losing anythin
   const out = migrate(structuredClone(v1), opts);
   assert.equal(out.schemaVersion, SCHEMA_VERSION);
   const b = out.trips['trip-1'].budget;
-  assert.deepEqual(b, { currency: 'ILS', totalMinor: 1200050, categoriesMinor: {}, profileId: null, estimate: false, extra: 'keep' });
+  assert.deepEqual(preV6(b), { currency: 'ILS', totalMinor: 1200050, categoriesMinor: {}, profileId: null, estimate: false, extra: 'keep' });
   assert.deepEqual(out.trips['trip-1'].destinations, trip.destinations);
   assert.equal(out.trips['trip-1'].startDate, '2026-12-05');
   assert.deepEqual(validateState(out), []);
   const empty = createDefaultState(opts); empty.schemaVersion = 1;
-  assert.deepEqual(migrate(empty, opts).trips['trip-1'].budget, { currency: 'ILS', totalMinor: null, categoriesMinor: {}, profileId: null, estimate: false });
+  assert.deepEqual(preV6(migrate(empty, opts).trips['trip-1'].budget), { currency: 'ILS', totalMinor: null, categoriesMinor: {}, profileId: null, estimate: false });
 });
 
 test('S4-13: a fresh state has an empty money budget', () => {
   const s = createDefaultState(opts);
   assert.equal(s.schemaVersion, SCHEMA_VERSION);
-  assert.deepEqual(s.trips['trip-1'].budget, { currency: 'ILS', totalMinor: null, categoriesMinor: {}, profileId: null, estimate: false });
+  assert.deepEqual(preV6(s.trips['trip-1'].budget), { currency: 'ILS', totalMinor: null, categoriesMinor: {}, profileId: null, estimate: false });
   assert.deepEqual(validateState(s), []);
 });
 
@@ -204,7 +206,7 @@ test('S4-1: an expense is saved through storage.js under the tisa: key and survi
 test('S4-9 + S4-13: backup round trip keeps budget, rates and expenses; a v1 backup still imports', () => {
   const { state } = storageOn(memoryBackend()).load();
   const trip = state.trips[state.activeTripId];
-  trip.budget = profileToBudget(TH.budgetProfiles[0]);
+  trip.budget = profileToBudget(TH.archive.budgetProfiles[0]);
   trip.rates = { ILS_THB: 11 };
   trip.expenses = [ex({ amount: '99.99', currency: 'USD' })];
   trip.destinations = [{ id: 'd', name: 'x', startDate: '2026-12-05', endDate: '2026-12-08', note: '' }];

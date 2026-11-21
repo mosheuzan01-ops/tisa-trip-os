@@ -1,0 +1,561 @@
+TAP version 13
+# Subtest: S9-1: the template is 15,000 without the flight and 20,000 with it; emergency 2,500 stays outside
+not ok 1 - S9-1: the template is 15,000 without the flight and 20,000 with it; emergency 2,500 stays outside
+  ---
+  duration_ms: 2.2435
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage9-data.test.js:23:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    0 !== 1500000
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1500000
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage9-data.test.js:25:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.start (node:internal/test_runner/test:944:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+  ...
+# Subtest: S9-1: template category names and the hidden "green" category; ids are the pack ids
+not ok 2 - S9-1: template category names and the hidden "green" category; ids are the pack ids
+  ---
+  duration_ms: 0.224034
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage9-data.test.js:34:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of undefined (reading 'food')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage9-data.test.js:36:32)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: S9-2: daily base = (budget without flight) / trip dates, in agorot: 32 dates -> 46,875
+not ok 3 - S9-2: daily base = (budget without flight) / trip dates, in agorot: 32 dates -> 46,875
+  ---
+  duration_ms: 0.341712
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage9-data.test.js:44:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + undefined
+    - 46875
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 46875
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage9-data.test.js:46:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: S9-2: counts: dates, nights, lodging nights (first night on the plane)
+not ok 4 - S9-2: counts: dates, nights, lodging nights (first night on the plane)
+  ---
+  duration_ms: 3.178955
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage9-data.test.js:52:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + {}
+    - {
+    -   dates: 32,
+    -   lodgingNights: 30,
+    -   nights: 31
+    - }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    dates: 32
+    nights: 31
+    lodgingNights: 30
+  actual:
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage9-data.test.js:54:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: S9-3: route for 2030-12-15..2031-01-15: plane night, Bangkok first, islands in the south, last 3 dates in Bangkok, no gaps or overlaps
+not ok 5 - S9-3: route for 2030-12-15..2031-01-15: plane night, Bangkok first, islands in the south, last 3 dates in Bangkok, no gaps or overlaps
+  ---
+  duration_ms: 0.509063
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage9-data.test.js:67:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    lodging = nights - 1 (first night on the plane)
+    
+    0 !== 30
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 30
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage9-data.test.js:71:12)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: S9-3: route for 2030-12-20..2031-01-03: plane night, Bangkok first, islands in the south, last 3 dates in Bangkok, no gaps or overlaps
+not ok 6 - S9-3: route for 2030-12-20..2031-01-03: plane night, Bangkok first, islands in the south, last 3 dates in Bangkok, no gaps or overlaps
+  ---
+  duration_ms: 0.188694
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage9-data.test.js:67:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    lodging = nights - 1 (first night on the plane)
+    
+    0 !== 13
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 13
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage9-data.test.js:71:12)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: S9-3: route for 2030-12-26..2031-01-20: plane night, Bangkok first, islands in the south, last 3 dates in Bangkok, no gaps or overlaps
+not ok 7 - S9-3: route for 2030-12-26..2031-01-20: plane night, Bangkok first, islands in the south, last 3 dates in Bangkok, no gaps or overlaps
+  ---
+  duration_ms: 0.168819
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage9-data.test.js:67:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    lodging = nights - 1 (first night on the plane)
+    
+    0 !== 24
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 24
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage9-data.test.js:71:12)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: S9-3: route for 2030-12-05..2031-01-12: plane night, Bangkok first, islands in the south, last 3 dates in Bangkok, no gaps or overlaps
+not ok 8 - S9-3: route for 2030-12-05..2031-01-12: plane night, Bangkok first, islands in the south, last 3 dates in Bangkok, no gaps or overlaps
+  ---
+  duration_ms: 0.10907
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage9-data.test.js:67:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    lodging = nights - 1 (first night on the plane)
+    
+    0 !== 37
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 37
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage9-data.test.js:71:12)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: S9-3: route for 2030-03-01..2030-04-01: plane night, Bangkok first, islands in the south, last 3 dates in Bangkok, no gaps or overlaps
+not ok 9 - S9-3: route for 2030-03-01..2030-04-01: plane night, Bangkok first, islands in the south, last 3 dates in Bangkok, no gaps or overlaps
+  ---
+  duration_ms: 0.332341
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage9-data.test.js:67:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    lodging = nights - 1 (first night on the plane)
+    
+    0 !== 30
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 30
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage9-data.test.js:71:12)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: S9-3: route for 2030-02-01..2030-02-15: plane night, Bangkok first, islands in the south, last 3 dates in Bangkok, no gaps or overlaps
+not ok 10 - S9-3: route for 2030-02-01..2030-02-15: plane night, Bangkok first, islands in the south, last 3 dates in Bangkok, no gaps or overlaps
+  ---
+  duration_ms: 0.492683
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage9-data.test.js:67:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    lodging = nights - 1 (first night on the plane)
+    
+    0 !== 13
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 13
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage9-data.test.js:71:12)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: S9-3: 31.12 on a Bangkok or plane night is a clear warning, never a silent move
+not ok 11 - S9-3: 31.12 on a Bangkok or plane night is a clear warning, never a silent move
+  ---
+  duration_ms: 6.897566
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage9-data.test.js:97:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The expression evaluated to a falsy value:
+    
+      assert.ok(plane.warnings.includes('newYear.notOnIsland'))
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage9-data.test.js:99:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: S9-3: too short for the plan gives a warning and no invented stops; short trips drop Koh Tao first
+not ok 12 - S9-3: too short for the plan gives a warning and no invented stops; short trips drop Koh Tao first
+  ---
+  duration_ms: 0.405667
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage9-data.test.js:104:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The expression evaluated to a falsy value:
+    
+      assert.ok(tiny.warnings.includes('route.tooShort'))
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage9-data.test.js:107:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: S9-4: the old route and the three old templates are in the archive, marked stale, and not active
+not ok 13 - S9-4: the old route and the three old templates are in the archive, marked stale, and not active
+  ---
+  duration_ms: 0.203986
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage9-data.test.js:115:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of undefined (reading 'length')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage9-data.test.js:116:40)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: v6: real v5 data migrates with nothing lost; archive and category fields are added
+not ok 14 - v6: real v5 data migrates with nothing lost; archive and category fields are added
+  ---
+  duration_ms: 1.187758
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage9-data.test.js:125:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    5 !== 6
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 6
+  actual: 5
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage9-data.test.js:128:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: v6: before migrating, the storage keeps a one-time copy of the old data under its own key
+not ok 15 - v6: before migrating, the storage keeps a one-time copy of the old data under its own key
+  ---
+  duration_ms: 0.997538
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage9-data.test.js:142:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    'ok' !== 'migrated'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'migrated'
+  actual: 'ok'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage9-data.test.js:148:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: S9-5: applying keeps every expense, transfer, check-in and photo; the old budget and route go to the archive
+not ok 16 - S9-5: applying keeps every expense, transfer, check-in and photo; the old budget and route go to the archive
+  ---
+  duration_ms: 1.305487
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage9-data.test.js:157:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    null !== true
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: ~
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage9-data.test.js:161:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: S9-5: declining changes nothing but the one-time flag; a new empty trip gets no card
+not ok 17 - S9-5: declining changes nothing but the one-time flag; a new empty trip gets no card
+  ---
+  duration_ms: 0.797537
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage9-data.test.js:175:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    null !== false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: ~
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage9-data.test.js:181:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: S9-5: with no trip dates the template applies to the budget only; the stops stay
+not ok 18 - S9-5: with no trip dates the template applies to the budget only; the stops stay
+  ---
+  duration_ms: 0.288438
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage9-data.test.js:185:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of undefined (reading 'routes')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage9-data.test.js:191:33)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: S9-6: moving money between categories keeps the total; bad moves change nothing
+not ok 19 - S9-6: moving money between categories keeps the total; bad moves change nothing
+  ---
+  duration_ms: 0.13744
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage9-data.test.js:195:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of undefined (reading 'misc')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage9-data.test.js:198:38)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: S9-6: renaming a category keeps its id, so expenses stay in it; empty name goes back to the default
+not ok 20 - S9-6: renaming a category keeps its id, so expenses stay in it; empty name goes back to the default
+  ---
+  duration_ms: 0.214846
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage9-data.test.js:207:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of undefined (reading 'food')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage9-data.test.js:210:32)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: S9-6: "green" is hidden only while it is empty; with an expense in it, it shows
+not ok 21 - S9-6: "green" is hidden only while it is empty; with an expense in it, it shows
+  ---
+  duration_ms: 0.821398
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage9-data.test.js:216:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The expression evaluated to a falsy value:
+    
+      assert.ok(visibleCategories(b, [{ category: 'green', baseMinor: 4000 }], ids).includes('green'))
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage9-data.test.js:220:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: S9-6: an expense linked to a stop that moved to the archive still shows its stop name
+not ok 22 - S9-6: an expense linked to a stop that moved to the archive still shows its stop name
+  ---
+  duration_ms: 0.602363
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage9-data.test.js:224:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + undefined
+    - {
+    -   archived: true,
+    -   name: "צ'יאנג מאי"
+    - }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    name: "צ'יאנג מאי"
+    archived: true
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage9-data.test.js:230:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..22
+# tests 22
+# suites 0
+# pass 0
+# fail 22
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 115.743431

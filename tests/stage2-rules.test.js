@@ -6,31 +6,32 @@ import { join } from 'node:path';
 import { ROOT, readText, readJson, listFiles, stripShareImage } from './helpers.js';
 import { TH } from '../data/packs/th.js';
 import { daysBetween, isIsoDate } from '../src/js/core/trip.js';
+// Stage 9 (owner, 2026-11-21): the old route, dates and profiles moved to TH.archive (kept, not the default).
 
 test('B8: country pack matches the work plan (11 stops, 29 nights, 30 days, totals, rates)', () => {
   assert.equal(TH.countryCode, 'TH');
   assert.equal(TH.timeZone, 'Asia/Bangkok');
   assert.equal(TH.timeZone, readJson('data/countries/th.json').timeZone, 'one time zone for the country');
-  assert.equal(TH.defaultDates.start, '2026-12-05');
-  assert.equal(TH.defaultDates.end, '2027-01-03');
-  assert.equal(daysBetween(TH.defaultDates.start, TH.defaultDates.end) + 1, 30, '30 days');
+  assert.equal(TH.archive.defaultDates.start, '2026-12-05');
+  assert.equal(TH.archive.defaultDates.end, '2027-01-03');
+  assert.equal(daysBetween(TH.archive.defaultDates.start, TH.archive.defaultDates.end) + 1, 30, '30 days');
 
-  assert.equal(TH.destinations.length, 11);
+  assert.equal(TH.archive.destinations.length, 11);
   let nights = 0;
-  let cursor = TH.defaultDates.start;
-  for (const d of TH.destinations) {
+  let cursor = TH.archive.defaultDates.start;
+  for (const d of TH.archive.destinations) {
     assert.ok(isIsoDate(d.startDate) && isIsoDate(d.endDate), d.id);
     assert.equal(d.startDate, cursor, `${d.id} starts where the previous stop ended`);
     assert.equal(d.nights, daysBetween(d.startDate, d.endDate), `${d.id} nights match its dates`);
     nights += d.nights;
     cursor = d.endDate;
   }
-  assert.equal(cursor, TH.defaultDates.end);
+  assert.equal(cursor, TH.archive.defaultDates.end);
   assert.equal(nights, 29);
-  assert.deepEqual(TH.destinations.filter((d) => d.flexible).map((d) => d.id), ['koh-tao']);
+  assert.deepEqual(TH.archive.destinations.filter((d) => d.flexible).map((d) => d.id), ['koh-tao']);
 
   assert.equal(TH.budgetCategories.length, 8);
-  assert.deepEqual(TH.budgetProfiles.map((p) => [p.id, p.total, p.currency]), [
+  assert.deepEqual(TH.archive.budgetProfiles.map((p) => [p.id, p.total, p.currency]), [
     ['saver', 9800, 'ILS'], ['realistic', 15270, 'ILS'], ['comfort', 21400, 'ILS'],
   ]);
   const r = TH.planningRates;
@@ -42,11 +43,11 @@ test('B8: country pack matches the work plan (11 stops, 29 nights, 30 days, tota
 });
 
 test('B8a: category amounts add up to each profile total, and are marked as unverified planning numbers', () => {
-  assert.equal(TH.budgetProfilesVerified, false);
-  for (const p of TH.budgetProfiles) {
+  assert.equal(TH.archive.budgetProfilesVerified, false);
+  for (const p of TH.archive.budgetProfiles) {
     assert.deepEqual(Object.keys(p.categories).sort(), TH.budgetCategories.map((c) => c.id).sort(), p.id);
   }
-  for (const p of TH.budgetProfiles) {
+  for (const p of TH.archive.budgetProfiles) {
     const sum = TH.budgetCategories.reduce((s, c) => s + p.categories[c.id], 0);
     assert.equal(sum, p.total, p.id);
   }
