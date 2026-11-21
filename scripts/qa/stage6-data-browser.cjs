@@ -87,7 +87,11 @@ const textOf = (page, sel) => page.locator(sel).innerText();
       const { ctx, page } = await openWith(browser, view, before);
       const s = await stored(page);
       const t = s.trips['trip-1'];
-      const kept = Object.fromEntries(OLD_FIELDS.map((k) => [k, same(t[k], before.trips['trip-1'][k])]));
+      // Stage 9 (schema 6) adds two empty fields to the budget; everything else must be exactly as before,
+      // and the two new ones must be exactly empty (nothing invented).
+      const preV6 = (b) => { const { categoryNames, hidden, ...rest } = b ?? {}; return rest; };
+      const v6Empty = (b) => !b || (!('categoryNames' in b) && !('hidden' in b)) || (same(b.categoryNames, {}) && same(b.hidden, []));
+      const kept = Object.fromEntries(OLD_FIELDS.map((k) => [k, k === 'budget' ? same(preV6(t[k]), before.trips['trip-1'][k]) && v6Empty(t[k]) : same(t[k], before.trips['trip-1'][k])]));
       const added = same(t.journal, {}) && same(t.checkins, []) && same(t.luggage, { bags: [] });
       if (SHOTS) await page.screenshot({ path: `${OUT}/after-home-migrated-${view}.png`, fullPage: true });
       await page.goto(`${BASE}#/itinerary`); await ready(page);

@@ -1,0 +1,201 @@
+{
+ "hscroll": [],
+ "notRtl": [],
+ "smallTargets": [],
+ "unnamed": [],
+ "ltrWrong": [],
+ "minTextUnder14": [],
+ "bodyTextUnder16": [],
+ "lowContrast": [
+  [
+   "itinerary 360 dark",
+   [
+    {
+     "text": "טיסות ומעברים",
+     "ratio": 4.5,
+     "need": 4.5
+    },
+    {
+     "text": "לוח שנה",
+     "ratio": 4.5,
+     "need": 4.5
+    },
+    {
+     "text": "תמונות",
+     "ratio": 4.5,
+     "need": 4.5
+    },
+    {
+     "text": "סיכום הטיול",
+     "ratio": 4.5,
+     "need": 4.5
+    }
+   ]
+  ],
+  [
+   "money 360 dark",
+   [
+    {
+     "text": "ייצוא הוצאות ל-CSV",
+     "ratio": 4.5,
+     "need": 4.5
+    }
+   ]
+  ],
+  [
+   "checklist 360 dark",
+   [
+    {
+     "text": "משקל מזוודה",
+     "ratio": 4.5,
+     "need": 4.5
+    }
+   ]
+  ],
+  [
+   "itinerary 390 dark",
+   [
+    {
+     "text": "טיסות ומעברים",
+     "ratio": 4.5,
+     "need": 4.5
+    },
+    {
+     "text": "לוח שנה",
+     "ratio": 4.5,
+     "need": 4.5
+    },
+    {
+     "text": "תמונות",
+     "ratio": 4.5,
+     "need": 4.5
+    },
+    {
+     "text": "סיכום הטיול",
+     "ratio": 4.5,
+     "need": 4.5
+    }
+   ]
+  ],
+  [
+   "money 390 dark",
+   [
+    {
+     "text": "ייצוא הוצאות ל-CSV",
+     "ratio": 4.5,
+     "need": 4.5
+    }
+   ]
+  ],
+  [
+   "checklist 390 dark",
+   [
+    {
+     "text": "משקל מזוודה",
+     "ratio": 4.5,
+     "need": 4.5
+    }
+   ]
+  ],
+  [
+   "itinerary 768 dark",
+   [
+    {
+     "text": "טיסות ומעברים",
+     "ratio": 4.5,
+     "need": 4.5
+    },
+    {
+     "text": "לוח שנה",
+     "ratio": 4.5,
+     "need": 4.5
+    },
+    {
+     "text": "תמונות",
+     "ratio": 4.5,
+     "need": 4.5
+    },
+    {
+     "text": "סיכום הטיול",
+     "ratio": 4.5,
+     "need": 4.5
+    }
+   ]
+  ],
+  [
+   "money 768 dark",
+   [
+    {
+     "text": "ייצוא הוצאות ל-CSV",
+     "ratio": 4.5,
+     "need": 4.5
+    }
+   ]
+  ],
+  [
+   "checklist 768 dark",
+   [
+    {
+     "text": "משקל מזוודה",
+     "ratio": 4.5,
+     "need": 4.5
+    }
+   ]
+  ],
+  [
+   "itinerary 1280 dark",
+   [
+    {
+     "text": "טיסות ומעברים",
+     "ratio": 4.5,
+     "need": 4.5
+    },
+    {
+     "text": "לוח שנה",
+     "ratio": 4.5,
+     "need": 4.5
+    },
+    {
+     "text": "תמונות",
+     "ratio": 4.5,
+     "need": 4.5
+    },
+    {
+     "text": "סיכום הטיול",
+     "ratio": 4.5,
+     "need": 4.5
+    }
+   ]
+  ],
+  [
+   "money 1280 dark",
+   [
+    {
+     "text": "ייצוא הוצאות ל-CSV",
+     "ratio": 4.5,
+     "need": 4.5
+    }
+   ]
+  ],
+  [
+   "checklist 1280 dark",
+   [
+    {
+     "text": "משקל מזוודה",
+     "ratio": 4.5,
+     "need": 4.5
+    }
+   ]
+  ]
+ ],
+ "contrastEstimated": 524,
+ "checkedTexts": 5060,
+ "dialogsLoseFocus": [],
+ "dialogsNoRing": [],
+ "dialogsFocusNotReturned": [],
+ "keyboardNoRing": [],
+ "errors": [],
+ "external": [],
+ "screensChecked": 80,
+ "dialogsChecked": 28
+}

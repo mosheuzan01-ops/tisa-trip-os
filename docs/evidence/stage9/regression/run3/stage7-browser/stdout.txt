@@ -1,0 +1,20 @@
+PASS  B7-0 photos screen opens
+PASS  S7-4 auto place by EXIF date
+PASS  S7-2 10 MB compressed under 600 KB
+PASS  S7-4 outside the route is shown as not assigned
+PASS  S7-3 no image data in localStorage
+PASS  S7-1 survives a reload
+PASS  B7-1 calendar day shows its photos
+PASS  B7-2 edit date, caption and star
+PASS  S7-6 summary equals the money screen in every category
+PASS  B7-3 summary shows days and places
+PASS  B7-4 slideshow shows the starred photo
+PASS  S7-8 photo backup round trip
+PASS  S7-5 delete asks, then removes from IndexedDB too
+PASS  S7-11 390px: no horizontal scroll on the new screens
+PASS  S7-11 390px: tap targets 44px, text 14px
+PASS  B7-5 storage warning near the limit
+PASS  B7-6 desktop: no horizontal scroll
+PASS  S7-11 no JS errors
+PASS  no external requests
+ALL PASS
