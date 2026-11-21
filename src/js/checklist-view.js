@@ -5,7 +5,7 @@ import { interpolate } from './core/i18n.js';
 import { todayIn } from './core/trip.js';
 import {
   GROUPS, TASK_STATUSES, validateItem, makeItem, progress, needsCheck, validateVerify, seedChecklist, seedTasks,
-  validateTask, makeTask, taskState, openTasks, nextTask, cleanItems, cleanTasks, hideDone,
+  validateTask, makeTask, taskState, openTasks, nextTask, cleanItems, cleanTasks, hideDone, addFlightItems,
 } from './core/checklist.js';
 import { formatDate } from './core/itinerary.js';
 import { makeId } from './core/ids.js';
@@ -326,6 +326,14 @@ export function setupLists(ctx, { wireDialog, showFormErrors }) {
         if (cleanItems(trip.checklist).length) return; // never on top of the user's own list
         trip.checklist = [...trip.checklist, ...seedChecklist(ctx.pack, ctx.locale, () => makeId())];
       }, 'list.seeded'), true);
+    }
+    if (action === 'list-flight-items') { // Stage 9 PR 2: only items not on the list yet; nothing existing changes
+      const n = addFlightItems(s.items, ctx.pack, ctx.locale, () => 'preview').added;
+      if (!n) { ctx.toast('list.flight.none'); return; }
+      confirm(btn, 'list.flight', { n }, () => commit((st) => {
+        const trip = tripOf(st);
+        trip.checklist = addFlightItems(trip.checklist, ctx.pack, ctx.locale, () => makeId()).items;
+      }, 'list.flight.added'), true);
     }
     if (action === 'tasks-seed') {
       confirm(btn, 'task.seed', { n: ctx.pack?.taskSeed?.length ?? 0 }, () => commit((st) => {

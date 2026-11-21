@@ -7,7 +7,13 @@ import { parseMoney, makeExpense, editExpense } from './money.js';
 export const KINDS = ['flight', 'bus', 'train', 'boat', 'car', 'other'];
 /** Transfer status -> budget status of the linked expense. */
 export const TRANSFER_STATUSES = { planned: 'planned', booked: 'committed', paid: 'paid' };
-const MAX = { from: 60, to: 60, company: 60, booking: 40, note: 140, link: 300 };
+const MAX = { from: 60, to: 60, company: 60, booking: 40, note: 140, link: 300, seat: 8 };
+/** Stage 9 PR 2 (flights only): how the ticket was bought. A round trip is priced on the way out; the way back is
+ * "included" and has no price, so the budget holds one flight expense for the whole ticket. */
+export const TICKETS = ['oneway', 'roundtrip', 'included'];
+// Two letters or digits (the airline), then 1-4 digits and an optional letter. The shape only; nothing is looked up.
+const FLIGHT_NO = /^[A-Z0-9]{2} ?[0-9]{1,4}[A-Z]?$/;
+const normFlightNo = (v) => txt(v).toUpperCase().replace(/\s+/g, ' ');
 
 const txt = (v) => String(v ?? '').trim();
 
@@ -22,10 +28,17 @@ export function validateTransfer(input = {}, currencies = []) {
   else if (!isIsoDate(input.date)) errors.push('date.invalid');
   if (input.time && !/^([01]\d|2[0-3]):[0-5]\d$/.test(input.time)) errors.push('time.invalid');
   for (const k of ['company', 'booking', 'note']) if (txt(input[k]).length > MAX[k]) errors.push(`${k}.tooLong`);
-  if (txt(input.price) !== '') {
-    if (Number.isNaN(parseMoney(input.price))) errors.push('price.invalid');
-    else if (!currencies.includes(input.currency)) errors.push('currency.invalid');
-  }
+  const hasPrice = txt(input.price) !== '';
+  const hasSeatPrice = txt(input.seatPrice) !== '';
+  if (hasPrice && Number.isNaN(parseMoney(input.price))) errors.push('price.invalid');
+  if (hasSeatPrice && Number.isNaN(parseMoney(input.seatPrice))) errors.push('seatPrice.invalid');
+  if ((hasPrice || hasSeatPrice) && !errors.some((e) => e.startsWith('price.') || e.startsWith('seatPrice.')) && !currencies.includes(input.currency)) errors.push('currency.invalid');
+  const flightNo = normFlightNo(input.flightNo);
+  if (flightNo && !FLIGHT_NO.test(flightNo)) errors.push('flightNo.invalid');
+  if (txt(input.seat).length > MAX.seat) errors.push('seat.tooLong');
+  const ticket = input.ticket ?? 'oneway';
+  if (!TICKETS.includes(ticket)) errors.push('ticket.invalid');
+  else if (ticket === 'included' && hasPrice) errors.push('price.included');
   const link = txt(input.link);
   if (link && (!/^https?:\/\/\S+$/i.test(link) || link.length > MAX.link)) errors.push('link.invalid');
   if (!Object.hasOwn(TRANSFER_STATUSES, input.status)) errors.push('status.invalid');
@@ -33,6 +46,9 @@ export function validateTransfer(input = {}, currencies = []) {
 }
 
 export function makeTransfer(input, makeId, existing = null) {
+  const flight = input.kind === 'flight';
+  const ticket = flight && TICKETS.includes(input.ticket) ? input.ticket : 'oneway';
+  const seatPrice = txt(input.seatPrice);
   return {
     ...(existing ?? {}),
     id: existing?.id ?? makeId(),
@@ -43,12 +59,17 @@ export function makeTransfer(input, makeId, existing = null) {
     time: input.time || '',
     company: txt(input.company),
     booking: txt(input.booking),
-    priceMinor: txt(input.price) === '' ? null : parseMoney(input.price),
+    priceMinor: txt(input.price) === '' || ticket === 'included' ? null : parseMoney(input.price),
     currency: input.currency,
     link: txt(input.link),
     status: input.status,
     note: txt(input.note),
     expenseId: existing?.expenseId ?? null,
+    // Stage 9 PR 2: flight details. The seat price is kept here only and never becomes a budget expense.
+    flightNo: flight ? normFlightNo(input.flightNo) : '',
+    seat: flight ? txt(input.seat).toUpperCase() : '',
+    seatPriceMinor: flight && seatPrice !== '' ? parseMoney(seatPrice) : null,
+    ticket,
   };
 }
 
@@ -62,7 +83,7 @@ export function expenseFor(t, rates, makeId, existing) {
     date: t.date,
     status: TRANSFER_STATUSES[t.status],
     method: existing?.method ?? 'card',
-    description: `${t.from} – ${t.to}`,
+    description: t.ticket === 'roundtrip' ? `${t.from} ⇄ ${t.to}` : `${t.from} – ${t.to}`,
     note: existing?.note ?? '',
     destinationId: existing?.destinationId ?? '',
   };
@@ -105,3 +126,10 @@ export const sortTransfers = (list = []) => [...list].sort((a, b) => (key(a) < k
 
 /** Transfers on any day of a stop, arrival and departure days included. */
 export const transfersForStop = (list = [], stop) => sortTransfers(list.filter((t) => t.date >= stop.startDate && t.date <= stop.endDate));
+
+/** Stage 9 PR 2: the duplicate key of a flight, number + date, ignoring case and spaces. null when it has no number. */
+export function flightKey(t) {
+  if (t?.kind !== 'flight') return null;
+  const no = txt(t.flightNo).replace(/\s+/g, '').toUpperCase();
+  return no && t.date ? `${no}|${t.date}` : null;
+}

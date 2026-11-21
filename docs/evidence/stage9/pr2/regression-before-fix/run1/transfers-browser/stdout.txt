@@ -1,0 +1,16 @@
+PASS  TB-1 add (mobile)
+PASS  TB-5 honest fields (mobile)
+PASS  TB-2 budget (mobile)
+PASS  TB-3 itinerary (mobile)
+PASS  TB-4 delete (mobile)
+PASS  TB-6 backup (mobile)
+FAIL  TB-7 layout (mobile)
+PASS  TB-1 add (desktop)
+PASS  TB-5 honest fields (desktop)
+PASS  TB-2 budget (desktop)
+PASS  TB-3 itinerary (desktop)
+PASS  TB-4 delete (desktop)
+PASS  TB-6 backup (desktop)
+FAIL  TB-7 layout (desktop)
+PASS  TB-8 offline
+PASS  no JS errors

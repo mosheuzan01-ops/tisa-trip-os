@@ -1,0 +1,2018 @@
+TAP version 13
+# Subtest: F-1: flight fields are validated: flight number shape, seat length, seat price, ticket kind
+not ok 1 - F-1: flight fields are validated: flight number shape, seat length, seat price, ticket kind
+  ---
+  duration_ms: 2.445345
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage9-flights.test.js:25:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + []
+    - [
+    -   'flightNo.invalid'
+    - ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 'flightNo.invalid'
+  actual:
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage9-flights.test.js:27:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.start (node:internal/test_runner/test:944:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+  ...
+# Subtest: F-2: makeTransfer keeps the flight details; a non-flight carries none of them
+not ok 2 - F-2: makeTransfer keeps the flight details; a non-flight carries none of them
+  ---
+  duration_ms: 1.489914
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage9-flights.test.js:36:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      [
+    +   undefined,
+    +   undefined,
+    +   undefined,
+    +   undefined
+    -   'ZZ 101',
+    -   '1A',
+    -   9000,
+    -   'roundtrip'
+      ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 'ZZ 101'
+    1: '1A'
+    2: 9000
+    3: 'roundtrip'
+  actual:
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage9-flights.test.js:38:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: F-3: a round-trip ticket is ONE expense in the flight category; the return leg adds nothing
+not ok 3 - F-3: a round-trip ticket is ONE expense in the flight category; the return leg adds nothing
+  ---
+  duration_ms: 1.065993
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage9-flights.test.js:46:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + undefined
+    - 300000
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 300000
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage9-flights.test.js:55:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F-4: seat payments stay in the flight details and never become a budget expense
+not ok 4 - F-4: seat payments stay in the flight details and never become a budget expense
+  ---
+  duration_ms: 0.167982
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage9-flights.test.js:58:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + undefined
+    - 9000
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 9000
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage9-flights.test.js:64:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: F-5: the duplicate key is flight number + date, ignoring case and spaces
+not ok 5 - F-5: the duplicate key is flight number + date, ignoring case and spaces
+  ---
+  duration_ms: 0.213598
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage9-flights.test.js:69:1'
+  failureType: 'testCodeFailure'
+  error: 'Expected "actual" to be strictly unequal to: null'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: ~
+  actual: ~
+  operator: 'notStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage9-flights.test.js:71:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: I-1: the file must be latisa-flights version 1 with a flights list
+not ok 6 - I-1: the file must be latisa-flights version 1 with a flights list
+  ---
+  duration_ms: 0.366384
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage9-flights.test.js:77:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      {
+    +   error: 'todo',
+    -   error: 'empty',
+        ok: false
+      }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    ok: false
+    error: 'empty'
+  actual:
+    ok: false
+    error: 'todo'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage9-flights.test.js:79:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: I-2: new flights are added; a priced round trip makes one flight expense; seats stay out
+not ok 7 - I-2: new flights are added; a priced round trip makes one flight expense; seats stay out
+  ---
+  duration_ms: 0.17898
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage9-flights.test.js:91:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    0 !== 2
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 2
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage9-flights.test.js:94:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: I-3: a duplicate (same number and date) is skipped; the existing record and its expense are untouched
+not ok 8 - I-3: a duplicate (same number and date) is skipped; the existing record and its expense are untouched
+  ---
+  duration_ms: 0.302243
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage9-flights.test.js:104:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + []
+    - [
+    -   'zz101'
+    - ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 'zz101'
+  actual:
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage9-flights.test.js:109:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: I-4: importing the same file twice changes nothing the second time
+not ok 9 - I-4: importing the same file twice changes nothing the second time
+  ---
+  duration_ms: 0.321322
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage9-flights.test.js:114:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    0 !== 2
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 2
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage9-flights.test.js:118:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: I-5: a flight listed twice in one file is added once
+not ok 10 - I-5: a flight listed twice in one file is added once
+  ---
+  duration_ms: 0.283964
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage9-flights.test.js:122:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    0 !== 1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage9-flights.test.js:124:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: I-6: bad entries are skipped with a reason; good ones still come in; every other field of the trip stays
+not ok 11 - I-6: bad entries are skipped with a reason; good ones still come in; every other field of the trip stays
+  ---
+  duration_ms: 0.337482
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage9-flights.test.js:129:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    0 !== 1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage9-flights.test.js:135:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: I-7: a hand-entered flight with the same number and date also counts as a duplicate
+not ok 12 - I-7: a hand-entered flight with the same number and date also counts as a duplicate
+  ---
+  duration_ms: 0.18158
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage9-flights.test.js:145:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    only the new number comes in
+    
+    0 !== 1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage9-flights.test.js:148:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: I-8: flight details survive a backup and restore
+not ok 13 - I-8: flight details survive a backup and restore
+  ---
+  duration_ms: 0.496714
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage9-flights.test.js:154:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    0 !== 2
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 2
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage9-flights.test.js:158:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: C-1: new groups: offline downloads (prep), flight food and flight comfort (pack); old groups stay
+not ok 14 - C-1: new groups: offline downloads (prep), flight food and flight comfort (pack); old groups stay
+  ---
+  duration_ms: 0.193785
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage9-flights.test.js:167:1'
+  failureType: 'testCodeFailure'
+  error: 'offline'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage9-flights.test.js:168:135)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: C-2: the flight items cover the three new groups, in Hebrew and English, with no numbers or dates
+not ok 15 - C-2: the flight items cover the three new groups, in Hebrew and English, with no numbers or dates
+  ---
+  duration_ms: 3.241511
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage9-flights.test.js:175:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The expression evaluated to a falsy value:
+    
+      assert.ok(Array.isArray(seed) && seed.length >= 9)
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage9-flights.test.js:177:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: C-3: adding flight items twice adds them once; own items, ticks and notes stay
+not ok 16 - C-3: adding flight items twice adds them once; own items, ticks and notes stay
+  ---
+  duration_ms: 0.129297
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage9-flights.test.js:187:1'
+  failureType: 'testCodeFailure'
+  error: 'the pack has flight items'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage9-flights.test.js:188:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: C-4: an item the user already has under the same name (any case or spacing) is not added again
+not ok 17 - C-4: an item the user already has under the same name (any case or spacing) is not added again
+  ---
+  duration_ms: 0.125193
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage9-flights.test.js:200:1'
+  failureType: 'testCodeFailure'
+  error: 'the pack has flight items'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage9-flights.test.js:201:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: R-1: the new core file is cached for offline use, and the version moved past 0.8.0 everywhere
+not ok 18 - R-1: the new core file is cached for offline use, and the version moved past 0.8.0 everywhere
+  ---
+  duration_ms: 1.407239
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage9-flights.test.js:210:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The expression evaluated to a falsy value:
+    
+      assert.ok(readText('sw.js').includes("'./src/js/core/flights.js'"))
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage9-flights.test.js:211:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: R-2: the flights screen has a working import entry and the lists screen a flight-items button
+not ok 19 - R-2: the flights screen has a working import entry and the lists screen a flight-items button
+  ---
+  duration_ms: 1.177099
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage9-flights.test.js:218:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /data-action="flights-import"/. Input:
+    
+    '<!doctype html>\n' +
+      '<html lang="he" dir="rtl" data-theme="light">\n' +
+      '<head>\n' +
+      '  <meta charset="utf-8">\n' +
+      '  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n' +
+      '  <meta name="color-scheme" content="light dark">\n' +
+      '  <meta name="referrer" content="no-referrer">\n' +
+      '  <title>TISA, תכנון הטיול במקום אחד</title>\n' +
+      '  <meta name="description" content="מסלול, תקציב, רשימות ומסמכים של הטיול במקום אחד. עובד גם בלי אינטרנט, והנתונים נשמרים רק במכשיר שלכם. גרסה ניסיונית.">\n' +
+      '  <meta property="og:type" content="website">\n' +
+      '  <meta property="og:locale" content="he_IL">\n' +
+      '  <meta property="og:title" content="TISA, תכנון הטיול במקום אחד">\n' +
+      '  <meta property="og:description" content="מסלול, תקציב, רשימות ומסמכים של הטיול במקום אחד. עובד גם בלי אינטרנט, והנתונים נשמרים רק במכשיר שלכם. גרסה ניסיונית.">\n' +
+      '  <meta property="og:image" content="https://mosheuzan01-ops.github.io/tisa-trip-os/icons/icon-512.png">\n' +
+      '  <link rel="manifest" href="./manifest.webmanifest">\n' +
+      '  <link rel="icon" href="./icons/icon-192.png" type="image/png">\n' +
+      '  <link rel="apple-touch-icon" href="./icons/apple-touch-icon-180.png">\n' +
+      '  <meta name="apple-mobile-web-app-capable" content="yes">\n' +
+      '  <script src="./src/js/theme-boot.js"></script>\n' +
+      '  <link rel="preload" href="./assets/fonts/Heebo-VF.ttf" as="font" type="font/ttf" crossorigin>\n' +
+      '  <link rel="stylesheet" href="./src/css/fonts.css">\n' +
+      '  <link rel="stylesheet" href="./src/css/tokens.css">\n' +
+      '  <link rel="stylesheet" href="./src/css/main.css">\n' +
+      '  <script type="module" src="./src/js/app.js"></script>\n' +
+      '</head>\n' +
+      '<body>\n' +
+      '  <a class="skip" href="#main" data-i18n="a11y.skip">דלגו לתוכן</a>\n' +
+      '\n' +
+      '  <div class="app">\n' +
+      '    <header class="topbar">\n' +
+      '      <a class="brand" href="#/home" data-i18n-label="a11y.brand" aria-label="TISA, מסך הבית">\n' +
+      '        <svg class="icon brand-mark" aria-hidden="true"><use href="./assets/icons.svg#i-mark"/></svg>\n' +
+      '        <span class="brand-word ltr">TISA</span>\n' +
+      '      </a>\n' +
+      '      <div class="topbar-actions">\n' +
+      '      <a class="icon-btn settings-btn" href="#/settings" data-route="settings" data-i18n-label="settings.open" aria-label="הגדרות">\n' +
+      '        <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-gear"/></svg>\n' +
+      '      </a>\n' +
+      '      <button class="icon-btn theme-btn" type="button" aria-pressed="false" data-i18n-label="theme.toggle" aria-label="מצב כהה">\n' +
+      '        <svg class="icon only-light" aria-hidden="true"><use href="./assets/icons.svg#i-moon"/></svg>\n' +
+      '        <svg class="icon only-dark" aria-hidden="true"><use href="./assets/icons.svg#i-sun"/></svg>\n' +
+      '      </button>\n' +
+      '      </div>\n' +
+      '    </header>\n' +
+      '\n' +
+      '    <main id="main" tabindex="-1">\n' +
+      '      <div class="banners" data-slot="banners" hidden></div>\n' +
+      '      <!-- HOME -->\n' +
+      '      <section class="panel home" data-setup="open" id="panel-home" role="tabpanel" aria-labelledby="tab-home">\n' +
+      '        <div class="home-grid">\n' +
+      '          <div class="col">\n' +
+      '            <div class="hero">\n' +
+      '              <p class="eyebrow" data-i18n="home.eyebrow">הטיול הבא שלכם</p>\n' +
+      '              <h1 class="display" data-slot="country"></h1>\n' +
+      '            </div>\n' +
+      '\n' +
+      '            <button class="pass" type="button" aria-pressed="false" data-i18n-label="pass.flipLabel" data-label-back="pass.flipLabelBack" aria-label="כרטיס הטיול. הקישו כדי לראות את התקציב">\n' +
+      '              <span class="pass-inner">\n' +
+      '                <!-- Front: platinum-gold trip pass with an aircraft window -->\n' +
+      '                <span class="face front metal">\n' +
+      '                  <span class="porthole" aria-hidden="true">\n' +
+      '                    <span class="porthole-reveal">\n' +
+      '                      <span class="porthole-pane">\n' +
+      '                        <svg class="scene" viewBox="70 38 112 168" preserveAspectRatio="xMidYMid slice" focusable="false">\n' +
+      '                          <defs>\n' +
+      '                            <linearGradient id="g-sky" x1="0" x2="0" y1="0" y2="1"><stop class="st-sky1" offset="0"/><stop class="st-sky2" offset=".45"/><stop class="st-sky3" offset=".8"/><stop class="st-sky4" offset="1"/></linearGradient>\n' +
+      '                            <linearGradient id="g-sea" x1="0" x2="0" y1="0" y2="1"><stop class="st-sea1" offset="0"/><stop class="st-sea2" offset=".35"/><stop class="st-sea3" offset="1"/></linearGradient>\n' +
+      '                            <radialGradient id="g-sun"><stop class="st-sun-core" offset="0"/><stop class="st-sun-glow" offset=".35"/><stop class="st-sun-fade" offset="1"/></radialGradient>\n' +
+      '                            <linearGradient id="g-rock" x1="0" x2="1"><stop class="st-rock1" offset="0"/><stop class="st-rock2" offset=".75"/><stop class="st-rock3" offset="1"/></linearGradient>\n' +
+      '                            <linearGradient id="g-rim" x1="0" x2="0" y1="0" y2="1"><stop class="st-rim" offset="0"/><stop class="st-rim-fade" offset="1"/></linearGradient>\n' +
+      '                          </defs>\n' +
+      '                          <rect width="350" height="132" fill="url(#g-sky)"/>\n' +
+      '                          <circle cx="160" cy="130" r="70" fill="url(#g-sun)" opacity=".75"/>\n' +
+      '                          <circle class="f-sun" cx="160" cy="131" r="13"/>\n' +
+      '                          <path class="f-islands" d="M214 132c2-10 5-14 8-14s4 4 6 6c2-6 5-9 8-9 4 0 5 8 6 17zM262 132c1-6 3-9 5-9s3 3 4 9z"/>\n' +
+      '                          <rect y="131" width="350" height="75" fill="url(#g-sea)"/>\n' +
+      '                          <g class="f-glint">\n' +
+      '                            <rect x="146" y="135" width="28" height="1.6" rx=".8" opacity=".9"/><rect x="141" y="140" width="38" height="1.6" rx=".8" opacity=".75"/>\n' +
+      '                            <rect x="150" y="146" width="22" height="1.6" rx=".8" opacity=".7"/><rect x="136" y="152" width="46" height="1.6" rx=".8" opacity=".5"/>\n' +
+      '                            <rect x="148" y="159" width="28" height="1.6" rx=".8" opacity=".45"/><rect x="132" y="167" width="52" height="1.6" rx=".8" opacity=".3"/>\n' +
+      '                            <rect x="152" y="176" width="20" height="1.6" rx=".8" opacity=".3"/><rect x="128" y="186" width="58" height="1.6" rx=".8" opacity=".2"/>\n' +
+      '                          </g>\n' +
+      '                          <path d="M0 206V40c10-10 22-14 34-10 10 3 16 0 26 6 12 7 14 20 22 30 9 12 4 22 10 34 6 12 14 18 12 32-2 12-8 18-6 30 1 10 6 16 10 24z" fill="url(#g-rock)"/>\n' +
+      '                          <path d="M60 36c12 7 14 20 22 30 9 12 4 22 10 34 6 12 14 18 12 32" fill="none" stroke="url(#g-rim)" stroke-width="1.6" opacity=".85"/>\n' +
+      '                          <path class="s-foam" d="M96 192c8-2 14 1 22-1" fill="none" stroke-width="1.2" opacity=".35"/>\n' +
+      '                        </svg>\n' +
+      '                        <span class="porthole-shade"><span class="porthole-grip"></span></span>\n' +
+      '                        <span class="porthole-hole"></span>\n' +
+      '                      </span>\n' +
+      '                    </span>\n' +
+      '                  </span>\n' +
+      '                  <span class="pass-name">\n' +
+      '                    <span class="pass-latin ltr" data-slot="country-latin"></span>\n' +
+      '                    <span class="pass-dates ltr" data-slot="pass-dates" hidden></span>\n' +
+      '                  </span>\n' +
+      '                  <span class="chip-btn on-metal">\n' +
+      '                    <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-flip"/></svg>\n' +
+      '                    <span data-i18n="pass.hint">הקישו לתקציב</span>\n' +
+      '                  </span>\n' +
+      '                </span>\n' +
+      '\n' +
+      '                <!-- Back: budget (empty until the traveler sets it; nothing invented) -->\n' +
+      '                <span class="face back metal">\n' +
+      '                  <span class="back-title" data-i18n="budget.title">תקציב הטיול</span>\n' +
+      '                  <span class="back-empty" data-i18n="budget.empty" data-slot="budget-empty">עוד לא הוגדר</span>\n' +
+      '                  <span class="kpis">\n' +
+      '                    <span class="kpi"><span class="kpi-label" data-i18n="budget.total">תקציב</span><span class="kpi-value" data-slot="kpi-total">—</span></span>\n' +
+      '                    <span class="kpi"><span class="kpi-label" data-i18n="budget.spent">הוצא</span><span class="kpi-value" data-slot="kpi-spent">—</span></span>\n' +
+      '                    <span class="kpi"><span class="kpi-label" data-i18n="budget.left">נשאר</span><span class="kpi-value" data-slot="kpi-left">—</span></span>\n' +
+      '                  </span>\n' +
+      '                  <span class="chip-btn on-metal">\n' +
+      '                    <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-flip"/></svg>\n' +
+      '                    <span data-i18n="budget.back">הקישו למיקום</span>\n' +
+      '                  </span>\n' +
+      '                </span>\n' +
+      '              </span>\n' +
+      '            </button>\n' +
+      '\n' +
+      '            <section class="card today surface" aria-labelledby="today-title">\n' +
+      '              <div class="card-head">\n' +
+      '                <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-clock"/></svg>\n' +
+      '                <h2 id="today-title" data-i18n="today.title.unset" data-slot="today-title">מה מחכה לכם</h2>\n' +
+      '              </div>\n' +
+      '              <p class="today-status" data-slot="today-status" hidden></p>\n' +
+      '              <p class="today-stop" data-slot="today-stop" hidden></p>\n' +
+      '              <p class="today-money" data-slot="today-money" hidden></p>\n' +
+      '              <p class="today-time"><span class="clock ltr" data-slot="clock">--:--</span><span class="today-where" data-slot="clock-label"></span></p>\n' +
+      '              <p class="muted" data-i18n="today.empty" data-slot="today-sub">כשתקבעו תאריכים, כאן יופיע מה מחכה לכם היום.</p>\n' +
+      '            </section>\n' +
+      '\n' +
+      '            <section class="card surface home-lists" aria-labelledby="home-lists-title">\n' +
+      '              <button class="home-lists-link" type="button" data-go="checklist">\n' +
+      '                <span class="card-head">\n' +
+      '                  <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-list"/></svg>\n' +
+      '                  <span class="home-lists-title" id="home-lists-title" data-i18n="home.lists.title">משימות והכנות</span>\n' +
+      '                </span>\n' +
+      '                <span class="home-lists-open" data-slot="home-tasks-open"></span>\n' +
+      '                <span class="home-lists-next" data-slot="home-tasks-next"></span>\n' +
+      '                <span class="home-bars">\n' +
+      '                  <span class="home-bar"><span class="home-bar-label" '... 87512 more characters
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    <!doctype html>
+    <html lang="he" dir="rtl" data-theme="light">
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+      <meta name="color-scheme" content="light dark">
+      <meta name="referrer" content="no-referrer">
+      <title>TISA, תכנון הטיול במקום אחד</title>
+      <meta name="description" content="מסלול, תקציב, רשימות ומסמכים של הטיול במקום אחד. עובד גם בלי אינטרנט, והנתונים נשמרים רק במכשיר שלכם. גרסה ניסיונית.">
+      <meta property="og:type" content="website">
+      <meta property="og:locale" content="he_IL">
+      <meta property="og:title" content="TISA, תכנון הטיול במקום אחד">
+      <meta property="og:description" content="מסלול, תקציב, רשימות ומסמכים של הטיול במקום אחד. עובד גם בלי אינטרנט, והנתונים נשמרים רק במכשיר שלכם. גרסה ניסיונית.">
+      <meta property="og:image" content="https://mosheuzan01-ops.github.io/tisa-trip-os/icons/icon-512.png">
+      <link rel="manifest" href="./manifest.webmanifest">
+      <link rel="icon" href="./icons/icon-192.png" type="image/png">
+      <link rel="apple-touch-icon" href="./icons/apple-touch-icon-180.png">
+      <meta name="apple-mobile-web-app-capable" content="yes">
+      <script src="./src/js/theme-boot.js"></script>
+      <link rel="preload" href="./assets/fonts/Heebo-VF.ttf" as="font" type="font/ttf" crossorigin>
+      <link rel="stylesheet" href="./src/css/fonts.css">
+      <link rel="stylesheet" href="./src/css/tokens.css">
+      <link rel="stylesheet" href="./src/css/main.css">
+      <script type="module" src="./src/js/app.js"></script>
+    </head>
+    <body>
+      <a class="skip" href="#main" data-i18n="a11y.skip">דלגו לתוכן</a>
+    
+      <div class="app">
+        <header class="topbar">
+          <a class="brand" href="#/home" data-i18n-label="a11y.brand" aria-label="TISA, מסך הבית">
+            <svg class="icon brand-mark" aria-hidden="true"><use href="./assets/icons.svg#i-mark"/></svg>
+            <span class="brand-word ltr">TISA</span>
+          </a>
+          <div class="topbar-actions">
+          <a class="icon-btn settings-btn" href="#/settings" data-route="settings" data-i18n-label="settings.open" aria-label="הגדרות">
+            <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-gear"/></svg>
+          </a>
+          <button class="icon-btn theme-btn" type="button" aria-pressed="false" data-i18n-label="theme.toggle" aria-label="מצב כהה">
+            <svg class="icon only-light" aria-hidden="true"><use href="./assets/icons.svg#i-moon"/></svg>
+            <svg class="icon only-dark" aria-hidden="true"><use href="./assets/icons.svg#i-sun"/></svg>
+          </button>
+          </div>
+        </header>
+    
+        <main id="main" tabindex="-1">
+          <div class="banners" data-slot="banners" hidden></div>
+          <!-- HOME -->
+          <section class="panel home" data-setup="open" id="panel-home" role="tabpanel" aria-labelledby="tab-home">
+            <div class="home-grid">
+              <div class="col">
+                <div class="hero">
+                  <p class="eyebrow" data-i18n="home.eyebrow">הטיול הבא שלכם</p>
+                  <h1 class="display" data-slot="country"></h1>
+                </div>
+    
+                <button class="pass" type="button" aria-pressed="false" data-i18n-label="pass.flipLabel" data-label-back="pass.flipLabelBack" aria-label="כרטיס הטיול. הקישו כדי לראות את התקציב">
+                  <span class="pass-inner">
+                    <!-- Front: platinum-gold trip pass with an aircraft window -->
+                    <span class="face front metal">
+                      <span class="porthole" aria-hidden="true">
+                        <span class="porthole-reveal">
+                          <span class="porthole-pane">
+                            <svg class="scene" viewBox="70 38 112 168" preserveAspectRatio="xMidYMid slice" focusable="false">
+                              <defs>
+                                <linearGradient id="g-sky" x1="0" x2="0" y1="0" y2="1"><stop class="st-sky1" offset="0"/><stop class="st-sky2" offset=".45"/><stop class="st-sky3" offset=".8"/><stop class="st-sky4" offset="1"/></linearGradient>
+                                <linearGradient id="g-sea" x1="0" x2="0" y1="0" y2="1"><stop class="st-sea1" offset="0"/><stop class="st-sea2" offset=".35"/><stop class="st-sea3" offset="1"/></linearGradient>
+                                <radialGradient id="g-sun"><stop class="st-sun-core" offset="0"/><stop class="st-sun-glow" offset=".35"/><stop class="st-sun-fade" offset="1"/></radialGradient>
+                                <linearGradient id="g-rock" x1="0" x2="1"><stop class="st-rock1" offset="0"/><stop class="st-rock2" offset=".75"/><stop class="st-rock3" offset="1"/></linearGradient>
+                                <linearGradient id="g-rim" x1="0" x2="0" y1="0" y2="1"><stop class="st-rim" offset="0"/><stop class="st-rim-fade" offset="1"/></linearGradient>
+                              </defs>
+                              <rect width="350" height="132" fill="url(#g-sky)"/>
+                              <circle cx="160" cy="130" r="70" fill="url(#g-sun)" opacity=".75"/>
+                              <circle class="f-sun" cx="160" cy="131" r="13"/>
+                              <path class="f-islands" d="M214 132c2-10 5-14 8-14s4 4 6 6c2-6 5-9 8-9 4 0 5 8 6 17zM262 132c1-6 3-9 5-9s3 3 4 9z"/>
+                              <rect y="131" width="350" height="75" fill="url(#g-sea)"/>
+                              <g class="f-glint">
+                                <rect x="146" y="135" width="28" height="1.6" rx=".8" opacity=".9"/><rect x="141" y="140" width="38" height="1.6" rx=".8" opacity=".75"/>
+                                <rect x="150" y="146" width="22" height="1.6" rx=".8" opacity=".7"/><rect x="136" y="152" width="46" height="1.6" rx=".8" opacity=".5"/>
+                                <rect x="148" y="159" width="28" height="1.6" rx=".8" opacity=".45"/><rect x="132" y="167" width="52" height="1.6" rx=".8" opacity=".3"/>
+                                <rect x="152" y="176" width="20" height="1.6" rx=".8" opacity=".3"/><rect x="128" y="186" width="58" height="1.6" rx=".8" opacity=".2"/>
+                              </g>
+                              <path d="M0 206V40c10-10 22-14 34-10 10 3 16 0 26 6 12 7 14 20 22 30 9 12 4 22 10 34 6 12 14 18 12 32-2 12-8 18-6 30 1 10 6 16 10 24z" fill="url(#g-rock)"/>
+                              <path d="M60 36c12 7 14 20 22 30 9 12 4 22 10 34 6 12 14 18 12 32" fill="none" stroke="url(#g-rim)" stroke-width="1.6" opacity=".85"/>
+                              <path class="s-foam" d="M96 192c8-2 14 1 22-1" fill="none" stroke-width="1.2" opacity=".35"/>
+                            </svg>
+                            <span class="porthole-shade"><span class="porthole-grip"></span></span>
+                            <span class="porthole-hole"></span>
+                          </span>
+                        </span>
+                      </span>
+                      <span class="pass-name">
+                        <span class="pass-latin ltr" data-slot="country-latin"></span>
+                        <span class="pass-dates ltr" data-slot="pass-dates" hidden></span>
+                      </span>
+                      <span class="chip-btn on-metal">
+                        <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-flip"/></svg>
+                        <span data-i18n="pass.hint">הקישו לתקציב</span>
+                      </span>
+                    </span>
+    
+                    <!-- Back: budget (empty until the traveler sets it; nothing invented) -->
+                    <span class="face back metal">
+                      <span class="back-title" data-i18n="budget.title">תקציב הטיול</span>
+                      <span class="back-empty" data-i18n="budget.empty" data-slot="budget-empty">עוד לא הוגדר</span>
+                      <span class="kpis">
+                        <span class="kpi"><span class="kpi-label" data-i18n="budget.total">תקציב</span><span class="kpi-value" data-slot="kpi-total">—</span></span>
+                        <span class="kpi"><span class="kpi-label" data-i18n="budget.spent">הוצא</span><span class="kpi-value" data-slot="kpi-spent">—</span></span>
+                        <span class="kpi"><span class="kpi-label" data-i18n="budget.left">נשאר</span><span class="kpi-value" data-slot="kpi-left">—</span></span>
+                      </span>
+                      <span class="chip-btn on-metal">
+                        <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-flip"/></svg>
+                        <span data-i18n="budget.back">הקישו למיקום</span>
+                      </span>
+                    </span>
+                  </span>
+                </button>
+    
+                <section class="card today surface" aria-labelledby="today-title">
+                  <div class="card-head">
+                    <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-clock"/></svg>
+                    <h2 id="today-title" data-i18n="today.title.unset" data-slot="today-title">מה מחכה לכם</h2>
+                  </div>
+                  <p class="today-status" data-slot="today-status" hidden></p>
+                  <p class="today-stop" data-slot="today-stop" hidden></p>
+                  <p class="today-money" data-slot="today-money" hidden></p>
+                  <p class="today-time"><span class="clock ltr" data-slot="clock">--:--</span><span class="today-where" data-slot="clock-label"></span></p>
+                  <p class="muted" data-i18n="today.empty" data-slot="today-sub">כשתקבעו תאריכים, כאן יופיע מה מחכה לכם היום.</p>
+                </section>
+    
+                <section class="card surface home-lists" aria-labelledby="home-lists-title">
+                  <button class="home-lists-link" type="button" data-go="checklist">
+                    <span class="card-head">
+                      <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-list"/></svg>
+                      <span class="home-lists-title" id="home-lists-title" data-i18n="home.lists.title">משימות והכנות</span>
+                    </span>
+                    <span class="home-lists-open" data-slot="home-tasks-open"></span>
+                    <span class="home-lists-next" data-slot="home-tasks-next"></span>
+                    <span class="home-bars">
+                      <span class="home-bar"><span class="home-bar-label" data-slot="home-prep-label"></span><span class="mini-meter" aria-hidden="true"><span class="mini-fill" data-slot="home-prep-fill"></span></span></span>
+                      <span class="home-bar"><span class="home-bar-label" data-slot="home-pack-label"></span><span class="mini-meter" aria-hidden="true"><span class="mini-fill" data-slot="home-pack-fill"></span></span></span>
+                    </span>
+                  </button>
+                  <button class="btn btn-ghost btn-small" type="button" data-go="assistant">
+                    <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-chat"/></svg><span data-i18n="ast.open">עוזר: מה לעשות היום</span>
+                  </button>
+                  <button class="btn btn-ghost btn-small home-checkin" type="button" data-go="transfers" data-slot="home-checkin" hidden></button>
+                  <button class="btn btn-ghost btn-small" type="button" data-action="task-quick">
+                    <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-plus"/></svg><span data-i18n="task.new">משימה חדשה</span>
+                  </button>
+                </section>
+              </div>
+    
+              <div class="col">
+                <section class="card setup dmetal" aria-labelledby="setup-title">
+                  <div class="setup-head">
+                    <h2 id="setup-title" data-i18n="setup.title">הקמת הטיול</h2>
+                    <span class="setup-count ltr" data-slot="setup-count">0 / 2</span>
+                  </div>
+                  <span class="progress" aria-hidden="true"><span class="progress-fill" data-slot="setup-fill"></span></span>
+                  <p data-i18n="setup.text" data-slot="setup-text">שני צעדים קטנים, והמסך הזה מתחיל לעבוד בשבילכם.</p>
+                  <div class="setup-actions">
+                    <button class="btn btn-solid metal-btn" type="button" data-open="dates" data-step="dates">
+                      <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-calendar"/></svg>
+                      <span data-i18n="setup.dates" data-label-set="setup.datesEdit">קבעו תאריכים</span>
+                    </button>
+                    <button class="btn btn-ghost" type="button" data-open="budget" data-step="budget">
+                      <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-wallet"/></svg>
+                      <span data-i18n="setup.budget" data-label-set="setup.budgetEdit">הגדירו תקציב</span>
+                    </button>
+                  </div>
+                </section>
+    
+                <section class="tools" aria-labelledby="tools-title">
+                  <div class="tools-head">
+                    <h2 id="tools-title" class="section-title" data-i18n="tools.title">הכלים שלכם</h2>
+                    <p class="tools-note" data-i18n="tools.note">ייפתחו בשלבים הבאים</p>
+                  </div>
+                  <div class="tiles">
+                    <button class="tile surface" type="button" data-go="itinerary">
+                      <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-route"/></svg>
+                      <span class="tile-name" data-i18n="tools.itinerary">מסלול</span>
+                      <span class="tile-desc" data-i18n="tools.itinerary.desc">יום אחרי יום</span>
+                    </button>
+                    <button class="tile surface" type="button" data-go="money">
+                      <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-wallet"/></svg>
+                      <span class="tile-name" data-i18n="tools.budget">תקציב</span>
+                      <span class="tile-desc" data-i18n="tools.budget.desc">כמה יצא ונשאר</span>
+                    </button>
+                    <button class="tile surface" type="button" data-go="checklist">
+                      <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-list"/></svg>
+                      <span class="tile-name" data-i18n="tools.lists">רשימות</span>
+                      <span class="tile-desc" data-i18n="tools.lists.desc">אריזה ומשימות</span>
+                    </button>
+                    <button class="tile surface" type="button" data-go="info">
+                      <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-doc"/></svg>
+                      <span class="tile-name" data-i18n="tools.docs">מסמכים</span>
+                      <span class="tile-desc" data-i18n="tools.docs.desc">מסמכי הנסיעה</span>
+                    </button>
+                  </div>
+                </section>
+              </div>
+            </div>
+            <p class="footnote" data-i18n="app.stage">גרסה ניסיונית</p>
+          </section>
+    
+          <!-- Placeholder for the tabs that are not built yet -->
+          <section class="panel soon" id="panel-soon" role="tabpanel" hidden>
+            <div class="soon-box">
+              <span class="soon-icon surface"><svg class="icon" aria-hidden="true"><use data-slot="soon-icon" href="./assets/icons.svg#i-route"/></svg></span>
+              <span class="badge" data-i18n="common.soon">בקרוב</span>
+              <h1 class="soon-title" data-slot="soon-title"></h1>
+              <p class="muted" data-slot="soon-text"></p>
+              <button class="btn btn-primary" type="button" data-go="home">
+                <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-home"/></svg>
+                <span data-i18n="soon.home">חזרה לבית</span>
+              </button>
+            </div>
+            <nav class="soon-more" aria-labelledby="soon-more-title">
+              <h2 class="section-title" id="soon-more-title" data-i18n="soon.more">מסכים שבדרך</h2>
+              <div class="soon-links" data-slot="soon-links"></div>
+            </nav>
+          </section>
+    
+          <!-- ITINERARY (feature 1, Stage 3): stops, nights, today. No calendar, no map. -->
+          <section class="panel itinerary" id="panel-itinerary" role="tabpanel" aria-labelledby="tab-itinerary" hidden>
+            <div class="itin-head">
+              <h1 class="display itin-title" data-i18n="itin.title">המסלול</h1>
+              <p class="muted" data-slot="itin-summary"></p>
+            </div>
+    
+            <section class="card surface itin-now" data-slot="itin-now" aria-labelledby="itin-now-title" hidden>
+              <h2 class="itin-now-label" id="itin-now-title" data-slot="itin-now-label"></h2>
+              <p class="itin-now-place" data-slot="itin-now-place"></p>
+              <p class="muted" data-slot="itin-now-sub"></p>
+            </section>
+    
+            <div class="itin-warn" role="status" data-slot="itin-warn" hidden></div>
+    
+            <section class="card surface itin-empty" data-slot="itin-empty" aria-labelledby="itin-empty-title" hidden>
+              <h2 id="itin-empty-title" data-i18n="itin.empty.title">עוד אין תחנות</h2>
+              <p data-i18n="itin.empty.text">מוסיפים תחנה: מקום, תאריך הגעה ותאריך עזיבה.</p>
+              <div class="settings-actions">
+                <button class="btn btn-primary" type="button" data-action="stop-add">
+                  <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-plus"/></svg>
+                  <span data-i18n="itin.add">הוספת תחנה</span>
+                </button>
+                <button class="btn btn-ghost" type="button" data-action="seed-open" data-i18n="itin.seed.open">מסלול מוצע</button>
+              </div>
+              <button class="link-btn link-btn-calm" type="button" data-action="seed-archive-open" data-i18n="itin.seed.archiveOpen">מסלול ישן מהארכיון (הערכה לא מעודכנת)</button>
+            </section>
+    
+            <section class="card surface route-note" data-slot="route-note" role="status" hidden></section>
+    
+            <ol class="stops" data-slot="stops" aria-label="תחנות" data-i18n-label="itin.listLabel"></ol>
+    
+            <div class="itin-actions" data-slot="itin-actions" hidden>
+              <button class="btn btn-primary" type="button" data-action="stop-add">
+                <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-plus"/></svg>
+                <span data-i18n="itin.add">הוספת תחנה</span>
+              </button>
+            </div>
+    
+            <button class="btn btn-ghost itin-transfers-link" type="button" data-go="transfers">
+              <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-plane"/></svg><span data-i18n="transfers.open">טיסות ומעברים</span>
+            </button>
+            <button class="btn btn-ghost itin-transfers-link" type="button" data-go="calendar">
+              <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-calendar"/></svg><span data-i18n="cal.open">לוח שנה</span>
+            </button>
+            <button class="btn btn-ghost itin-transfers-link" type="button" data-go="photos">
+              <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-image"/></svg><span data-i18n="photo.open">תמונות</span>
+            </button>
+            <button class="btn btn-ghost itin-transfers-link" type="button" data-go="summary">
+              <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-summary"/></svg><span data-i18n="sum.open">סיכום הטיול</span>
+            </button>
+    
+            <section class="card surface settings-card itin-trip" aria-labelledby="itin-trip-title">
+              <h2 id="itin-trip-title" data-i18n="itin.trip.title">תאריכי הטיול</h2>
+              <p data-slot="itin-trip-dates"></p>
+              <button class="btn btn-ghost" type="button" data-action="replan-open">
+                <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-calendar"/></svg>
+                <span data-i18n="itin.replan.open">שינוי תאריכים ותכנון מחדש</span>
+              </button>
+            </section>
+          </section>
+    
+          <!-- MONEY (features 2-4, Stage 4): budget, expenses, planning rates. Amounts are whole agorot. -->
+          <section class="panel money" id="panel-money" role="tabpanel" aria-labelledby="tab-budget" hidden>
+            <div class="itin-head">
+              <h1 class="display" data-i18n="money.title">כסף</h1>
+            </div>
+    
+            <!-- 9.0b: one-time offer for a user who already has data. Nothing changes without a yes. -->
+            <section class="card surface tpl-card" data-slot="template-card" aria-labelledby="tpl-card-title" hidden>
+              <h2 class="tool-title" id="tpl-card-title" data-i18n="tpl.card.title">תבנית חדשה לתקציב ולמסלול</h2>
+              <p data-i18n="tpl.card.text">אפשר לעבור לתבנית החדשה. התקציב והמסלול הנוכחיים נשמרים בארכיון, וההוצאות לא משתנות.</p>
+              <div class="settings-actions">
+                <button class="btn btn-primary" type="button" data-action="template-open" data-i18n="tpl.card.open">לעבור לתבנית</button>
+                <button class="btn btn-ghost" type="button" data-action="template-decline" data-i18n="tpl.card.decline">לא עכשיו</button>
+              </div>
+            </section>
+    
+            <section class="card surface money-hero" aria-labelledby="money-free-label">
+              <h2 class="money-hero-label" id="money-free-label" data-i18n="money.free.title">פנוי אחרי התכנון</h2>
+              <p class="money-big ltr" data-slot="money-free">—</p>
+              <p class="money-before" data-slot="money-free-before"></p>
+              <p class="money-today" data-slot="money-today"></p>
+              <div class="money-bar" data-slot="money-bar" aria-hidden="true"></div>
+              <dl class="money-split">
+                <div><dt><span class="dot dot-paid" aria-hidden="true"></span><span data-i18n="money.paid">שולם</span></dt><dd class="ltr" data-slot="money-paid"></dd></div>
+                <div><dt><span class="dot dot-planned" aria-hidden="true"></span><span data-i18n="money.planned">מתוכנן</span></dt><dd class="ltr" data-slot="money-planned"></dd></div>
+                <div><dt><span class="dot dot-committed" aria-hidden="true"></span><span data-i18n="money.committed">התחייבות עתידית</span></dt><dd class="ltr" data-slot="money-committed"></dd></div>
+                <div><dt><span class="dot dot-free" aria-hidden="true"></span><span data-i18n="money.freeShort">פנוי אחרי התכנון</span></dt><dd class="ltr" data-slot="money-free-small"></dd></div>
+                <div class="money-split-total"><dt data-i18n="money.total">תקציב שוטף</dt><dd class="ltr" data-slot="money-total"></dd></div>
+              </dl>
+              <p class="money-estimate" data-slot="money-estimate" data-i18n="money.estimate" hidden>הערכת תכנון, לא מאומת</p>
+              <p class="money-base" data-slot="money-base" hidden></p>
+              <p class="money-counts muted" data-slot="money-counts" hidden></p>
+              <p class="money-em-note" data-slot="money-emergency-note" hidden></p>
+            </section>
+    
+            <section class="card surface money-empty" data-slot="money-empty" aria-labelledby="money-empty-title" hidden>
+              <h2 id="money-empty-title" data-i18n="money.empty.title">עוד אין חלוקה לקטגוריות</h2>
+              <p data-i18n="money.empty.text">טוענים פרופיל מוכן ומשנים את הסכומים, או כותבים סכומים משלכם.</p>
+              <div class="settings-actions">
+                <button class="btn btn-primary" type="button" data-action="profile-open" data-i18n="money.profile.open">לבחור פרופיל</button>
+                <button class="btn btn-ghost" type="button" data-action="cats-open" data-i18n="money.cats.edit">עריכת סכומים</button>
+              </div>
+            </section>
+    
+            <section class="card surface settings-card money-cats" data-slot="money-cats" aria-labelledby="money-cats-title" hidden>
+              <div class="money-card-head">
+                <h2 id="money-cats-title" data-i18n="money.cats.title">לפי קטגוריה</h2>
+                <button class="btn btn-ghost btn-small" type="button" data-action="cats-open">
+                  <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-edit"/></svg><span data-i18n="money.cats.edit">עריכת סכומים</span>
+                </button>
+              </div>
+              <ul class="cat-list" data-slot="cat-list"></ul>
+              <div class="cat-emergency" data-slot="cat-emergency"></div>
+              <button class="link-btn link-btn-calm" type="button" data-action="profile-open" data-i18n="money.profile.change">לטעון פרופיל אחר</button>
+            </section>
+    
+            <section class="money-expenses" aria-labelledby="money-exp-title">
+              <div class="money-card-head">
+                <h2 class="section-title" id="money-exp-title" data-i18n="money.exp.title">הוצאות</h2>
+                <button class="btn btn-primary btn-small" type="button" data-action="expense-add">
+                  <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-plus"/></svg><span data-i18n="money.exp.add">הוספת הוצאה</span>
+                </button>
+              </div>
+              <div class="filter-bar" data-slot="money-filter-bar">
+                <div class="search-bar" data-search="money" role="search">
+                  <svg class="icon search-icon" aria-hidden="true"><use href="./assets/icons.svg#i-search"/></svg>
+                  <input type="search" data-slot="search-input" autocomplete="off" enterkeyhint="search" data-i18n-label="search.money" aria-label="חיפוש" placeholder="" data-i18n-placeholder="search.money">
+                  <button class="icon-btn search-clear" type="button" data-action="search-clear" data-i18n-label="search.clear" aria-label="ניקוי החיפוש"><svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-close"/></svg></button>
+                </div>
+              <div class="money-filters" data-slot="money-filters">
+                <label class="field"><span data-i18n="money.filter.day">יום</span><select data-filter="date"></select></label>
+                <label class="field"><span data-i18n="money.filter.category">קטגוריה</span><select data-filter="category"></select></label>
+                <label class="field"><span data-i18n="money.filter.stop">יעד</span><select data-filter="destinationId"></select></label>
+              </div>
+              </div>
+              <p class="filtered-summary" data-slot="money-filtered" aria-live="polite" hidden></p>
+              <div class="card surface money-pie-card" data-slot="pie-card" hidden>
+                <svg class="money-pie" data-slot="pie" viewBox="-1.1 -1.1 2.2 2.2" role="img" aria-labelledby="pie-desc"></svg>
+                <p class="sr-only" id="pie-desc" data-slot="pie-desc"></p>
+                <ul class="pie-legend" data-slot="pie-legend" aria-hidden="true"></ul>
+              </div>
+              <p class="muted money-exp-empty" data-slot="exp-empty"></p>
+              <ul class="exp-list" data-slot="exp-list"></ul>
+              <button class="btn btn-ghost btn-small money-csv" type="button" data-action="csv-export" data-slot="csv-btn" hidden>
+                <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-download"/></svg><span data-i18n="csv.export">ייצוא הוצאות ל-CSV</span>
+              </button>
+            </section>
+    
+            <details class="card surface settings-card fold money-split-card" data-slot="split-fold">
+              <summary class="fold-head"><h2 data-i18n="split.title">חלוקת הוצאות</h2><span class="fold-sub" data-slot="split-sub"></span></summary>
+              <p data-i18n="split.text">מוסיפים את מי שמתחלק בהוצאות. בכל הוצאה בוחרים מי שילם ומי משתתף. נספרות רק הוצאות ששולמו.</p>
+              <ul class="people" data-slot="people"></ul>
+              <form class="split-add" data-form="person" novalidate>
+                <label class="field"><span data-i18n="split.name">שם</span><input type="text" name="name" maxlength="30" autocomplete="off" aria-describedby="person-error"></label>
+                <button class="btn btn-ghost" type="submit"><svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-plus"/></svg><span data-i18n="split.add">הוספה</span></button>
+                <p class="form-error" id="person-error" role="alert"></p>
+              </form>
+              <div class="settle" data-slot="settle" aria-live="polite"></div>
+              <div class="repaid" data-slot="repaid"></div>
+            </details>
+    
+            <details class="card surface settings-card fold money-tools" data-slot="tools-fold">
+              <summary class="fold-head"><h2 data-i18n="tools.money.title">מחשבונים</h2><span class="fold-sub" data-i18n="tools.money.sub">האם משתלם לי, ממיר מט"ח, כספומט</span></summary>
+              <form class="tool" data-form="afford" novalidate>
+                <h3 class="tool-title" data-i18n="afford.title">האם משתלם לי?</h3>
+                <label class="field"><span data-i18n="afford.item">מה רוצים לקנות</span><input type="text" name="item" maxlength="80" autocomplete="off"></label>
+                <div class="field-row field-row-money">
+                  <label class="field field-grow"><span data-i18n="afford.price">מחיר</span><input class="ltr" type="text" name="price" inputmode="decimal" autocomplete="off"></label>
+                  <label class="field"><span data-i18n="exp.currency">מטבע</span><select name="currency" data-slot="afford-currency"></select></label>
+                </div>
+                <div class="afford-out" data-slot="afford-out" aria-live="polite"></div>
+                <button class="btn btn-ghost" type="button" data-action="afford-add" data-slot="afford-add" hidden>
+                  <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-plus"/></svg><span data-i18n="afford.add">להוסיף כהוצאה</span>
+                </button>
+              </form>
+              <form class="tool" data-form="convert" novalidate>
+                <h3 class="tool-title" data-i18n="convert.title">ממיר מט"ח</h3>
+                <div class="field-row field-row-money">
+                  <label class="field field-grow"><span data-i18n="exp.amount">סכום</span><input class="ltr" type="text" name="amount" inputmode="decimal" autocomplete="off"></label>
+                  <label class="field"><span data-i18n="exp.currency">מטבע</span><select name="currency" data-slot="convert-currency"></select></label>
+                </div>
+                <ul class="tool-out ltr" data-slot="convert-out" aria-live="polite"></ul>
+              </form>
+              <form class="tool" data-form="atm" novalidate>
+                <h3 class="tool-title" data-i18n="atm.title">מחשבון כספומט</h3>
+                <div class="field-row field-row-money">
+                  <label class="field field-grow"><span data-slot="atm-amount-label"></span><input class="ltr" type="text" name="amount" inputmode="decimal" autocomplete="off"></label>
+                  <label class="field"><span data-slot="atm-fee-label"></span><input class="ltr" type="text" name="fee" inputmode="decimal" autocomplete="off"></label>
+                </div>
+                <p class="tool-result" data-slot="atm-out" aria-live="polite"></p>
+              </form>
+              <p class="sheet-hint" data-i18n="tools.money.note">לפי השערים במסך הזה. שער תכנון הוא הערכה, לא שער חי.</p>
+            </details>
+    
+            <section class="card surface settings-card" aria-labelledby="money-rates-title">
+              <div class="money-card-head">
+                <h2 id="money-rates-title" data-i18n="money.rates.title">שערים</h2>
+                <span class="badge" data-slot="rates-badge"></span>
+              </div>
+              <ul class="settings-list rates-list ltr-nums" data-slot="rates-list"></ul>
+              <p class="settings-meta" data-slot="rates-updated" hidden></p>
+              <p class="form-warn-calm" data-slot="rates-warn" hidden></p>
+              <p data-i18n="money.rates.note">שער חדש חל רק על הוצאות חדשות. הוצאות שכבר נשמרו שומרות את השער שלהן.</p>
+              <button class="btn btn-ghost" type="button" data-action="rates-open" data-i18n="money.rates.edit">עריכת שערים</button>
+            </section>
+          </section>
+    
+          <!-- LISTS (feature 10, Stage 5): checklist with two progress bars, and tasks. No rule is stated as fact. -->
+          <section class="panel lists" id="panel-checklist" role="tabpanel" aria-labelledby="tab-lists" hidden>
+            <div class="itin-head">
+              <h1 class="display" data-i18n="lists.title">רשימות</h1>
+            </div>
+    
+            <section class="card surface lists-progress" aria-labelledby="lists-progress-title">
+              <h2 class="sr-only" id="lists-progress-title" data-i18n="lists.progress">התקדמות</h2>
+              <div class="bar-row"><span class="bar-label" data-i18n="lists.prep">הכנות</span><span class="bar-num" data-slot="prep-num"></span></div>
+              <span class="meter" role="progressbar" aria-labelledby="prep-label" data-slot="prep-meter" aria-valuemin="0" aria-valuemax="100"><span class="meter-fill" data-slot="prep-fill"></span></span>
+              <span class="sr-only" id="prep-label" data-i18n="lists.prep">הכנות</span>
+              <div class="bar-row"><span class="bar-label" data-i18n="lists.pack">אריזה</span><span class="bar-num" data-slot="pack-num"></span></div>
+              <span class="meter" role="progressbar" aria-labelledby="pack-label" data-slot="pack-meter" aria-valuemin="0" aria-valuemax="100"><span class="meter-fill" data-slot="pack-fill"></span></span>
+              <span class="sr-only" id="pack-label" data-i18n="lists.pack">אריזה</span>
+            </section>
+    
+            <button class="btn btn-ghost itin-transfers-link" type="button" data-go="luggage">
+              <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-bag"/></svg><span data-i18n="lug.open">משקל מזוודה</span>
+            </button>
+    
+            <div class="lists-body">
+              <div class="filter-bar" data-slot="lists-bar">
+                <div class="search-bar" data-search="lists" role="search">
+                  <svg class="icon search-icon" aria-hidden="true"><use href="./assets/icons.svg#i-search"/></svg>
+                  <input type="search" data-slot="search-input" autocomplete="off" enterkeyhint="search" data-i18n-label="search.lists" aria-label="חיפוש" placeholder="" data-i18n-placeholder="search.lists">
+                  <button class="icon-btn search-clear" type="button" data-action="search-clear" data-i18n-label="search.clear" aria-label="ניקוי החיפוש"><svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-close"/></svg></button>
+                </div>
+                <div class="filter-toggles">
+                  <label class="split-check filter-toggle" data-slot="items-filter"><input type="checkbox" data-filter="hide-done-items"><span data-i18n="list.hideDone">להסתיר מה שכבר מוכן</span></label>
+                  <label class="split-check filter-toggle" data-slot="tasks-filter"><input type="checkbox" data-filter="hide-done-tasks"><span data-i18n="task.hideDone">להסתיר משימות שבוצעו</span></label>
+                </div>
+              </div>
+              <p class="filtered-summary" data-slot="lists-filtered" aria-live="polite" hidden></p>
+              <p class="no-results" data-slot="lists-no-results" data-i18n="search.none" hidden>אין תוצאות</p>
+            <section class="lists-block" aria-labelledby="list-title">
+              <div class="money-card-head">
+                <h2 class="section-title" id="list-title" data-i18n="list.title">צ'ק ליסט</h2>
+                <button class="btn btn-primary btn-small" type="button" data-action="item-add">
+                  <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-plus"/></svg><span data-i18n="list.add">הוספת פריט</span>
+                </button>
+              </div>
+              <section class="card surface money-empty" data-slot="list-empty" aria-labelledby="list-empty-title" hidden>
+                <h3 class="tool-title" id="list-empty-title" data-i18n="list.empty.title">הרשימה ריקה</h3>
+                <p data-i18n="list.empty.text">טוענים רשימה מוצעת לתאילנד ומשנים אותה, או מוסיפים פריטים משלכם.</p>
+                <button class="btn btn-ghost" type="button" data-action="list-seed" data-i18n="list.seed.open">לטעון רשימה מוצעת</button>
+              </section>
+              <div class="groups" data-slot="groups"></div>
+            </section>
+    
+            <section class="lists-block" aria-labelledby="tasks-title">
+              <div class="money-card-head">
+                <h2 class="section-title" id="tasks-title" data-i18n="task.title">משימות</h2>
+                <button class="btn btn-primary btn-small" type="button" data-action="task-add">
+                  <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-plus"/></svg><span data-i18n="task.new">משימה חדשה</span>
+                </button>
+              </div>
+              <section class="card surface money-empty" data-slot="tasks-empty" aria-labelledby="tasks-empty-title" hidden>
+                <h3 class="tool-title" id="tasks-empty-title" data-i18n="task.empty.title">אין משימות</h3>
+                <p data-i18n="task.empty.text">טוענים משימות מוצעות לפני טיסה, או מוסיפים משלכם.</p>
+                <button class="btn btn-ghost" type="button" data-action="tasks-seed" data-i18n="task.seed.open">לטעון משימות מוצעות</button>
+              </section>
+              <ul class="task-list" data-slot="task-list"></ul>
+            </section>
+            </div>
+          </section>
+    
+          <!-- FLIGHTS AND TRANSFERS (0.5.3): entered by hand. Search and live prices are a future version. -->
+          <section class="panel transfers" id="panel-transfers" role="tabpanel" aria-labelledby="transfers-title" hidden>
+            <div class="itin-head">
+              <h1 class="display" id="transfers-title" data-i18n="transfers.title">טיסות ומעברים</h1>
+              <p class="muted" data-i18n="transfers.lead">הטיסות והמעברים שלכם, בהזנה ידנית. מחיר נכנס לתקציב, ותאריך מופיע במסלול.</p>
+            </div>
+            <div class="money-card-head">
+              <h2 class="section-title" data-i18n="transfers.mine">הטיסות והמעברים שלי</h2>
+              <button class="btn btn-primary btn-small" type="button" data-action="transfer-add">
+                <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-plus"/></svg><span data-i18n="transfers.add">הוספה</span>
+              </button>
+            </div>
+            <section class="card surface money-empty" data-slot="transfers-empty" aria-labelledby="transfers-empty-title" hidden>
+              <h3 class="tool-title" id="transfers-empty-title" data-i18n="transfers.empty.title">עוד אין טיסות או מעברים</h3>
+              <p data-i18n="transfers.empty.text">מוסיפים טיסה, אוטובוס, רכבת, מעבורת או נסיעה. כל הפרטים נכתבים ידנית.</p>
+            </section>
+            <ul class="transfer-list" data-slot="transfer-list"></ul>
+    
+            <!-- CHECK-IN (6.0d): flights and hotels, entered by hand. Reminders only inside the app. -->
+            <div class="money-card-head">
+              <h2 class="section-title" id="checkins-title" data-i18n="checkins.title">צ'ק-אין לטיסות ולמלונות</h2>
+              <button class="btn btn-primary btn-small" type="button" data-action="checkin-add">
+                <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-plus"/></svg><span data-i18n="checkins.add">צ'ק-אין חדש</span>
+              </button>
+            </div>
+            <p class="muted" data-i18n="checkins.lead">מזינים ידנית מתי עושים צ'ק-אין. תזכורת מופיעה רק בתוך האפליקציה, בבית, אצל העוזר ובלוח השנה.</p>
+            <section class="card surface tz-card" aria-labelledby="tz-title">
+              <h3 class="tool-title" id="tz-title"><svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-clock"/></svg><span data-i18n="tz.title">הפרש שעות</span></h3>
+              <p class="tz-diff" data-slot="tz-diff"></p>
+              <p class="muted" data-i18n="tz.note">לפי נתוני אזורי הזמן במכשיר. בישראל יש שעון קיץ, ולכן ההפרש משתנה במהלך השנה.</p>
+            </section>
+            <section class="card surface money-empty" data-slot="checkins-empty" hidden>
+              <p data-i18n="checkins.empty">עוד אין צ'ק-אין. מתי הצ'ק-אין נפתח לא מחושב כאן: כותבים את מה שחברת התעופה או המלון מסרו.</p>
+            </section>
+            <ul class="transfer-list" data-slot="checkin-list" aria-labelledby="checkins-title"></ul>
+            <section class="card surface future-card" aria-labelledby="transfers-future-title">
+              <h2 class="tool-title" id="transfers-future-title" data-i18n="transfers.future.title">חיפוש והשוואה של טיסות ומלונות</h2>
+              <p class="muted" data-slot="transfers-future" data-i18n="transfers.future.text">חיפוש במחירים חיים יגיע בגרסה עתידית. עד אז כל טיסה ומלון נכתבים כאן ידנית, בלי מחירים, שעות או זמינות מומצאים.</p>
+            </section>
+          </section>
+    
+          <!-- CALENDAR (6.0b): the trip as a list of days, opened from the itinerary. Built from the user's own data only. -->
+          <section class="panel calendar" id="panel-calendar" role="tabpanel" aria-labelledby="calendar-title" hidden>
+            <div class="itin-head">
+              <h1 class="display" id="calendar-title" data-i18n="cal.title">לוח שנה</h1>
+              <p class="muted" data-slot="cal-lead"></p>
+            </div>
+            <section class="card surface money-empty" data-slot="cal-empty" aria-labelledby="cal-empty-title" hidden>
+              <h2 class="tool-title" id="cal-empty-title" data-i18n="cal.empty.title">עוד אין תאריכי טיול</h2>
+              <p data-i18n="cal.empty.text">קובעים תאריכים במסך המסלול, והימים יופיעו כאן.</p>
+              <button class="btn btn-ghost" type="button" data-go="itinerary">
+                <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-route"/></svg><span data-i18n="cal.empty.go">למסך המסלול</span>
+              </button>
+            </section>
+            <ol class="cal-days" data-slot="cal-days" aria-label="ימי הטיול" data-i18n-label="cal.listLabel"></ol>
+          </section>
+    
+          <!-- PHOTOS (7.0b): stored on this device in IndexedDB, never on a server. Only ids and details go into the data. -->
+          <section class="panel photos" id="panel-photos" role="tabpanel" aria-labelledby="photos-title" hidden>
+            <div class="itin-head">
+              <h1 class="display" id="photos-title" data-i18n="photo.title">תמונות</h1>
+              <p class="muted" data-i18n="photo.lead">התמונות נשמרות רק בטלפון הזה, מוקטנות. כל תמונה משויכת ליום וליעד לפי תאריך הצילום.</p>
+            </div>
+            <p class="banner photo-warn" role="status" data-slot="photo-storage-warn" hidden></p>
+            <div class="money-card-head">
+              <p class="muted" data-slot="photo-count"></p>
+              <button class="btn btn-primary btn-small" type="button" data-action="photo-add">
+                <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-plus"/></svg><span data-i18n="photo.add">הוספת תמונות</span>
+              </button>
+            </div>
+            <input class="sr-only" type="file" id="photo-file" accept="image/*" multiple tabindex="-1" aria-hidden="true">
+            <p class="muted photo-busy" role="status" data-slot="photo-busy" hidden></p>
+            <section class="card surface money-empty" data-slot="photo-empty" aria-labelledby="photo-empty-title" hidden>
+              <h2 class="tool-title" id="photo-empty-title" data-i18n="photo.empty.title">עוד אין תמונות</h2>
+              <p data-i18n="photo.empty.text">מוסיפים מהגלריה או מהמצלמה. התמונה נכנסת ליום שבו צולמה.</p>
+            </section>
+            <div class="photo-groups" data-slot="photo-groups"></div>
+          </section>
+    
+          <!-- SUMMARY (7.0c): the trip at a glance. Every money figure comes from the money screen's own summary. -->
+          <section class="panel summary" id="panel-summary" role="tabpanel" aria-labelledby="summary-title" hidden>
+            <div class="itin-head">
+              <h1 class="display" id="summary-title" data-i18n="sum.title">סיכום הטיול</h1>
+              <p class="muted" data-i18n="sum.lead">הימים, המקומות, כמה הוצאתם מול התכנון, ומצגת של התמונות.</p>
+            </div>
+            <section class="card surface sum-show" aria-labelledby="sum-show-title">
+              <div class="money-card-head">
+                <h2 class="tool-title" id="sum-show-title" data-i18n="sum.show.title">מצגת</h2>
+                <button class="btn btn-primary btn-small" type="button" data-action="show-play">
+                  <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-play"/></svg><span data-i18n="sum.show.play">הפעלת מצגת</span>
+                </button>
+              </div>
+              <p class="muted" data-slot="sum-show-note"></p>
+              <ul class="sum-strip" data-slot="sum-strip" aria-label="תמונות המצגת" data-i18n-label="sum.show.listLabel"></ul>
+            </section>
+            <section class="card surface sum-facts" aria-labelledby="sum-facts-title">
+              <h2 class="tool-title" id="sum-facts-title" data-i18n="sum.facts.title">במספרים</h2>
+              <dl class="sum-kpis">
+                <div class="sum-kpi"><dt data-i18n="sum.days">ימים</dt><dd data-slot="sum-days"></dd></div>
+                <div class="sum-kpi"><dt data-i18n="sum.placesCount">מקומות</dt><dd data-slot="sum-places-count"></dd></div>
+                <div class="sum-kpi"><dt data-i18n="sum.spent">הוצאות ותכנון</dt><dd data-slot="sum-spent"></dd></div>
+                <div class="sum-kpi"><dt data-i18n="sum.photos">תמונות</dt><dd data-slot="sum-photos"></dd></div>
+              </dl>
+              <h3 class="sum-sub" data-i18n="sum.places">איפה היינו</h3>
+              <p class="muted" data-slot="sum-places-empty" hidden></p>
+              <ol class="sum-places" data-slot="sum-places"></ol>
+              <h3 class="sum-sub" data-i18n="sum.byCat">הוצאות לפי קטגוריה</h3>
+              <p class="muted" data-slot="sum-cats-empty" hidden></p>
+              <ul class="sum-cats" data-slot="sum-cats"></ul>
+            </section>
+            <section class="card surface sum-budget" aria-labelledby="sum-budget-title">
+              <h2 class="tool-title" id="sum-budget-title" data-i18n="sum.budget.title">תקציב מול בפועל</h2>
+              <p class="muted" data-i18n="sum.budget.lead">אותם סכומים כמו במסך הכסף, בשקלים.</p>
+              <p class="muted" data-slot="sum-budget-empty" hidden></p>
+              <table class="sum-table" data-slot="sum-table">
+                <caption class="sr-only" data-i18n="sum.budget.title">תקציב מול בפועל</caption>
+                <thead><tr>
+                  <th scope="col" data-i18n="sum.col.cat">קטגוריה</th>
+                  <th scope="col" data-i18n="sum.col.plan">תקציב</th>
+                  <th scope="col" data-i18n="exp.status.paid">שולם</th>
+                  <th scope="col" data-i18n="exp.status.planned">מתוכנן</th>
+                  <th scope="col" data-i18n="sum.col.committed">עתידי</th>
+                  <th scope="col" data-i18n="sum.col.free">פנוי</th>
+                </tr></thead>
+                <tbody data-slot="sum-rows"></tbody>
+                <tfoot data-slot="sum-foot"></tfoot>
+              </table>
+              <p class="muted sum-em" data-slot="sum-emergency"></p>
+              <button class="btn btn-ghost" type="button" data-go="money">
+                <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-wallet"/></svg><span data-i18n="sum.toMoney">למסך הכסף</span>
+              </button>
+            </section>
+          </section>
+    
+          <!-- LUGGAGE (6.0e): weight per bag, opened from the lists. The user sets each limit; the app only adds up. -->
+          <section class="panel luggage" id="panel-luggage" role="tabpanel" aria-labelledby="luggage-title" hidden>
+            <div class="itin-head">
+              <h1 class="display" id="luggage-title" data-i18n="lug.title">משקל מזוודה</h1>
+              <p class="muted" data-i18n="lug.lead">קובעים לכל תיק את המגבלה שחברת התעופה מסרה לכם. האפליקציה רק מסכמת ומזהירה כשעוברים אותה.</p>
+            </div>
+            <div class="money-card-head">
+              <span></span>
+              <button class="btn btn-primary btn-small" type="button" data-action="bag-add">
+                <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-plus"/></svg><span data-i18n="lug.addBag">תיק חדש</span>
+              </button>
+            </div>
+            <section class="card surface money-empty" data-slot="luggage-empty" aria-labelledby="luggage-empty-title" hidden>
+              <h2 class="tool-title" id="luggage-empty-title" data-i18n="lug.empty.title">עוד אין תיקים</h2>
+              <p data-i18n="lug.empty.text">מוסיפים תיק, למשל מזוודה או תיק גב, ואז את הפריטים והמשקל של כל אחד.</p>
+            </section>
+            <div class="bags" data-slot="bags"></div>
+          </section>
+    
+          <!-- ASSISTANT (0.5.4): rule-based, from the user's own data only. A full AI chat is a future version. -->
+          <section class="panel assistant" id="panel-assistant" role="tabpanel" aria-labelledby="assistant-title" hidden>
+            <div class="itin-head">
+              <h1 class="display" id="assistant-title" data-i18n="ast.title">עוזר</h1>
+              <p class="muted" data-i18n="ast.lead">מבוסס רק על הנתונים שלכם. כל מספר מגיע עם החישוב שלו, ושום דבר לא מנוחש.</p>
+            </div>
+            <section class="card surface ast-card" aria-labelledby="ast-money-title">
+              <h2 id="ast-money-title" data-i18n="ast.money.title">הכסף</h2>
+              <div data-slot="ast-money"></div>
+              <p class="ast-warn" data-slot="ast-warn" hidden></p>
+              <details class="ast-how" data-slot="ast-how" hidden>
+                <summary data-i18n="ast.how.title">איך זה חושב</summary>
+                <div class="how-body" data-slot="ast-how-body"></div>
+              </details>
+            </section>
+            <section class="card surface ast-card" aria-labelledby="ast-today-title">
+              <h2 id="ast-today-title" data-i18n="ast.today.title">מה לעשות היום</h2>
+              <div data-slot="ast-today"></div>
+            </section>
+            <section class="card surface ast-card" aria-labelledby="ast-due-title">
+              <h2 id="ast-due-title" data-i18n="ast.due.title">משימות שמגיע זמנן</h2>
+              <div data-slot="ast-due"></div>
+            </section>
+            <section class="card surface future-card" aria-labelledby="ast-future-title">
+              <h2 class="tool-title" id="ast-future-title" data-i18n="ast.future.title">צ'אט עם שאלות פתוחות</h2>
+              <p class="muted" data-slot="ast-future" data-i18n="ast.future.text">צ'אט AI מלא יגיע בגרסה עתידית. עד אז העוזר עונה רק מתוך החישובים והנתונים שלכם.</p>
+            </section>
+          </section>
+    
+          <!-- SETTINGS (feature 8) -->
+          <section class="panel settings" id="panel-settings" aria-labelledby="settings-title" hidden>
+            <h1 class="display settings-title" id="settings-title" data-i18n="settings.title">הגדרות</h1>
+    
+            <section class="card surface settings-card" aria-labelledby="set-dates-title">
+              <h2 id="set-dates-title" data-i18n="settings.dates.title">תאריכי הטיול</h2>
+              <form class="sheet-form" data-form="settings-dates" novalidate>
+                <div class="field-row">
+                  <label class="field"><span data-i18n="dates.start">יציאה</span><input class="ltr" type="date" name="start" aria-describedby="set-dates-error"></label>
+                  <label class="field"><span data-i18n="dates.end">חזרה</span><input class="ltr" type="date" name="end" aria-describedby="set-dates-error"></label>
+                </div>
+                <p class="sheet-hint" data-i18n="settings.dates.hint">התאריכים נשמרים בטיול.</p>
+                <p class="form-error" id="set-dates-error" role="alert"></p>
+                <button class="btn btn-primary" type="submit" data-i18n="form.save">שמירה</button>
+              </form>
+            </section>
+    
+            <section class="card surface settings-card" aria-labelledby="set-theme-title">
+              <fieldset class="choice-group">
+                <legend id="set-theme-title" data-i18n="settings.theme.title">מראה</legend>
+                <div class="choices">
+                  <label class="choice"><input type="radio" name="theme" value="system"><span data-i18n="settings.theme.system">אוטומטי</span></label>
+                  <label class="choice"><input type="radio" name="theme" value="light"><span data-i18n="settings.theme.light">בהיר</span></label>
+                  <label class="choice"><input type="radio" name="theme" value="dark"><span data-i18n="settings.theme.dark">כהה</span></label>
+                </div>
+              </fieldset>
+            </section>
+    
+            <section class="card surface settings-card" aria-labelledby="set-backup-title" id="backup">
+              <h2 id="set-backup-title" data-i18n="settings.backup.title">גיבוי ושחזור</h2>
+              <p data-i18n="settings.backup.text">קובץ JSON עם כל הנתונים.</p>
+              <p class="settings-meta" data-slot="last-backup"></p>
+              <div class="settings-actions">
+                <button class="btn btn-primary" type="button" data-action="export">
+                  <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-download"/></svg>
+                  <span data-i18n="settings.backup.export">ייצוא גיבוי</span>
+                </button>
+                <button class="btn btn-ghost" type="button" data-action="import-pick">
+                  <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-upload"/></svg>
+                  <span data-i18n="settings.backup.import">ייבוא גיבוי</span>
+                </button>
+              </div>
+              <input class="sr-only" type="file" id="import-file" accept="application/json,.json" tabindex="-1" aria-hidden="true">
+              <p class="form-error" role="alert" data-slot="import-error"></p>
+            </section>
+    
+            <section class="card surface settings-card" aria-labelledby="set-photos-title" id="photos-backup">
+              <h2 id="set-photos-title" data-i18n="photoBackup.title">גיבוי תמונות</h2>
+              <p data-i18n="photoBackup.text">התמונות לא נכנסות לגיבוי הרגיל. הן יוצאות לקובץ ZIP נפרד, שאפשר לפתוח גם במחשב.</p>
+              <p class="settings-meta" data-slot="photos-size"></p>
+              <div class="settings-actions">
+                <button class="btn btn-primary" type="button" data-action="photos-export">
+                  <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-download"/></svg>
+                  <span data-i18n="photoBackup.export">ייצוא תמונות</span>
+                </button>
+                <button class="btn btn-ghost" type="button" data-action="photos-import-pick">
+                  <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-upload"/></svg>
+                  <span data-i18n="photoBackup.import">שחזור תמונות</span>
+                </button>
+              </div>
+              <input class="sr-only" type="file" id="photos-import-file" accept="application/zip,.zip" tabindex="-1" aria-hidden="true">
+              <p class="form-error" role="alert" data-slot="photos-import-error"></p>
+            </section>
+    
+            <section class="card surface settings-card" aria-labelledby="set-install-title">
+              <h2 id="set-install-title" data-i18n="settings.install.title">התקנה למסך הבית</h2>
+              <p data-i18n="settings.install.text">אחרי התקנה האפליקציה עובדת גם בלי קליטה.</p>
+              <p class="settings-meta" data-slot="install-done" data-i18n="settings.install.done" hidden>האפליקציה מותקנת.</p>
+              <ul class="settings-list">
+                <li data-i18n="settings.install.iphone">באייפון: Safari, שיתוף, הוספה למסך הבית.</li>
+                <li data-i18n="settings.install.android">באנדרואיד: כפתור ההתקנה.</li>
+              </ul>
+              <button class="btn btn-primary" type="button" data-slot="install-btn" hidden>
+                <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-download"/></svg>
+                <span data-i18n="settings.install.button">התקנת האפליקציה</span>
+              </button>
+            </section>
+    
+            <section class="card surface settings-card" aria-labelledby="set-storage-title">
+              <h2 id="set-storage-title" data-i18n="settings.storage.title">שמירה במכשיר</h2>
+              <p data-slot="persist-status"></p>
+            </section>
+    
+            <section class="card surface settings-card" aria-labelledby="set-limits-title">
+              <h2 id="set-limits-title" data-i18n="settings.limits.title">מגבלות האפליקציה</h2>
+              <ul class="settings-list">
+                <li data-i18n="settings.limits.device">הנתונים נשמרים רק במכשיר הזה.</li>
+                <li data-i18n="settings.limits.sync">אין סנכרון.</li>
+                <li data-i18n="settings.limits.encryption">הנתונים לא מוצפנים.</li>
+                <li data-i18n="settings.limits.iphone">באייפון חובה להתקין למסך הבית.</li>
+              </ul>
+            </section>
+    
+            <section class="card surface settings-card" aria-labelledby="set-reset-title">
+              <h2 id="set-reset-title" data-i18n="settings.reset.title">התחלה מחדש</h2>
+              <p data-i18n="settings.reset.text">מוחק את כל הנתונים במכשיר הזה.</p>
+              <button class="btn btn-ghost btn-danger" type="button" data-action="reset-open" data-i18n="settings.reset.open">איפוס הנתונים</button>
+            </section>
+    
+            <section class="settings-version" aria-labelledby="set-version-title">
+              <h2 class="section-title" id="set-version-title" data-i18n="settings.version.title">גרסה</h2>
+              <dl class="version-list">
+                <div><dt data-i18n="settings.version.app">גרסת האפליקציה</dt><dd class="ltr" data-slot="version-app"></dd></div>
+                <div><dt data-i18n="settings.version.schema">גרסת הנתונים</dt><dd class="ltr" data-slot="version-schema"></dd></div>
+              </dl>
+            </section>
+          </section>
+        </main>
+    
+        <nav class="tabbar surface" data-i18n-label="nav.label" aria-label="ניווט ראשי">
+          <div class="tabbar-list" role="tablist" aria-orientation="horizontal">
+            <button class="tab" role="tab" id="tab-home" data-tab="home" data-route="home" aria-selected="true" aria-controls="panel-home" tabindex="0" type="button">
+              <span class="tab-chip"><svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-home"/></svg></span>
+              <span data-i18n="nav.home">בית</span>
+            </button>
+            <button class="tab" role="tab" id="tab-itinerary" data-tab="itinerary" data-route="itinerary" data-icon="i-route" aria-selected="false" aria-controls="panel-itinerary" tabindex="-1" type="button">
+              <span class="tab-chip"><svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-route"/></svg></span>
+              <span data-i18n="nav.itinerary">מסלול</span>
+            </button>
+            <button class="tab" role="tab" id="tab-budget" data-tab="budget" data-route="money" data-icon="i-wallet" aria-selected="false" aria-controls="panel-money" tabindex="-1" type="button">
+              <span class="tab-chip"><svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-wallet"/></svg></span>
+              <span data-i18n="nav.budget">תקציב</span>
+            </button>
+            <button class="tab" role="tab" id="tab-lists" data-tab="lists" data-route="checklist" data-icon="i-list" aria-selected="false" aria-controls="panel-checklist" tabindex="-1" type="button">
+              <span class="tab-chip"><svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-list"/></svg></span>
+              <span data-i18n="nav.lists">רשימות</span>
+            </button>
+          </div>
+        </nav>
+    
+    
+        <!-- Trip setup dialogs (data stays on this device) -->
+        <dialog class="sheet dmetal" id="dlg-dates" aria-labelledby="dlg-dates-title">
+          <form class="sheet-form" data-form="dates" novalidate>
+            <h2 id="dlg-dates-title" data-i18n="dates.title">תאריכי הטיול</h2>
+            <div class="field-row">
+              <label class="field"><span data-i18n="dates.start">יציאה</span><input class="ltr" type="date" name="start" aria-describedby="dates-error"></label>
+              <label class="field"><span data-i18n="dates.end">חזרה</span><input class="ltr" type="date" name="end" aria-describedby="dates-error"></label>
+            </div>
+            <p class="sheet-hint" data-slot="dates-hint"></p>
+            <p class="form-error" id="dates-error" role="alert" data-slot="dates-error"></p>
+            <div class="sheet-actions">
+              <button class="btn metal-btn" type="submit" data-i18n="form.save">שמירה</button>
+              <button class="btn btn-ghost" type="button" data-close data-i18n="form.cancel">ביטול</button>
+            </div>
+            <button class="link-btn" type="button" data-clear="dates" data-i18n="form.clearDates" hidden>ניקוי התאריכים</button>
+          </form>
+        </dialog>
+    
+        <dialog class="sheet dmetal" id="dlg-budget" aria-labelledby="dlg-budget-title">
+          <form class="sheet-form" data-form="budget" novalidate>
+            <h2 id="dlg-budget-title" data-i18n="budget.dialogTitle">תקציב הטיול</h2>
+            <div class="field-row">
+              <label class="field field-grow"><span data-i18n="budget.amount">סכום כולל</span><input class="ltr" type="text" name="amount" inputmode="decimal" autocomplete="off" aria-describedby="budget-error"></label>
+              <label class="field"><span data-i18n="budget.currency">מטבע</span><select name="currency" data-slot="currency-select"></select></label>
+            </div>
+            <p class="sheet-hint" data-i18n="budget.hint">הסכום לכל הטיול. חלוקה לקטגוריות והוצאות נמצאות במסך הכסף.</p>
+            <p class="form-error" id="budget-error" role="alert" data-slot="budget-error"></p>
+            <div class="sheet-actions">
+              <button class="btn metal-btn" type="submit" data-i18n="form.save">שמירה</button>
+              <button class="btn btn-ghost" type="button" data-close data-i18n="form.cancel">ביטול</button>
+            </div>
+            <button class="link-btn" type="button" data-clear="budget" data-i18n="form.clearBudget" hidden>ניקוי התקציב</button>
+          </form>
+        </dialog>
+    
+        <!-- Import: show what the file holds, replace only after an explicit yes -->
+        <dialog class="sheet dmetal" id="dlg-import" aria-labelledby="dlg-import-title" aria-describedby="dlg-import-text">
+          <div class="sheet-form">
+            <h2 id="dlg-import-title" data-i18n="import.title">ייבוא גיבוי</h2>
+            <p class="sheet-hint" id="dlg-import-text" data-i18n="import.text">הנתונים מהקובץ יחליפו את כל מה ששמור עכשיו.</p>
+            <dl class="import-summary">
+              <div><dt data-i18n="import.trip">טיול</dt><dd data-slot="import-trip"></dd></div>
+              <div><dt data-i18n="import.dates">תאריכים</dt><dd data-slot="import-dates"></dd></div>
+              <div><dt data-i18n="import.updated">עודכן לאחרונה</dt><dd data-slot="import-updated"></dd></div>
+            </dl>
+            <div class="sheet-actions">
+              <button class="btn metal-btn" type="button" data-action="import-confirm" data-i18n="import.confirm">להחליף את הנתונים</button>
+              <button class="btn btn-ghost" type="button" data-close data-i18n="form.cancel">ביטול</button>
+            </div>
+          </div>
+        </dialog>
+    
+        <!-- Reset: backup offered first, then the word must be typed -->
+        <dialog class="sheet dmetal" id="dlg-reset" aria-labelledby="dlg-reset-title" aria-describedby="dlg-reset-text">
+          <form class="sheet-form" novalidate>
+            <h2 id="dlg-reset-title" data-i18n="reset.title">איפוס כל הנתונים</h2>
+            <p class="sheet-hint" id="dlg-reset-text" data-i18n="reset.text">הכול יימחק מהמכשיר הזה.</p>
+            <button class="btn btn-ghost" type="button" data-action="reset-backup">
+              <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-download"/></svg>
+              <span data-i18n="reset.backupFirst">קודם לייצא גיבוי</span>
+            </button>
+            <label class="field"><span data-slot="reset-type-label"></span><input type="text" data-slot="reset-input" autocomplete="off" autocapitalize="off" spellcheck="false"></label>
+            <div class="sheet-actions">
+              <button class="btn metal-btn btn-danger-solid" type="submit" data-action="reset-confirm" data-i18n="reset.confirm" disabled>למחוק הכול</button>
+              <button class="btn btn-ghost" type="button" data-close data-i18n="form.cancel">ביטול</button>
+            </div>
+          </form>
+        </dialog>
+    
+        <!-- Itinerary: add or edit a stop -->
+        <dialog class="sheet dmetal" id="dlg-stop" aria-labelledby="dlg-stop-title">
+          <form class="sheet-form" data-form="stop" novalidate>
+            <h2 id="dlg-stop-title" data-slot="stop-title"></h2>
+            <label class="field"><span data-i18n="stop.name">שם המקום</span><input type="text" name="name" maxlength="60" autocomplete="off" aria-describedby="stop-error"></label>
+            <div class="field-row">
+              <label class="field"><span data-i18n="stop.start">הגעה</span><input class="ltr" type="date" name="start" aria-describedby="stop-error"></label>
+              <label class="field"><span data-i18n="stop.end">עזיבה</span><input class="ltr" type="date" name="end" aria-describedby="stop-error"></label>
+            </div>
+            <label class="field"><span data-i18n="stop.note">הערה (לא חובה)</span><input type="text" name="note" maxlength="140" autocomplete="off" aria-describedby="stop-error"></label>
+            <p class="sheet-hint" data-slot="stop-nights" aria-live="polite"></p>
+            <p class="form-error" id="stop-error" role="alert"></p>
+            <p class="form-warn" role="status" data-slot="stop-warn"></p>
+            <div class="sheet-actions">
+              <button class="btn metal-btn" type="submit" data-slot="stop-save" data-i18n="form.save">שמירה</button>
+              <button class="btn btn-ghost" type="button" data-close data-i18n="form.cancel">ביטול</button>
+            </div>
+          </form>
+        </dialog>
+    
+        <!-- Itinerary: delete only after a yes -->
+        <dialog class="sheet dmetal" id="dlg-stop-delete" aria-labelledby="dlg-stop-delete-title" aria-describedby="dlg-stop-delete-text">
+          <div class="sheet-form">
+            <h2 id="dlg-stop-delete-title" data-i18n="stop.delete.title">מחיקת תחנה</h2>
+            <p class="sheet-hint" id="dlg-stop-delete-text" data-slot="stop-delete-text"></p>
+            <div class="sheet-actions">
+              <button class="btn metal-btn btn-danger-solid" type="button" data-action="stop-delete-confirm" data-i18n="stop.delete.confirm">למחוק</button>
+              <button class="btn btn-ghost" type="button" data-close data-i18n="form.cancel">ביטול</button>
+            </div>
+          </div>
+        </dialog>
+    
+        <!-- Itinerary: the suggested route goes in only after a yes -->
+        <dialog class="sheet dmetal" id="dlg-seed" aria-labelledby="dlg-seed-title" aria-describedby="dlg-seed-text">
+          <div class="sheet-form">
+            <h2 id="dlg-seed-title" data-i18n="itin.seed.title">מסלול מוצע</h2>
+            <p class="sheet-hint" id="dlg-seed-text" data-slot="seed-text"></p>
+            <div class="sheet-actions">
+              <button class="btn metal-btn" type="button" data-action="seed-confirm" data-i18n="itin.seed.confirm">לטעון את המסלול</button>
+              <button class="btn btn-ghost" type="button" data-close data-i18n="form.cancel">ביטול</button>
+            </div>
+          </div>
+        </dialog>
+    
+        <!-- Itinerary: new trip dates, three ways to replan, before and after shown, saved only after a yes -->
+        <dialog class="sheet dmetal" id="dlg-replan" aria-labelledby="dlg-replan-title">
+          <form class="sheet-form" data-form="replan" novalidate>
+            <h2 id="dlg-replan-title" data-i18n="replan.title">תכנון מחדש</h2>
+            <p class="sheet-hint" data-slot="replan-from" data-i18n="replan.fromDates" hidden>יש תחנות במסלול. בחרו מה יקרה להן, ורק אז התאריכים יישמרו.</p>
+            <div class="field-row">
+              <label class="field"><span data-i18n="dates.start">יציאה</span><input class="ltr" type="date" name="start" aria-describedby="replan-error"></label>
+              <label class="field"><span data-i18n="dates.end">חזרה</span><input class="ltr" type="date" name="end" aria-describedby="replan-error"></label>
+            </div>
+            <fieldset class="replan-modes">
+              <legend data-i18n="replan.modeTitle">מה לעשות עם התחנות?</legend>
+              <label class="replan-mode"><input type="radio" name="mode" value="shift" checked><span><b data-i18n="replan.shift">להזיז את כל המסלול</b><small data-i18n="replan.shift.hint">כל תחנה זזה באותו מספר ימים.</small></span></label>
+              <label class="replan-mode"><input type="radio" name="mode" value="flex"><span><b data-i18n="replan.flex">לשנות את התחנה הגמישה</b><small data-i18n="replan.flex.hint">רק היעד הגמיש מתארך או מתקצר.</small></span></label>
+              <label class="replan-mode"><input type="radio" name="mode" value="datesOnly"><span><b data-i18n="replan.datesOnly">רק תאריכי הטיול</b><small data-i18n="replan.datesOnly.hint">התחנות לא זזות. תקבלו אזהרה על מה שבחוץ.</small></span></label>
+            </fieldset>
+            <p class="form-error" id="replan-error" role="alert"></p>
+            <div class="replan-preview" data-slot="replan-preview" aria-live="polite"></div>
+            <div class="sheet-actions">
+              <button class="btn metal-btn" type="submit" data-slot="replan-save" data-i18n="replan.save">לאשר ולשמור</button>
+              <button class="btn btn-ghost" type="button" data-close data-i18n="form.cancel">ביטול</button>
+            </div>
+          </form>
+        </dialog>
+    
+        <!-- Money: add or edit an expense -->
+        <dialog class="sheet dmetal" id="dlg-expense" aria-labelledby="dlg-expense-title">
+          <form class="sheet-form" data-form="expense" novalidate>
+            <h2 id="dlg-expense-title" data-slot="expense-title"></h2>
+            <div class="field-row field-row-money">
+              <label class="field field-grow"><span data-i18n="exp.amount">סכום</span><input class="ltr" type="text" name="amount" inputmode="decimal" autocomplete="off" aria-describedby="expense-error"></label>
+              <label class="field"><span data-i18n="exp.currency">מטבע</span><select name="currency" data-slot="exp-currency"></select></label>
+            </div>
+            <p class="sheet-hint" data-slot="exp-convert" aria-live="polite"></p>
+            <label class="field"><span data-i18n="exp.category">קטגוריה</span><select name="category" data-slot="exp-category"></select></label>
+            <div class="field-row">
+              <label class="field"><span data-i18n="exp.date">תאריך</span><input class="ltr" type="date" name="date" aria-describedby="expense-error"></label>
+              <label class="field"><span data-i18n="exp.status">סטטוס</span><select name="status" data-slot="exp-status"></select></label>
+            </div>
+            <label class="field"><span data-i18n="exp.stop">יעד (לא חובה)</span><select name="destinationId" data-slot="exp-stop"></select></label>
+            <div class="split-box" data-slot="exp-split" hidden>
+              <div class="field-row">
+                <label class="field"><span data-i18n="split.paidBy">מי שילם</span><select name="paidBy" data-slot="exp-paid-by"></select></label>
+                <label class="field"><span data-i18n="split.mode">איך מחלקים</span><select name="splitMode" data-slot="exp-split-mode"></select></label>
+              </div>
+              <fieldset class="split-who"><legend data-i18n="split.sharedBy">מי משתתף</legend><div class="split-rows" data-slot="exp-shared-by"></div></fieldset>
+              <p class="sheet-hint" data-slot="split-sum" aria-live="polite"></p>
+            </div>
+            <label class="field"><span data-i18n="exp.description">תיאור</span><input type="text" name="description" maxlength="80" autocomplete="off" aria-describedby="expense-error"></label>
+            <label class="field"><span data-i18n="exp.method">אמצעי תשלום</span><select name="method" data-slot="exp-method"></select></label>
+            <label class="field"><span data-i18n="exp.note">הערה (לא חובה)</span><input type="text" name="note" maxlength="140" autocomplete="off" aria-describedby="expense-error"></label>
+            <p class="form-error" id="expense-error" role="alert"></p>
+            <div class="sheet-actions">
+              <button class="btn metal-btn" type="submit" data-i18n="form.save">שמירה</button>
+              <button class="btn btn-ghost" type="button" data-close data-i18n="form.cancel">ביטול</button>
+            </div>
+          </form>
+        </dialog>
+    
+        <!-- Money: delete only after a yes -->
+        <dialog class="sheet dmetal" id="dlg-expense-delete" aria-labelledby="dlg-expense-delete-title" aria-describedby="dlg-expense-delete-text">
+          <div class="sheet-form">
+            <h2 id="dlg-expense-delete-title" data-i18n="exp.delete.title">מחיקת הוצאה</h2>
+            <p class="sheet-hint" id="dlg-expense-delete-text" data-slot="expense-delete-text"></p>
+            <div class="sheet-actions">
+              <button class="btn metal-btn btn-danger-solid" type="button" data-action="expense-delete-confirm" data-i18n="stop.delete.confirm">למחוק</button>
+              <button class="btn btn-ghost" type="button" data-close data-i18n="form.cancel">ביטול</button>
+            </div>
+          </div>
+        </dialog>
+    
+        <!-- Money: a planning profile goes in only after a yes -->
+        <dialog class="sheet dmetal" id="dlg-profile" aria-labelledby="dlg-profile-title" aria-describedby="dlg-profile-text">
+          <form class="sheet-form" data-form="profile" novalidate>
+            <h2 id="dlg-profile-title" data-i18n="money.profile.title">פרופיל תקציב</h2>
+            <p class="sheet-hint" id="dlg-profile-text" data-i18n="money.profile.text">סכומי תכנון מתוכנית הטיול. הם הערכה ולא מחירים מאומתים. אחרי הטעינה אפשר לשנות כל סכום.</p>
+            <fieldset class="replan-modes">
+              <legend class="sr-only" data-i18n="money.profile.title">פרופיל תקציב</legend>
+              <div class="profile-options" data-slot="profile-options"></div>
+            </fieldset>
+            <p class="form-warn" role="status" data-slot="profile-warn"></p>
+            <div class="sheet-actions">
+              <button class="btn metal-btn" type="submit" data-i18n="money.profile.confirm">לטעון את הפרופיל</button>
+              <button class="btn btn-ghost" type="button" data-close data-i18n="form.cancel">ביטול</button>
+            </div>
+          </form>
+        </dialog>
+    
+        <!-- Money: edit the nine category amounts -->
+        <dialog class="sheet dmetal" id="dlg-cats" aria-labelledby="dlg-cats-title">
+          <form class="sheet-form" data-form="cats" novalidate>
+            <h2 id="dlg-cats-title" data-i18n="money.cats.dialog">סכומים לפי קטגוריה (₪)</h2>
+            <div class="cats-fields" data-slot="cats-fields"></div>
+            <p class="sheet-hint" data-slot="cats-sum" aria-live="polite"></p>
+            <p class="form-error" role="alert"></p>
+            <div class="sheet-actions">
+              <button class="btn metal-btn" type="submit" data-i18n="form.save">שמירה</button>
+              <button class="btn btn-ghost" type="button" data-close data-i18n="form.cancel">ביטול</button>
+            </div>
+          </form>
+        </dialog>
+    
+        <!-- Money: planning rates, editable, with a way back to the defaults -->
+        <dialog class="sheet dmetal" id="dlg-rates" aria-labelledby="dlg-rates-title">
+          <form class="sheet-form" data-form="rates" novalidate>
+            <h2 id="dlg-rates-title" data-i18n="money.rates.title">שערים</h2>
+            <div class="cats-fields" data-slot="rates-fields"></div>
+            <p class="sheet-hint" data-i18n="money.rates.note">שער חדש חל רק על הוצאות חדשות. הוצאות שכבר נשמרו שומרות את השער שלהן.</p>
+            <p class="form-error" role="alert"></p>
+            <div class="sheet-actions">
+              <button class="btn metal-btn" type="submit" data-i18n="form.save">שמירה</button>
+              <button class="btn btn-ghost" type="button" data-close data-i18n="form.cancel">ביטול</button>
+            </div>
+            <button class="link-btn" type="button" data-action="rates-restore" data-i18n="money.rates.restore">חזרה לשערי התכנון</button>
+          </form>
+        </dialog>
+    
+        <!-- Split: removing a person only after a yes -->
+        <dialog class="sheet dmetal" id="dlg-person-delete" aria-labelledby="dlg-person-delete-title" aria-describedby="dlg-person-delete-text">
+          <div class="sheet-form">
+            <h2 id="dlg-person-delete-title" data-i18n="split.remove.title">הסרה מהחלוקה</h2>
+            <p class="sheet-hint" id="dlg-person-delete-text" data-slot="person-delete-text"></p>
+            <div class="sheet-actions">
+              <button class="btn metal-btn btn-danger-solid" type="button" data-action="person-delete-confirm" data-i18n="split.remove.confirm">להסיר</button>
+              <button class="btn btn-ghost" type="button" data-close data-i18n="form.cancel">ביטול</button>
+            </div>
+          </div>
+        </dialog>
+    
+        <!-- Split: record or remove a repayment only after a yes -->
+        <dialog class="sheet dmetal" id="dlg-confirm" aria-labelledby="dlg-confirm-title" aria-describedby="dlg-confirm-text">
+          <div class="sheet-form">
+            <h2 id="dlg-confirm-title" data-slot="confirm-title"></h2>
+            <p class="sheet-hint" id="dlg-confirm-text" data-slot="confirm-text"></p>
+            <div class="sheet-actions">
+              <button class="btn metal-btn" type="button" data-action="confirm-yes" data-slot="confirm-yes"></button>
+              <button class="btn btn-ghost" type="button" data-close data-i18n="form.cancel">ביטול</button>
+            </div>
+          </div>
+        </dialog>
+    
+        <!-- Lists: add or edit a checklist item -->
+        <dialog class="sheet dmetal" id="dlg-item" aria-labelledby="dlg-item-title">
+          <form class="sheet-form" data-form="item" novalidate>
+            <h2 id="dlg-item-title" data-slot="item-title"></h2>
+            <label class="field"><span data-i18n="list.name">שם הפריט</span><input type="text" name="name" maxlength="60" autocomplete="off" aria-describedby="item-error"></label>
+            <div class="field-row">
+              <label class="field"><span data-i18n="list.group">קבוצה</span><select name="group" data-slot="item-group"></select></label>
+              <label class="field"><span data-i18n="list.qty">כמות</span><input class="ltr" type="text" name="qty" inputmode="numeric" autocomplete="off" aria-describedby="item-error"></label>
+            </div>
+            <label class="field"><span data-i18n="list.note">הערה (לא חובה)</span><input type="text" name="note" maxlength="140" autocomplete="off" aria-describedby="item-error"></label>
+            <label class="split-check"><input type="checkbox" name="verify"><span data-i18n="list.verify.toggle">תלוי בכללים: לבדוק במקור רשמי</span></label>
+            <fieldset class="verify-box" data-slot="verify-box">
+              <legend data-i18n="list.verify.title">בדיקה</legend>
+              <label class="field"><span data-i18n="list.verify.source">איפה בדקתם (מקור)</span><input type="text" name="source" maxlength="200" autocomplete="off" aria-describedby="item-error"></label>
+              <label class="field"><span data-i18n="list.verify.date">תאריך הבדיקה</span><input class="ltr" type="date" name="checkedAt" aria-describedby="item-error"></label>
+              <p class="sheet-hint" data-i18n="list.verify.hint">כללים משתנים. האפליקציה לא כותבת אותם כעובדה: בודקים במקור רשמי ורושמים כאן מתי.</p>
+            </fieldset>
+            <p class="form-error" id="item-error" role="alert"></p>
+            <div class="sheet-actions">
+              <button class="btn metal-btn" type="submit" data-i18n="form.save">שמירה</button>
+              <button class="btn btn-ghost" type="button" data-close data-i18n="form.cancel">ביטול</button>
+            </div>
+          </form>
+        </dialog>
+    
+        <!-- Lists: add or edit a task -->
+        <dialog class="sheet dmetal" id="dlg-task" aria-labelledby="dlg-task-title">
+          <form class="sheet-form" data-form="task" novalidate>
+            <h2 id="dlg-task-title" data-slot="task-title"></h2>
+            <label class="field"><span data-i18n="task.name">משימה</span><input type="text" name="title" maxlength="80" autocomplete="off" aria-describedby="task-error"></label>
+            <div class="field-row">
+              <label class="field"><span data-i18n="task.status">סטטוס</span><select name="status" data-slot="task-status"></select></label>
+              <label class="field"><span data-i18n="task.due">תאריך יעד (לא חובה)</span><input class="ltr" type="date" name="due" aria-describedby="task-error"></label>
+            </div>
+            <label class="field"><span data-i18n="task.note">הערה (לא חובה)</span><input type="text" name="note" maxlength="140" autocomplete="off" aria-describedby="task-error"></label>
+            <p class="form-error" id="task-error" role="alert"></p>
+            <div class="sheet-actions">
+              <button class="btn metal-btn" type="submit" data-i18n="form.save">שמירה</button>
+              <button class="btn btn-ghost" type="button" data-close data-i18n="form.cancel">ביטול</button>
+            </div>
+          </form>
+        </dialog>
+    
+        <!-- Lists: delete or load only after a yes -->
+        <dialog class="sheet dmetal" id="dlg-list-confirm" aria-labelledby="dlg-list-confirm-title" aria-describedby="dlg-list-confirm-text">
+          <div class="sheet-form">
+            <h2 id="dlg-list-confirm-title" data-slot="list-confirm-title"></h2>
+            <p class="sheet-hint" id="dlg-list-confirm-text" data-slot="list-confirm-text"></p>
+            <div class="sheet-actions">
+              <button class="btn metal-btn" type="button" data-action="list-confirm-yes" data-slot="list-confirm-yes"></button>
+              <button class="btn btn-ghost" type="button" data-close data-i18n="form.cancel">ביטול</button>
+            </div>
+          </div>
+        </dialog>
+    
+        <!-- Journal (6.0c): one note per day, from the calendar. Deleting asks first. -->
+        <!-- 9.0b: switch to the template, with a preview of what changes -->
+        <dialog class="sheet dmetal" id="dlg-template" aria-labelledby="dlg-template-title" aria-describedby="dlg-template-text">
+          <div class="sheet-form">
+            <h2 id="dlg-template-title" data-i18n="tpl.dlg.title">לעבור לתבנית החדשה?</h2>
+            <div class="sheet-hint" id="dlg-template-text" data-slot="template-preview"></div>
+            <div class="sheet-actions">
+              <button class="btn metal-btn" type="button" data-action="template-apply" data-i18n="tpl.dlg.yes">כן, לעבור</button>
+              <button class="btn btn-ghost" type="button" data-close data-i18n="form.cancel">ביטול</button>
+            </div>
+          </div>
+        </dialog>
+    
+        <!-- 9.0b: one category: its name for this trip, and moving money to another category -->
+        <dialog class="sheet dmetal" id="dlg-cat" aria-labelledby="dlg-cat-title">
+          <form class="sheet-form" data-form="cat" novalidate>
+            <h2 id="dlg-cat-title" data-slot="cat-title"></h2>
+            <label class="field"><span data-i18n="cat.name">שם הקטגוריה</span><input type="text" name="name" maxlength="40" autocomplete="off" aria-describedby="cat-error"></label>
+            <p class="sheet-hint" data-i18n="cat.moveHint">העברה לקטגוריה אחרת. הסכום הכולל לא משתנה.</p>
+            <div class="field-row">
+              <label class="field"><span data-i18n="cat.amount">סכום להעברה (₪, לא חובה)</span><input class="ltr" type="text" inputmode="decimal" name="amount" autocomplete="off" aria-describedby="cat-error"></label>
+              <label class="field"><span data-i18n="cat.to">אל</span><select name="to" data-slot="cat-to"></select></label>
+            </div>
+            <p class="form-error" id="cat-error" role="alert"></p>
+            <div class="sheet-actions">
+              <button class="btn metal-btn" type="submit" data-i18n="form.save">שמירה</button>
+              <button class="btn btn-ghost" type="button" data-close data-i18n="form.cancel">ביטול</button>
+            </div>
+          </form>
+        </dialog>
+    
+        <dialog class="sheet dmetal" id="dlg-note" aria-labelledby="dlg-note-title" aria-describedby="dlg-note-where">
+          <form class="sheet-form" data-form="note" novalidate>
+            <h2 id="dlg-note-title" data-slot="note-title"></h2>
+            <p class="sheet-hint" id="dlg-note-where"><span data-slot="note-date"></span><br><span data-slot="note-where"></span></p>
+            <label class="field"><span data-i18n="note.field">מה היה היום?</span><textarea name="note" rows="6" maxlength="1000" aria-describedby="note-error"></textarea></label>
+            <p class="form-error" id="note-error" role="alert"></p>
+            <div class="sheet-actions">
+              <button class="btn metal-btn" type="submit" data-i18n="form.save">שמירה</button>
+              <button class="btn btn-ghost" type="button" data-close data-i18n="form.cancel">ביטול</button>
+              <button class="btn btn-ghost" type="button" data-action="note-delete" data-i18n="note.delete" hidden>מחיקת ההערה</button>
+            </div>
+          </form>
+        </dialog>
+    
+        <dialog class="sheet dmetal" id="dlg-note-delete" aria-labelledby="dlg-note-delete-title" aria-describedby="dlg-note-delete-text">
+          <div class="sheet-form">
+            <h2 id="dlg-note-delete-title" data-i18n="note.deleteTitle">למחוק את ההערה?</h2>
+            <p class="sheet-hint" id="dlg-note-delete-text" data-slot="note-delete-text"></p>
+            <div class="sheet-actions">
+              <button class="btn metal-btn" type="button" data-action="note-delete-yes" data-i18n="note.deleteYes">כן, למחוק</button>
+              <button class="btn btn-ghost" type="button" data-close data-i18n="form.cancel">ביטול</button>
+            </div>
+          </div>
+        </dialog>
+    
+        <!-- Photo (7.0b): view, date, place, caption, star for the slideshow. Delete asks first. -->
+        <dialog class="sheet dmetal" id="dlg-photo" aria-labelledby="dlg-photo-title">
+          <form class="sheet-form" data-form="photo" novalidate>
+            <h2 id="dlg-photo-title" data-i18n="photo.dlgTitle">תמונה</h2>
+            <img class="photo-big" data-slot="photo-big" alt="">
+            <p class="sheet-hint" data-slot="photo-place"></p>
+            <div class="field-row">
+              <label class="field"><span data-i18n="photo.date">תאריך</span><input class="ltr" type="date" name="date" aria-describedby="photo-error photo-date-src"></label>
+              <label class="field"><span data-i18n="photo.stop">יעד</span><select name="stopId" data-slot="photo-stop"></select></label>
+            </div>
+            <p class="sheet-hint" id="photo-date-src" data-slot="photo-date-src"></p>
+            <label class="field"><span data-i18n="photo.caption">כיתוב (לא חובה)</span><input type="text" name="caption" maxlength="140" autocomplete="off" aria-describedby="photo-error"></label>
+            <label class="photo-star"><input type="checkbox" name="featured"><span data-i18n="photo.featured">להציג במצגת (עד 12)</span></label>
+            <p class="form-error" id="photo-error" role="alert"></p>
+            <div class="sheet-actions">
+              <button class="btn metal-btn" type="submit" data-i18n="form.save">שמירה</button>
+              <button class="btn btn-ghost" type="button" data-close data-i18n="form.cancel">ביטול</button>
+              <button class="btn btn-ghost" type="button" data-action="photo-delete" data-i18n="photo.delete">מחיקת התמונה</button>
+            </div>
+          </form>
+        </dialog>
+    
+        <dialog class="sheet dmetal" id="dlg-photo-delete" aria-labelledby="dlg-photo-delete-title" aria-describedby="dlg-photo-delete-text">
+          <div class="sheet-form">
+            <h2 id="dlg-photo-delete-title" data-i18n="photo.deleteTitle">למחוק את התמונה?</h2>
+            <p class="sheet-hint" id="dlg-photo-delete-text" data-i18n="photo.deleteText">התמונה תימחק מהטלפון. אם היא לא נמצאת בגיבוי תמונות, אי אפשר להחזיר אותה.</p>
+            <div class="sheet-actions">
+              <button class="btn metal-btn" type="button" data-action="photo-delete-yes" data-i18n="photo.deleteYes">כן, למחוק</button>
+              <button class="btn btn-ghost" type="button" data-close data-i18n="form.cancel">ביטול</button>
+            </div>
+          </div>
+        </dialog>
+    
+        <!-- Slideshow (7.0c): the summary "clip" is a slideshow, not a video file (owner decision A). -->
+        <dialog class="slides" id="dlg-show" aria-labelledby="dlg-show-title">
+          <div class="slides-inner">
+            <h2 class="sr-only" id="dlg-show-title" data-i18n="sum.show.title">מצגת</h2>
+            <img class="slides-img" data-slot="show-img" alt="">
+            <p class="slides-caption" data-slot="show-caption" aria-live="polite"></p>
+            <div class="slides-controls">
+              <button class="icon-btn slides-btn" type="button" data-action="show-prev" aria-label="הקודמת" data-i18n-label="sum.show.prev"><svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-next"/></svg></button>
+              <button class="icon-btn slides-btn" type="button" data-action="show-toggle" aria-label="עצירה" data-i18n-label="sum.show.pause"><svg class="icon" aria-hidden="true"><use data-slot="show-toggle-icon" href="./assets/icons.svg#i-pause"/></svg></button>
+              <span class="slides-count ltr" data-slot="show-count"></span>
+              <button class="icon-btn slides-btn" type="button" data-action="show-next" aria-label="הבאה" data-i18n-label="sum.show.next"><svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-prev"/></svg></button>
+              <button class="icon-btn slides-btn" type="button" data-close aria-label="סגירה" data-i18n-label="sum.show.close"><svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-close"/></svg></button>
+            </div>
+          </div>
+        </dialog>
+    
+        <!-- Check-in (6.0d): add or edit, all by hand. No opening time is worked out. -->
+        <dialog class="sheet dmetal" id="dlg-checkin" aria-labelledby="dlg-checkin-title">
+          <form class="sheet-form" data-form="checkin" novalidate>
+            <h2 id="dlg-checkin-title" data-slot="checkin-title"></h2>
+            <p class="sheet-hint" data-i18n="checkin.hint">לטיסה: מתי הצ'ק-אין נפתח. למלון: מתי מגיעים. כותבים את מה שנמסר לכם, בלי לנחש.</p>
+            <div class="field-row">
+              <label class="field"><span data-i18n="checkin.kind">סוג</span><select name="kind" data-slot="checkin-kind"></select></label>
+              <label class="field"><span data-i18n="checkin.zone">לפי שעון</span><select name="zone" data-slot="checkin-zone"></select></label>
+            </div>
+            <label class="field"><span data-i18n="checkin.title">שם</span><input type="text" name="title" maxlength="60" autocomplete="off" aria-describedby="checkin-error"></label>
+            <div class="field-row">
+              <label class="field"><span data-i18n="checkin.date">תאריך</span><input class="ltr" type="date" name="date" aria-describedby="checkin-error"></label>
+              <label class="field"><span data-i18n="checkin.time">שעה (לא חובה)</span><input class="ltr" type="time" name="time" aria-describedby="checkin-error"></label>
+            </div>
+            <label class="field" data-slot="checkin-flight-field"><span data-i18n="checkin.flight">טיסה מהרשימה (לא חובה)</span><select name="transferId" data-slot="checkin-flight"></select></label>
+            <label class="field" data-slot="checkin-stop-field" hidden><span data-i18n="checkin.stop">תחנה במסלול (לא חובה)</span><select name="stopId" data-slot="checkin-stop"></select></label>
+            <label class="field"><span data-i18n="checkin.booking">מספר הזמנה</span><input class="ltr" type="text" name="booking" maxlength="40" autocomplete="off" aria-describedby="checkin-error"></label>
+            <label class="field"><span data-i18n="checkin.link">קישור לצ'ק-אין (לא חובה)</span><input class="ltr" type="url" name="link" maxlength="300" autocomplete="off" aria-describedby="checkin-error"></label>
+            <label class="field"><span data-i18n="checkin.note">הערה (לא חובה)</span><input type="text" name="note" maxlength="140" autocomplete="off" aria-describedby="checkin-error"></label>
+            <p class="form-error" id="checkin-error" role="alert"></p>
+            <div class="sheet-actions">
+              <button class="btn metal-btn" type="submit" data-i18n="form.save">שמירה</button>
+              <button class="btn btn-ghost" type="button" data-close data-i18n="form.cancel">ביטול</button>
+            </div>
+          </form>
+        </dialog>
+    
+        <dialog class="sheet dmetal" id="dlg-checkin-delete" aria-labelledby="dlg-checkin-delete-title" aria-describedby="dlg-checkin-delete-text">
+          <div class="sheet-form">
+            <h2 id="dlg-checkin-delete-title" data-i18n="checkin.deleteTitle">למחוק את הצ'ק-אין?</h2>
+            <p class="sheet-hint" id="dlg-checkin-delete-text" data-slot="checkin-delete-text"></p>
+            <div class="sheet-actions">
+              <button class="btn metal-btn" type="button" data-action="checkin-delete-yes" data-i18n="checkin.deleteYes">כן, למחוק</button>
+              <button class="btn btn-ghost" type="button" data-close data-i18n="form.cancel">ביטול</button>
+            </div>
+          </div>
+        </dialog>
+    
+        <!-- Luggage (6.0e): bag, item, and delete after a yes -->
+        <dialog class="sheet dmetal" id="dlg-bag" aria-labelledby="dlg-bag-title">
+          <form class="sheet-form" data-form="bag" novalidate>
+            <h2 id="dlg-bag-title" data-slot="bag-title"></h2>
+            <label class="field"><span data-i18n="lug.bag.name">שם התיק</span><input type="text" name="name" maxlength="40" autocomplete="off" aria-describedby="bag-error"></label>
+            <label class="field"><span data-i18n="lug.bag.limit">מגבלה בק״ג (לא חובה)</span><input class="ltr" type="text" name="limit" inputmode="decimal" autocomplete="off" aria-describedby="bag-error"></label>
+            <p class="sheet-hint" data-i18n="lug.bag.limitHint">לפי מה שחברת התעופה מסרה לכם. בלי מגבלה, האפליקציה רק מסכמת.</p>
+            <p class="form-error" id="bag-error" role="alert"></p>
+            <div class="sheet-actions">
+              <button class="btn metal-btn" type="submit" data-i18n="form.save">שמירה</button>
+              <button class="btn btn-ghost" type="button" data-close data-i18n="form.cancel">ביטול</button>
+            </div>
+          </form>
+        </dialog>
+    
+        <dialog class="sheet dmetal" id="dlg-luggage-item" aria-labelledby="dlg-luggage-item-title">
+          <form class="sheet-form" data-form="luggage-item" novalidate>
+            <h2 id="dlg-luggage-item-title" data-slot="luggage-item-title"></h2>
+            <label class="field"><span data-i18n="lug.item.name">פריט</span><input type="text" name="name" maxlength="60" autocomplete="off" aria-describedby="luggage-item-error"></label>
+            <div class="field-row">
+              <label class="field"><span data-i18n="lug.item.weight">משקל בק״ג</span><input class="ltr" type="text" name="weight" inputmode="decimal" autocomplete="off" aria-describedby="luggage-item-error"></label>
+              <label class="field"><span data-i18n="lug.item.bag">תיק</span><select name="bagId" data-slot="luggage-item-bag"></select></label>
+            </div>
+            <p class="form-error" id="luggage-item-error" role="alert"></p>
+            <div class="sheet-actions">
+              <button class="btn metal-btn" type="submit" data-i18n="form.save">שמירה</button>
+              <button class="btn btn-ghost" type="button" data-close data-i18n="form.cancel">ביטול</button>
+            </div>
+          </form>
+        </dialog>
+    
+        <dialog class="sheet dmetal" id="dlg-luggage-delete" aria-labelledby="dlg-luggage-delete-title" aria-describedby="dlg-luggage-delete-text">
+          <div class="sheet-form">
+            <h2 id="dlg-luggage-delete-title" data-i18n="lug.delete.title">למחוק?</h2>
+            <p class="sheet-hint" id="dlg-luggage-delete-text" data-slot="luggage-delete-text"></p>
+            <div class="sheet-actions">
+              <button class="btn metal-btn" type="button" data-action="luggage-delete-yes" data-i18n="lug.delete.yes">כן, למחוק</button>
+              <button class="btn btn-ghost" type="button" data-close data-i18n="form.cancel">ביטול</button>
+            </div>
+          </div>
+        </dialog>
+    
+        <!-- Transfers: add or edit (all by hand) -->
+        <dialog class="sheet dmetal" id="dlg-transfer" aria-labelledby="dlg-transfer-title">
+          <form class="sheet-form" data-form="transfer" novalidate>
+            <h2 id="dlg-transfer-title" data-slot="transfer-title"></h2>
+            <div class="field-row">
+              <label class="field"><span data-i18n="transfer.kind">סוג</span><select name="kind" data-slot="transfer-kind"></select></label>
+              <label class="field"><span data-i18n="transfer.status">סטטוס</span><select name="status" data-slot="transfer-status"></select></label>
+            </div>
+            <div class="field-row">
+              <label class="field"><span data-i18n="transfer.from">מוצא</span><input type="text" name="from" maxlength="60" autocomplete="off" aria-describedby="transfer-error"></label>
+              <label class="field"><span data-i18n="transfer.to">יעד</span><input type="text" name="to" maxlength="60" autocomplete="off" aria-describedby="transfer-error"></label>
+            </div>
+            <div class="field-row">
+              <label class="field"><span data-i18n="transfer.date">תאריך</span><input class="ltr" type="date" name="date" aria-describedby="transfer-error"></label>
+              <label class="field"><span data-i18n="transfer.time">שעה (לא חובה)</span><input class="ltr" type="time" name="time" aria-describedby="transfer-error"></label>
+            </div>
+            <div class="field-row">
+              <label class="field"><span data-i18n="transfer.company">חברה</span><input type="text" name="company" maxlength="60" autocomplete="off"></label>
+              <label class="field"><span data-i18n="transfer.booking">מספר הזמנה</span><input class="ltr" type="text" name="booking" maxlength="40" autocomplete="off" aria-describedby="transfer-error"></label>
+            </div>
+            <div class="field-row field-row-money">
+              <label class="field field-grow"><span data-i18n="transfer.price">מחיר (לא חובה)</span><input class="ltr" type="text" name="price" inputmode="decimal" autocomplete="off" aria-describedby="transfer-error"></label>
+              <label class="field"><span data-i18n="exp.currency">מטבע</span><select name="currency" data-slot="transfer-currency"></select></label>
+            </div>
+            <p class="sheet-hint" data-i18n="transfer.priceHint">מחיר נכנס לתקציב כהוצאה אחת, בקטגוריה טיסה או נסיעות, לפי הסטטוס.</p>
+            <label class="field"><span data-i18n="transfer.link">קישור להזמנה (לא חובה)</span><input class="ltr" type="url" name="link" maxlength="300" autocomplete="off" aria-describedby="transfer-error"></label>
+            <label class="field"><span data-i18n="transfer.note">הערה (לא חובה)</span><input type="text" name="note" maxlength="140" autocomplete="off"></label>
+            <p class="form-error" id="transfer-error" role="alert"></p>
+            <div class="sheet-actions">
+              <button class="btn metal-btn" type="submit" data-i18n="form.save">שמירה</button>
+              <button class="btn btn-ghost" type="button" data-close data-i18n="form.cancel">ביטול</button>
+            </div>
+          </form>
+        </dialog>
+    
+        <!-- Transfers: delete after a yes; the linked expense goes too only if ticked -->
+        <dialog class="sheet dmetal" id="dlg-transfer-delete" aria-labelledby="dlg-transfer-delete-title" aria-describedby="dlg-transfer-delete-text">
+          <div class="sheet-form">
+            <h2 id="dlg-transfer-delete-title" data-i18n="transfer.delete.title">מחיקה</h2>
+            <p class="sheet-hint" id="dlg-transfer-delete-text" data-slot="transfer-delete-text"></p>
+            <label class="split-check" data-slot="transfer-delete-expense"><input type="checkbox" name="withExpense" checked><span data-i18n="transfer.delete.withExpense">למחוק גם את ההוצאה המקושרת במסך הכסף</span></label>
+            <div class="sheet-actions">
+              <button class="btn metal-btn btn-danger-solid" type="button" data-action="transfer-delete-confirm" data-i18n="stop.delete.confirm">למחוק</button>
+              <button class="btn btn-ghost" type="button" data-close data-i18n="form.cancel">ביטול</button>
+            </div>
+          </div>
+        </dialog>
+    
+        <div class="toast" role="status" aria-live="polite" data-slot="toast"></div>
+      </div>
+    </body>
+    </html>
+    
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage9-flights.test.js:220:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..19
+# tests 19
+# suites 0
+# pass 0
+# fail 19
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 89.12982

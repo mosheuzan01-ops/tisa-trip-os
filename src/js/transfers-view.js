@@ -2,8 +2,9 @@
 // (core/transfers.js), and each stop on the itinerary lists the transfers on its days. All copy from locales.
 import { interpolate } from './core/i18n.js';
 import {
-  KINDS, TRANSFER_STATUSES, validateTransfer, saveTransfer, removeTransfer, sortTransfers,
+  KINDS, TRANSFER_STATUSES, TICKETS, validateTransfer, saveTransfer, removeTransfer, sortTransfers,
 } from './core/transfers.js';
+import { parseFlightsFile, importFlights } from './core/flights.js';
 import { currenciesFor } from './core/money.js';
 import { formatDate } from './core/itinerary.js';
 import { moneyState, formatMinor } from './money-view.js';
@@ -50,10 +51,19 @@ export function renderTransfers(ctx) {
     top.append(actions);
     const meta = el('p', 'exp-meta');
     meta.append(el('span', '', formatDate(x.date, fmtLocale)), el('span', x.time ? 'ltr' : 'muted', x.time || t('transfer.timeNone')), el('span', '', t(`transfer.kind.${x.kind}`)));
+    if (x.flightNo) meta.append(el('span', 'ltr transfer-flightno', x.flightNo));
     if (x.company) meta.append(el('span', '', x.company));
     if (x.booking) meta.append(el('span', '', interpolate(t('transfer.bookingShort'), { booking: x.booking })));
     if (Number.isInteger(x.priceMinor)) meta.append(el('span', 'ltr transfer-price', formatMinor(x.priceMinor, x.currency, fmtLocale)));
+    if (x.kind === 'flight' && (x.ticket === 'roundtrip' || x.ticket === 'included')) meta.append(el('span', 'badge transfer-ticket', t(`transfer.ticketShort.${x.ticket}`)));
     li.append(top, meta);
+    // Stage 9 PR 2: seat details stay on the flight; the seat payment is shown as not in the budget.
+    if (x.kind === 'flight' && (x.seat || Number.isInteger(x.seatPriceMinor))) {
+      const seat = el('p', 'exp-meta transfer-seat');
+      if (x.seat) seat.append(el('span', '', interpolate(t('transfer.seatShort'), { seat: x.seat })));
+      if (Number.isInteger(x.seatPriceMinor)) seat.append(el('span', '', interpolate(t('transfer.seatPriceShort'), { price: formatMinor(x.seatPriceMinor, x.currency, fmtLocale) })));
+      li.append(seat);
+    }
     if (x.note) li.append(el('p', 'item-note', x.note));
     if (x.link) {
       const a = el('a', 'transfer-link', t('transfer.openLink'));
@@ -80,6 +90,9 @@ export function setupTransfers(ctx, { wireDialog, showFormErrors }) {
   const form = $('[data-form="transfer"]');
   let editing = null;
   wireDialog(dlg, restore);
+  const FIELDS = ['kind', 'from', 'to', 'date', 'time', 'flightNo', 'ticket', 'seat', 'company', 'booking', 'currency', 'link', 'status', 'note'];
+  const showFlight = () => { $('[data-slot="transfer-flight"]').hidden = form.kind.value !== 'flight'; };
+  form.kind.addEventListener('change', showFlight);
   function open(x, from) {
     opener = from;
     editing = x;
@@ -88,23 +101,30 @@ export function setupTransfers(ctx, { wireDialog, showFormErrors }) {
     $('[data-slot="transfer-title"]').textContent = t(x ? 'transfer.editTitle' : 'transfer.addTitle');
     $('[data-slot="transfer-kind"]').replaceChildren(...KINDS.map((k) => option(k, t(`transfer.kind.${k}`))));
     $('[data-slot="transfer-status"]').replaceChildren(...Object.keys(TRANSFER_STATUSES).map((k) => option(k, t(`transfer.status.${k}`))));
+    $('[data-slot="transfer-ticket"]').replaceChildren(...TICKETS.map((k) => option(k, t(`transfer.ticket.${k}`))));
     const currencies = currenciesFor(moneyState(ctx).rates);
     $('[data-slot="transfer-currency"]').replaceChildren(...currencies.map((c) => option(c, c)));
     if (x) {
-      for (const k of ['kind', 'from', 'to', 'date', 'time', 'company', 'booking', 'currency', 'link', 'status', 'note']) form[k].value = x[k] ?? '';
-      form.price.value = Number.isInteger(x.priceMinor) ? (x.priceMinor / 100).toFixed(x.priceMinor % 100 ? 2 : 0) : '';
+      for (const k of FIELDS) form[k].value = x[k] ?? '';
+      if (!form.ticket.value) form.ticket.value = 'oneway'; // records from before Stage 9 have no ticket
+      const asText = (m) => (Number.isInteger(m) ? (m / 100).toFixed(m % 100 ? 2 : 0) : '');
+      form.price.value = asText(x.priceMinor);
+      form.seatPrice.value = asText(x.seatPriceMinor);
     } else {
       form.kind.value = 'flight';
       form.status.value = 'planned';
+      form.ticket.value = 'oneway';
       form.currency.value = currencies[0];
     }
+    showFlight();
     dlg.showModal();
     form.from.focus();
   }
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     const m = moneyState(ctx);
-    const input = Object.fromEntries(['kind', 'from', 'to', 'date', 'time', 'company', 'booking', 'price', 'currency', 'link', 'status', 'note'].map((k) => [k, form[k].value]));
+    const input = Object.fromEntries([...FIELDS, 'price', 'seatPrice'].map((k) => [k, form[k].value]));
+    if (input.kind !== 'flight') Object.assign(input, { flightNo: '', ticket: 'oneway', seat: '', seatPrice: '' }); // hidden fields never block a bus
     const errors = validateTransfer(input, currenciesFor(m.rates));
     if (errors.length) { showFormErrors(t, form, errors, 'transferErr'); return; }
     let savedId = null;
@@ -115,7 +135,7 @@ export function setupTransfers(ctx, { wireDialog, showFormErrors }) {
       trip.expenses = next.expenses;
       savedId = editing?.id ?? next.transfers[next.transfers.length - 1].id;
     }, { now: true });
-    ctx.toast(!result?.ok ? 'form.saveFailed' : (input.price.trim() ? 'transfer.saved' : 'transfer.savedNoPrice'));
+    ctx.toast(!result?.ok ? 'form.saveFailed' : (input.price.trim() && input.ticket !== 'included' ? 'transfer.saved' : 'transfer.savedNoPrice'));
     opener = $(`#panel-transfers [data-action="transfer-edit"][data-id="${savedId}"]`) ?? opener;
     dlg.close();
   });
@@ -139,10 +159,51 @@ export function setupTransfers(ctx, { wireDialog, showFormErrors }) {
     dlgDel.close();
   });
 
+  // ---------- Stage 9 PR 2: import a latisa-flights file, after a yes ----------
+  const fileInput = $('#flights-import-file');
+  const importError = $('[data-slot="flights-import-error"]');
+  const dlgImport = $('#dlg-flights-import');
+  const importYes = $('[data-action="flights-import-confirm"]');
+  let pendingFlights = null;
+  wireDialog(dlgImport, () => { pendingFlights = null; fileInput.value = ''; restore(); });
+  const importOpts = (m) => ({ rates: m.rates, currencies: currenciesFor(m.rates), makeId: () => makeId() });
+  fileInput.addEventListener('change', async () => {
+    const file = fileInput.files?.[0];
+    if (!file) return;
+    let text;
+    try { text = await file.text(); } catch { importError.textContent = t('flights.import.err.read'); fileInput.value = ''; return; }
+    const parsed = parseFlightsFile(text);
+    if (!parsed.ok) { importError.textContent = t(`flights.import.err.${parsed.error}`); fileInput.value = ''; return; }
+    const preview = importFlights(ctx.trip(), parsed.flights, importOpts(moneyState(ctx))); // a dry run: nothing is saved
+    pendingFlights = parsed.flights;
+    $('[data-slot="flights-import-text"]').textContent = interpolate(t('flights.import.text'), { added: preview.added, dup: preview.duplicates.length, bad: preview.invalid.length });
+    importYes.disabled = preview.added === 0;
+    dlgImport.showModal();
+    (preview.added ? importYes : dlgImport.querySelector('[data-close]')).focus();
+  });
+  importYes.addEventListener('click', () => {
+    const flights = pendingFlights;
+    if (!flights) return;
+    pendingFlights = null; // a double tap imports once
+    const m = moneyState(ctx);
+    let added = 0;
+    const result = ctx.change((st) => {
+      const trip = st.trips[st.activeTripId];
+      const r = importFlights(trip, flights, importOpts(m)); // against the saved trip, so a duplicate is never added
+      trip.transfers = r.trip.transfers;
+      trip.expenses = r.trip.expenses;
+      added = r.added;
+    }, { now: true });
+    dlgImport.close();
+    if (!result?.ok) { ctx.toast('form.saveFailed'); return; }
+    if (added) ctx.toast('flights.import.done', { n: added }); else ctx.toast('flights.import.nothing');
+  });
+
   panel.addEventListener('click', (e) => {
     const btn = e.target.closest('button[data-action]');
     if (!btn) return;
     const { action, id } = btn.dataset;
+    if (action === 'flights-import') { opener = btn; importError.textContent = ''; fileInput.click(); }
     if (action === 'transfer-add') open(null, btn);
     if (action === 'transfer-edit') open(list().find((x) => x.id === id), btn);
     if (action === 'transfer-delete') {

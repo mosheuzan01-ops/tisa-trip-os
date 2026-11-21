@@ -16,8 +16,11 @@ const id = () => `i${++n}`;
 const item = (o) => makeItem({ group: 'documents', name: 'דרכון', qty: '1', note: '', ...o }, id);
 
 test('six groups: three for preparation, three for packing', () => {
-  assert.deepEqual(GROUPS, ['documents', 'money', 'comms', 'health', 'clothing', 'chargers']);
-  assert.deepEqual(GROUPS.map(groupKind), ['prep', 'prep', 'prep', 'pack', 'pack', 'pack']);
+  // Stage 9 PR 2 (owner request) added offline / flightFood / flightComfort; the six first groups keep order and kind.
+  const six = ['documents', 'money', 'comms', 'health', 'clothing', 'chargers'];
+  assert.deepEqual(GROUPS.filter((g) => six.includes(g)), six);
+  assert.deepEqual(six.map(groupKind), ['prep', 'prep', 'prep', 'pack', 'pack', 'pack']);
+  assert.deepEqual(GROUPS.filter((g) => !six.includes(g)), ['offline', 'flightFood', 'flightComfort']);
 });
 
 test('validateItem: name, quantity, note and group are checked', () => {
@@ -64,7 +67,9 @@ test('S5-8: rule-dependent items stay "to check" until a check date is written; 
 
 test('S5-8: the starter list and tasks hold names only: no numbers, rules, dates or medicine names', () => {
   assert.ok(TH.checklistSeed.length >= 12);
-  assert.deepEqual([...new Set(TH.checklistSeed.map((x) => x.group))].sort(), [...GROUPS].sort(), 'every group has items');
+  // Stage 9 PR 2: the three flight groups are filled by TH.flightChecklistSeed (tests/stage9-flights.test.js C-2).
+  const flightGroups = ['offline', 'flightFood', 'flightComfort'];
+  assert.deepEqual([...new Set(TH.checklistSeed.map((x) => x.group))].sort(), GROUPS.filter((g) => !flightGroups.includes(g)).sort(), 'every group has items');
   for (const x of [...TH.checklistSeed, ...TH.taskSeed]) {
     const text = JSON.stringify(x.name ?? x.title);
     assert.doesNotMatch(text, /\d/, `no numbers: ${text}`);

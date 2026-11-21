@@ -1,0 +1,23 @@
+PASS  F flight fields show for a flight only
+PASS  F-3 round trip: one flight expense for the ticket price
+PASS  F-4 seat payment kept on the flight, not in the budget
+PASS  F card shows number, round trip, seat and "not in the budget"
+PASS  F-3 return leg: a price is refused; without one it saves and the budget is unchanged
+PASS  F-1 a bad flight number is refused with a message
+PASS  I import: the dialog counts 1 new, 1 already here, 1 invalid; nothing saved before yes
+PASS  I-3 the duplicate kept its own price, status, note and expense
+PASS  I-2 the new return leg came in with its seat; the budget did not change
+PASS  I-6 the rest of the trip is untouched
+PASS  I-4 the same file twice: 0 new, import disabled, no change
+PASS  I-1 a file of another format: a message and no change
+PASS  I the "import flights" button opens the file picker
+PASS  M transfers screen: no horizontal scroll at 390px
+PASS  F-3 the money screen lists the round trip once
+PASS  C-1 flight items added in three new groups; own items and ticks unchanged
+PASS  C-3 pressing again adds nothing and keeps the tick
+PASS  M lists screen: no horizontal scroll at 390px
+PASS  B backup and restore keep flight number, ticket, seat and the single expense
+PASS  D desktop: import works and the screen has no horizontal scroll
+PASS  O offline: flights.js is cached; import and flight items work with no network
+PASS  no JS errors
+ALL PASS
