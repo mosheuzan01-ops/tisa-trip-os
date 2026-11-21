@@ -1,0 +1,20 @@
+PASS  L-1/L-3 mobile: title, LATISA word and icon in the top bar
+PASS  M mobile: no sideways scroll
+PASS  L-1/L-3 desktop: title, LATISA word and icon in the top bar
+PASS  M desktop: no sideways scroll
+PASS  L-4 mobile light: About card is dark with the full dark logo, text AA
+PASS  M mobile light: settings, no sideways scroll
+PASS  L-4 mobile dark: About card is dark with the full dark logo, text AA
+PASS  M mobile dark: settings, no sideways scroll
+PASS  L-4 desktop light: About card is dark with the full dark logo, text AA
+PASS  M desktop light: settings, no sideways scroll
+PASS  L-4 desktop dark: About card is dark with the full dark logo, text AA
+PASS  M desktop dark: settings, no sideways scroll
+PASS  L-5 mobile: brand.html full logo, light on light and dark on dark, icons load
+PASS  M mobile: brand.html no sideways scroll
+PASS  L-5 desktop: brand.html full logo, light on light and dark on dark, icons load
+PASS  M desktop: brand.html no sideways scroll
+PASS  L-6 every favicon, touch and manifest icon loads as a square PNG
+PASS  O offline: brand files are cached, icon and logo show with no network
+PASS  no JS errors
+ALL PASS

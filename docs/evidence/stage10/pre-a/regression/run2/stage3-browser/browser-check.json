@@ -1,0 +1,183 @@
+{
+  "S3-1": {
+    "result": "PASS",
+    "afterReload": [
+      "בנגקוק",
+      "קו טאו"
+    ],
+    "rawKeys": [
+      "tisa:v1"
+    ]
+  },
+  "S3-2 (screen)": {
+    "result": "PASS",
+    "order": [
+      "בנגקוק",
+      "קו טאו"
+    ],
+    "summary": "2 תחנות, 6 לילות",
+    "nightsShown": [
+      "3 לילות",
+      "3 לילות"
+    ]
+  },
+  "S3-3": {
+    "result": "PASS",
+    "err": "תאריך העזיבה לא יכול להיות לפני תאריך ההגעה.",
+    "dialogStillOpen": true,
+    "savedAfterError": 0,
+    "warnText": "התאריכים חופפים לבנגקוק. אפשר לשמור בכל זאת.",
+    "buttonText": "לשמור בכל זאת",
+    "savedBeforeSecondTap": 2,
+    "listWarn": "התאריכים של בנגקוק ושל קו פנגן חופפים.התאריכים של קו פנגן ושל קו טאו חופפים."
+  },
+  "S3-4": {
+    "result": "PASS",
+    "editWarn": "התאריכים חופפים לקו פנגן. אפשר לשמור בכל זאת.",
+    "edited": [
+      "בנגקוק",
+      "קו פנגן",
+      "קו טאו (צלילה)"
+    ],
+    "moved": [
+      "קו פנגן",
+      "בנגקוק",
+      "קו טאו (צלילה)"
+    ],
+    "movedData": [
+      [
+        "קו פנגן",
+        "2027-01-27",
+        "2027-01-29"
+      ],
+      [
+        "בנגקוק",
+        "2027-01-28",
+        "2027-01-31"
+      ],
+      [
+        "קו טאו (צלילה)",
+        "2027-01-30",
+        "2027-02-02"
+      ]
+    ],
+    "askText": "למחוק את קו טאו (צלילה)? אי אפשר לבטל את זה.",
+    "afterCancel": 3,
+    "afterDelete": 2
+  },
+  "S3-5": {
+    "result": "PASS",
+    "before": {
+      "got": {
+        "phase": "before",
+        "place": "בנגקוק",
+        "today": null,
+        "ariaCurrent": 0
+      },
+      "ok": true
+    },
+    "during": {
+      "got": {
+        "phase": "during",
+        "place": "פאי",
+        "today": "פאי",
+        "ariaCurrent": 1
+      },
+      "ok": true
+    },
+    "handover": {
+      "got": {
+        "phase": "during",
+        "place": "פוקט",
+        "today": "פוקט",
+        "ariaCurrent": 1
+      },
+      "ok": true
+    },
+    "bangkok-midnight": {
+      "got": {
+        "phase": "during",
+        "place": "פוקט",
+        "today": "פוקט",
+        "ariaCurrent": 1
+      },
+      "ok": true
+    },
+    "after": {
+      "got": {
+        "phase": "after",
+        "place": "",
+        "today": null,
+        "ariaCurrent": 0
+      },
+      "ok": true
+    }
+  },
+  "S3-11": {
+    "result": "PASS",
+    "seedText": "",
+    "seedOk": true,
+    "previewRows": 11,
+    "firstRow": "בנגקוקהיה: 5 בדצמ׳ – 8 בדצמ׳יהיה: 7 בדצמ׳ – 10 בדצמ׳",
+    "savedBeforeConfirm": "2026-12-05",
+    "shiftedFirst": {
+      "id": "320f13f1-abd8-4c88-9420-cf71e28e98cb",
+      "name": "בנגקוק",
+      "startDate": "2026-12-07",
+      "endDate": "2026-12-10",
+      "note": ""
+    },
+    "flexErr": "היעד הגמיש יכול להיות 1 עד 2 לילות. השינוי גדול מדי.",
+    "flexDisabled": true,
+    "flexRows": 2,
+    "tao": {
+      "id": "95b802b0-691f-42b2-8ca8-14ea75e955bf",
+      "name": "קו טאו",
+      "startDate": "2027-01-03",
+      "endDate": "2027-01-05",
+      "note": "",
+      "flexible": true,
+      "nightsRange": [
+        1,
+        2
+      ]
+    }
+  },
+  "S3-9 (browser)": {
+    "result": "PASS",
+    "dir": "rtl",
+    "width": 375,
+    "hscroll": false,
+    "small": [],
+    "tiny": []
+  },
+  "S3-7": {
+    "result": "PASS",
+    "exportedStops": 11,
+    "wiped": 0,
+    "identical": true,
+    "shown": 11
+  },
+  "S3-6": {
+    "result": "PASS",
+    "caches": {
+      "keys": [
+        "tisa-0.8.3"
+      ],
+      "hasView": true,
+      "hasCore": true,
+      "hasPack": true
+    },
+    "version": "0.8.3",
+    "offlineBanner": [
+      "אין חיבור לאינטרנט. הכול שמור במכשיר וממשיך לעבוד.",
+      ""
+    ],
+    "stopsOffline": 12
+  },
+  "no errors / no outside requests": {
+    "result": "PASS",
+    "errors": [],
+    "external": []
+  }
+}
