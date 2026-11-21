@@ -162,8 +162,8 @@ async function setup(browser, w, h) {
     await page.waitForFunction(() => document.querySelector('[data-search="lists"]').dataset.query === '');
     const lCleared = { items: await page.locator('#panel-checklist .item').count(), tasks: await page.locator('#panel-checklist .task').count(), noResultsHidden: await page.locator('[data-slot="lists-no-results"]').isHidden() };
     // Pre-stage-10 PR A: the built-in list (61 items) has two more names with "בנגקוק" and two with "eSIM".
-    const bkk = ['כתובת הלינה הראשונה בבנגקוק באנגלית', 'מפות אופליין לבנגקוק וליעדים במסלול', 'כבל טעינה ומטען נייד'];
-    pass(`S51-4 lists (${tag})`, JSON.stringify(li.items) === JSON.stringify(bkk) && li.tasks.length === 1 && li.tasks[0] === 'לאשר מלון בבנגקוק' && /3 פריטים.*משימה אחת/.test(li.summary)
+    const bkkItems = ['כתובת הלינה הראשונה בבנגקוק באנגלית', 'מפות אופליין לבנגקוק וליעדים במסלול', 'כבל טעינה ומטען נייד'];
+    pass(`S51-4 lists (${tag})`, JSON.stringify(li.items) === JSON.stringify(bkkItems) && li.tasks.length === 1 && li.tasks[0] === 'לאשר מלון בבנגקוק' && /3 פריטים.*משימה אחת/.test(li.summary)
       && lh.items === 0 && lh.tasks.length === 1 && esim.length === 2 && esim.every((x) => /eSIM/.test(x))
       && lEmpty.text === 'אין תוצאות' && lEmpty.visible && bars1 === bars0 && lCleared.items === 61 && lCleared.tasks === 8 && lCleared.noResultsHidden,
     { li, lh, esim, lEmpty, bars0, bars1, lCleared });
