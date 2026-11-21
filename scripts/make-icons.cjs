@@ -2,6 +2,12 @@
 // aircraft window at sunset. Colors are read from src/css/tokens.css (light theme), so the icon follows the palette.
 // Needs a Chromium through Playwright on the developer's machine; the app itself has no dependencies.
 // Run: node scripts/make-icons.cjs
+// RETIRED in 0.8.2 (Stage 9 PR 3): the icons now come from the approved LATISA artwork, built by
+// scripts/brand/build-brand.py. Running this would overwrite them with the old window icon, so it stops unless forced.
+if (process.env.FORCE_OLD_ICONS !== '1') {
+  console.error('Retired: use python3 scripts/brand/build-brand.py (set FORCE_OLD_ICONS=1 to draw the old icons anyway).');
+  process.exit(1);
+}
 const { readFileSync, mkdirSync } = require('node:fs');
 const { join } = require('node:path');
 const { chromium } = require('playwright');

@@ -16,6 +16,14 @@ code { font: 500 .9em var(--font-mono); }
 .bk-ctx-label { font: 500 var(--text-caption)/1 var(--font-mono); letter-spacing: .14em; color: var(--muted); }
 .bk-logo { display: flex; align-items: center; gap: var(--space-3); color: var(--title); padding-block: var(--space-4); }
 .bk-logo .icon { width: 56px; height: 56px; stroke-width: 1.4; }
+.bk-ctx-deep { background: var(--deep); border-color: var(--deep-line); }
+.bk-full { display: block; width: 100%; max-width: 560px; height: auto; margin-inline: auto; }
+.bk-mark { width: 56px; height: 56px; border-radius: 12px; }
+.bk-appicons { display: flex; flex-wrap: wrap; align-items: end; gap: var(--space-5); }
+.bk-appicons figure { margin: 0; display: grid; justify-items: center; gap: var(--space-2); }
+.bk-appicons figcaption { font: 500 var(--text-caption)/1 var(--font-mono); color: var(--muted); }
+.bk-appicons .mask-ios { border-radius: 22.37%; }
+.bk-appicons .mask-circle { border-radius: 50%; }
 .bk-logo .brand-word { font-size: 2rem; letter-spacing: .3em; }
 
 .bk-group { display: grid; gap: var(--space-2); }

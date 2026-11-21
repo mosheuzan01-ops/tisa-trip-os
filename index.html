@@ -5,15 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="color-scheme" content="light dark">
   <meta name="referrer" content="no-referrer">
-  <title>TISA, תכנון הטיול במקום אחד</title>
+  <title>LATISA, תכנון הטיול במקום אחד</title>
   <meta name="description" content="מסלול, תקציב, רשימות ומסמכים של הטיול במקום אחד. עובד גם בלי אינטרנט, והנתונים נשמרים רק במכשיר שלכם. גרסה ניסיונית.">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="he_IL">
-  <meta property="og:title" content="TISA, תכנון הטיול במקום אחד">
+  <meta property="og:title" content="LATISA, תכנון הטיול במקום אחד">
   <meta property="og:description" content="מסלול, תקציב, רשימות ומסמכים של הטיול במקום אחד. עובד גם בלי אינטרנט, והנתונים נשמרים רק במכשיר שלכם. גרסה ניסיונית.">
   <meta property="og:image" content="https://mosheuzan01-ops.github.io/tisa-trip-os/icons/icon-512.png">
   <link rel="manifest" href="./manifest.webmanifest">
-  <link rel="icon" href="./icons/icon-192.png" type="image/png">
+  <link rel="icon" href="./icons/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="./icons/icon-192.png" sizes="192x192" type="image/png">
   <link rel="apple-touch-icon" href="./icons/apple-touch-icon-180.png">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <script src="./src/js/theme-boot.js"></script>
@@ -28,9 +29,9 @@
 
   <div class="app">
     <header class="topbar">
-      <a class="brand" href="#/home" data-i18n-label="a11y.brand" aria-label="TISA, מסך הבית">
-        <svg class="icon brand-mark" aria-hidden="true"><use href="./assets/icons.svg#i-mark"/></svg>
-        <span class="brand-word ltr">TISA</span>
+      <a class="brand" href="#/home" data-i18n-label="a11y.brand" aria-label="LATISA, מסך הבית">
+        <img class="brand-mark" src="./assets/brand/latisa-mark.png" alt="" width="30" height="30">
+        <span class="brand-word ltr">LATISA</span>
       </a>
       <div class="topbar-actions">
       <a class="icon-btn settings-btn" href="#/settings" data-route="settings" data-i18n-label="settings.open" aria-label="הגדרות">
@@ -784,6 +785,12 @@
           <h2 id="set-reset-title" data-i18n="settings.reset.title">התחלה מחדש</h2>
           <p data-i18n="settings.reset.text">מוחק את כל הנתונים במכשיר הזה.</p>
           <button class="btn btn-ghost btn-danger" type="button" data-action="reset-open" data-i18n="settings.reset.open">איפוס הנתונים</button>
+        </section>
+
+        <section class="card about-card" aria-labelledby="set-about-title">
+          <h2 id="set-about-title" data-i18n="settings.about.title">אודות</h2>
+          <img class="about-logo" src="./assets/brand/latisa-logo-dark.png" alt="לוגו LATISA ו-Tripilot: טיסות, טיולים, ניהול תקציב בחופשה" data-i18n-alt="settings.about.logoAlt" width="1000" height="676" loading="lazy" decoding="async">
+          <p data-i18n="settings.about.text">תכנון הטיול במקום אחד. עובד גם בלי אינטרנט, והנתונים נשמרים רק במכשיר שלכם.</p>
         </section>
 
         <section class="settings-version" aria-labelledby="set-version-title">

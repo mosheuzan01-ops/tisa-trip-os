@@ -1,0 +1,81 @@
+{
+  "S9-4 new trip: the template is the default; the 3 old profiles are in a folded archive marked stale": {
+    "result": "PASS",
+    "checked": "plan20k",
+    "archiveIds": [
+      "saver",
+      "realistic",
+      "comfort"
+    ]
+  },
+  "S9-1 template: 20,000 base, emergency 2,500 shown apart and not counted in it": {
+    "result": "PASS",
+    "total": "‏20,000 ‏₪",
+    "em": "קרן חירום ‏2,500 ‏₪, בנפרד: לא כלולה בתקציב של ‏20,000 ‏₪. יחד עם החירום: ‏22,500 ‏₪."
+  },
+  "S9-2 daily base 468.75 for 32 dates; dates, nights and lodging nights shown": {
+    "result": "PASS",
+    "base": "בסיס יומי: ‏468.75 ‏₪ (‏15,000 ‏₪ בלי טיסה, חלקי 32 תאריכים).",
+    "counts": "32 תאריכים, 31 לילות, 0 לילות לינה (הלילה הראשון בטיסה)."
+  },
+  "S9-1 template names; \"green\" hidden while empty": {
+    "result": "PASS",
+    "cats": [
+      "flight",
+      "insurance-sim-gear",
+      "lodging",
+      "food",
+      "transport",
+      "attractions",
+      "misc"
+    ],
+    "foodName": "אוכל ושתייה"
+  },
+  "S9-3 route from the dates: Bangkok first and last, southern islands, marked as a suggestion, transfers not entered": {
+    "result": "PASS",
+    "names": [
+      "בנגקוק",
+      "קו סמוי",
+      "קו טאו",
+      "פוקט",
+      "קו פי פי",
+      "קו לנטה",
+      "בנגקוק"
+    ],
+    "note": "הצעת מסלול, לא הוזמן. נבנתה לפי תאריכי הטיול, ואפשר לערוך כל תחנה.",
+    "missing": 6,
+    "counts2": "32 תאריכים, 31 לילות, 30 לילות לינה (הלילה הראשון בטיסה)."
+  },
+  "v6: the old data is kept once under its own key before migrating": {
+    "result": "PASS",
+    "kept": 6566,
+    "seed": 6566
+  },
+  "S9-5 decline: one card, nothing changed, not shown again": {
+    "result": "PASS"
+  },
+  "S9-5 apply: expenses and everything else unchanged; old budget and route archived; own emergency kept": {
+    "result": "PASS",
+    "preview": "התקציב יוחלף בתבנית החדשה. התקציב הנוכחי נשמר בארכיון. קרן החירום שלכם נשארת.\n\nהמסלול יוחלף בהצעה לפי תאריכי הטיול. המסלול הנוכחי נשמר בארכיון.\n\nההוצאות (4), הטיסות והמעברים, הצ'ק-אין, התמונות והרשימות לא משתנים."
+  },
+  "S9-6 an expense in hidden \"green\" keeps it visible; an expense on an archived stop still shows the stop name": {
+    "result": "PASS",
+    "greenShown": 1,
+    "archivedStop": 1
+  },
+  "S9-6 move 500 from reserve to food and rename: total unchanged, expenses unchanged": {
+    "result": "PASS",
+    "miscName": "מתנות"
+  },
+  "S9-9 390px: no horizontal scroll": {
+    "result": "PASS"
+  },
+  "S9-4 the old route loads only from the archive, marked as an old estimate": {
+    "result": "PASS",
+    "archText": "הערכה ישנה, לא מעודכנת. 11 תחנות ו29 לילות, מ-5 בדצמ׳ עד 3 בינו׳. אלה התאריכים מתוכנית הטיול. אפשר לשנות הכול אחרי הטעינה. גם תאריכי הטיול ייקבעו לפי המסלול."
+  },
+  "S9-9 no JS errors": {
+    "result": "PASS",
+    "errors": []
+  }
+}

@@ -1,0 +1,97 @@
+{
+  "L-1/L-3 mobile: title, LATISA word and icon in the top bar": {
+    "result": "FAIL",
+    "title": "TISA — Experimental — תאילנד",
+    "word": "TISA",
+    "markOk": false,
+    "box": null,
+    "label": "TISA, מסך הבית"
+  },
+  "M mobile: no sideways scroll": {
+    "result": "PASS"
+  },
+  "L-1/L-3 desktop: title, LATISA word and icon in the top bar": {
+    "result": "FAIL",
+    "title": "TISA — Experimental — תאילנד",
+    "word": "TISA",
+    "markOk": false,
+    "box": null,
+    "label": "TISA, מסך הבית"
+  },
+  "M desktop: no sideways scroll": {
+    "result": "PASS"
+  },
+  "L-4 mobile light: About card is dark with the full dark logo, text AA": {
+    "result": "FAIL",
+    "error": "no About card logo"
+  },
+  "L-4 mobile dark: About card is dark with the full dark logo, text AA": {
+    "result": "FAIL",
+    "error": "no About card logo"
+  },
+  "L-4 desktop light: About card is dark with the full dark logo, text AA": {
+    "result": "FAIL",
+    "error": "no About card logo"
+  },
+  "L-4 desktop dark: About card is dark with the full dark logo, text AA": {
+    "result": "FAIL",
+    "error": "no About card logo"
+  },
+  "L-5 mobile: brand.html full logo, light on light and dark on dark, icons load": {
+    "result": "FAIL",
+    "srcs": [],
+    "icons": []
+  },
+  "M mobile: brand.html no sideways scroll": {
+    "result": "PASS"
+  },
+  "L-5 desktop: brand.html full logo, light on light and dark on dark, icons load": {
+    "result": "FAIL",
+    "srcs": [],
+    "icons": []
+  },
+  "M desktop: brand.html no sideways scroll": {
+    "result": "PASS"
+  },
+  "L-6 every favicon, touch and manifest icon loads as a square PNG": {
+    "result": "FAIL",
+    "name": "TISA, תאילנד",
+    "short": "TISA",
+    "out": {
+      "./icons/icon-192.png": {
+        "status": 200,
+        "type": "image/png",
+        "w": 192,
+        "h": 192
+      },
+      "./icons/apple-touch-icon-180.png": {
+        "status": 200,
+        "type": "image/png",
+        "w": 180,
+        "h": 180
+      },
+      "./icons/icon-512.png": {
+        "status": 200,
+        "type": "image/png",
+        "w": 512,
+        "h": 512
+      },
+      "./icons/icon-maskable-512.png": {
+        "status": 200,
+        "type": "image/png",
+        "w": 512,
+        "h": 512
+      }
+    }
+  },
+  "run": {
+    "result": "FAIL",
+    "error": "page.waitForFunction: Timeout 30000ms exceeded.\n    at /home/user/tisa-trip-os/scripts/qa/stage9-brand-browser.cjs:154:18"
+  },
+  "no JS errors": {
+    "result": "FAIL",
+    "errors": [
+      "console: Failed to load resource: the server responded with a status of 404 (Not Found)"
+    ]
+  }
+}

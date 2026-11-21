@@ -27,13 +27,13 @@ test('validateCountry reports missing fields and bad currency codes', () => {
 
 test('buildTitle produces the Stage 0 title from config + Thailand data', () => {
   const th = readJson('data/countries/th.json');
-  assert.equal(buildTitle(config, th, 'he'), 'TISA — Experimental — תאילנד');
-  assert.equal(buildTitle(config, th, 'en'), 'TISA — Experimental — Thailand');
+  assert.equal(buildTitle(config, th, 'he'), 'LATISA — Experimental — תאילנד');
+  assert.equal(buildTitle(config, th, 'en'), 'LATISA — Experimental — Thailand');
 });
 
 test('titleParts splits the Latin brand from the localized place name', () => {
   const th = readJson('data/countries/th.json');
-  assert.deepEqual(titleParts(config, th, 'he'), { brand: 'TISA — Experimental', place: 'תאילנד' });
+  assert.deepEqual(titleParts(config, th, 'he'), { brand: 'LATISA — Experimental', place: 'תאילנד' });
 });
 
 test('interpolate fills {placeholders} and leaves unknown ones visible', async () => {
