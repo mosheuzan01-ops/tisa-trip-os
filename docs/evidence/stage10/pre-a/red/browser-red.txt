@@ -1,0 +1,16 @@
+before shots written
+before-fresh-lists-desktop.png
+before-fresh-lists-mobile.png
+before-old-data-lists-desktop.png
+before-old-data-lists-mobile.png
+before-settings-storage-desktop.png
+before-settings-storage-mobile.png
+FAIL  R1 fresh install: the full built-in list is saved and shown, nothing ticked
+FAIL  R2 four separate progress bars (prep, carry-on, checked bag, after landing)
+PASS  R3 no offer card and no add button when nothing is missing
+PASS  R4 390px: no sideways scroll on the lists screen
+FAIL  run
+PASS  no JS errors
+FAIL 3
+
+[exited with code 0]
