@@ -1,0 +1,15 @@
+PASS  S5-3
+PASS  S5-8
+PASS  S5-4
+PASS  S5-5
+PASS  S5-6 (screen)
+PASS  S5-7
+PASS  S5-1
+PASS  S5-11 (layout)
+PASS  S5-9
+PASS  S5-6
+PASS  S5-10
+PASS  S5-13
+PASS  S5-15
+PASS  S5-14
+PASS  S5-11 (no JS errors, no outside requests)

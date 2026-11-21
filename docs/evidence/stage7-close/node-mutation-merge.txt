@@ -1,0 +1,3 @@
+ok 1 - C4: the JSON backup carries the photo details (no image data) and restores them unchanged
+ok 2 - C4: a JSON backup from before photos (schema 4) restores with an empty photo list
+not ok 3 - C3: restoring the same photo file twice adds nothing the second time and deletes nothing
