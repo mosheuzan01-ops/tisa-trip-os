@@ -129,6 +129,11 @@
 | נייד | 390px בלי גלילה לרוחב, וגם מחשב 1280px | PASS | דפדפן (M). צילומי לפני ואחרי ב-`docs/evidence/stage9/pr3/shots/` |
 | גרסה | 0.8.2 ב-`package.json`, `config/app.config.json` ו-`sw.js` | PASS | L-10, B9 |
 
+## רגרסיה (PR 3)
+- `npm test` 319/319, 3 פעמים.
+- 23 סקריפטי דפדפן (כולל `stage9-brand-browser` החדש) × 3 = 69/69, בלי FAIL (`docs/evidence/stage9/pr3/regression/summary.log`). צילומים וקובצי zip מהרגרסיה הוסרו כדי לשמור על גודל סביר. נשארו קובצי התוצאה (JSON) והפלט.
+- סורק סטטי (`qa_scan.py`): אותם FAIL ידועים כמו ב-main (כלל 7). נוספה אזהרה: תמונות בלי `loading=lazy`. האייקון בסרגל העליון מוצג מיד, ולכן במכוון אין לו lazy.
+
 ## בדיקות ישנות שעודכנו (סיבה: החלטת בעל המוצר)
 - `tests/core.test.js`: הכותרת `TISA — Experimental — …` הפכה ל-`LATISA — Experimental — …`. שום assertion אחר לא שונה.
 
