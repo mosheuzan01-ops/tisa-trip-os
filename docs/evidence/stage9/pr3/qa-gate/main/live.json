@@ -1,0 +1,171 @@
+{
+ "360-home": {
+  "hscroll": false,
+  "small": [],
+  "tiny": [],
+  "noName": [
+   "photo-file",
+   "import-file",
+   "photos-import-file",
+   "flights-import-file"
+  ],
+  "tab": [
+   {
+    "el": "a.skip",
+    "ring": true
+   },
+   {
+    "el": "a.brand",
+    "ring": true
+   },
+   {
+    "el": "a.icon-btn settings-btn",
+    "ring": true
+   }
+  ]
+ },
+ "360-settings": {
+  "hscroll": false,
+  "small": [],
+  "tiny": [],
+  "noName": [
+   "photo-file",
+   "import-file",
+   "photos-import-file",
+   "flights-import-file"
+  ]
+ },
+ "360-brand": {
+  "hscroll": false,
+  "small": [],
+  "tiny": [],
+  "noName": []
+ },
+ "390-home": {
+  "hscroll": false,
+  "small": [],
+  "tiny": [],
+  "noName": [
+   "photo-file",
+   "import-file",
+   "photos-import-file",
+   "flights-import-file"
+  ],
+  "tab": [
+   {
+    "el": "a.skip",
+    "ring": true
+   },
+   {
+    "el": "a.brand",
+    "ring": true
+   },
+   {
+    "el": "a.icon-btn settings-btn",
+    "ring": true
+   }
+  ]
+ },
+ "390-settings": {
+  "hscroll": false,
+  "small": [],
+  "tiny": [],
+  "noName": [
+   "photo-file",
+   "import-file",
+   "photos-import-file",
+   "flights-import-file"
+  ]
+ },
+ "390-brand": {
+  "hscroll": false,
+  "small": [],
+  "tiny": [],
+  "noName": []
+ },
+ "768-home": {
+  "hscroll": false,
+  "small": [],
+  "tiny": [],
+  "noName": [
+   "photo-file",
+   "import-file",
+   "photos-import-file",
+   "flights-import-file"
+  ],
+  "tab": [
+   {
+    "el": "a.skip",
+    "ring": true
+   },
+   {
+    "el": "a.brand",
+    "ring": true
+   },
+   {
+    "el": "a.icon-btn settings-btn",
+    "ring": true
+   }
+  ]
+ },
+ "768-settings": {
+  "hscroll": false,
+  "small": [],
+  "tiny": [],
+  "noName": [
+   "photo-file",
+   "import-file",
+   "photos-import-file",
+   "flights-import-file"
+  ]
+ },
+ "768-brand": {
+  "hscroll": false,
+  "small": [],
+  "tiny": [],
+  "noName": []
+ },
+ "1280-home": {
+  "hscroll": false,
+  "small": [],
+  "tiny": [],
+  "noName": [
+   "photo-file",
+   "import-file",
+   "photos-import-file",
+   "flights-import-file"
+  ],
+  "tab": [
+   {
+    "el": "a.skip",
+    "ring": true
+   },
+   {
+    "el": "a.brand",
+    "ring": true
+   },
+   {
+    "el": "a.icon-btn settings-btn",
+    "ring": true
+   }
+  ]
+ },
+ "1280-settings": {
+  "hscroll": false,
+  "small": [],
+  "tiny": [],
+  "noName": [
+   "photo-file",
+   "import-file",
+   "photos-import-file",
+   "flights-import-file"
+  ]
+ },
+ "1280-brand": {
+  "hscroll": false,
+  "small": [],
+  "tiny": [],
+  "noName": []
+ },
+ "errors": []
+}
