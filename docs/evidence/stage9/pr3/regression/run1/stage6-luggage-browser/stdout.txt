@@ -1,0 +1,18 @@
+PASS  LB-1 open and back mobile
+PASS  LB-2 bags mobile
+PASS  LB-3 no limit, no warning mobile
+PASS  LB-4 at the limit and over mobile
+PASS  LB-5 move and change the limit mobile
+PASS  LB-6 delete asks first mobile
+PASS  LB-7 layout and the packing list mobile
+PASS  LB-8 reload and backup mobile
+PASS  LB-1 open and back desktop
+PASS  LB-2 bags desktop
+PASS  LB-3 no limit, no warning desktop
+PASS  LB-4 at the limit and over desktop
+PASS  LB-5 move and change the limit desktop
+PASS  LB-6 delete asks first desktop
+PASS  LB-7 layout and the packing list desktop
+PASS  LB-8 reload and backup desktop
+PASS  LB-9 offline and dark
+PASS  no JS errors, no outside requests
