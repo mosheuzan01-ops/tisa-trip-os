@@ -8,6 +8,8 @@ import {
 } from './core/trip.js';
 import { createStorage, browserBackend, requestPersistence, isPersisted } from './core/storage.js';
 import { needsBackupReminder } from './core/schema.js';
+import { readyChecklist } from './core/checklist.js';
+import { dataSummary } from './core/device-data.js';
 import { exportBackup, parseBackup, backupFileName } from './core/backup.js';
 import { makeId } from './core/ids.js';
 import { createAutosave } from './core/autosave.js';
@@ -129,6 +131,9 @@ async function boot() {
   document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') autosave.flush(); });
 
   if (loaded.status === 'migrated') ctx.lastSave = storage.save(ctx.state); // move Stage 1 data to the new key (old keys stay)
+  // Pre-stage-10 PR A (owner, 2026-11-21): a new trip comes with the built-in checklist, saved at once so a reload
+  // keeps the same items (and ticks). Old data is never filled here: the lists screen offers what is missing.
+  if (loaded.status === 'new') { readyChecklist(ctx.trip(), pack, locale, () => makeId()); ctx.lastSave = storage.save(ctx.state); }
   if (loaded.status === 'new' || loaded.status === 'migrated') requestPersistence().then(() => renderSettings(ctx));
 
   setupTheme(ctx);
@@ -594,6 +599,12 @@ function renderSettings(ctx) {
     ? interpolate(t('settings.backup.last'), { date: formatStamp(state.settings.lastBackupAt, fmtLocale) })
     : t('settings.backup.never');
   $('[data-slot="version-app"]').textContent = ctx.config.appVersion;
+  // Pre-stage-10 PR A: what this side holds, so Safari and the home-screen app can be compared on iPhone.
+  const sum = dataSummary(state);
+  const standalone = window.matchMedia?.('(display-mode: standalone)').matches || navigator.standalone === true;
+  $('[data-slot="device-data"]').textContent = interpolate(t('settings.device.summary'), {
+    ...sum, where: t(standalone ? 'settings.device.app' : 'settings.device.browser'), date: formatStamp(sum.createdAt, fmtLocale),
+  });
   $('[data-slot="version-schema"]').textContent = String(state.schemaVersion);
   const installed = window.matchMedia?.('(display-mode: standalone)').matches || navigator.standalone === true;
   $('[data-slot="install-done"]').hidden = !installed;
@@ -705,7 +716,9 @@ function setupSettings(ctx) {
   dlgReset.querySelector('form').addEventListener('submit', (e) => {
     e.preventDefault();
     if (resetInput.value.trim() !== word) return;
-    const { state, result } = ctx.storage.reset();
+    const { state } = ctx.storage.reset();
+    readyChecklist(state.trips[state.activeTripId], ctx.pack, ctx.locale, () => makeId());
+    const result = ctx.storage.save(state);
     ctx.state = state;
     ctx.status = 'ok';
     ctx.lastSave = result;

@@ -443,9 +443,15 @@
           <div class="bar-row"><span class="bar-label" data-i18n="lists.prep">הכנות</span><span class="bar-num" data-slot="prep-num"></span></div>
           <span class="meter" role="progressbar" aria-labelledby="prep-label" data-slot="prep-meter" aria-valuemin="0" aria-valuemax="100"><span class="meter-fill" data-slot="prep-fill"></span></span>
           <span class="sr-only" id="prep-label" data-i18n="lists.prep">הכנות</span>
-          <div class="bar-row"><span class="bar-label" data-i18n="lists.pack">אריזה</span><span class="bar-num" data-slot="pack-num"></span></div>
-          <span class="meter" role="progressbar" aria-labelledby="pack-label" data-slot="pack-meter" aria-valuemin="0" aria-valuemax="100"><span class="meter-fill" data-slot="pack-fill"></span></span>
-          <span class="sr-only" id="pack-label" data-i18n="lists.pack">אריזה</span>
+          <div class="bar-row"><span class="bar-label" data-i18n="lists.carry">תיק יד</span><span class="bar-num" data-slot="carry-num"></span></div>
+          <span class="meter" role="progressbar" aria-labelledby="carry-label" data-slot="carry-meter" aria-valuemin="0" aria-valuemax="100"><span class="meter-fill" data-slot="carry-fill"></span></span>
+          <span class="sr-only" id="carry-label" data-i18n="lists.carry">תיק יד</span>
+          <div class="bar-row"><span class="bar-label" data-i18n="lists.bag">מזוודה</span><span class="bar-num" data-slot="bag-num"></span></div>
+          <span class="meter" role="progressbar" aria-labelledby="bag-label" data-slot="bag-meter" aria-valuemin="0" aria-valuemax="100"><span class="meter-fill" data-slot="bag-fill"></span></span>
+          <span class="sr-only" id="bag-label" data-i18n="lists.bag">מזוודה</span>
+          <div class="bar-row"><span class="bar-label" data-i18n="lists.arrival">אחרי הנחיתה</span><span class="bar-num" data-slot="arrival-num"></span></div>
+          <span class="meter" role="progressbar" aria-labelledby="arrival-label" data-slot="arrival-meter" aria-valuemin="0" aria-valuemax="100"><span class="meter-fill" data-slot="arrival-fill"></span></span>
+          <span class="sr-only" id="arrival-label" data-i18n="lists.arrival">אחרי הנחיתה</span>
         </section>
 
         <button class="btn btn-ghost itin-transfers-link" type="button" data-go="luggage">
@@ -475,11 +481,19 @@
           </div>
           <section class="card surface money-empty" data-slot="list-empty" aria-labelledby="list-empty-title" hidden>
             <h3 class="tool-title" id="list-empty-title" data-i18n="list.empty.title">הרשימה ריקה</h3>
-            <p data-i18n="list.empty.text">טוענים רשימה מוצעת לתאילנד ומשנים אותה, או מוסיפים פריטים משלכם.</p>
-            <button class="btn btn-ghost" type="button" data-action="list-seed" data-i18n="list.seed.open">לטעון רשימה מוצעת</button>
+            <p data-i18n="list.empty.text">אפשר להוסיף את הרשימה המובנית, או פריטים משלכם.</p>
           </section>
-          <button class="btn btn-ghost list-flight-btn" type="button" data-action="list-flight-items">
-            <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-plane"/></svg><span data-i18n="list.flight.open">הוספת פריטי טיסה</span>
+          <!-- Pre-stage-10 PR A: one-time offer of the built-in items an old list does not have. Nothing changes before yes. -->
+          <section class="card surface builtin-offer" data-slot="builtin-offer" aria-labelledby="builtin-offer-title" hidden>
+            <h3 class="tool-title" id="builtin-offer-title" data-i18n="list.builtin.offerTitle">רשימה מובנית לטיול</h3>
+            <p data-slot="builtin-offer-text"></p>
+            <div class="settings-actions builtin-offer-actions">
+              <button class="btn btn-primary btn-small" type="button" data-action="builtin-add" data-i18n="list.builtin.offerYes">להוסיף אותם</button>
+              <button class="btn btn-ghost btn-small" type="button" data-action="builtin-later" data-i18n="list.builtin.offerLater">לא עכשיו</button>
+            </div>
+          </section>
+          <button class="btn btn-ghost list-builtin-btn" type="button" data-action="list-builtin" hidden>
+            <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-plus"/></svg><span data-i18n="list.builtin.open">להוסיף פריטים מובנים חסרים</span>
           </button>
           <div class="groups" data-slot="groups"></div>
         </section>
@@ -769,6 +783,8 @@
         <section class="card surface settings-card" aria-labelledby="set-storage-title">
           <h2 id="set-storage-title" data-i18n="settings.storage.title">שמירה במכשיר</h2>
           <p data-slot="persist-status"></p>
+          <p data-slot="device-data"></p>
+          <p class="sheet-hint" data-slot="device-iphone-note" data-i18n="settings.device.iphone">באייפון, Safari והאפליקציה שבמסך הבית שומרים נתונים בנפרד.</p>
         </section>
 
         <section class="card surface settings-card" aria-labelledby="set-limits-title">

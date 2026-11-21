@@ -1,0 +1,29 @@
+{
+  "R1 fresh install: the full built-in list is saved and shown, nothing ticked": {
+    "result": "FAIL",
+    "builtin": 0,
+    "saved": null,
+    "shown": 0
+  },
+  "R2 four separate progress bars (prep, carry-on, checked bag, after landing)": {
+    "result": "FAIL",
+    "prep": "עוד אין פריטים",
+    "carry": "",
+    "bag": "",
+    "arrival": ""
+  },
+  "R3 no offer card and no add button when nothing is missing": {
+    "result": "PASS"
+  },
+  "R4 390px: no sideways scroll on the lists screen": {
+    "result": "PASS"
+  },
+  "run": {
+    "result": "FAIL",
+    "error": "locator.check: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#panel-checklist .item input[type=\"checkbox\"]').first()\u001b[22m\n\n    at /home/user/tisa-trip-os/scripts/qa/ready-checklist-browser.cjs:97:17"
+  },
+  "no JS errors": {
+    "result": "PASS",
+    "errors": []
+  }
+}

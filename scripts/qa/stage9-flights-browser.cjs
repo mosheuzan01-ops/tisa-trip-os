@@ -176,8 +176,12 @@ async function shots(browser, label) {
     // ---------- checklist: flight items, no duplicates, own items kept ----------
     await a.page.goto(`${BASE}#/checklist`);
     await a.page.locator('#panel-checklist').waitFor();
+    // Pre-stage-10 PR A (owner decision 2026-11-21): the flight items are part of the built-in list (61 items). One
+    // button adds whatever is missing; on this v5 sample that is 60 (its "דרכון" counts as the built-in passport).
+    // The one-time card is answered "not now" first, so the button flow (confirm dialog) is the one checked here.
     const l0 = (await trip(a.page)).checklist;
-    await a.page.click('[data-action="list-flight-items"]');
+    await a.page.click('[data-action="builtin-later"]');
+    await a.page.click('[data-action="list-builtin"]');
     await a.page.locator('#dlg-list-confirm[open]').waitFor();
     const lText = await text(a.page, '[data-slot="list-confirm-text"]');
     await a.page.click('[data-action="list-confirm-yes"]');
@@ -185,16 +189,18 @@ async function shots(browser, label) {
     await toastGone(a.page);
     const l1 = (await trip(a.page)).checklist;
     const groups = await a.page.$$eval('#panel-checklist [data-slot="groups"] .list-group h3', (l) => l.map((x) => x.textContent));
-    pass('C-1 flight items added in three new groups; own items and ticks unchanged', l1.length === l0.length + 15 && l0.every((x) => JSON.stringify(l1.find((y) => y.id === x.id)) === JSON.stringify(x)) && ['הורדות לאופליין', 'אוכל לטיסה', 'נוחות בטיסה'].every((g) => groups.includes(g)) && /15/.test(lText), { groups, lText });
+    pass('C-1 flight items added in their groups; own items and ticks unchanged', l1.length === l0.length + 60 && l0.every((x) => JSON.stringify(l1.find((y) => y.id === x.id)) === JSON.stringify(x)) && ['הכנות דיגיטליות, 2–3 ימים לפני הטיסה', 'אוכל ושתייה לטיסה', 'נוחות ושינה במטוס'].every((g) => groups.includes(g)) && /60/.test(lText), { groups, lText });
     if (SHOTS) await a.page.screenshot({ path: `${OUT}/after-lists-mobile.png`, fullPage: true });
     // tick one new item, then press again: nothing added, the tick stays
     const first = l1.find((x) => x.group === 'flightComfort');
     await a.page.check(`#panel-checklist input[data-action="item-toggle"][data-id="${first.id}"]`);
     await a.page.waitForFunction((id) => JSON.parse(localStorage.getItem('tisa:v1')).trips[JSON.parse(localStorage.getItem('tisa:v1')).activeTripId].checklist.find((x) => x.id === id).done, first.id);
-    await a.page.click('[data-action="list-flight-items"]');
-    const toastNone = await toastText(a.page);
+    // PR A: with nothing missing the button is gone, so it cannot add twice; a reload adds nothing and keeps the tick.
+    const btnGone = await a.page.locator('[data-action="list-builtin"]').isHidden();
+    await a.page.reload();
+    await ready(a.page);
     const l2 = (await trip(a.page)).checklist;
-    pass('C-3 pressing again adds nothing and keeps the tick', l2.length === l1.length && l2.find((x) => x.id === first.id).done === true && /כבר ברשימה/.test(toastNone) && (await a.page.locator('#dlg-list-confirm[open]').count()) === 0, { toastNone });
+    pass('C-3 nothing more to add: the button is gone, a reload adds nothing and keeps the tick', btnGone && l2.length === l1.length && l2.find((x) => x.id === first.id).done === true && (await a.page.locator('#dlg-list-confirm[open]').count()) === 0, { btnGone });
     pass('M lists screen: no horizontal scroll at 390px', !(await hScroll(a.page)));
     await toastGone(a.page);
 
@@ -238,7 +244,8 @@ async function shots(browser, label) {
     if (SHOTS) await d.page.screenshot({ path: `${OUT}/after-flight-form-desktop.png` });
     await d.page.click('#dlg-transfer [data-close]');
     await d.page.goto(`${BASE}#/checklist`);
-    await d.page.click('[data-action="list-flight-items"]');
+    await d.page.click('[data-action="builtin-later"]');
+    await d.page.click('[data-action="list-builtin"]');
     await d.page.locator('#dlg-list-confirm[open]').waitFor();
     await d.page.click('[data-action="list-confirm-yes"]');
     await closed(d.page, '#dlg-list-confirm');
@@ -265,12 +272,10 @@ async function shots(browser, label) {
     await closed(op, '#dlg-flights-import');
     const offTrip = await op.evaluate(() => { const s = JSON.parse(localStorage.getItem('tisa:v1')); return s.trips[s.activeTripId]; });
     await op.goto(`${BASE}#/checklist`);
-    await op.click('[data-action="list-flight-items"]');
-    await op.locator('#dlg-list-confirm[open]').waitFor();
-    await op.click('[data-action="list-confirm-yes"]');
-    await closed(op, '#dlg-list-confirm');
+    // PR A: a new trip already has the built-in list (flight items included), offline too.
+    await op.locator('#panel-checklist .item').first().waitFor();
     const offList = await op.evaluate(() => { const s = JSON.parse(localStorage.getItem('tisa:v1')); return s.trips[s.activeTripId].checklist; });
-    pass('O offline: flights.js is cached; import and flight items work with no network', cached && offTrip.transfers.length === 2 && offList.length === 15, { cached, transfers: offTrip.transfers.length, items: offList.length });
+    pass('O offline: flights.js is cached; import and flight items work with no network', cached && offTrip.transfers.length === 2 && offList.length === 61, { cached, transfers: offTrip.transfers.length, items: offList.length });
     await octx.close();
   } catch (error) {
     pass('run', false, { error: String(error.stack ?? error) });

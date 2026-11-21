@@ -133,5 +133,6 @@ test('L-9: no pink or purple in the app icons (the approved teal and gold stay)'
 test('L-10: brand files are cached for offline use and the version moves to 0.8.2 for the update banner', () => {
   const sw = readText('sw.js');
   for (const f of ['assets/brand/latisa-mark.png', 'assets/brand/latisa-logo-dark.png', 'assets/brand/latisa-logo-light.png', 'icons/favicon-32.png']) assert.ok(sw.includes(`'./${f}'`), f);
-  assert.equal(readJson('config/app.config.json').appVersion, '0.8.2');
+  // 0.8.3 (pre-stage-10 PR A) and later keep the brand files; the version only moves forward.
+  assert.match(readJson('config/app.config.json').appVersion, /^0\.(8\.[2-9]|9\.\d+)$/);
 });

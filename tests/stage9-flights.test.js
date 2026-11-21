@@ -220,5 +220,6 @@ test('R-2: the flights screen has a working import entry and the lists screen a 
   assert.match(html, /data-action="flights-import"/);
   assert.match(html, /id="flights-import-file"[^>]*accept="application\/json,\.json"/);
   assert.match(html, /id="dlg-flights-import"/);
-  assert.match(html, /data-action="list-flight-items"/);
+  // Pre-stage-10 PR A (owner decision): the flight items are part of the built-in list; one button adds what is missing.
+  assert.match(html, /data-action="list-builtin"/);
 });

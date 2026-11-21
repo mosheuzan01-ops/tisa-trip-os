@@ -58,7 +58,8 @@ async function setup(browser, w, h) {
   await add('45', 'food', 'קפה', 'פאי', 'ליד המלון');
   for (let i = 0; i < 6; i += 1) await add('20', 'misc', `מים ${i + 1}`, 'פאי'); // a long list to scroll
   await page.click('[data-tab="lists"]');
-  for (const which of ['list-seed', 'tasks-seed']) {
+  // Pre-stage-10 PR A (owner decision): a new trip already has the built-in checklist; only the tasks are loaded.
+  for (const which of ['tasks-seed']) {
     await page.click(`[data-action="${which}"]`);
     await page.click('[data-action="list-confirm-yes"]');
     await closed(page, '#dlg-list-confirm');
@@ -67,7 +68,7 @@ async function setup(browser, w, h) {
   await page.fill('#dlg-task [name="title"]', 'לאשר מלון בבנגקוק');
   await page.click('#dlg-task [type="submit"]');
   await closed(page, '#dlg-task');
-  await page.click('.item:has-text("מטען לטלפון") [data-action="item-edit"]');
+  await page.click('.item:has-text("כבל טעינה ומטען נייד") [data-action="item-edit"]');
   await page.fill('#dlg-item [name="note"]', 'לקנות בבנגקוק');
   await page.click('#dlg-item [type="submit"]');
   await closed(page, '#dlg-item');
@@ -160,9 +161,11 @@ async function setup(browser, w, h) {
     await page.click('[data-search="lists"] [data-action="search-clear"]');
     await page.waitForFunction(() => document.querySelector('[data-search="lists"]').dataset.query === '');
     const lCleared = { items: await page.locator('#panel-checklist .item').count(), tasks: await page.locator('#panel-checklist .task').count(), noResultsHidden: await page.locator('[data-slot="lists-no-results"]').isHidden() };
-    pass(`S51-4 lists (${tag})`, li.items.length === 1 && li.items[0] === 'מטען לטלפון' && li.tasks.length === 1 && li.tasks[0] === 'לאשר מלון בבנגקוק' && /1 פריטים.*1 משימות|פריט אחד.*משימה אחת/.test(li.summary)
-      && lh.items === 0 && lh.tasks.length === 1 && esim.length === 1 && /eSIM/.test(esim[0])
-      && lEmpty.text === 'אין תוצאות' && lEmpty.visible && bars1 === bars0 && lCleared.items === 21 && lCleared.tasks === 8 && lCleared.noResultsHidden,
+    // Pre-stage-10 PR A: the built-in list (61 items) has two more names with "בנגקוק" and two with "eSIM".
+    const bkkItems = ['כתובת הלינה הראשונה בבנגקוק באנגלית', 'מפות אופליין לבנגקוק וליעדים במסלול', 'כבל טעינה ומטען נייד'];
+    pass(`S51-4 lists (${tag})`, JSON.stringify(li.items) === JSON.stringify(bkkItems) && li.tasks.length === 1 && li.tasks[0] === 'לאשר מלון בבנגקוק' && /3 פריטים.*משימה אחת/.test(li.summary)
+      && lh.items === 0 && lh.tasks.length === 1 && esim.length === 2 && esim.every((x) => /eSIM/.test(x))
+      && lEmpty.text === 'אין תוצאות' && lEmpty.visible && bars1 === bars0 && lCleared.items === 61 && lCleared.tasks === 8 && lCleared.noResultsHidden,
     { li, lh, esim, lEmpty, bars0, bars1, lCleared });
 
     // sticky on lists: search + both hide toggles stay at the top while scrolling to the tasks
