@@ -37,7 +37,24 @@ async function fresh(browser, when, extra = {}) {
   await ready(page);
   return { ctx, page };
 }
+// Pre-stage-10 PR A (owner decision 2026-11-21): a new trip comes with the built-in list, and the "load the suggested
+// list" button is gone. The Stage 5 checks below still run on the old 21-item starter list, written into the saved
+// trip the way an older version left it, then the page reloads. Tasks are still loaded with their button.
+const BUILTIN = 61;
+async function oldStarter(page) {
+  await page.evaluate(async () => {
+    const { seedChecklist } = await import('./src/js/core/checklist.js');
+    const { TH } = await import('./data/packs/th.js');
+    const s = JSON.parse(localStorage.getItem('tisa:v1'));
+    let n = 0;
+    s.trips[s.activeTripId].checklist = seedChecklist(TH, 'he', () => `old-${++n}`);
+    localStorage.setItem('tisa:v1', JSON.stringify(s));
+  });
+  await page.reload();
+  await ready(page);
+}
 async function seed(page, which) {
+  if (which === 'list-seed') { await oldStarter(page); return; }
   await page.click(`[data-action="${which}"]`);
   await page.click('[data-action="list-confirm-yes"]');
   await closed(page, '#dlg-list-confirm');
@@ -60,21 +77,21 @@ async function addTask(page, { title, due, status }) {
     const { ctx, page } = await fresh(browser, '2026-11-25T09:00:00+07:00');
     await shot(page, 'after-checklist-empty-375-light');
 
-    // S5-3: cancel loads nothing; yes loads once; a double tap does not duplicate; the button then goes away
-    await page.click('[data-action="list-seed"]');
+    // S5-3 (changed by the pre-stage-10 PR A owner decision): the built-in list is there from the start, nothing
+    // ticked, no empty state; tasks: cancel loads nothing, yes loads once, a double tap does not duplicate.
+    const builtin = (await trip(page)).checklist;
+    const items = builtin.length;
+    const emptyHidden = await page.locator('[data-slot="list-empty"]').isHidden();
+    await page.click('[data-action="tasks-seed"]');
     await page.click('#dlg-list-confirm [data-close]');
     await closed(page, '#dlg-list-confirm');
-    const afterNo = ((await trip(page))?.checklist ?? []).length;
-    await page.click('[data-action="list-seed"]');
-    await page.locator('[data-action="list-confirm-yes"]').evaluate((b) => { b.click(); b.click(); }); // two taps on the same button
-    await closed(page, '#dlg-list-confirm');
-    const items = (await trip(page)).checklist.length;
-    const emptyHidden = await page.locator('[data-slot="list-empty"]').isHidden();
+    const afterNo = (await trip(page)).tasks.length;
+    await oldStarter(page); // the rest of this block runs on the old 21-item list
     await page.click('[data-action="tasks-seed"]');
     await page.locator('[data-action="list-confirm-yes"]').evaluate((b) => { b.click(); b.click(); }); // two taps on the same button
     await closed(page, '#dlg-list-confirm');
     const tasks = (await trip(page)).tasks.length;
-    pass('S5-3', afterNo === 0 && items === 21 && emptyHidden && tasks === 7, { afterNo, items, emptyHidden, tasks });
+    pass('S5-3', afterNo === 0 && items === BUILTIN && builtin.every((x) => !x.done) && emptyHidden && tasks === 7, { afterNo, items, emptyHidden, tasks });
 
     // S5-8: rule-dependent items show "to check"; after writing source + date they show when
     const toCheck = await page.locator('.item-verify.is-open').count();
@@ -91,7 +108,8 @@ async function addTask(page, { title, due, status }) {
       { toCheck, verifyItems, checkedText });
 
     // S5-4: tick / untick and the two bars
-    const bars = async () => ({ prep: (await page.locator('[data-slot="prep-num"]').textContent()).trim(), pack: (await page.locator('[data-slot="pack-num"]').textContent()).trim() });
+    // PR A: the lists screen shows four bars; the old list's packing groups are all in the "checked bag" bar.
+    const bars = async () => ({ prep: (await page.locator('[data-slot="prep-num"]').textContent()).trim(), pack: (await page.locator('[data-slot="bag-num"]').textContent()).trim() });
     const b0 = await bars();
     await page.locator('.item:has-text("דרכון") [data-action="item-toggle"]').first().check();
     await page.locator('.item:has-text("בגד ים") [data-action="item-toggle"]').check();
@@ -146,7 +164,7 @@ async function addTask(page, { title, due, status }) {
     await page.locator('.task:has-text("בדיקת מסמכים") [data-action="task-toggle"]').check();
     const overdue = await page.locator('.task.is-overdue .item-name').allTextContents();
     const todayDue = (await page.locator('.task:has-text("ביטוח נסיעות") .task-due').textContent()).trim();
-    const screen = { open: (await trip(page)).tasks.filter((x) => x.status !== 'done').length, prep: (await page.locator('[data-slot="prep-num"]').textContent()).trim(), pack: (await page.locator('[data-slot="pack-num"]').textContent()).trim() };
+    const screen = { open: (await trip(page)).tasks.filter((x) => x.status !== 'done').length, prep: (await page.locator('[data-slot="prep-num"]').textContent()).trim(), pack: (await page.locator('[data-slot="bag-num"]').textContent()).trim() }; // PR A: old packing groups = "checked bag" bar
     await toastGone(page);
     await shot(page, 'after-checklist-full-375-light');
     await page.click('[data-tab="home"]');
@@ -234,7 +252,8 @@ async function addTask(page, { title, due, status }) {
     const after = await trip(page);
     fs.unlinkSync(file);
     const same = Object.fromEntries(['destinations', 'budget', 'expenses', 'checklist', 'tasks'].map((k) => [k, JSON.stringify(before[k]) === JSON.stringify(after[k])]));
-    pass('S5-9', wiped.checklist.length === 0 && wiped.tasks.length === 0 && Object.values(same).every(Boolean) && after.checklist.length === 20 && after.expenses.length === 1, { same });
+    // PR A (owner decision): after a reset the trip comes back with the built-in list, nothing ticked.
+    pass('S5-9', wiped.checklist.length === BUILTIN && wiped.checklist.every((x) => !x.done) && wiped.tasks.length === 0 && Object.values(same).every(Boolean) && after.checklist.length === 20 && after.expenses.length === 1, { same });
     await ctx.close();
   }
 

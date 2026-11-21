@@ -19,11 +19,15 @@ test('S5-5: deletes and starter lists wait for a yes in a native dialog', () => 
 
 test('S5-8: no rule, number or date as fact in the checklist copy and data', () => {
   const pack = readText('data/packs/th.js');
-  const seed = pack.slice(pack.indexOf('checklistSeed'), pack.indexOf('taskSeed') + 2000);
+  // Pre-stage-10 PR A: the built-in list (owner's emergency numbers, marked not verified) has its own rules in
+  // tests/ready-checklist.test.js A-6, so it is cut out here.
+  const seed = pack.slice(pack.indexOf('checklistSeed'), pack.indexOf('taskSeed') + 2000)
+    .replace(pack.slice(pack.indexOf('checklistBuiltinVersion'), pack.indexOf('taskSeed')), '');
   assert.doesNotMatch(seed.replace(/\/\/.*$/gm, ''), /\d/, 'starter list and tasks have no digits');
   for (const loc of ['he', 'en']) {
     const dict = readJson(`locales/${loc}.json`);
     for (const [k, v] of Object.entries(dict)) {
+      if (k === 'list.group.offline') continue; // owner decision (pre-stage-10 PR A): "2–3 days before the flight"
       if (/^(list|task|lists|itemErr|taskErr|home\.(tasks|prep|pack|lists))/.test(k)) assert.doesNotMatch(v, /\d/, `${loc} ${k}`);
     }
   }

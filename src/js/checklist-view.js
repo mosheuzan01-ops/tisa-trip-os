@@ -4,8 +4,9 @@
 import { interpolate } from './core/i18n.js';
 import { todayIn } from './core/trip.js';
 import {
-  GROUPS, TASK_STATUSES, validateItem, makeItem, progress, needsCheck, validateVerify, seedChecklist, seedTasks,
-  validateTask, makeTask, taskState, openTasks, nextTask, cleanItems, cleanTasks, hideDone, addFlightItems,
+  GROUPS, SECTIONS, TASK_STATUSES, validateItem, makeItem, progress, needsCheck, validateVerify, seedTasks,
+  validateTask, makeTask, taskState, openTasks, nextTask, cleanItems, cleanTasks, hideDone,
+  missingBuiltins, addBuiltins, needsBuiltinOffer, declineBuiltinOffer,
 } from './core/checklist.js';
 import { formatDate } from './core/itinerary.js';
 import { makeId } from './core/ids.js';
@@ -83,9 +84,15 @@ export function renderLists(ctx) {
     $(`[data-slot="home-${kind}-fill"]`).style.width = `${bar.pct ?? 0}%`;
   }
 
-  // ---------- Progress ----------
-  setBar(ctx, 'prep', s.bars.prep);
-  setBar(ctx, 'pack', s.bars.pack);
+  // ---------- Progress: four sections (pre-stage-10 PR A) ----------
+  for (const sec of SECTIONS) setBar(ctx, sec, s.bars[sec]);
+
+  // ---------- Built-in items: one-time card, and a button while anything is missing ----------
+  const missing = missingBuiltins(s.trip.checklist, ctx.pack).length;
+  const offer = needsBuiltinOffer(s.trip, ctx.pack);
+  $('[data-slot="builtin-offer"]').hidden = !offer;
+  $('[data-slot="builtin-offer-text"]').textContent = interpolate(t('list.builtin.offerText'), { n: missing });
+  $('[data-action="list-builtin"]').hidden = offer || missing === 0;
 
   // Focus survives a redraw: same action on the same id.
   const focused = panel.contains(document.activeElement) && document.activeElement.dataset.id
@@ -320,20 +327,24 @@ export function setupLists(ctx, { wireDialog, showFormErrors }) {
       const x = s.tasks.find((i) => i.id === id);
       confirm(btn, 'task.delete', { title: x?.title ?? '' }, () => commit((st) => { const trip = tripOf(st); trip.tasks = trip.tasks.filter((i) => i?.id !== id); }, 'task.deleted'));
     }
-    if (action === 'list-seed') {
-      confirm(btn, 'list.seed', { n: ctx.pack?.checklistSeed?.length ?? 0 }, () => commit((st) => {
+    if (action === 'list-builtin') {
+      const n = missingBuiltins(tripOf(ctx.state).checklist, ctx.pack).length;
+      if (!n) return;
+      confirm(btn, 'list.builtin', { n }, () => commit((st) => {
         const trip = tripOf(st);
-        if (cleanItems(trip.checklist).length) return; // never on top of the user's own list
-        trip.checklist = [...trip.checklist, ...seedChecklist(ctx.pack, ctx.locale, () => makeId())];
-      }, 'list.seeded'), true);
+        trip.checklist = addBuiltins(trip.checklist, ctx.pack, ctx.locale, () => makeId()).items;
+      }, 'list.builtin.added'), true);
     }
-    if (action === 'list-flight-items') { // Stage 9 PR 2: only items not on the list yet; nothing existing changes
-      const n = addFlightItems(s.items, ctx.pack, ctx.locale, () => 'preview').added;
-      if (!n) { ctx.toast('list.flight.none'); return; }
-      confirm(btn, 'list.flight', { n }, () => commit((st) => {
+    if (action === 'builtin-add') {
+      commit((st) => {
         const trip = tripOf(st);
-        trip.checklist = addFlightItems(trip.checklist, ctx.pack, ctx.locale, () => makeId()).items;
-      }, 'list.flight.added'), true);
+        trip.checklist = addBuiltins(trip.checklist, ctx.pack, ctx.locale, () => makeId()).items;
+      }, 'list.builtin.added');
+      panel.querySelector('[data-action="item-add"]').focus();
+    }
+    if (action === 'builtin-later') {
+      commit((st) => declineBuiltinOffer(tripOf(st), ctx.pack), 'list.builtin.later');
+      panel.querySelector('[data-action="list-builtin"]').focus();
     }
     if (action === 'tasks-seed') {
       confirm(btn, 'task.seed', { n: ctx.pack?.taskSeed?.length ?? 0 }, () => commit((st) => {

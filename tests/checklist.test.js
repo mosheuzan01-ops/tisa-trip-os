@@ -20,7 +20,8 @@ test('six groups: three for preparation, three for packing', () => {
   const six = ['documents', 'money', 'comms', 'health', 'clothing', 'chargers'];
   assert.deepEqual(GROUPS.filter((g) => six.includes(g)), six);
   assert.deepEqual(six.map(groupKind), ['prep', 'prep', 'prep', 'pack', 'pack', 'pack']);
-  assert.deepEqual(GROUPS.filter((g) => !six.includes(g)), ['offline', 'flightFood', 'flightComfort']);
+  // Pre-stage-10 PR A (owner decision 2026-11-21): five more groups and four sections (tests/ready-checklist.test.js).
+  assert.deepEqual(GROUPS.filter((g) => !six.includes(g)), ['offline', 'flightDay', 'carryOn', 'flightComfort', 'flightFood', 'hygiene', 'checkedBag', 'afterLanding']);
 });
 
 test('validateItem: name, quantity, note and group are checked', () => {
@@ -36,14 +37,16 @@ test('validateItem: name, quantity, note and group are checked', () => {
 });
 
 test('S5-4: two separate progress bars, including 0 items and 100%', () => {
-  assert.deepEqual(progress([]), { prep: { done: 0, total: 0, pct: null }, pack: { done: 0, total: 0, pct: null } });
+  // Pre-stage-10 PR A added carry / bag / arrival bars; prep and pack keep their meaning (tests/ready-checklist.test.js A-2).
+  const two = (p) => ({ prep: p.prep, pack: p.pack });
+  assert.deepEqual(two(progress([])), { prep: { done: 0, total: 0, pct: null }, pack: { done: 0, total: 0, pct: null } });
   const list = [
     item({ group: 'documents' }), item({ group: 'money' }), item({ group: 'comms' }),
     item({ group: 'clothing' }), item({ group: 'chargers' }),
   ];
   list[0].done = true;
   list[3].done = true;
-  assert.deepEqual(progress(list), { prep: { done: 1, total: 3, pct: 33 }, pack: { done: 1, total: 2, pct: 50 } });
+  assert.deepEqual(two(progress(list)), { prep: { done: 1, total: 3, pct: 33 }, pack: { done: 1, total: 2, pct: 50 } });
   list[4].done = true;
   assert.equal(progress(list).pack.pct, 100);
   list[1].done = true;
@@ -68,7 +71,8 @@ test('S5-8: rule-dependent items stay "to check" until a check date is written; 
 test('S5-8: the starter list and tasks hold names only: no numbers, rules, dates or medicine names', () => {
   assert.ok(TH.checklistSeed.length >= 12);
   // Stage 9 PR 2: the three flight groups are filled by TH.flightChecklistSeed (tests/stage9-flights.test.js C-2).
-  const flightGroups = ['offline', 'flightFood', 'flightComfort'];
+  // Pre-stage-10 PR A: flightDay, carryOn, hygiene, checkedBag and afterLanding are filled by TH.checklistBuiltin.
+  const flightGroups = ['offline', 'flightFood', 'flightComfort', 'flightDay', 'carryOn', 'hygiene', 'checkedBag', 'afterLanding'];
   assert.deepEqual([...new Set(TH.checklistSeed.map((x) => x.group))].sort(), GROUPS.filter((g) => !flightGroups.includes(g)).sort(), 'every group has items');
   for (const x of [...TH.checklistSeed, ...TH.taskSeed]) {
     const text = JSON.stringify(x.name ?? x.title);
@@ -79,7 +83,8 @@ test('S5-8: the starter list and tasks hold names only: no numbers, rules, dates
   assert.equal(TH.checklistSeed.filter((x) => x.group === 'health' && /medic|תרופ/i.test(JSON.stringify(x.name))).length, 1, 'one general medicine item');
   assert.deepEqual(TH.taskSeed.map((x) => x.title.en), ['Book flights', 'Travel insurance', 'Check entry requirements', 'Book stays', 'Plan transfers', 'Prepare payment methods', 'Check documents']);
   const locales = readText('locales/he.json') + readText('locales/en.json');
-  assert.doesNotMatch(locales.match(/"(list|task)\.[^"]*": "[^"]*"/g)?.join('') ?? '', /\d/, 'checklist copy has no numbers');
+  // Owner decision (pre-stage-10 PR A): the heading "2–3 days before the flight" is the one allowed number.
+  assert.doesNotMatch(locales.match(/"(list|task)\.[^"]*": "[^"]*"/g)?.filter((x) => !x.startsWith('"list.group.offline"')).join('') ?? '', /\d/, 'checklist copy has no numbers'); 
 });
 
 test('S5-3: seeding makes fresh items with new ids; verify items start unchecked', () => {

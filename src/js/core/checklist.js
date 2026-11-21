@@ -3,10 +3,23 @@
 // until the user writes where and when they checked.
 import { isIsoDate } from './trip.js';
 
-// Stage 9 PR 2 added offline (downloads before the flight), flightFood and flightComfort.
-export const GROUPS = ['documents', 'money', 'comms', 'offline', 'health', 'clothing', 'chargers', 'flightFood', 'flightComfort'];
-const PREP = new Set(['documents', 'money', 'comms', 'offline']);
-export const groupKind = (g) => (PREP.has(g) ? 'prep' : 'pack');
+// Stage 9 PR 2 added offline (downloads before the flight), flightFood and flightComfort. Pre-stage-10 PR A
+// (owner, 2026-11-21) added flightDay, carryOn, hygiene, checkedBag and afterLanding, and four sections:
+// preparation, carry-on, checked bag, after landing. GROUPS is in display order (section by section).
+const SECTION_OF = {
+  documents: 'prep', money: 'prep', comms: 'prep', offline: 'prep', flightDay: 'prep',
+  carryOn: 'carry', flightComfort: 'carry', flightFood: 'carry', hygiene: 'carry',
+  checkedBag: 'bag', health: 'bag', clothing: 'bag', chargers: 'bag',
+  afterLanding: 'arrival',
+};
+export const GROUPS = Object.keys(SECTION_OF);
+export const SECTIONS = ['prep', 'carry', 'bag', 'arrival'];
+export const groupSection = (g) => SECTION_OF[g] ?? null;
+/** The home card's two bars: preparation and packing (carry-on + checked bag). After landing is its own. */
+export const groupKind = (g) => {
+  const s = groupSection(g);
+  return s === 'carry' || s === 'bag' ? 'pack' : s;
+};
 export const TASK_STATUSES = ['open', 'doing', 'done'];
 export const NAME_MAX = 60;
 export const NOTE_MAX = 140;
@@ -55,14 +68,17 @@ export function validateVerify({ source, checkedAt } = {}) {
   return errors;
 }
 
-/** Done / total per kind. pct is rounded down (100 only when all are done), null when there is nothing. */
+/** Done / total per section, and `pack` (carry-on + checked bag) for the home card. pct is rounded down
+ *  (100 only when all are done), null when there is nothing. */
 export function progress(items = []) {
-  const bar = (kind) => {
-    const list = items.filter((x) => groupKind(x.group) === kind);
+  const bar = (test) => {
+    const list = items.filter((x) => test(x.group));
     const done = list.filter((x) => x.done).length;
     return { done, total: list.length, pct: list.length ? Math.floor((done / list.length) * 100) : null };
   };
-  return { prep: bar('prep'), pack: bar('pack') };
+  const out = Object.fromEntries(SECTIONS.map((s) => [s, bar((g) => groupSection(g) === s)]));
+  out.pack = bar((g) => groupKind(g) === 'pack');
+  return out;
 }
 
 const pick = (obj, locale) => obj?.[locale] ?? obj?.en ?? '';
@@ -134,4 +150,53 @@ export function addFlightItems(items = [], pack, locale, makeId) {
     fresh.push(makeItem({ group: x.group, name, qty: '', note: '', verify: Boolean(x.verify) }, makeId));
   }
   return { items: [...items, ...fresh], added: fresh.length };
+}
+
+
+// ---------- Pre-stage-10 PR A: the built-in list (data/packs/th.js checklistBuiltin) ----------
+// A new trip gets all of it. Old data keeps every item and tick and is only offered what is missing.
+// An entry counts as present when an item has its key, or an item's name equals its name or an alias in any
+// language (old starter items have no key). Nothing is ever ticked here.
+
+const entryNames = (x) => Object.values(x.name ?? {}).concat(...Object.values(x.aliases ?? {})).map(sameName);
+
+/** All built-in entries as fresh items, each with its `builtin` key. */
+export function builtinItems(pack, locale, makeId) {
+  return (pack?.checklistBuiltin ?? []).map((x) => ({
+    ...makeItem({ group: x.group, name: pick(x.name, locale), qty: '', note: pick(x.note, locale), verify: Boolean(x.verify) }, makeId),
+    builtin: x.key,
+  }));
+}
+
+/** The built-in entries the list does not have yet. */
+export function missingBuiltins(items, pack) {
+  const list = Array.isArray(items) ? items : [];
+  const keys = new Set(list.map((x) => x?.builtin).filter(Boolean));
+  const names = new Set(list.map((x) => sameName(x?.name)));
+  return (pack?.checklistBuiltin ?? []).filter((x) => !keys.has(x.key) && !entryNames(x).some((n) => names.has(n)));
+}
+
+/** Add the missing built-in items after the existing ones. Existing items are returned as they are. */
+export function addBuiltins(items, pack, locale, makeId) {
+  const list = Array.isArray(items) ? items : [];
+  const want = new Set(missingBuiltins(list, pack).map((x) => x.key));
+  const fresh = builtinItems(pack, locale, makeId).filter((x) => want.has(x.builtin));
+  return { items: [...list, ...fresh], added: fresh.length };
+}
+
+/** A new (or reset) trip: fill an empty list with the built-in one. A list with any item is left alone. */
+export function readyChecklist(trip, pack, locale, makeId) {
+  if (cleanItems(trip.checklist).length) return;
+  trip.checklist = [...(Array.isArray(trip.checklist) ? trip.checklist : []), ...builtinItems(pack, locale, makeId)];
+}
+
+/** The one-time card: something is missing and the user did not say "not now" to this version of the list. */
+export function needsBuiltinOffer(trip, pack) {
+  if (trip?.builtinOffer?.declined === pack?.checklistBuiltinVersion) return false;
+  return missingBuiltins(trip?.checklist, pack).length > 0;
+}
+
+/** "Not now": only the answer is saved. */
+export function declineBuiltinOffer(trip, pack) {
+  trip.builtinOffer = { declined: pack.checklistBuiltinVersion };
 }

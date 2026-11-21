@@ -789,7 +789,7 @@ body::before {
 .transfer-link { justify-self: start; display: inline-flex; align-items: center; min-height: var(--tap); color: var(--accent); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
 .transfer-link:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; border-radius: var(--radius-sm); }
 .future-card { display: grid; gap: var(--space-2); border-style: dashed; }
-.itin-transfers-link, .flights-import-btn, .list-flight-btn { justify-self: start; }
+.itin-transfers-link, .flights-import-btn, .list-builtin-btn { justify-self: start; }
 .stop-transfer, .cal-transfer { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-1) var(--space-2); color: var(--ink); }
 .stop-transfer .icon, .cal-transfer .icon { width: 18px; height: 18px; color: var(--accent); }
 
@@ -982,7 +982,7 @@ body::before {
 }
 
 /* ---------- 9.0b: template card, daily base, emergency apart, route suggestion (existing tokens, rule 14 names) ---------- */
-.tpl-card { display: grid; gap: var(--space-3); border-inline-start: 4px solid var(--accent); }
+.tpl-card, .builtin-offer { display: grid; gap: var(--space-3); border-inline-start: 4px solid var(--accent); }
 .money-base { font-weight: 700; color: var(--title); font-variant-numeric: tabular-nums; }
 .money-counts { font-size: var(--text-body); }
 .money-em-note { padding: var(--space-2) var(--space-3); border-radius: var(--radius-md); background: var(--surface-2); color: var(--ink); line-height: 1.5; }
