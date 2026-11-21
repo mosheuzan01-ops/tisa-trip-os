@@ -1,4 +1,5 @@
 // 0.5.3 flights and transfers screen (docs/GOALS_STAGE5.md TB-1..TB-8), mobile 375 and desktop 1280.
+// Stage 9 (owner, 2026-11-21): the old route and the 3 old profiles moved to the archive; this script uses them from there.
 // Waits for UI state (rule 6). Run 3 times before PASS. QA_OUT for reruns (rule 10).
 // Run from the repo root: node scripts/qa/transfers-browser.cjs   (port 8081)
 const { chromium } = require('playwright');
@@ -39,11 +40,12 @@ async function fill(page, o) {
     await page.clock.setFixedTime(new Date('2026-11-25T09:00:00+07:00'));
     await page.goto(`${BASE}#/itinerary`);
     await page.waitForFunction(() => document.querySelector('[data-slot="version-app"]')?.textContent.length > 0);
-    await page.click('[data-slot="itin-empty"] [data-action="seed-open"]');
+    await page.click('[data-slot="itin-empty"] [data-action="seed-archive-open"]');
     await page.click('[data-action="seed-confirm"]');
     await closed(page, '#dlg-seed');
     await page.click('[data-tab="budget"]');
     await page.click('[data-slot="money-empty"] [data-action="profile-open"]');
+    await page.locator('#dlg-profile details.profile-archive').evaluate((d) => { d.open = true; }); await page.check('#dlg-profile input[value="realistic"]');
     await page.click('#dlg-profile [type="submit"]');
     await closed(page, '#dlg-profile');
     const committed0 = num(await page.locator('[data-slot="money-committed"]').textContent());

@@ -1,0 +1,12 @@
+{
+  "run": {
+    "result": "FAIL",
+    "error": "locator.waitFor: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#dlg-profile[open]') to be visible\u001b[22m\n\n    at /home/user/tisa-trip-os/scripts/qa/stage9-browser.cjs:58:48"
+  },
+  "S9-9 no JS errors": {
+    "result": "FAIL",
+    "errors": [
+      "pageerror: Cannot read properties of undefined (reading 'find')"
+    ]
+  }
+}

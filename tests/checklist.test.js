@@ -9,7 +9,7 @@ import { TH } from '../data/packs/th.js';
 import { SCHEMA_VERSION, migrate, validateState, createDefaultState } from '../src/js/core/schema.js';
 import { createStorage } from '../src/js/core/storage.js';
 import { exportBackup, parseBackup } from '../src/js/core/backup.js';
-import { readText } from './helpers.js';
+import { readText, preV6 } from './helpers.js';
 
 let n = 0;
 const id = () => `i${++n}`;
@@ -153,7 +153,7 @@ test('S5-2: real v2 data migrates to v3: nothing lost, tasks added, old checklis
   assert.equal(out.schemaVersion, SCHEMA_VERSION);
   const a = before.trips['trip-1'];
   const b = out.trips['trip-1'];
-  for (const k of ['startDate', 'endDate', 'destinations', 'budget', 'rates', 'expenses', 'people', 'repayments']) assert.deepEqual(b[k], a[k], k);
+  for (const k of ['startDate', 'endDate', 'destinations', 'budget', 'rates', 'expenses', 'people', 'repayments']) assert.deepEqual(k === 'budget' ? preV6(b[k]) : b[k], a[k], k);
   assert.deepEqual(b.tasks, []);
   assert.deepEqual(b.checklist, [{ id: 'old', name: 'פריט ישן', group: 'documents', qty: 1, note: '', done: false }]);
   assert.deepEqual(validateState(out), []);

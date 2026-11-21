@@ -8,6 +8,7 @@ import {
 import { TH } from '../data/packs/th.js';
 import { createStorage } from '../src/js/core/storage.js';
 import { exportBackup, parseBackup } from '../src/js/core/backup.js';
+// Stage 9 (owner, 2026-11-21): the old route, dates and profiles moved to TH.archive (kept, not the default).
 
 const s = (id, startDate, endDate, extra = {}) => ({ id, name: id, startDate, endDate, ...extra });
 
@@ -31,7 +32,7 @@ test('S3-2: stops are sorted by arrival date, then by departure, and the total i
 });
 
 test('S3-2: the Thailand pack adds up to 29 nights through the month change', () => {
-  const stops = seedFromPack(TH, 'he', (() => { let n = 0; return () => `id${++n}`; })());
+  const stops = seedFromPack(TH.archive, 'he', (() => { let n = 0; return () => `id${++n}`; })());
   assert.equal(stops.length, 11);
   assert.equal(totalNights(stops), 29);
   assert.equal(stops[0].name, 'בנגקוק');
@@ -40,7 +41,7 @@ test('S3-2: the Thailand pack adds up to 29 nights through the month change', ()
   assert.deepEqual(stops[9].nightsRange, [1, 2]);
   assert.equal(stops[9].flexible, true);
   assert.ok(stops.every((x) => /^id\d+$/.test(x.id) && x.note === ''));
-  assert.equal(seedFromPack(TH, 'en', () => 'x')[0].name, 'Bangkok');
+  assert.equal(seedFromPack(TH.archive, 'en', () => 'x')[0].name, 'Bangkok');
 });
 
 test('S3-3: validateStop requires a name and real dates, and departure not before arrival', () => {
@@ -176,7 +177,7 @@ test('S3-1: stops are saved under the tisa: key and survive a reload', () => {
 
 test('S3-7: the itinerary goes out in a backup and comes back unchanged', () => {
   const { state } = storageOn(memoryBackend()).load();
-  const stops = seedFromPack(TH, 'he', (() => { let n = 0; return () => `s${++n}`; })());
+  const stops = seedFromPack(TH.archive, 'he', (() => { let n = 0; return () => `s${++n}`; })());
   state.trips[state.activeTripId].destinations = stops;
   const text = JSON.stringify(exportBackup(state, new Date('2026-11-19T12:00:00Z')));
   const back = parseBackup(text, opts);

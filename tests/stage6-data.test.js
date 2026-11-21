@@ -1,5 +1,6 @@
 // Stage 6.0a: data model v4 (docs/GOALS_STAGE6.md S6-1 data part, S6-2, S6-12). Written before the schema change.
 import { test } from 'node:test';
+import { preV6 } from './helpers.js';
 import assert from 'node:assert/strict';
 import { SCHEMA_VERSION, migrate, validateState, createDefaultState, TRIP_FEATURE_FIELDS } from '../src/js/core/schema.js';
 import { createStorage } from '../src/js/core/storage.js';
@@ -52,7 +53,7 @@ test('S6-2: real v3 data migrates to v4: nothing lost or changed, the three new 
   assert.equal(out.schemaVersion, SCHEMA_VERSION);
   const a = before.trips['trip-1'];
   const b = out.trips['trip-1'];
-  for (const k of OLD_FIELDS) assert.deepEqual(b[k], a[k], k);
+  for (const k of OLD_FIELDS) assert.deepEqual(k === 'budget' ? preV6(b[k]) : b[k], a[k], k);
   assert.deepEqual(out.settings, before.settings);
   assert.deepEqual(b.journal, {});
   assert.deepEqual(b.checkins, []);

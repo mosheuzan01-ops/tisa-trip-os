@@ -3,7 +3,7 @@
 import { isIsoDate, daysBetween } from './trip.js';
 import { toMinor } from './money.js';
 
-export const SCHEMA_VERSION = 5;
+export const SCHEMA_VERSION = 6;
 export const DEFAULT_QUESTION_LIMIT = 50;
 export const BACKUP_REMINDER_DAYS = 7;
 
@@ -16,7 +16,9 @@ const THEMES = [null, 'light', 'dark'];
 const isObj = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
 
 /** Stage 4 budget: whole minor units in the base currency, nine categories, nothing filled in. */
-export const emptyBudget = () => ({ currency: 'ILS', totalMinor: null, categoriesMinor: {}, profileId: null, estimate: false });
+export const emptyBudget = () => ({ currency: 'ILS', totalMinor: null, categoriesMinor: {}, profileId: null, estimate: false, categoryNames: {}, hidden: [] });
+/** Stage 9: copies of a budget or route the user replaced. Only ever added to. */
+export const emptyArchive = () => ({ budgets: [], routes: [] });
 /** Stage 6 luggage: bags the user adds by hand; weights in whole grams, no limit until the user sets one. */
 export const emptyLuggage = () => ({ bags: [] });
 
@@ -26,6 +28,8 @@ export function createTrip({ makeId, countryCode, tripName }) {
   for (const f of OBJECT_FIELDS) trip[f] = {};
   trip.budget = emptyBudget();
   trip.luggage = emptyLuggage();
+  trip.archive = emptyArchive();
+  trip.templateOffer = null;
   return trip;
 }
 
@@ -67,6 +71,8 @@ export function validateState(state) {
     for (const f of ARRAY_FIELDS) if (!Array.isArray(trip[f])) errors.push(`trip.${id}.${f}`);
     for (const f of OBJECT_FIELDS) if (!isObj(trip[f])) errors.push(`trip.${id}.${f}`);
     if (isObj(trip.luggage) && !Array.isArray(trip.luggage.bags)) errors.push(`trip.${id}.luggage.bags`);
+    if (!isObj(trip.archive) || !Array.isArray(trip.archive.budgets) || !Array.isArray(trip.archive.routes)) errors.push(`trip.${id}.archive`);
+    if (isObj(trip.budget) && (!isObj(trip.budget.categoryNames) || !Array.isArray(trip.budget.hidden))) errors.push(`trip.${id}.budget.names`);
   }
   return errors;
 }
@@ -132,6 +138,22 @@ const MIGRATIONS = {
     const next = { ...old, schemaVersion: 5, trips: {} };
     for (const [id, trip] of Object.entries(old.trips ?? {})) {
       next.trips[id] = { ...trip, photos: Array.isArray(trip?.photos) ? trip.photos : [] };
+    }
+    return next;
+  },
+  // 5 -> 6 (Stage 9): an archive for replaced budgets and routes, a trip's own category names, hidden empty
+  // categories, and the one-time template offer. Only additions: every existing field stays as it was.
+  5(old) {
+    const next = { ...old, schemaVersion: 6, trips: {} };
+    for (const [id, trip] of Object.entries(old.trips ?? {})) {
+      const b = isObj(trip?.budget) ? trip.budget : emptyBudget();
+      const a = isObj(trip?.archive) ? trip.archive : {};
+      next.trips[id] = {
+        ...trip,
+        budget: { ...b, categoryNames: isObj(b.categoryNames) ? b.categoryNames : {}, hidden: Array.isArray(b.hidden) ? b.hidden : [] },
+        archive: { ...a, budgets: Array.isArray(a.budgets) ? a.budgets : [], routes: Array.isArray(a.routes) ? a.routes : [] },
+        templateOffer: trip?.templateOffer ?? null,
+      };
     }
     return next;
   },

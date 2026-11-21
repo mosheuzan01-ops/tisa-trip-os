@@ -2,7 +2,7 @@
 // Written before the code (rule 12): every test here ran red first.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { readJson } from './helpers.js';
+import { readJson, preV6 } from './helpers.js';
 import { SCHEMA_VERSION, migrate, validateState, createDefaultState, TRIP_FEATURE_FIELDS } from '../src/js/core/schema.js';
 import {
   fitSize, exifDate, dateFromFile, placeOf, groupPhotos, toggleFeatured, slideshow, storageWarning, makePhoto,
@@ -18,8 +18,8 @@ const v4 = () => readJson('tests/fixtures/v4-stage6.json');
 const trip = () => migrate(v4(), opts).trips.t;
 
 // ---------- schema v5 (S7-9) ----------
-test('S7-9: schema is v5 and a fresh trip has no photos', () => {
-  assert.equal(SCHEMA_VERSION, 5);
+test('S7-9: schema is v5 or later and a fresh trip has no photos', () => {
+  assert.ok(SCHEMA_VERSION >= 5, 'the 4 -> 5 step stays in the chain (Stage 9 added 5 -> 6)');
   const fresh = createDefaultState(opts);
   assert.deepEqual(fresh.trips['trip-1'].photos, []);
   assert.ok(TRIP_FEATURE_FIELDS.includes('photos'));
@@ -29,10 +29,10 @@ test('S7-9: schema is v5 and a fresh trip has no photos', () => {
 test('S7-9: real v4 data from Stage 6 migrates to v5 with nothing lost', () => {
   const before = v4();
   const out = migrate(structuredClone(before), opts);
-  assert.equal(out.schemaVersion, 5);
+  assert.equal(out.schemaVersion, SCHEMA_VERSION);
   const a = before.trips.t;
   const b = out.trips.t;
-  for (const k of Object.keys(a)) assert.deepEqual(b[k], a[k], k);
+  for (const k of Object.keys(a)) assert.deepEqual(k === 'budget' ? preV6(b[k]) : b[k], a[k], k);
   assert.deepEqual(b.photos, []);
   assert.deepEqual(out.settings, before.settings);
   assert.deepEqual(validateState(out), []);
@@ -43,7 +43,7 @@ test('S7-9: migration keeps photos that already exist, and v0 still reaches v5',
   s.trips.t.photos = [{ id: 'p1', date: '2026-12-06' }];
   assert.deepEqual(migrate(s, opts).trips.t.photos, [{ id: 'p1', date: '2026-12-06' }]);
   const v0 = migrate({ schemaVersion: 0, trip: {}, theme: null }, opts);
-  assert.equal(v0.schemaVersion, 5);
+  assert.equal(v0.schemaVersion, SCHEMA_VERSION);
   assert.deepEqual(validateState(v0), []);
 });
 

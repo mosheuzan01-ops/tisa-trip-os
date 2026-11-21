@@ -1,0 +1,6 @@
+not ok 1 - S9-9: 0.8.0 or later in all three places, so installed phones get the update banner
+ok 2 - S9-9: the new core files are cached for offline use
+ok 3 - rule 16: the new template and route carry no calendar dates: the trip dates are entered in the app
+ok 4 - rule 16: nothing shaped like a flight number, seat or booking reference in code, data or texts
+# pass 3
+# fail 1

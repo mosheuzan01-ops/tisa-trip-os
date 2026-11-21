@@ -1,5 +1,5 @@
 // Stage 7 before/after screenshots (rule 1). PREFIX=before|after, QA_OUT default docs/evidence/stage7/shots.
-// Uses the real v4 data from Stage 6 (tests/fixtures/v4-stage6.json). SCREENS=comma list of routes.
+// Uses real sample data from earlier stages (FIXTURE, default tests/fixtures/v4-stage6.json). SCREENS=comma list of routes.
 const { chromium } = require('playwright');
 const { spawn } = require('node:child_process');
 const fs = require('node:fs');
@@ -13,7 +13,7 @@ const PORT = Number(process.env.PORT ?? 8120);
 const BASE_DIR = process.env.BASE_DIR ?? ROOT;
 fs.mkdirSync(OUT, { recursive: true });
 const VIEWS = { mobile: { width: 390, height: 844 }, desktop: { width: 1280, height: 800 } };
-const seed = fs.readFileSync(path.join(ROOT, 'tests/fixtures/v4-stage6.json'), 'utf8');
+const seed = fs.readFileSync(path.join(ROOT, process.env.FIXTURE ?? 'tests/fixtures/v4-stage6.json'), 'utf8');
 
 (async () => {
   const server = spawn(process.execPath, [path.join(BASE_DIR, 'scripts/serve.js')], { env: { ...process.env, PORT: String(PORT) }, stdio: 'ignore' });

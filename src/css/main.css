@@ -975,3 +975,16 @@ body::before {
   .card.surface, .stop, .cal-day, .tile, .photo-group, .bag, .transfer, .photo-thumb, .cal-photo, .sum-thumb { transition: none; }
   .tile:hover, .tile:active, .photo-thumb:hover, .cal-photo:hover, .sum-thumb:hover, .photo-thumb:hover img, .cal-photo:hover img, .sum-thumb:hover img { transform: none; }
 }
+
+/* ---------- 9.0b: template card, daily base, emergency apart, route suggestion (existing tokens, rule 14 names) ---------- */
+.tpl-card { display: grid; gap: var(--space-3); border-inline-start: 4px solid var(--accent); }
+.money-base { font-weight: 700; color: var(--title); font-variant-numeric: tabular-nums; }
+.money-counts { font-size: var(--text-body); }
+.money-em-note { padding: var(--space-2) var(--space-3); border-radius: var(--radius-md); background: var(--surface-2); color: var(--ink); line-height: 1.5; }
+.route-note { display: grid; gap: var(--space-1); border-inline-start: 4px solid var(--accent); font-weight: 600; }
+.route-note-warn { color: var(--danger); }
+.stop-transfer-missing { font-size: var(--text-body); }
+.profile-archive { display: grid; gap: var(--space-2); }
+.profile-archive > summary { min-height: var(--tap); display: flex; align-items: center; cursor: pointer; color: var(--on-dmetal-muted); font-weight: 600; }
+.profile-stale { color: var(--on-dmetal-muted); font-style: italic; }
+.cat-edit-btn { justify-self: start; padding-inline: 0; color: var(--accent); font-weight: 600; } /* on a calm card, not a dark sheet */

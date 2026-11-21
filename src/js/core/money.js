@@ -122,11 +122,16 @@ export function editExpense(old, input, rates) {
 }
 
 /** A budget profile from the country pack as an editable budget, marked as an estimate. Emergency starts at 0. */
-export function profileToBudget(profile) {
+export function profileToBudget(profile, locale = 'he') {
   const categoriesMinor = {};
   for (const [k, v] of Object.entries(profile.categories)) categoriesMinor[k] = toMinor(v);
   categoriesMinor[EMERGENCY] = toMinor(profile.emergency ?? 0); // owner: about one flight ticket (2026-11-19)
-  return { currency: profile.currency, totalMinor: null, categoriesMinor, profileId: profile.id, estimate: true };
+  // Stage 9: a template may name its categories and hide empty ones. Old profiles have neither.
+  const names = profile.categoryNames?.[locale] ?? profile.categoryNames?.en ?? {};
+  return {
+    currency: profile.currency, totalMinor: null, categoriesMinor, profileId: profile.id, estimate: true,
+    categoryNames: { ...names }, hidden: Array.isArray(profile.hidden) ? [...profile.hidden] : [],
+  };
 }
 
 const isMinor = (v) => Number.isInteger(v) && v >= 0;
@@ -258,4 +263,48 @@ export function toCsv(rows) {
     return /[",\r\n]/.test(x) ? `"${x.replace(/"/g, '""')}"` : x;
   };
   return `\uFEFF${rows.map((r) => r.map(cell).join(',')).join('\r\n')}\r\n`;
+}
+
+
+// ---------- Stage 9: daily base, moving money, names, hidden categories ----------
+
+/**
+ * Daily base: the budget without the flight, split over the trip's calendar dates (both ends included), in
+ * whole agorot (rounded down). The emergency fund is never part of it. null without dates or categories.
+ */
+export function dailyBase(budget, dates) {
+  const cats = budget?.categoriesMinor ?? {};
+  if (!dates || !isIsoDate(dates.start) || !isIsoDate(dates.end)) return null;
+  const days = daysBetween(dates.start, dates.end) + 1;
+  const base = Object.entries(cats).filter(([k, v]) => k !== EMERGENCY && k !== 'flight' && isMinor(v)).reduce((s, [, v]) => s + v, 0);
+  if (!(days > 0) || base <= 0) return null;
+  return Math.floor(base / days);
+}
+
+/** Move money from one category's plan to another's. The total stays the same; an impossible move changes nothing. */
+export function moveBetween(budget, from, to, minor) {
+  const cats = budget?.categoriesMinor ?? {};
+  const have = isMinor(cats[from]) ? cats[from] : 0;
+  if (from === to || !Number.isInteger(minor) || minor <= 0 || minor > have || from === EMERGENCY || to === EMERGENCY) return budget;
+  return { ...budget, categoriesMinor: { ...cats, [from]: have - minor, [to]: (isMinor(cats[to]) ? cats[to] : 0) + minor } };
+}
+
+export const CATEGORY_NAME_MAX = 40;
+
+/** A trip's own name for a category. The id never changes, so expenses stay in it. Empty name = back to the default. */
+export function renameCategory(budget, id, name) {
+  const value = String(name ?? '').trim().slice(0, CATEGORY_NAME_MAX);
+  const names = { ...(budget?.categoryNames ?? {}) };
+  if (value) names[id] = value; else delete names[id];
+  return { ...budget, categoryNames: names };
+}
+
+/** The name to show: the trip's own name when it has one, else the pack's. */
+export const categoryLabel = (budget, id, fallback) => budget?.categoryNames?.[id] || fallback;
+
+/** Category ids to list. A hidden one shows again as soon as it has a plan or any expense: nothing is ever lost. */
+export function visibleCategories(budget, expenses = [], ids = []) {
+  const hidden = new Set(Array.isArray(budget?.hidden) ? budget.hidden : []);
+  const plan = budget?.categoriesMinor ?? {};
+  return ids.filter((id) => !hidden.has(id) || (isMinor(plan[id]) && plan[id] > 0) || expenses.some((e) => e?.category === id));
 }

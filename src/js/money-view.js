@@ -7,7 +7,10 @@ import {
   EMERGENCY, BASE_CURRENCY, STATUSES, METHODS, parseMoney, effectiveRates, rateToBase, currenciesFor, validateRates,
   ratesConsistent, categoryIds, validateExpense, makeExpense, editExpense, profileToBudget, summarize, daysLeft,
   dailyAllowance, filterExpenses, pieSlices, convertAll, atmCost, affordability, toCsv, stampRates,
+  dailyBase, moveBetween, renameCategory, categoryLabel, visibleCategories, CATEGORY_NAME_MAX,
 } from './core/money.js';
+import { needsTemplateOffer, declineTemplate, applyTemplate, templatePreview, stopNameFor, TEMPLATE_ID } from './core/template.js';
+import { tripCounts } from './core/route-plan.js';
 import { validatePerson, balances, settle, validateSplit, SPLIT_MODES } from './core/split.js';
 import { searchList, sumBase } from './core/search.js';
 import { setupSearch } from './search-view.js';
@@ -48,7 +51,7 @@ export function moneyState(ctx) {
 export function catName(ctx, id) {
   if (id === EMERGENCY) return ctx.t('money.cat.emergency');
   const c = ctx.pack?.budgetCategories.find((x) => x.id === id);
-  return c ? (c.name[ctx.locale] ?? c.name.en) : id;
+  return categoryLabel(ctx.trip?.()?.budget, id, c ? (c.name[ctx.locale] ?? c.name.en) : id); // 9.0b: the trip's own name first
 }
 const catIndex = (ctx, id) => Math.max(0, categoryIds(ctx.pack).indexOf(id)) + 1;
 
@@ -91,6 +94,21 @@ export function renderMoney(ctx) {
   $('[data-slot="money-free-small"]').textContent = fm(s.freeMinor);
   $('[data-slot="money-total"]').textContent = fm(s.totalMinor);
   $('[data-slot="money-estimate"]').hidden = !m.trip.budget?.estimate;
+  // 9.0b: daily base (budget without the flight / trip dates), the counts, and the emergency fund kept apart.
+  const dates = tripDates(m.trip);
+  const baseMinor = dailyBase(m.trip.budget, dates);
+  const flightMinor = m.trip.budget?.categoriesMinor?.flight ?? 0;
+  const counts = dates ? tripCounts(dates.start, dates.end, cleanStops(m.trip.destinations)) : null;
+  const baseEl = $('[data-slot="money-base"]');
+  baseEl.hidden = baseMinor === null;
+  if (baseMinor !== null) baseEl.textContent = interpolate(t('money.base'), { amount: fm(baseMinor), budget: fm(s.totalMinor - flightMinor), days: counts.dates });
+  const countsEl = $('[data-slot="money-counts"]');
+  countsEl.hidden = !counts;
+  if (counts) countsEl.textContent = interpolate(t('money.counts'), { dates: counts.dates, nights: counts.nights, lodging: counts.lodgingNights });
+  const emEl = $('[data-slot="money-emergency-note"]');
+  emEl.hidden = !(s.emergency.planMinor > 0);
+  if (s.emergency.planMinor > 0) emEl.textContent = interpolate(t('money.emergencyApart'), { em: fm(s.emergency.planMinor), base: fm(s.totalMinor), both: fm(s.totalMinor + s.emergency.planMinor) });
+  $('[data-slot="template-card"]').hidden = !needsTemplateOffer(m.trip);
   const bar = $('[data-slot="money-bar"]');
   const parts = [['paid', s.paidMinor], ['planned', s.plannedMinor], ['committed', s.committedMinor], ['free', Math.max(0, s.freeMinor)]];
   const whole = parts.reduce((a, [, v]) => a + v, 0);
@@ -105,7 +123,7 @@ export function renderMoney(ctx) {
   $('[data-slot="money-empty"]').hidden = s.hasCategories;
   $('[data-slot="money-cats"]').hidden = !s.hasCategories;
   const list = $('[data-slot="cat-list"]');
-  const ids = categoryIds(m.pack).filter((id) => id !== EMERGENCY);
+  const ids = visibleCategories(m.trip.budget, m.expenses, categoryIds(m.pack).filter((id) => id !== EMERGENCY));
   const lines = new Map(s.categories.map((c) => [c.id, c]));
   const catLine = (c, name) => {
     const li = el('li', `cat c-${catIndex(ctx, c.id)}${c.over ? ' is-over' : ''}`);
@@ -120,6 +138,14 @@ export function renderMoney(ctx) {
     meter.append(fill);
     const left = el('p', 'cat-left', c.over ? interpolate(t('money.cat.over'), { amount: fm(-c.leftMinor) }) : interpolate(t('money.cat.left'), { amount: fm(c.leftMinor) }));
     li.append(head, meter, left);
+    if (c.id !== EMERGENCY) { // 9.0b: rename / move money (own data-* name, rule 14)
+      const edit = el('button', 'link-btn cat-edit-btn', t('cat.edit'));
+      edit.type = 'button';
+      edit.dataset.action = 'cat-edit';
+      edit.dataset.catId = c.id;
+      edit.setAttribute('aria-label', interpolate(t('cat.editLabel'), { name }));
+      li.append(edit);
+    }
     return li;
   };
   list.replaceChildren(...ids.map((id) => catLine(lines.get(id) ?? { id, planMinor: 0, usedMinor: 0, leftMinor: 0, over: false }, catName(ctx, id))));
@@ -145,7 +171,7 @@ export function renderMoney(ctx) {
   fill(stops.map((x) => [x.id, x.name]), 'destinationId');
 
   // Search: description, category, stop, payment method, note. Only the list narrows; the totals above never change.
-  const searchFields = (e) => [e.description, catName(ctx, e.category), stopName.get(e.destinationId), t(`exp.method.${e.method}`), e.note];
+  const searchFields = (e) => [e.description, catName(ctx, e.category), stopNameFor(m.trip, e.destinationId)?.name, t(`exp.method.${e.method}`), e.note];
   const shown = searchList(filterExpenses(m.expenses, filters), query, searchFields)
     .sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0));
   const any = Object.values(filters).some(Boolean) || query.trim() !== '';
@@ -199,7 +225,10 @@ export function renderMoney(ctx) {
       ...(e.description ? [el('span', '', catName(ctx, e.category))] : []),
       el('span', `badge exp-status exp-${e.status}`, t(`exp.status.${e.status}`)),
     );
-    if (e.destinationId && stopName.has(e.destinationId)) meta.append(el('span', '', stopName.get(e.destinationId)));
+    if (e.destinationId) { // 9.0b: a stop that moved to the archive still shows its name
+      const where = stopNameFor(m.trip, e.destinationId);
+      if (where) meta.append(el('span', where.archived ? 'muted' : '', where.archived ? interpolate(t('exp.stopArchived'), { name: where.name }) : where.name));
+    }
     if (e.currency !== BASE_CURRENCY) meta.append(el('span', 'ltr', fm(e.baseMinor)));
     li.append(top, meta);
     if (e.note) li.append(el('p', 'exp-note', e.note));
@@ -505,33 +534,116 @@ export function setupMoney(ctx, { wireDialog, showFormErrors }) {
   function openProfile(from) {
     opener = from;
     const m = moneyState(ctx);
-    const profiles = m.pack.budgetProfiles;
-    const current = profiles.find((p) => p.id === m.trip.budget?.profileId) ?? profiles[Math.min(1, profiles.length - 1)];
-    $('[data-slot="profile-options"]').replaceChildren(...profiles.map((p) => {
+    const templates = m.pack.budgetTemplates ?? [];
+    const archived = m.pack.archive?.budgetProfiles ?? [];
+    const all = [...templates, ...archived];
+    const current = all.find((p) => p.id === m.trip.budget?.profileId) ?? templates[0] ?? archived[0];
+    const option = (p, stale) => {
       const label = el('label', 'replan-mode');
       const input = Object.assign(document.createElement('input'), { type: 'radio', name: 'profile', value: p.id, checked: p === current });
       const text = el('span');
       text.append(el('b', '', `${p.name[ctx.locale] ?? p.name.en}: ${formatMinor(p.total * 100, p.currency, fmtLocale)}`));
       if (p.description) text.append(el('small', '', p.description[ctx.locale] ?? p.description.en));
+      if (stale) text.append(el('small', 'profile-stale', m.pack.archive.staleLabel?.[ctx.locale] ?? m.pack.archive.staleLabel?.en ?? ''));
       label.append(input, text);
       return label;
-    }));
+    };
+    // 9.0b: the template first; the three old profiles only in a folded archive, marked stale (owner, 2026-11-21)
+    const box = el('details', 'profile-archive');
+    box.open = archived.some((p) => p.id === current?.id);
+    box.append(el('summary', '', t('money.profile.archive')), ...archived.map((p) => option(p, true)));
+    $('[data-slot="profile-options"]').replaceChildren(...templates.map((p) => option(p, false)), ...(archived.length ? [box] : []));
     $('[data-slot="profile-warn"]').textContent = m.summary.hasCategories ? t('money.profile.replace') : '';
     dlgProfile.showModal();
     pForm.querySelector('input:checked')?.focus();
   }
   pForm.addEventListener('submit', (e) => {
     e.preventDefault();
-    const profile = ctx.pack.budgetProfiles.find((p) => p.id === pForm.profile.value);
+    const pack = ctx.pack;
+    const profile = [...(pack.budgetTemplates ?? []), ...(pack.archive?.budgetProfiles ?? [])].find((p) => p.id === pForm.profile.value);
     if (!profile) return;
     commit((st) => {
       const trip = st.trips[st.activeTripId];
-      const { categoriesMinor, profileId, estimate } = profileToBudget(profile);
+      const next = profileToBudget(profile, ctx.locale);
       const keepEmergency = trip.budget?.categoriesMinor?.[EMERGENCY];
-      if (Number.isInteger(keepEmergency) && keepEmergency > 0) categoriesMinor[EMERGENCY] = keepEmergency; // never wipe the user's own emergency amount
-      trip.budget = { ...trip.budget, currency: BASE_CURRENCY, categoriesMinor, profileId, estimate };
+      if (Number.isInteger(keepEmergency) && keepEmergency > 0) next.categoriesMinor[EMERGENCY] = keepEmergency; // never wipe the user's own emergency amount
+      trip.budget = { ...trip.budget, ...next, currency: BASE_CURRENCY };
+      if (profile.id === TEMPLATE_ID && trip.templateOffer == null) trip.templateOffer = 'applied';
     }, 'money.profile.done');
     dlgProfile.close();
+  });
+
+  // ---------- 9.0b: the one-time template card (only after a yes; expenses never change) ----------
+  const dlgTpl = $('#dlg-template');
+  wireDialog(dlgTpl, restore);
+  panel.addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-action]');
+    if (!btn) return;
+    if (btn.dataset.action === 'template-decline') {
+      commit((st) => declineTemplate(st.trips[st.activeTripId]), 'tpl.declined');
+      $('[data-action="cats-open"]')?.focus();
+    }
+    if (btn.dataset.action === 'template-open') {
+      opener = btn;
+      const pv = templatePreview(ctx.trip());
+      const lines = [t('tpl.dlg.budget'), pv.replacesRoute ? t('tpl.dlg.route') : t('tpl.dlg.noDates'), interpolate(t('tpl.dlg.keeps'), { n: pv.keepsExpenses })];
+      $('[data-slot="template-preview"]').replaceChildren(...lines.map((x) => el('p', '', x)));
+      dlgTpl.showModal();
+      $('[data-action="template-apply"]').focus();
+    }
+  });
+  $('[data-action="template-apply"]').addEventListener('click', () => {
+    let warnings = [];
+    commit((st) => { ({ warnings } = applyTemplate(st.trips[st.activeTripId], ctx.pack, ctx.locale, () => makeId(), new Date().toISOString())); }, 'tpl.applied');
+    if (warnings.length) ctx.toast(`routeWarn.${warnings[0]}`);
+    dlgTpl.close();
+  });
+
+  // ---------- 9.0b: one category: rename, move money ----------
+  const dlgCat = $('#dlg-cat');
+  const kForm = $('[data-form="cat"]');
+  let catId = null;
+  wireDialog(dlgCat, restore);
+  function openCat(id, from) {
+    opener = from;
+    catId = id;
+    kForm.reset();
+    showFormErrors(t, kForm, [], 'catErr');
+    const m = moneyState(ctx);
+    $('[data-slot="cat-title"]').textContent = catName(ctx, id);
+    kForm.name.value = m.trip.budget?.categoryNames?.[id] ?? '';
+    kForm.name.placeholder = (() => { const c = ctx.pack.budgetCategories.find((x) => x.id === id); return c ? (c.name[ctx.locale] ?? c.name.en) : id; })();
+    const targets = visibleCategories(m.trip.budget, m.expenses, categoryIds(m.pack).filter((x) => x !== EMERGENCY && x !== id));
+    $('[data-slot="cat-to"]').replaceChildren(...targets.map((x) => Object.assign(el('option', '', catName(ctx, x)), { value: x })));
+    dlgCat.showModal();
+    kForm.name.focus();
+  }
+  panel.addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-action="cat-edit"]');
+    if (btn) openCat(btn.dataset.catId, btn);
+  });
+  kForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const raw = kForm.amount.value.trim();
+    const minor = raw === '' ? 0 : parseMoney(raw);
+    const budget = ctx.trip().budget;
+    const have = budget?.categoriesMinor?.[catId] ?? 0;
+    const errs = [];
+    if (raw !== '' && !(minor > 0)) errs.push('amount.invalid');
+    else if (minor > have) errs.push('amount.tooMuch');
+    if (kForm.name.value.trim().length > CATEGORY_NAME_MAX) errs.push('name.tooLong');
+    if (errs.length) {
+      showFormErrors(t, kForm, errs, 'catErr');
+      kForm.querySelector('.form-error').textContent = errs.map((x) => interpolate(t(`catErr.${x}`), { max: CATEGORY_NAME_MAX, have: formatMinor(have, BASE_CURRENCY, fmtLocale) })).join(' ');
+      return;
+    }
+    commit((st) => {
+      const trip = st.trips[st.activeTripId];
+      let next = renameCategory(trip.budget, catId, kForm.name.value);
+      if (minor > 0) next = moveBetween(next, catId, kForm.to.value, minor);
+      trip.budget = next;
+    }, 'cat.saved');
+    dlgCat.close();
   });
 
   // ---------- Category amounts ----------

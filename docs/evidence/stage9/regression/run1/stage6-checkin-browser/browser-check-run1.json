@@ -1,0 +1,181 @@
+{
+  "CI-1 flight by hand mobile": {
+    "result": "PASS",
+    "empty": true,
+    "zoneDefault": "Asia/Bangkok",
+    "stopHiddenForFlight": true,
+    "f": "צ'ק-אין לטיסה\n\nטיסה\n4 בדצמ׳\nשעה: עוד לא הוזנה\nשעון ישראל\n\nטיסה: תל אביב – בנגקוק\n\nלצ'ק-אין באתר",
+    "err": "כתבו שם, למשל \"צ'ק-אין לטיסה\". בחרו תאריך. הקישור צריך להתחיל ב-http:// או ב-https://."
+  },
+  "CI-2 hotel with time, shown in the other zone mobile": {
+    "result": "PASS",
+    "h": "מלון בבנגקוק\n\nמלון\n5 בדצמ׳\n14:00\nשעון תאילנד\n\nבשעון ישראל: 09:00\n\nתחנה: בנגקוק",
+    "checkins": [
+      {
+        "id": "eb09283c-75f3-403e-9568-1f8c4e18e5c6",
+        "kind": "flight",
+        "title": "צ'ק-אין לטיסה",
+        "transferId": "t1",
+        "stopId": null,
+        "date": "2026-12-04",
+        "time": "",
+        "zone": "Asia/Jerusalem",
+        "booking": "",
+        "link": "https://airline.example/checkin",
+        "note": "",
+        "done": false
+      },
+      {
+        "id": "d883aa7e-d9fe-4103-a315-df80f115e0e9",
+        "kind": "hotel",
+        "title": "מלון בבנגקוק",
+        "transferId": null,
+        "stopId": "d1",
+        "date": "2026-12-05",
+        "time": "14:00",
+        "zone": "Asia/Bangkok",
+        "booking": "",
+        "link": "",
+        "note": "",
+        "done": false
+      }
+    ]
+  },
+  "CI-3 time difference in winter mobile": {
+    "result": "PASS",
+    "diff": "היום תאילנד מקדימה את ישראל ב-5 שעות."
+  },
+  "CI-4 edit and delete with a yes mobile": {
+    "result": "PASS",
+    "pre": "14:00",
+    "ask": "למחוק את הצ'ק-אין?\n\n\"מלון בבנגקוק\" יימחק. אי אפשר לבטל.\n\nכן, למחוק\nביטול",
+    "afterNo": 2,
+    "after": 1
+  },
+  "CI-5 flight deleted, check-in kept mobile": {
+    "result": "PASS",
+    "shown": "צ'ק-אין לטיסה\n\nטיסה\n4 בדצמ׳\nשעה: עוד לא הוזנה\nשעון ישראל\n\nלצ'ק-אין באתר"
+  },
+  "CI-9 layout mobile": {
+    "result": "PASS",
+    "hscroll": false,
+    "small": [],
+    "tiny": [],
+    "clipped": []
+  },
+  "CI-6 reminder in the app mobile": {
+    "result": "PASS",
+    "homeText": "צ'ק-אין היום: צ'ק-אין לטיסה",
+    "ast": "צ'ק-אין היום: צ'ק-אין לטיסה.",
+    "cal5": "יום 1\nיום שבת, 5 בדצמבר\n\nבנגקוק\nהגעה\n\nתל אביב – בנגקוק\nשעה: עוד לא הוזנה\n\nצ'ק-אין: מלון בבנגקוק\n14:00\n\nאין תכנון ליום זה\n\nהערה ליום\nתמונה ליום הזה",
+    "gone": true
+  },
+  "CI-7 overdue mobile": {
+    "result": "PASS",
+    "cls": "btn btn-ghost btn-small home-checkin is-overdue",
+    "text": "צ'ק-אין שעבר המועד: צ'ק-אין לטיסה",
+    "itemCls": "transfer surface checkin is-overdue"
+  },
+  "CI-1 flight by hand desktop": {
+    "result": "PASS",
+    "empty": true,
+    "zoneDefault": "Asia/Bangkok",
+    "stopHiddenForFlight": true,
+    "f": "צ'ק-אין לטיסה\n\nטיסה\n4 בדצמ׳\nשעה: עוד לא הוזנה\nשעון ישראל\n\nטיסה: תל אביב – בנגקוק\n\nלצ'ק-אין באתר",
+    "err": "כתבו שם, למשל \"צ'ק-אין לטיסה\". בחרו תאריך. הקישור צריך להתחיל ב-http:// או ב-https://."
+  },
+  "CI-2 hotel with time, shown in the other zone desktop": {
+    "result": "PASS",
+    "h": "מלון בבנגקוק\n\nמלון\n5 בדצמ׳\n14:00\nשעון תאילנד\n\nבשעון ישראל: 09:00\n\nתחנה: בנגקוק",
+    "checkins": [
+      {
+        "id": "54d44773-aa7c-40e0-9fdb-d500db2120e8",
+        "kind": "flight",
+        "title": "צ'ק-אין לטיסה",
+        "transferId": "t1",
+        "stopId": null,
+        "date": "2026-12-04",
+        "time": "",
+        "zone": "Asia/Jerusalem",
+        "booking": "",
+        "link": "https://airline.example/checkin",
+        "note": "",
+        "done": false
+      },
+      {
+        "id": "a5477460-bec8-4c72-b1aa-c70f108a3862",
+        "kind": "hotel",
+        "title": "מלון בבנגקוק",
+        "transferId": null,
+        "stopId": "d1",
+        "date": "2026-12-05",
+        "time": "14:00",
+        "zone": "Asia/Bangkok",
+        "booking": "",
+        "link": "",
+        "note": "",
+        "done": false
+      }
+    ]
+  },
+  "CI-3 time difference in winter desktop": {
+    "result": "PASS",
+    "diff": "היום תאילנד מקדימה את ישראל ב-5 שעות."
+  },
+  "CI-4 edit and delete with a yes desktop": {
+    "result": "PASS",
+    "pre": "14:00",
+    "ask": "למחוק את הצ'ק-אין?\n\n\"מלון בבנגקוק\" יימחק. אי אפשר לבטל.\n\nכן, למחוק\nביטול",
+    "afterNo": 2,
+    "after": 1
+  },
+  "CI-5 flight deleted, check-in kept desktop": {
+    "result": "PASS",
+    "shown": "צ'ק-אין לטיסה\n\nטיסה\n4 בדצמ׳\nשעה: עוד לא הוזנה\nשעון ישראל\n\nלצ'ק-אין באתר"
+  },
+  "CI-9 layout desktop": {
+    "result": "PASS",
+    "hscroll": false,
+    "small": [],
+    "tiny": [],
+    "clipped": []
+  },
+  "CI-6 reminder in the app desktop": {
+    "result": "PASS",
+    "homeText": "צ'ק-אין היום: צ'ק-אין לטיסה",
+    "ast": "צ'ק-אין היום: צ'ק-אין לטיסה.",
+    "cal5": "יום 1\nיום שבת, 5 בדצמבר\n\nבנגקוק\nהגעה\n\nתל אביב – בנגקוק\nשעה: עוד לא הוזנה\n\nצ'ק-אין: מלון בבנגקוק\n14:00\n\nאין תכנון ליום זה\n\nהערה ליום\nתמונה ליום הזה",
+    "gone": true
+  },
+  "CI-7 overdue desktop": {
+    "result": "PASS",
+    "cls": "btn btn-ghost btn-small home-checkin is-overdue",
+    "text": "צ'ק-אין שעבר המועד: צ'ק-אין לטיסה",
+    "itemCls": "transfer surface checkin is-overdue"
+  },
+  "CI-8 summer difference": {
+    "result": "PASS",
+    "summer": "היום תאילנד מקדימה את ישראל ב-4 שעות."
+  },
+  "CI-10 backup and offline": {
+    "result": "PASS",
+    "cached": [
+      "/src/js/checkins-view.js",
+      "/src/js/core/checkins.js",
+      "/src/js/core/timezones.js"
+    ],
+    "rt": true
+  },
+  "CI-11 no system notifications": {
+    "result": "PASS",
+    "notify": [
+      0,
+      0
+    ]
+  },
+  "no JS errors, no outside requests": {
+    "result": "PASS",
+    "errors": [],
+    "external": []
+  }
+}

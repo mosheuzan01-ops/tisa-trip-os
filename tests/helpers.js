@@ -26,3 +26,11 @@ export function listFiles(dir, exts) {
 export const PAGES_ORIGIN = 'https://mosheuzan01-ops.github.io/tisa-trip-os/';
 export const stripShareImage = (text) =>
   text.replace(/<meta property="og:image" content="https:\/\/mosheuzan01-ops\.github\.io\/tisa-trip-os\/[^"]*">/g, '');
+
+/** Stage 9 (schema 6) adds two empty fields to every budget. Older migration tests compare the rest unchanged;
+ *  tests/stage9-data.test.js checks the two new fields themselves. */
+export const preV6 = (budget) => {
+  if (!budget || typeof budget !== 'object') return budget;
+  const { categoryNames, hidden, ...rest } = budget;
+  return rest;
+};

@@ -5,6 +5,7 @@ import assert from 'node:assert/strict';
 import { effectiveRates, convertAll, atmCost, profileToBudget, EMERGENCY } from '../src/js/core/money.js';
 import { validatePerson, splitShares, balances, settle, PERSON_MAX } from '../src/js/core/split.js';
 import { TH } from '../data/packs/th.js';
+// Stage 9 (owner, 2026-11-21): the old route, dates and profiles moved to TH.archive (kept, not the default).
 
 const RATES = effectiveRates({}, TH.planningRates);
 
@@ -29,10 +30,10 @@ test('S4-15: ATM cost: fee in baht and shekels, and the fee as a share of the wi
 });
 
 test('S4-17: scenarios are renamed (optimal / average / saving), amounts unchanged, emergency 2,500 by default', () => {
-  assert.deepEqual(TH.budgetProfiles.map((p) => [p.id, p.name.he, p.total]), [
+  assert.deepEqual(TH.archive.budgetProfiles.map((p) => [p.id, p.name.he, p.total]), [
     ['saver', 'חסכון', 9800], ['realistic', 'ממוצע', 15270], ['comfort', 'אופטימלי', 21400],
   ]);
-  for (const p of TH.budgetProfiles) {
+  for (const p of TH.archive.budgetProfiles) {
     assert.ok(p.description?.he && p.description?.en, `${p.id} has an explanation`);
     assert.equal(p.emergency, 2500, p.id);
     assert.equal(profileToBudget(p).categoriesMinor[EMERGENCY], 250000);

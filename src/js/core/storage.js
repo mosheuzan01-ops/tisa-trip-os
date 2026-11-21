@@ -13,7 +13,7 @@ function quota(error) {
  * @param {string} o.key            the single data key, e.g. "tisa:v1"
  * @param {{trip?: string, theme?: string}} o.legacy  Stage 1 keys to migrate from (left in place)
  */
-export function createStorage({ backend, key, legacy = {}, corruptPrefix = 'tisa:corrupt:', ...opts }) {
+export function createStorage({ backend, key, legacy = {}, corruptPrefix = 'tisa:corrupt:', premigrationPrefix = 'tisa:premigration:', ...opts }) {
   // 'ok' = can write; 'readonly' = writing would destroy data the user has not agreed to lose; 'unavailable' = no storage.
   let mode = backend ? 'ok' : 'unavailable';
   const defaults = () => createDefaultState(opts);
@@ -26,6 +26,13 @@ export function createStorage({ backend, key, legacy = {}, corruptPrefix = 'tisa
     const corruptKey = `${corruptPrefix}${opts.now().toISOString()}`;
     try { backend.setItem(corruptKey, raw); } catch { /* full or blocked: the original key is still untouched */ }
     return corruptKey;
+  }
+
+  // Stage 9: before a version change, keep the exact old text once under its own key (never overwritten,
+  // never read back on its own). A full or blocked storage is fine: the migration only adds fields.
+  function keepCopy(raw, version) {
+    const copyKey = `${premigrationPrefix}v${Number.isInteger(version) ? version : 0}`;
+    try { if (read(copyKey) === null) backend.setItem(copyKey, raw); } catch { /* full or blocked: carry on */ }
   }
 
   function loadLegacy() {
@@ -68,6 +75,7 @@ export function createStorage({ backend, key, legacy = {}, corruptPrefix = 'tisa
       let status = 'ok';
       try {
         if (!Number.isInteger(data?.schemaVersion) || data.schemaVersion < SCHEMA_VERSION) {
+          keepCopy(raw, data?.schemaVersion);
           state = migrate(data, opts);
           status = 'migrated';
         } else state = data;
