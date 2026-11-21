@@ -132,6 +132,9 @@
 ## רגרסיה (PR 3)
 - `npm test` 319/319, 3 פעמים.
 - 23 סקריפטי דפדפן (כולל `stage9-brand-browser` החדש) × 3 = 69/69, בלי FAIL (`docs/evidence/stage9/pr3/regression/summary.log`). צילומים וקובצי zip מהרגרסיה הוסרו כדי לשמור על גודל סביר. נשארו קובצי התוצאה (JSON) והפלט.
+- **שער QA (site-qa-before-publish):** `docs/evidence/stage9/pr3/qa-gate/REPORT.md`. FAIL 0 ו-WARN 2.
+  - "שדות בלי תווית" עבר ל-KNOWN באישור בעל המוצר (כלל 7), בתנאי ש-`scripts/qa/a11y-names-browser.cjs` עובר.
+  - הבדיקה עברה 3 מתוך 3 על 106 שדות, ונכשלה כשהוסרה תווית אחת.
 - סורק סטטי (`qa_scan.py`): אותם FAIL ידועים כמו ב-main (כלל 7). נוספה אזהרה: תמונות בלי `loading=lazy`. האייקון בסרגל העליון מוצג מיד, ולכן במכוון אין לו lazy.
 
 ## בדיקות ישנות שעודכנו (סיבה: החלטת בעל המוצר)
