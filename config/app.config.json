@@ -1,5 +1,5 @@
 {
-  "appName": "TISA",
+  "appName": "LATISA",
   "buildLabel": "Experimental",
   "defaultLocale": "he",
   "supportedLocales": [
@@ -18,5 +18,5 @@
     "he": "ישראל",
     "en": "Israel"
   },
-  "appVersion": "0.8.1"
+  "appVersion": "0.8.2"
 }

@@ -1,0 +1,2 @@
+not ok 1 - L-7: the plane and the pin stay inside every mask (maskable 80% circle, iOS rounded square, the icon itself)
+  error: 'icons/icon-maskable-512.png: the plane is cut by the mask at 392,84'

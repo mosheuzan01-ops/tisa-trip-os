@@ -5,14 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light dark">
   <meta name="referrer" content="no-referrer">
-  <title>TISA · ערכת המותג</title>
-  <meta name="description" content="ערכת המותג של TISA: צבעים, גופנים, אייקונים ורכיבים. כך נראית אפליקציית תכנון הטיול בבהיר ובכהה.">
+  <title>LATISA · ערכת המותג</title>
+  <meta name="description" content="ערכת המותג של LATISA: צבעים, גופנים, אייקונים ורכיבים. כך נראית אפליקציית תכנון הטיול בבהיר ובכהה.">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="he_IL">
-  <meta property="og:title" content="TISA · ערכת המותג">
-  <meta property="og:description" content="ערכת המותג של TISA: צבעים, גופנים, אייקונים ורכיבים. כך נראית אפליקציית תכנון הטיול בבהיר ובכהה.">
+  <meta property="og:title" content="LATISA · ערכת המותג">
+  <meta property="og:description" content="ערכת המותג של LATISA: צבעים, גופנים, אייקונים ורכיבים. כך נראית אפליקציית תכנון הטיול בבהיר ובכהה.">
   <meta property="og:image" content="https://mosheuzan01-ops.github.io/tisa-trip-os/icons/icon-512.png">
-  <link rel="icon" href="./icons/icon-192.png" type="image/png">
+  <link rel="icon" href="./icons/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="./icons/icon-192.png" sizes="192x192" type="image/png">
   <script src="./src/js/theme-boot.js"></script>
   <link rel="stylesheet" href="./src/css/fonts.css">
   <link rel="stylesheet" href="./src/css/tokens.css">
@@ -24,21 +25,34 @@
   <header class="bk-head">
     <div class="bk-wrap">
       <a class="brand" href="./index.html">
-        <svg class="icon brand-mark" aria-hidden="true"><use href="./assets/icons.svg#i-mark"/></svg>
-        <span class="brand-word ltr">TISA</span>
+        <img class="brand-mark" src="./assets/brand/latisa-mark.png" alt="" width="30" height="30">
+        <span class="brand-word ltr">LATISA</span>
       </a>
       <h1 class="bk-title">ערכת המותג</h1>
-      <p class="bk-lead">מקור אחד לכל ההחלטות העיצוביות של TISA: צבעים, טיפוגרפיה, אייקונים, רכיבים ותנועה. כל צבע באפליקציה מגיע מ-<code class="ltr">src/css/tokens.css</code>, ובדיקה אוטומטית מוודאת שאין צבע בשום מקום אחר.</p>
+      <p class="bk-lead">מקור אחד לכל ההחלטות העיצוביות של LATISA: צבעים, טיפוגרפיה, אייקונים, רכיבים ותנועה. כל צבע באפליקציה מגיע מ-<code class="ltr">src/css/tokens.css</code>, ובדיקה אוטומטית מוודאת שאין צבע בשום מקום אחר.</p>
     </div>
   </header>
 
   <main class="bk-wrap">
     <section class="bk-sec" aria-labelledby="s-logo">
-      <h2 id="s-logo"><span class="bk-num ltr">01</span>סימן ושם</h2>
-      <p class="bk-note">הסימן הוא חלון מטוס: הרגע שבו הטיול מתחיל. בשם משתמשים ב-Plex Mono במרווח רחב.</p>
+      <h2 id="s-logo"><span class="bk-num ltr">01</span>לוגו ואייקון</h2>
+      <p class="bk-note">הלוגו המלא, מהקבצים שאושרו. על רקע כהה: הגרסה המקורית. על רקע בהיר: הגרסה שאושרה, עם סיסמה כהה. הקבצים נבנים מהמקור ב-<code class="ltr">scripts/brand/build-brand.py</code>.</p>
       <div class="bk-duo">
-        <div class="bk-ctx" data-theme="light"><div class="bk-logo"><svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-mark"/></svg><span class="brand-word ltr">TISA</span></div></div>
-        <div class="bk-ctx" data-theme="dark"><div class="bk-logo"><svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-mark"/></svg><span class="brand-word ltr">TISA</span></div></div>
+        <div class="bk-ctx" data-theme="light"><img class="bk-full" src="./assets/brand/latisa-logo-light.png" alt="לוגו LATISA ו-Tripilot: טיסות, טיולים, ניהול תקציב בחופשה, לרקע בהיר" width="1000" height="676"></div>
+        <div class="bk-ctx bk-ctx-deep" data-theme="dark"><img class="bk-full" src="./assets/brand/latisa-logo-dark.png" alt="לוגו LATISA ו-Tripilot: טיסות, טיולים, ניהול תקציב בחופשה, לרקע כהה" width="1000" height="676"></div>
+      </div>
+      <h3 class="bk-sub">האייקון בסרגל העליון</h3>
+      <div class="bk-duo">
+        <div class="bk-ctx" data-theme="light"><div class="bk-logo"><img class="bk-mark" src="./assets/brand/latisa-mark.png" alt="" width="56" height="56"><span class="brand-word ltr">LATISA</span></div></div>
+        <div class="bk-ctx" data-theme="dark"><div class="bk-logo"><img class="bk-mark" src="./assets/brand/latisa-mark.png" alt="" width="56" height="56"><span class="brand-word ltr">LATISA</span></div></div>
+      </div>
+      <h3 class="bk-sub">אייקוני האתר והאפליקציה</h3>
+      <p class="bk-note">באייקון למסך הבית (אייפון ו-maskable) האיור מוקטן על רקע כחול-לילה, כדי שהמטוס והסיכה יישארו בתוך כל מסכה.</p>
+      <div class="bk-appicons">
+        <figure><img src="./icons/favicon-32.png" alt="" width="32" height="32"><figcaption class="ltr">favicon 32</figcaption></figure>
+        <figure><img src="./icons/icon-192.png" alt="" width="96" height="96"><figcaption class="ltr">192 / 512</figcaption></figure>
+        <figure><img class="mask-ios" src="./icons/apple-touch-icon-180.png" alt="" width="96" height="96"><figcaption class="ltr">Apple touch 180</figcaption></figure>
+        <figure><img class="mask-circle" src="./icons/icon-maskable-512.png" alt="" width="96" height="96"><figcaption class="ltr">maskable 512</figcaption></figure>
       </div>
     </section>
 

@@ -37,7 +37,7 @@ button { font: inherit; color: inherit; }
 .topbar { display: flex; align-items: center; justify-content: space-between; padding-block: var(--space-4) var(--space-2); }
 
 .brand { display: inline-flex; align-items: center; gap: var(--space-2); min-height: var(--tap); color: var(--title); text-decoration: none; border-radius: var(--radius-sm); }
-.brand-mark { width: 26px; height: 26px; }
+.brand-mark { width: 30px; height: 30px; border-radius: 7px; flex: none; }
 .brand-word { font: 500 var(--text-body)/1 var(--font-mono); letter-spacing: .28em; color: var(--ink); }
 
 .icon-btn {
@@ -377,6 +377,11 @@ h2, .section-title { font-size: var(--text-h3); font-weight: 700; line-height: 1
 .choice:has(input:focus-visible) { outline: 3px solid var(--focus); outline-offset: 2px; }
 .btn-danger { color: var(--on-dmetal-error); border-color: var(--on-dmetal-error); }
 .btn:disabled { opacity: .45; cursor: not-allowed; filter: none; transform: none; }
+/* 0.8.2: About card. The full logo is the dark original, so the card stays dark in both themes. */
+.about-card { display: grid; gap: var(--space-3); background: var(--deep); color: var(--on-deep); border-color: var(--deep-line); }
+.about-card h2 { color: var(--on-deep); font-size: var(--text-h3); font-weight: 700; }
+.about-card p { color: var(--on-deep-muted); line-height: 1.55; }
+.about-logo { display: block; width: 100%; max-width: 420px; height: auto; margin-inline: auto; }
 .settings-version { display: grid; gap: var(--space-2); padding-inline: var(--space-1); }
 .version-list, .import-summary { display: grid; gap: var(--space-2); }
 .version-list div, .import-summary div { display: flex; justify-content: space-between; gap: var(--space-3); }
