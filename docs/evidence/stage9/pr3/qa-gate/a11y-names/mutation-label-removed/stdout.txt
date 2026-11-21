@@ -1,0 +1,2 @@
+{"total":106,"checked":106,"byChrome":103,"byDom":3,"named":101,"known":["import-file","photos-import-file","flights-import-file","photo-file"],"unnamed":["panel-money:item:5"],"errors":[],"result":"FAIL"}
+FAIL

@@ -1,0 +1,2 @@
+{"total":106,"checked":106,"byChrome":103,"byDom":3,"named":102,"known":["import-file","photos-import-file","flights-import-file","photo-file"],"unnamed":[],"errors":[],"result":"PASS"}
+ALL PASS
