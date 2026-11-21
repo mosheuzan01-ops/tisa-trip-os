@@ -1,4 +1,5 @@
 // 0.4.2 browser checks at 375px (docs/GOALS_STAGE4.md S4-18..S4-24).
+// Stage 9 (owner, 2026-11-21): the old route and the 3 old profiles moved to the archive; this script uses them from there.
 // Waits for UI state, not fixed sleeps (docs/RULES.md rule 6). Run 3 times before calling it PASS.
 // Run from the repo root: node scripts/qa/stage4-polish-browser.cjs   (port 8089)
 const { chromium } = require('playwright');
@@ -36,7 +37,7 @@ async function setup(browser, when, scheme = 'light') {
   await closed(page, '#dlg-dates');
   await page.click('[data-tab="budget"]');
   await page.click('[data-slot="money-empty"] [data-action="profile-open"]');
-  await page.check('#dlg-profile input[value="saver"]');
+  await page.locator('#dlg-profile details.profile-archive').evaluate((d) => { d.open = true; }); await page.check('#dlg-profile input[value="saver"]');
   await page.click('#dlg-profile [type="submit"]');
   await closed(page, '#dlg-profile');
   return { ctx, page };

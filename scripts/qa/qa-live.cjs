@@ -1,4 +1,5 @@
 // Pre-publish live QA (site-qa-before-publish, step 2): 360 / 390 / 768 / 1280 px, light and dark,
+// Stage 9 (owner, 2026-11-21): the old route and the 3 old profiles moved to the archive; this script uses them from there.
 // on home, itinerary (with the suggested route, during the trip) and settings.
 // Checks: sideways scroll, RTL, tap targets >= 44px, smallest text, body text size, computed contrast,
 // keyboard focus order and visibility, dialog focus trap and Esc. Run: node scripts/qa/qa-live.cjs (port 8095)
@@ -81,13 +82,14 @@ function audit() {
       await page.goto(`${BASE}#/itinerary`);
       await page.waitForFunction(() => document.querySelector('[data-slot="version-app"]')?.textContent.length > 0);
       await page.evaluate(() => document.fonts.ready);
-      await page.click('[data-slot="itin-empty"] [data-action="seed-open"]');
+      await page.click('[data-slot="itin-empty"] [data-action="seed-archive-open"]');
       await page.click('[data-action="seed-confirm"]');
       await page.waitForFunction(() => document.querySelectorAll('.stop').length === 11);
       await sleep(2800); // toast gone
       // Stage 4: a budget and a couple of expenses, so the money screen has content
       await page.evaluate(() => { location.hash = '#/money'; });
       await page.click('[data-slot="money-empty"] [data-action="profile-open"]');
+      await page.locator('#dlg-profile details.profile-archive').evaluate((d) => { d.open = true; }); await page.check('#dlg-profile input[value="realistic"]');
       await page.click('#dlg-profile [type="submit"]');
       for (const [amount, cur, cat] of [['300', 'THB', 'food'], ['1200', 'ILS', 'lodging']]) {
         await page.click('#panel-money [data-action="expense-add"]');
@@ -130,7 +132,7 @@ function audit() {
     await page.clock.setFixedTime(new Date('2026-12-12T09:00:00+07:00'));
     await page.goto(`${BASE}#/itinerary`);
     await page.waitForFunction(() => document.querySelector('[data-slot="version-app"]')?.textContent.length > 0);
-    await page.click('[data-slot="itin-empty"] [data-action="seed-open"]');
+    await page.click('[data-slot="itin-empty"] [data-action="seed-archive-open"]');
     await page.click('[data-action="seed-confirm"]');
     await page.waitForFunction(() => document.querySelectorAll('.stop').length === 11);
     await page.evaluate(() => document.activeElement.blur());

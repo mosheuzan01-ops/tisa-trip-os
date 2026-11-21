@@ -247,7 +247,10 @@
             </button>
             <button class="btn btn-ghost" type="button" data-action="seed-open" data-i18n="itin.seed.open">מסלול מוצע</button>
           </div>
+          <button class="link-btn link-btn-calm" type="button" data-action="seed-archive-open" data-i18n="itin.seed.archiveOpen">מסלול ישן מהארכיון (הערכה לא מעודכנת)</button>
         </section>
+
+        <section class="card surface route-note" data-slot="route-note" role="status" hidden></section>
 
         <ol class="stops" data-slot="stops" aria-label="תחנות" data-i18n-label="itin.listLabel"></ol>
 
@@ -287,6 +290,16 @@
           <h1 class="display" data-i18n="money.title">כסף</h1>
         </div>
 
+        <!-- 9.0b: one-time offer for a user who already has data. Nothing changes without a yes. -->
+        <section class="card surface tpl-card" data-slot="template-card" aria-labelledby="tpl-card-title" hidden>
+          <h2 class="tool-title" id="tpl-card-title" data-i18n="tpl.card.title">תבנית חדשה לתקציב ולמסלול</h2>
+          <p data-i18n="tpl.card.text">אפשר לעבור לתבנית החדשה. התקציב והמסלול הנוכחיים נשמרים בארכיון, וההוצאות לא משתנות.</p>
+          <div class="settings-actions">
+            <button class="btn btn-primary" type="button" data-action="template-open" data-i18n="tpl.card.open">לעבור לתבנית</button>
+            <button class="btn btn-ghost" type="button" data-action="template-decline" data-i18n="tpl.card.decline">לא עכשיו</button>
+          </div>
+        </section>
+
         <section class="card surface money-hero" aria-labelledby="money-free-label">
           <h2 class="money-hero-label" id="money-free-label" data-i18n="money.free.title">פנוי אחרי התכנון</h2>
           <p class="money-big ltr" data-slot="money-free">—</p>
@@ -301,6 +314,9 @@
             <div class="money-split-total"><dt data-i18n="money.total">תקציב שוטף</dt><dd class="ltr" data-slot="money-total"></dd></div>
           </dl>
           <p class="money-estimate" data-slot="money-estimate" data-i18n="money.estimate" hidden>הערכת תכנון, לא מאומת</p>
+          <p class="money-base" data-slot="money-base" hidden></p>
+          <p class="money-counts muted" data-slot="money-counts" hidden></p>
+          <p class="money-em-note" data-slot="money-emergency-note" hidden></p>
         </section>
 
         <section class="card surface money-empty" data-slot="money-empty" aria-labelledby="money-empty-title" hidden>
@@ -1103,6 +1119,36 @@
     </dialog>
 
     <!-- Journal (6.0c): one note per day, from the calendar. Deleting asks first. -->
+    <!-- 9.0b: switch to the template, with a preview of what changes -->
+    <dialog class="sheet dmetal" id="dlg-template" aria-labelledby="dlg-template-title" aria-describedby="dlg-template-text">
+      <div class="sheet-form">
+        <h2 id="dlg-template-title" data-i18n="tpl.dlg.title">לעבור לתבנית החדשה?</h2>
+        <div class="sheet-hint" id="dlg-template-text" data-slot="template-preview"></div>
+        <div class="sheet-actions">
+          <button class="btn metal-btn" type="button" data-action="template-apply" data-i18n="tpl.dlg.yes">כן, לעבור</button>
+          <button class="btn btn-ghost" type="button" data-close data-i18n="form.cancel">ביטול</button>
+        </div>
+      </div>
+    </dialog>
+
+    <!-- 9.0b: one category: its name for this trip, and moving money to another category -->
+    <dialog class="sheet dmetal" id="dlg-cat" aria-labelledby="dlg-cat-title">
+      <form class="sheet-form" data-form="cat" novalidate>
+        <h2 id="dlg-cat-title" data-slot="cat-title"></h2>
+        <label class="field"><span data-i18n="cat.name">שם הקטגוריה</span><input type="text" name="name" maxlength="40" autocomplete="off" aria-describedby="cat-error"></label>
+        <p class="sheet-hint" data-i18n="cat.moveHint">העברה לקטגוריה אחרת. הסכום הכולל לא משתנה.</p>
+        <div class="field-row">
+          <label class="field"><span data-i18n="cat.amount">סכום להעברה (₪, לא חובה)</span><input class="ltr" type="text" inputmode="decimal" name="amount" autocomplete="off" aria-describedby="cat-error"></label>
+          <label class="field"><span data-i18n="cat.to">אל</span><select name="to" data-slot="cat-to"></select></label>
+        </div>
+        <p class="form-error" id="cat-error" role="alert"></p>
+        <div class="sheet-actions">
+          <button class="btn metal-btn" type="submit" data-i18n="form.save">שמירה</button>
+          <button class="btn btn-ghost" type="button" data-close data-i18n="form.cancel">ביטול</button>
+        </div>
+      </form>
+    </dialog>
+
     <dialog class="sheet dmetal" id="dlg-note" aria-labelledby="dlg-note-title" aria-describedby="dlg-note-where">
       <form class="sheet-form" data-form="note" novalidate>
         <h2 id="dlg-note-title" data-slot="note-title"></h2>

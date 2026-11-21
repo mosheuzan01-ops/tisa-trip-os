@@ -1,4 +1,5 @@
 // Stage 4 add-ons at 375px (docs/GOALS_STAGE4.md S4-14..S4-17): converter, ATM, split, scenarios.
+// Stage 9 (owner, 2026-11-21): the old route and the 3 old profiles moved to the archive; this script uses them from there.
 // Waits for UI state, not fixed sleeps (docs/RULES.md rule 6). Run 3 times before calling it PASS.
 // Run from the repo root: node scripts/qa/stage4-tools-browser.cjs   (port 8099)
 const { chromium } = require('playwright');
@@ -33,9 +34,10 @@ const shot = async (page, name, full = false) => { if (SHOTS) await page.screens
 
   // ---------- S4-17: scenario names, explanations, emergency 2,500 ----------
   await page.click('[data-slot="money-empty"] [data-action="profile-open"]');
-  const options = await page.locator('#dlg-profile .replan-mode').allTextContents();
+  await page.locator('#dlg-profile details.profile-archive').evaluate((d) => { d.open = true; });
+  const options = await page.locator('#dlg-profile details.profile-archive .replan-mode').allTextContents();
   await shot(page, 'after-profile-dialog-375');
-  await page.check('#dlg-profile input[value="comfort"]');
+  await page.locator('#dlg-profile details.profile-archive').evaluate((d) => { d.open = true; }); await page.check('#dlg-profile input[value="comfort"]');
   await page.click('#dlg-profile [type="submit"]');
   await closed(page, '#dlg-profile');
   const b = (await trip(page)).budget;

@@ -1,4 +1,5 @@
 // Stage 3 browser checks at 375px (docs/GOALS_STAGE3.md S3-1, S3-3..S3-7, S3-9, S3-11).
+// Stage 9 (owner, 2026-11-21): the old route and the 3 old profiles moved to the archive; this script uses them from there.
 // Dev-only: needs a Chromium through Playwright on the developer's machine. The app has no dependencies.
 // Run from the repo root: node scripts/qa/stage3-browser.cjs   (starts its own server on port 8093)
 const { chromium } = require('playwright');
@@ -131,7 +132,7 @@ async function addStop(page, { name, start, end, note = '' }) {
       await page.clock.setFixedTime(new Date(when));
       await page.goto(`${BASE}#/itinerary`);
       await ready(page);
-      await page.click('[data-slot="itin-empty"] [data-action="seed-open"]');
+      await page.click('[data-slot="itin-empty"] [data-action="seed-archive-open"]');
       await page.click('[data-action="seed-confirm"]');
       await page.waitForFunction(() => document.querySelectorAll('.stop').length === 11);
       const got = {
@@ -160,7 +161,7 @@ async function addStop(page, { name, start, end, note = '' }) {
     await page.clock.setFixedTime(new Date('2026-11-19T10:00:00+07:00'));
     await page.goto(`${BASE}#/itinerary`);
     await ready(page);
-    await page.click('[data-slot="itin-empty"] [data-action="seed-open"]');
+    await page.click('[data-slot="itin-empty"] [data-action="seed-archive-open"]');
     const seedText = await page.locator('[data-slot="seed-text"]').textContent();
     await page.screenshot({ path: `${OUT}/after-seed-offer-375.png` });
     const beforeSeed = (await stored(page)).destinations.length;
@@ -253,7 +254,7 @@ async function addStop(page, { name, start, end, note = '' }) {
     await ctx.setOffline(true);
     await page.reload();
     await ready(page);
-    await page.click('[data-slot="itin-empty"] [data-action="seed-open"]');
+    await page.click('[data-slot="itin-empty"] [data-action="seed-archive-open"]');
     await page.click('[data-action="seed-confirm"]');
     await page.waitForFunction(() => document.querySelectorAll('.stop').length === 11);
     await addStop(page, { name: 'צ׳יאנג ראי', start: '2027-01-03', end: '2027-01-04' });

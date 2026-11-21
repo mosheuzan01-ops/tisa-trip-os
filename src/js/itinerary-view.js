@@ -9,6 +9,7 @@ import {
 } from './core/itinerary.js';
 import { makeId } from './core/ids.js';
 import { transfersForStop } from './core/transfers.js';
+import { planRoute } from './core/route-plan.js';
 
 const $ = (sel, root = document) => root.querySelector(sel);
 const ICONS = './assets/icons.svg#';
@@ -28,6 +29,16 @@ const stopsText = (t, n) => (n === 1 ? t('itin.stops.one') : interpolate(t('itin
 
 const tripDates = (trip) => (isIsoDate(trip.startDate) && isIsoDate(trip.endDate) ? { start: trip.startDate, end: trip.endDate } : null);
 const visibleStops = (trip) => sortStops(cleanStops(trip.destinations));
+
+/** The night of 31.12 inside the trip dates, or null. */
+function newYearNight(trip) {
+  if (!isIsoDate(trip.startDate) || !isIsoDate(trip.endDate)) return null;
+  for (let y = Number(trip.startDate.slice(0, 4)); y <= Number(trip.endDate.slice(0, 4)); y += 1) {
+    const ny = `${y}-12-31`;
+    if (trip.startDate <= ny && ny < trip.endDate) return ny;
+  }
+  return null;
+}
 
 /** Put changed stops back by id. Entries the screen cannot show stay in the data untouched. */
 function writeStops(trip, next) {
@@ -91,6 +102,19 @@ export function renderItinerary(ctx) {
   const flagged = new Set([...findOverlaps(stops).flat(), ...stopsOutsideTrip(stops, tripDates(trip))]);
 
   // The list. Rebuilt each time; focus is put back on the same control by data-action + data-id.
+  // 9.0b: a suggested route says so, and says when 31.12 is not on Koh Samui (checked live, after any edit).
+  const note = $('[data-slot="route-note"]');
+  const suggested = stops.some((x) => x.suggested);
+  note.hidden = !suggested;
+  if (suggested) {
+    const lines = [t('route.note')];
+    const ny = newYearNight(trip);
+    const samui = ctx.pack?.routeTemplate?.clusters?.flat().find((x) => x.newYear);
+    const samuiName = samui ? (samui.name[ctx.locale] ?? samui.name.en) : null;
+    if (ny && samuiName && !stops.some((x) => x.name === samuiName && x.startDate <= ny && ny < x.endDate)) lines.push(t('routeWarn.newYear.notOnIsland'));
+    note.replaceChildren(...lines.map((x, k) => el('p', k ? 'route-note-warn' : '', x)));
+  }
+
   const list = $('[data-slot="stops"]');
   const focused = list.contains(document.activeElement) ? document.activeElement : null;
   const focusKey = focused ? [focused.dataset.action, focused.dataset.id] : null;
@@ -113,6 +137,10 @@ export function renderItinerary(ctx) {
       line.append(el('span', '', interpolate(t('transfer.route'), { from: x.from, to: x.to })), el('span', 'muted', formatDate(x.date, fmtLocale)));
       if (x.time) line.append(el('span', 'ltr muted', x.time));
       li.append(line);
+    }
+    // 9.0b: between suggested stops, say plainly that the transfer is not entered (no times are invented).
+    if (stop.suggested && i > 0 && !(trip.transfers ?? []).some((y) => y?.date === stop.startDate)) {
+      li.append(el('p', 'stop-transfer-missing muted', interpolate(t('route.transferMissing'), { from: stops[i - 1].name })));
     }
     if (stop.note) li.append(el('p', 'stop-note', stop.note));
     const actions = el('div', 'stop-actions');
@@ -264,6 +292,7 @@ export function setupItinerary(ctx, { wireDialog, showFormErrors }) {
       commit((s) => writeStops(s.trips[s.activeTripId], next), 'stop.moved');
     }
     if (action === 'seed-open') openSeed(btn);
+    if (action === 'seed-archive-open') openSeed(btn, 'archive');
     if (action === 'replan-open') openReplan(btn);
   });
 
@@ -271,33 +300,49 @@ export function setupItinerary(ctx, { wireDialog, showFormErrors }) {
   const dlgSeed = $('#dlg-seed');
   let seed = null;
   wireDialog(dlgSeed, () => { seed = null; restore(); });
-  async function openSeed(from) {
+  async function openSeed(from, mode = 'plan') {
     opener = from;
     let pack;
     try {
       const mod = await import(`../../data/packs/${ctx.config.activeCountry}.js`);
       pack = Object.values(mod)[0];
     } catch { ctx.toast('form.saveFailed'); return; }
-    seed = { pack, stops: seedFromPack(pack, ctx.locale, () => makeId()) };
-    const first = seed.stops[0];
-    const last = seed.stops[seed.stops.length - 1];
-    let text = interpolate(t('itin.seed.text'), {
-      stops: stopsText(t, seed.stops.length), nights: nightsText(t, totalNights(seed.stops)),
-      start: formatDate(first.startDate, fmtLocale), end: formatDate(last.endDate, fmtLocale),
-    });
-    if (!tripDates(ctx.trip())) text += ` ${t('itin.seed.tripDates')}`;
-    $('[data-slot="seed-text"]').textContent = text;
+    const confirm = $('[data-action="seed-confirm"]');
+    const dates = tripDates(ctx.trip());
+    let stops = [];
+    let text = '';
+    if (mode === 'archive') { // 9.0b: the old route, only on request, marked as an old estimate
+      stops = seedFromPack(pack.archive, ctx.locale, () => makeId());
+      text = `${pack.archive.staleLabel?.[ctx.locale] ?? pack.archive.staleLabel?.en ?? ''}. `;
+    } else if (dates) { // 9.0b: the suggestion built from the trip dates
+      const plan = planRoute(dates.start, dates.end, pack.routeTemplate, ctx.locale, () => makeId());
+      stops = plan.stops;
+      text = plan.warnings.map((w) => t(`routeWarn.${w}`)).join(' ');
+      if (text) text += ' ';
+    }
+    seed = stops.length ? { pack, stops, mode } : null;
+    confirm.disabled = !seed;
+    if (seed) {
+      const first = stops[0];
+      const last = stops[stops.length - 1];
+      text += interpolate(t(mode === 'archive' ? 'itin.seed.text' : 'itin.seed.planText'), {
+        stops: stopsText(t, stops.length), nights: nightsText(t, totalNights(stops)),
+        start: formatDate(first.startDate, fmtLocale), end: formatDate(last.endDate, fmtLocale),
+      });
+      if (mode === 'archive' && !dates) text += ` ${t('itin.seed.tripDates')}`;
+    } else if (!dates) text = t('itin.seed.needDates');
+    $('[data-slot="seed-text"]').textContent = text.trim();
     dlgSeed.showModal();
-    $('[data-action="seed-confirm"]').focus();
+    (confirm.disabled ? dlgSeed.querySelector('[data-close]') : confirm).focus();
   }
   $('[data-action="seed-confirm"]').addEventListener('click', () => {
     if (!seed) return;
-    const { pack, stops } = seed;
+    const { pack, stops, mode } = seed;
     commit((s) => {
       const trip = s.trips[s.activeTripId];
       if (visibleStops(trip).length) return; // never replace stops the user already has
       writeStops(trip, stops);
-      if (!tripDates(trip) && pack.defaultDates) { trip.startDate = pack.defaultDates.start; trip.endDate = pack.defaultDates.end; }
+      if (mode === 'archive' && !tripDates(trip) && pack.archive?.defaultDates) { trip.startDate = pack.archive.defaultDates.start; trip.endDate = pack.archive.defaultDates.end; }
     }, 'itin.seed.done');
     opener = $('[data-slot="stops"] [data-action="stop-edit"]') ?? opener;
     dlgSeed.close();

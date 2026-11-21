@@ -1,4 +1,5 @@
 // Stage 3 polish checks at 375px (docs/GOALS_STAGE3.md S3-12, S3-13).
+// Stage 9 (owner, 2026-11-21): the old route and the 3 old profiles moved to the archive; this script uses them from there.
 // S3-12: the home "today" card names the stop you are at (by the destination clock) and links to the itinerary.
 // S3-13: changing trip dates from home or settings, when there are stops, opens the replan preview; nothing is saved until yes.
 // Run from the repo root: PHASE=after node scripts/qa/stage3-polish-browser.cjs   (port 8094)
@@ -29,7 +30,7 @@ async function seeded(browser, when, bag) {
   await page.clock.setFixedTime(new Date(when));
   await page.goto(`${BASE}#/itinerary`);
   await ready(page);
-  await page.click('[data-slot="itin-empty"] [data-action="seed-open"]');
+  await page.click('[data-slot="itin-empty"] [data-action="seed-archive-open"]');
   await page.click('[data-action="seed-confirm"]');
   await page.waitForFunction(() => document.querySelectorAll('.stop').length === 11);
   await page.click('[data-tab="home"]');
