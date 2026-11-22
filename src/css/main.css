@@ -592,6 +592,21 @@ body::before {
 .seg-committed, .dot-committed { background: var(--chart-7); }
 .seg-free, .dot-free { background: var(--line-strong); }
 .seg-reserved, .dot-reserved { background: var(--chart-3); } /* stage 13: the money set aside for the flight */
+/* 1.0.1: one total; the emergency fund inside it; the categories folded under "details" */
+.seg-emheld, .dot-emheld { background: var(--chart-5); }
+.total-form { display: grid; gap: var(--space-2); }
+.total-input { display: flex; align-items: center; gap: var(--space-2); }
+.total-input input { flex: 1; min-width: 0; font-size: var(--text-lead); font-weight: 700; }
+.total-cur { font-weight: 700; color: var(--muted); }
+.total-fx { color: var(--muted); font-size: var(--text-caption); }
+.total-fx:empty { display: none; }
+.money-details > .card { box-shadow: none; border: 0; background: transparent; padding-inline: 0; margin-block: 0; }
+.money-unallocated { font-weight: 700; color: var(--ink); }
+.money-unallocated.is-over { color: var(--danger); }
+.money-suggest { display: grid; gap: var(--space-2); }
+.suggest-list { display: grid; gap: var(--space-1); margin: 0; padding: 0; list-style: none; }
+.suggest-list li { display: flex; justify-content: space-between; gap: var(--space-3); }
+.suggest-hint { color: var(--muted); }
 .money-split { display: grid; gap: var(--space-2); margin: var(--space-2) 0 0; }
 .money-split div { display: flex; justify-content: space-between; align-items: center; gap: var(--space-3); }
 .money-split dt { display: inline-flex; align-items: center; gap: var(--space-2); color: var(--muted); }
