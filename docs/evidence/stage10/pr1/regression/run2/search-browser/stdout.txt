@@ -1,0 +1,11 @@
+PASS  S51-4 money (mobile)
+PASS  S51-5 totals unchanged (mobile)
+PASS  S51-6 money sticky (mobile)
+PASS  S51-4 lists (mobile)
+PASS  S51-6 lists sticky (mobile)
+PASS  S51-4 money (desktop)
+PASS  S51-5 totals unchanged (desktop)
+PASS  S51-6 money sticky (desktop)
+PASS  S51-4 lists (desktop)
+PASS  S51-6 lists sticky (desktop)
+PASS  no JS errors

@@ -1,0 +1,36 @@
+{
+  "texts mobile": {
+    "result": "PASS",
+    "hint": "התאריכים נשמרים בטיול."
+  },
+  "cache mobile": {
+    "result": "PASS",
+    "cacheKeys": [
+      "tisa-0.9.0"
+    ],
+    "version": "0.9.0"
+  },
+  "export from settings mobile": {
+    "result": "PASS",
+    "downloads": 1
+  },
+  "texts desktop": {
+    "result": "PASS",
+    "hint": "התאריכים נשמרים בטיול."
+  },
+  "cache desktop": {
+    "result": "PASS",
+    "cacheKeys": [
+      "tisa-0.9.0"
+    ],
+    "version": "0.9.0"
+  },
+  "export from settings desktop": {
+    "result": "PASS",
+    "downloads": 1
+  },
+  "no JS errors": {
+    "result": "PASS",
+    "errors": []
+  }
+}
