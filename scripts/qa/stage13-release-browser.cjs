@@ -16,6 +16,7 @@ const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
 const { richState, putSamplePhoto } = require('./lib/rich-trip.cjs');
+const { openMoneyDetails } = require('./lib/money-details.cjs');
 
 const ROOT = path.join(__dirname, '..', '..');
 const OUT = path.resolve(ROOT, process.env.QA_OUT ?? 'docs/evidence/stage13/browser');
@@ -218,6 +219,7 @@ const pngSize = (buf) => (buf.readUInt32BE(0) === 0x89504e47 ? [buf.readUInt32BE
         { dates: [trip.startDate, trip.endDate], stops, checklist: trip.checklist.length, zero, home, money });
 
       // ---------- R20: the template as a manual choice, then a flight ----------
+      await openMoneyDetails(page); // 1.0.1: the template is under "details"
       await page.locator('#panel-money [data-action="profile-open"]:visible').click(); // the empty state's button is hidden while the category names show
       await page.waitForSelector('#dlg-profile[open]');
       const warn = await page.locator('[data-slot="profile-warn"]').textContent();
