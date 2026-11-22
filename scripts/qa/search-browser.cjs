@@ -3,7 +3,7 @@
 // Waits for UI state, not fixed sleeps (rule 6). Run 3 times before calling it PASS. QA_OUT for reruns (rule 10).
 // Run from the repo root: node scripts/qa/search-browser.cjs   (port 8085)
 const { chromium } = require('playwright');
-const { openMoneyDetails } = require('./lib/money-details.cjs');
+const { openMoneyDetails, closeMoneyDetails } = require('./lib/money-details.cjs');
 const { blankTrip } = require('./lib/blank-trip.cjs');
 const { spawn } = require('node:child_process');
 const fs = require('node:fs');
@@ -45,6 +45,7 @@ async function setup(browser, w, h) {
   await page.locator('#dlg-profile details.profile-archive').evaluate((d) => { d.open = true; }); await page.check('#dlg-profile input[value="realistic"]');
   await page.click('#dlg-profile [type="submit"]');
   await closed(page, '#dlg-profile');
+  await closeMoneyDetails(page); // fold it again: S51-6 checks the screen as it opens by default
   const add = async (amount, category, description, stop, note = '') => {
     await page.click('#panel-money [data-action="expense-add"]');
     await page.fill('#dlg-expense [name="amount"]', amount);

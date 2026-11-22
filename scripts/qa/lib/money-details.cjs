@@ -11,4 +11,14 @@ async function openMoneyDetails(page) {
   }
 }
 
-module.exports = { openMoneyDetails };
+/** Fold "details" again (a tap on its summary), for checks that expect the screen as it opens by default. */
+async function closeMoneyDetails(page) {
+  const sel = '#panel-money [data-slot="money-details"]';
+  const open = await page.locator(sel).evaluate((d) => d.open).catch(() => null);
+  if (open === true) {
+    await page.click(`${sel} > summary`);
+    await page.waitForFunction((s) => !document.querySelector(s).open, sel);
+  }
+}
+
+module.exports = { openMoneyDetails, closeMoneyDetails };
