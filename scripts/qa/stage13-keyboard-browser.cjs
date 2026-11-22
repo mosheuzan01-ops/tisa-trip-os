@@ -23,10 +23,11 @@ const results = {};
 const pass = (id, ok, detail = {}) => { results[id] = { result: ok ? 'PASS' : 'FAIL', ...detail }; };
 const errors = [];
 
-function watch(page) {
+function watch(page, { closePickers = true } = {}) {
   page.on('pageerror', (e) => errors.push(`pageerror: ${e.message}`));
   page.on('console', (m) => { if (m.type() === 'error' && !/Service Worker registration blocked|Failed to load resource|net::ERR/.test(m.text())) errors.push(`console: ${m.text()}`); });
   page.on('popup', (p) => p.close().catch(() => {}));
+  if (closePickers) page.on('filechooser', (fc) => fc.setFiles([]).catch(() => {})); // the crawl presses "import" buttons too: close their pickers at once
 }
 const ready = async (page) => { await page.waitForFunction(() => document.querySelector('[data-slot="version-app"]')?.textContent.length > 0); await page.evaluate(() => document.fonts.ready); };
 const openIds = (page) => page.evaluate(() => [...document.querySelectorAll('dialog[open]')].map((d) => d.id));
@@ -152,6 +153,33 @@ async function checkDialog(page, id) {
       if (!ok) problems.push({ dialog: id, where, ...r });
     };
 
+    // ---------- dialogs opened by choosing a file (first: before the crawl presses the same buttons) ----------
+    const files = [
+      ['settings', 'import-pick', '#import-file', 'dlg-import', { name: 'b.json', mimeType: 'application/json', buffer: Buffer.from(JSON.stringify({ format: 'tisa-backup', schemaVersion: 8, exportedAt: '2030-11-01T10:00:00.000Z', data: st })) }],
+      ['places', 'places-import', '#places-file', 'dlg-places-import', { name: 'p.json', mimeType: 'application/json', buffer: Buffer.from(JSON.stringify({ format: 'tisa-places', version: 1, places: [] })) }],
+      ['transfers', 'flights-import', '#flights-import-file', 'dlg-flights-import', { name: 'f.json', mimeType: 'application/json', buffer: Buffer.from(JSON.stringify({ format: 'latisa-flights', version: 1, flights: [] })) }],
+    ];
+    for (const [s, action, input, id, file] of files) {
+      // A new browser context each time: a file picker left open (the crawl above presses these buttons too)
+      // blocks the next picker in the same context (seen in headless Chromium).
+      const fctx = await browser.newContext({ viewport: { width: 390, height: 844 }, locale: 'he-IL', reducedMotion: 'reduce', timezoneId: 'Asia/Bangkok', serviceWorkers: 'block' });
+      const page = await fctx.newPage();
+      watch(page, { closePickers: false });
+      await page.clock.setFixedTime(new Date('2030-12-24T10:00:00+07:00'));
+      await page.goto(`${BASE}#/home`);
+      await ready(page);
+      await fresh(page, seed, s);
+      // Enter on the button opens the file picker, as a tap does; the file is chosen in the picker.
+      const trigger = await page.evaluate((a) => { const b = document.querySelector(`#panel-${a[0]} [data-action="${a[1]}"]`); if (b) { b.focus(); window.__opener = b; } return !!b; }, [s, action]);
+      const chooser = await Promise.all([page.waitForEvent('filechooser', { timeout: 3000 }), page.keyboard.press('Enter')]).then(([x]) => x, () => null);
+      if (!chooser) { problems.push({ dialog: id, where: `${s}: Enter on ${action} did not open the file picker` }); await fctx.close(); continue; }
+      await chooser.setFiles(file);
+      const opened = await page.waitForSelector(`#${id}[open]`, { timeout: 2000 }).then(() => true, () => false);
+      if (!trigger || !opened) { problems.push({ dialog: id, where: `${s}: ${action} -> ${input}`, trigger, opened }); await fctx.close(); continue; }
+      record(id, `${s} > ${action} (file chosen)`, await checkDialog(page, id));
+      await fctx.close();
+    }
+
     // ---------- screen buttons, and one level down ----------
     const ringMiss = {};
     const ONLY_FILES = process.env.ONLY_FILES === '1'; // a quick check of the file dialogs alone (not a full run)
@@ -209,33 +237,6 @@ async function checkDialog(page, id) {
       }
     }
     pass('K1 every screen: the first 25 Tab stops are visible and show a focus mark', Object.keys(ringMiss).length === 0, { ringMiss });
-
-    // ---------- dialogs opened by choosing a file ----------
-    const files = [
-      ['settings', 'import-pick', '#import-file', 'dlg-import', { name: 'b.json', mimeType: 'application/json', buffer: Buffer.from(JSON.stringify({ format: 'tisa-backup', schemaVersion: 8, exportedAt: '2030-11-01T10:00:00.000Z', data: st })) }],
-      ['places', 'places-import', '#places-file', 'dlg-places-import', { name: 'p.json', mimeType: 'application/json', buffer: Buffer.from(JSON.stringify({ format: 'tisa-places', version: 1, places: [] })) }],
-      ['transfers', 'flights-import', '#flights-import-file', 'dlg-flights-import', { name: 'f.json', mimeType: 'application/json', buffer: Buffer.from(JSON.stringify({ format: 'latisa-flights', version: 1, flights: [] })) }],
-    ];
-    for (const [s, action, input, id, file] of files) {
-      if (reached.has(id)) continue;
-      // A new browser context each time: a file picker left open (the crawl above presses these buttons too)
-      // blocks the next picker in the same context (seen in headless Chromium).
-      const fctx = await browser.newContext({ viewport: { width: 390, height: 844 }, locale: 'he-IL', reducedMotion: 'reduce', timezoneId: 'Asia/Bangkok', serviceWorkers: 'block' });
-      const page = await fctx.newPage();
-      watch(page);
-      await page.clock.setFixedTime(new Date('2030-12-24T10:00:00+07:00'));
-      await page.goto(`${BASE}#/home`);
-      await ready(page);
-      await fresh(page, seed, s);
-      // Enter on the button opens the file picker, as a tap does; the file is chosen in the picker.
-      const trigger = await page.evaluate((a) => { const b = document.querySelector(`#panel-${a[0]} [data-action="${a[1]}"]`); if (b) { b.focus(); window.__opener = b; } return !!b; }, [s, action]);
-      const [chooser] = await Promise.all([page.waitForEvent('filechooser', { timeout: 3000 }), page.keyboard.press('Enter')]);
-      await chooser.setFiles(file);
-      const opened = await page.waitForSelector(`#${id}[open]`, { timeout: 2000 }).then(() => true, () => false);
-      if (!trigger || !opened) { problems.push({ dialog: id, where: `${s}: ${action} -> ${input}`, trigger, opened }); await fctx.close(); continue; }
-      record(id, `${s} > ${action} (file chosen)`, await checkDialog(page, id));
-      await fctx.close();
-    }
 
     const notReached = allDialogs.filter((d) => !reached.has(d));
     pass('K2 every dialog: focus starts inside, Tab and Shift+Tab stay inside, a visible focus mark, Esc closes, focus goes back to its button',
