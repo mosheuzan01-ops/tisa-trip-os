@@ -37,7 +37,7 @@ test('S5-8: no rule, number or date as fact in the checklist copy and data', () 
 test('S5-10: new files are cached for offline use and the version is 0.5.x', () => {
   const sw = readText('sw.js');
   for (const f of ['./src/js/checklist-view.js', './src/js/core/checklist.js']) assert.ok(sw.includes(`'${f}'`), f);
-  assert.match(readJson('config/app.config.json').appVersion, /^0\.([5-9]|[1-9]\d)\.\d+$/); // 0.6.0 closed Stage 6
+  assert.match(readJson('config/app.config.json').appVersion, /^(0\.([5-9]|[1-9]\d)\.\d+|[1-9]\d*\.\d+\.\d+)$/); // 0.6.0 closed Stage 6
 });
 
 test('S5-11: list text is at least 14px and its controls at least 44px', () => {

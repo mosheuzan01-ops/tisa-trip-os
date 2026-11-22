@@ -1,0 +1,13 @@
+# red: node --test tests/stage13-release.test.js, before the privacy and terms text, 2026-11-22T14:17:39Z
+not ok 1 - PR-1 (S13-4) settings has a "privacy" fold: a summary with a heading, and every line is a text key in he and en
+  name: 'AssertionError'
+not ok 2 - PR-2 (S13-4) the privacy text says what 1.0.0 does, and what not to keep in it
+  name: 'AssertionError'
+ok 3 - PR-3 (S13-4) the text names every network part there is: the only outside address in the app is the Maps link in config
+not ok 4 - PR-4 settings has a short "terms of use" fold next to privacy, for personal use between friends
+  name: 'AssertionError'
+ok 5 - PR-5 no feedback button: feedback goes to the WhatsApp group
+ok 6 - S13-2 the backup reminder: 7 days from the last backup (or from install), not one minute before
+ok 7 - S13-3 one version everywhere it is set, and settings reads it from config
+# pass 4
+# fail 3

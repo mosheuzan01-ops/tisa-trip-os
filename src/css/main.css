@@ -454,6 +454,12 @@ body::before {
 /* Screen-reader-only text */
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 
+/* Stage 13 (F1): until the first render sets data-setup, the home cards are not shown, so a saved trip does not
+   first show "setup" on top and then move it down (CLS 0.397 at 390 px). If the script never runs, they appear after 2s
+   (not with reduced motion, where every animation is off; the app needs its script anyway). */
+.home[data-boot] .home-grid { visibility: hidden; animation: boot-show 0s 2s forwards; }
+@keyframes boot-show { to { visibility: visible; } }
+
 /* P1: on phones the two columns flow as one list, so the next step can sit right under the pass */
 @media (max-width: 1023.98px) {
   .home-grid > .col { display: contents; }
