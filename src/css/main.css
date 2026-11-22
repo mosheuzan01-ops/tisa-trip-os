@@ -993,3 +993,32 @@ body::before {
 .profile-archive > summary { min-height: var(--tap); display: flex; align-items: center; cursor: pointer; color: var(--on-dmetal-muted); font-weight: 600; }
 .profile-stale { color: var(--on-dmetal-muted); font-style: italic; }
 .cat-edit-btn { justify-self: start; padding-inline: 0; color: var(--accent); font-weight: 600; } /* on a calm card, not a dark sheet */
+
+/* ---------- Stage 10: saved places (existing tokens only, own names, rule 14) ---------- */
+.places { display: grid; gap: var(--space-4); }
+.place-here { display: grid; gap: var(--space-2); }
+.place-here-text { color: var(--ink); line-height: 1.5; overflow-wrap: anywhere; }
+.place-views { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-1); padding: var(--space-1); border-radius: var(--radius-pill); background: var(--surface-2); border: 1px solid var(--line); }
+.place-view-btn {
+  min-height: var(--tap); padding: 0 var(--space-2); border: 0; border-radius: var(--radius-pill);
+  background: transparent; color: var(--muted); font: inherit; font-weight: 600; cursor: pointer;
+}
+.place-view-btn[aria-pressed="true"] { background: var(--accent); color: var(--on-accent); }
+.place-view-btn:focus-visible { outline: 3px solid var(--focus); outline-offset: 1px; }
+.place-view-n { font-variant-numeric: tabular-nums; }
+.place-filters { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-2); }
+.place-filters .field { color: var(--muted); font-weight: 600; }
+.place-filters select { min-height: var(--tap); width: 100%; padding: 0 var(--space-2); border-radius: var(--radius-sm); border: 1px solid var(--line); background: var(--surface); color: var(--ink); font: inherit; }
+.place-filters select:focus-visible { outline: 3px solid var(--focus); outline-offset: 1px; }
+.place-list { display: grid; gap: var(--space-3); margin: 0; padding: 0; list-style: none; }
+.place-card { display: grid; gap: var(--space-2); }
+.place-card.is-loved { border-inline-start: 4px solid var(--accent); }
+.place-top { display: flex; align-items: center; gap: var(--space-2); }
+.place-name { flex: 1 1 auto; min-width: 0; margin: 0; font-size: var(--text-lead); font-weight: 700; color: var(--title); overflow-wrap: anywhere; }
+.place-actions { display: flex; flex: none; gap: var(--space-1); }
+.place-tags { display: flex; flex-wrap: wrap; gap: var(--space-1); margin: 0; }
+.place-status.is-loved, .place-status.is-visited { color: var(--accent); border-color: var(--accent); }
+.place-line { margin: 0; color: var(--ink); overflow-wrap: anywhere; }
+.place-coords { color: var(--muted); font-variant-numeric: tabular-nums; }
+.place-map-btn, .place-locate-btn { justify-self: start; }
+@media (max-width: 359px) { .place-filters { grid-template-columns: 1fr; } }

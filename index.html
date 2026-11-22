@@ -282,6 +282,9 @@
         <button class="btn btn-ghost itin-transfers-link" type="button" data-go="photos">
           <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-image"/></svg><span data-i18n="photo.open">תמונות</span>
         </button>
+        <button class="btn btn-ghost itin-transfers-link" type="button" data-go="places">
+          <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-pin"/></svg><span data-i18n="place.open">מקומות שמורים</span>
+        </button>
         <button class="btn btn-ghost itin-transfers-link" type="button" data-go="summary">
           <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-summary"/></svg><span data-i18n="sum.open">סיכום הטיול</span>
         </button>
@@ -608,6 +611,60 @@
           <p data-i18n="photo.empty.text">מוסיפים מהגלריה או מהמצלמה. התמונה נכנסת ליום שבו צולמה.</p>
         </section>
         <div class="photo-groups" data-slot="photo-groups"></div>
+      </section>
+
+      <!-- PLACES (Stage 10): saved places, only on this phone. Current location only on a tap, no tracking.
+           Google Maps opens only when the user taps (rule 5). -->
+      <section class="panel places" id="panel-places" role="tabpanel" aria-labelledby="places-title" hidden>
+        <div class="itin-head">
+          <h1 class="display" id="places-title" data-i18n="place.title">מקומות שמורים</h1>
+          <p class="muted" data-i18n="place.lead">מקומות שרוצים לבקר בהם, שביקרתם בהם או שאהבתם. נשמרים רק בטלפון הזה.</p>
+        </div>
+
+        <section class="card surface place-here" aria-labelledby="place-here-title">
+          <h2 class="tool-title" id="place-here-title" data-i18n="place.here.title">המיקום שלי</h2>
+          <p class="place-here-text" data-slot="place-here-text" role="status" aria-live="polite"></p>
+          <div class="settings-actions">
+            <button class="btn btn-ghost" type="button" data-action="place-here-locate">
+              <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-locate"/></svg><span data-i18n="place.here.locate">להציג את המיקום שלי</span>
+            </button>
+            <button class="btn btn-ghost" type="button" data-action="place-here-save" data-i18n="place.here.save" hidden>לשמור כמקום</button>
+            <button class="btn btn-ghost" type="button" data-action="place-here-map" data-i18n="place.map" hidden>פתיחה ב-Google Maps</button>
+          </div>
+        </section>
+
+        <div class="money-card-head">
+          <p class="muted" data-slot="place-count"></p>
+          <button class="btn btn-primary btn-small" type="button" data-action="place-add">
+            <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-plus"/></svg><span data-i18n="place.add">מקום חדש</span>
+          </button>
+        </div>
+
+        <div class="place-views" role="group" aria-label="תצוגה" data-i18n-label="place.views">
+          <button class="place-view-btn" type="button" data-place-view="all" aria-pressed="true"><span data-i18n="place.view.all">הכול</span> <span class="place-view-n" data-slot="place-n-all"></span></button>
+          <button class="place-view-btn" type="button" data-place-view="want" aria-pressed="false"><span data-i18n="place.view.want">רוצה לבקר</span> <span class="place-view-n" data-slot="place-n-want"></span></button>
+          <button class="place-view-btn" type="button" data-place-view="visited" aria-pressed="false"><span data-i18n="place.view.visited">ביקרתי</span> <span class="place-view-n" data-slot="place-n-visited"></span></button>
+        </div>
+
+        <div class="filter-bar" data-slot="place-filter-bar">
+          <div class="search-bar" data-search="places" role="search">
+            <svg class="icon search-icon" aria-hidden="true"><use href="./assets/icons.svg#i-search"/></svg>
+            <input type="search" data-slot="search-input" autocomplete="off" enterkeyhint="search" data-i18n-label="search.places" aria-label="חיפוש מקום" placeholder="" data-i18n-placeholder="search.places">
+            <button class="icon-btn search-clear" type="button" data-action="search-clear" data-i18n-label="search.clear" aria-label="ניקוי החיפוש"><svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-close"/></svg></button>
+          </div>
+          <div class="place-filters">
+            <label class="field"><span data-i18n="place.f.category">קטגוריה</span><select data-place-filter="category"></select></label>
+            <label class="field"><span data-i18n="place.f.stop">יעד</span><select data-place-filter="stopId"></select></label>
+            <label class="field"><span data-i18n="place.f.status">סטטוס</span><select data-place-filter="status"></select></label>
+          </div>
+        </div>
+
+        <section class="card surface money-empty" data-slot="place-empty" aria-labelledby="place-empty-title" hidden>
+          <h2 class="tool-title" id="place-empty-title" data-i18n="place.empty.title">עוד אין מקומות</h2>
+          <p data-i18n="place.empty.text">מוסיפים מקום ביד, או שומרים את המיקום הנוכחי. קואורדינטות אפשר להעתיק מאפליקציית מפות.</p>
+        </section>
+        <p class="no-results" data-slot="place-none" data-i18n="search.none" hidden>אין תוצאות</p>
+        <ul class="place-list" data-slot="place-list" aria-label="מקומות" data-i18n-label="place.listLabel"></ul>
       </section>
 
       <!-- SUMMARY (7.0c): the trip at a glance. Every money figure comes from the money screen's own summary. -->
@@ -1262,6 +1319,48 @@
           <span class="slides-count ltr" data-slot="show-count"></span>
           <button class="icon-btn slides-btn" type="button" data-action="show-next" aria-label="הבאה" data-i18n-label="sum.show.next"><svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-prev"/></svg></button>
           <button class="icon-btn slides-btn" type="button" data-close aria-label="סגירה" data-i18n-label="sum.show.close"><svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-close"/></svg></button>
+        </div>
+      </div>
+    </dialog>
+
+    <!-- Place (Stage 10): add or edit. Everything by hand; the visit date is never filled in by itself. -->
+    <dialog class="sheet dmetal" id="dlg-place" aria-labelledby="dlg-place-title">
+      <form class="sheet-form" data-form="place" novalidate>
+        <h2 id="dlg-place-title" data-slot="place-dlg-title"></h2>
+        <label class="field"><span data-i18n="place.name">שם המקום</span><input type="text" name="name" maxlength="60" autocomplete="off" aria-describedby="place-error"></label>
+        <div class="field-row">
+          <label class="field"><span data-i18n="place.category">קטגוריה</span><select name="category" data-slot="place-category"></select></label>
+          <label class="field"><span data-i18n="place.status">סטטוס</span><select name="status" data-slot="place-status"></select></label>
+        </div>
+        <label class="field"><span data-i18n="place.coords">קואורדינטות (לא חובה)</span><input class="ltr" type="text" name="coords" inputmode="decimal" autocomplete="off" placeholder="13.75, 100.50" aria-describedby="place-error place-coords-hint"></label>
+        <p class="sheet-hint" id="place-coords-hint" data-slot="place-coords-hint" data-i18n="place.coordsHint">רוחב, אורך. אפשר להדביק מאפליקציית מפות, או ללחוץ על "המיקום שלי".</p>
+        <button class="btn btn-ghost btn-small place-locate-btn" type="button" data-action="place-locate">
+          <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-locate"/></svg><span data-i18n="place.here.use">המיקום שלי</span>
+        </button>
+        <label class="field"><span data-i18n="place.address">כתובת (לא חובה)</span><input type="text" name="address" maxlength="120" autocomplete="off" aria-describedby="place-error"></label>
+        <label class="field"><span data-i18n="place.stop">יעד במסלול (לא חובה)</span><select name="stopId" data-slot="place-stop"></select></label>
+        <div class="field-row">
+          <label class="field"><span data-i18n="place.planned">יום מתוכנן (לא חובה)</span><input class="ltr" type="date" name="plannedDate" aria-describedby="place-error"></label>
+          <label class="field"><span data-i18n="place.visited">תאריך ביקור בפועל (לא חובה)</span><input class="ltr" type="date" name="visitedDate" aria-describedby="place-error place-visited-hint"></label>
+        </div>
+        <p class="sheet-hint" id="place-visited-hint" data-i18n="place.visitedHint">התאריך לא מתמלא לבד, גם כשמסמנים "ביקרתי".</p>
+        <label class="field"><span data-i18n="place.note">הערה (לא חובה)</span><textarea name="note" rows="2" maxlength="280" aria-describedby="place-error"></textarea></label>
+        <p class="form-error" id="place-error" role="alert"></p>
+        <div class="sheet-actions">
+          <button class="btn metal-btn" type="submit" data-i18n="form.save">שמירה</button>
+          <button class="btn btn-ghost" type="button" data-close data-i18n="form.cancel">ביטול</button>
+          <button class="btn btn-ghost" type="button" data-action="place-delete-from-form" data-i18n="place.delete" hidden>מחיקת המקום</button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog class="sheet dmetal" id="dlg-place-delete" aria-labelledby="dlg-place-delete-title" aria-describedby="dlg-place-delete-text">
+      <div class="sheet-form">
+        <h2 id="dlg-place-delete-title" data-i18n="place.deleteTitle">למחוק את המקום?</h2>
+        <p class="sheet-hint" id="dlg-place-delete-text" data-slot="place-delete-text"></p>
+        <div class="sheet-actions">
+          <button class="btn metal-btn" type="button" data-action="place-delete-yes" data-i18n="place.deleteYes">כן, למחוק</button>
+          <button class="btn btn-ghost" type="button" data-close data-i18n="form.cancel">ביטול</button>
         </div>
       </div>
     </dialog>
