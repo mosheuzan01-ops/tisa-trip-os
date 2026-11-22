@@ -1,0 +1,20 @@
+PASS  JB-1 write mobile
+PASS  JB-2 travel day mobile
+PASS  JB-3 empty mobile
+PASS  JB-4 too long mobile
+PASS  JB-5 edit mobile
+PASS  JB-6 delete asks first mobile
+PASS  JB-7 reload and destination mobile
+PASS  JB-8 layout mobile
+PASS  JB-9 backup mobile
+PASS  JB-1 write desktop
+PASS  JB-2 travel day desktop
+PASS  JB-3 empty desktop
+PASS  JB-4 too long desktop
+PASS  JB-5 edit desktop
+PASS  JB-6 delete asks first desktop
+PASS  JB-7 reload and destination desktop
+PASS  JB-8 layout desktop
+PASS  JB-9 backup desktop
+PASS  JB-10 offline
+PASS  no JS errors, no outside requests

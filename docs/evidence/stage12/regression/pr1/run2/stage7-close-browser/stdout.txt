@@ -1,0 +1,7 @@
+PASS  C1 stored file is a real JPEG that decodes, long side 1280
+PASS  C2 slideshow holds at most 12; the 13th star is refused with a message
+PASS  C3 restoring twice: no duplicates, nothing deleted
+PASS  C4 JSON backup and restore keep the photo details; files untouched
+PASS  C5 update: banner, no reload before the tap, new version shown, old cache gone, data and photos kept
+PASS  no JS errors
+ALL PASS
