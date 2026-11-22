@@ -23,6 +23,7 @@ async function richState() {
   trip.people = [{ id: 'rich-p1', name: 'חבר א' }, { id: 'rich-p2', name: 'חבר ב' }];
   const cat = Object.keys(trip.budget.categoriesMinor)[0];
   trip.expenses = [money.makeExpense({ amount: '50', currency: 'ILS', category: cat, date: stop.startDate, destinationId: stop.id, description: 'הוצאת דוגמה', method: 'card', status: 'paid', note: '' }, rates, makeId)];
+  Object.assign(trip.expenses[0], { paidBy: 'rich-p1', sharedBy: ['rich-p1', 'rich-p2'] }); // so "who pays whom" has a row
   trip.places = [places.makePlace({ name: 'מקום דוגמה', category: 'food', status: 'want', coords: '13.75, 100.5', stopId: stop.id, photoIds: [PHOTO_ID] }, makeId, at)];
   trip.journal = jr.setNote(trip.journal, stop.startDate, 'הערת דוגמה', at);
   trip.checkins = [ci.makeCheckin({ kind: 'hotel', title: 'מלון דוגמה', stopId: stop.id, date: stop.startDate, time: '14:00', zone: 'Asia/Bangkok', booking: '', link: '', note: '' }, makeId)];

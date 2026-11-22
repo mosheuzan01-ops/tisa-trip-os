@@ -76,6 +76,8 @@ async function fresh(page, seed, screen) {
   await page.reload();
   await ready(page);
   await page.waitForFunction((s) => !document.querySelector(`#panel-${s}`).hidden, screen);
+  // Open the folds, so the buttons inside them are reached too (the fold itself is a summary: K1 and the crawl press it).
+  await page.evaluate((s) => { for (const d of document.querySelectorAll(`#panel-${s} details`)) d.open = true; }, screen);
 }
 
 /** Visible buttons in a scope (a screen or a dialog), as stable handles: index among the matches. */
@@ -139,6 +141,10 @@ async function checkDialog(page, id) {
     const seedRich = JSON.stringify(st);
     const seed = seedRich;
     const blank = await blankState(); // a trip with no budget, dates or route: the dialogs that only such a trip shows
+    const olderTrip = structuredClone(st); // a trip from before the template (stage 9): money shows the template offer
+    Object.assign(olderTrip.trips[olderTrip.activeTripId], { templateOffer: null });
+    olderTrip.trips[olderTrip.activeTripId].budget.profileId = null;
+    const older = JSON.stringify(olderTrip);
     const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, locale: 'he-IL', reducedMotion: 'reduce', timezoneId: 'Asia/Bangkok', serviceWorkers: 'block', acceptDownloads: true });
     const page = await ctx.newPage();
     watch(page);
@@ -171,9 +177,14 @@ async function checkDialog(page, id) {
       await fresh(page, seed, s);
       // Enter on the button opens the file picker, as a tap does; the file is chosen in the picker.
       const trigger = await page.evaluate((a) => { const b = document.querySelector(`#panel-${a[0]} [data-action="${a[1]}"]`); if (b) { b.focus(); window.__opener = b; } return !!b; }, [s, action]);
+      // The app must ask for the picker: the file field gets a click while the user's key press still counts
+      // (user activation). Playwright misses the picker event now and then (about 1 in 6 in a test of 6 tries on
+      // 2026-11-22), so when the app asked and the event was missed, the file is set on the field directly.
+      await page.evaluate((inp) => { window.__asked = null; document.querySelector(inp).addEventListener('click', () => { window.__asked = navigator.userActivation.isActive; }, { once: true }); }, input);
       const chooser = await Promise.all([page.waitForEvent('filechooser', { timeout: 3000 }), page.keyboard.press('Enter')]).then(([x]) => x, () => null);
-      if (!chooser) { problems.push({ dialog: id, where: `${s}: Enter on ${action} did not open the file picker` }); await fctx.close(); continue; }
-      await chooser.setFiles(file);
+      const asked = await page.evaluate(() => window.__asked);
+      if (!chooser && asked !== true) { problems.push({ dialog: id, where: `${s}: Enter on ${action} did not ask for the file picker`, asked }); await fctx.close(); continue; }
+      if (chooser) await chooser.setFiles(file); else await page.locator(input).setInputFiles(file);
       const opened = await page.waitForSelector(`#${id}[open]`, { timeout: 2000 }).then(() => true, () => false);
       if (!trigger || !opened) { problems.push({ dialog: id, where: `${s}: ${action} -> ${input}`, trigger, opened }); await fctx.close(); continue; }
       record(id, `${s} > ${action} (file chosen)`, await checkDialog(page, id));
@@ -183,7 +194,7 @@ async function checkDialog(page, id) {
     // ---------- screen buttons, and one level down ----------
     const ringMiss = {};
     const ONLY_FILES = process.env.ONLY_FILES === '1'; // a quick check of the file dialogs alone (not a full run)
-    for (const [seed, s] of ONLY_FILES ? [] : [...SCREENS.map((x) => [seedRich, x]), ...['home', 'itinerary', 'money'].map((x) => [blank, x])]) {
+    for (const [seed, s] of ONLY_FILES ? [] : [...SCREENS.map((x) => [seedRich, x]), ...['home', 'itinerary', 'money'].map((x) => [blank, x]), [older, 'money']]) {
       await fresh(page, seed, s);
       // Tab order on the screen: every stop shows a focus mark.
       await page.evaluate(() => document.activeElement?.blur());
@@ -235,6 +246,19 @@ async function checkDialog(page, id) {
           record(id2, `${s} > ${b.label} > ${c.label}`, r2);
         }
       }
+    }
+    // A dialog two steps away that the crawl explores only from its first opener: the note of the day that has one.
+    if (!reached.has('dlg-note-delete')) {
+      const day = st.trips[st.activeTripId].destinations[0].startDate;
+      await fresh(page, seedRich, 'calendar');
+      const sel = `#panel-calendar [data-action="note-edit"][data-day="${day}"]`;
+      await page.evaluate((x) => { const b = document.querySelector(x); b.scrollIntoView({ block: 'center' }); b.focus(); }, sel);
+      await page.keyboard.press('Enter');
+      await page.waitForSelector('#dlg-note[open]');
+      await page.evaluate(() => { const b = document.querySelector('#dlg-note [data-action="note-delete"]'); b.focus(); window.__opener = null; });
+      await page.keyboard.press('Enter');
+      const ok = await page.waitForSelector('#dlg-note-delete[open]', { timeout: 2000 }).then(() => true, () => false);
+      if (ok) record('dlg-note-delete', `calendar > note-edit ${day} > note-delete`, await checkDialog(page, 'dlg-note-delete'));
     }
     pass('K1 every screen: the first 25 Tab stops are visible and show a focus mark', Object.keys(ringMiss).length === 0, { ringMiss });
 
