@@ -1,0 +1,59 @@
+{
+  "K1 every screen: the first 25 Tab stops are visible and show a focus mark": {
+    "result": "PASS",
+    "ringMiss": {}
+  },
+  "K2 every dialog: focus starts inside, Tab and Shift+Tab stay inside, a visible focus mark, Esc closes, focus goes back to its button": {
+    "result": "PASS",
+    "problems": [],
+    "reached": [
+      "dlg-import: settings > import-pick (file chosen)",
+      "dlg-places-import: places > places-import (file chosen)",
+      "dlg-flights-import: transfers > flights-import (file chosen)",
+      "dlg-task: home > button[task-quick] משימה חדשה",
+      "dlg-dates: home > button[] עריכת תאריכים",
+      "dlg-stop: itinerary > button[stop-edit] עריכת בנגקוק",
+      "dlg-stop-delete: itinerary > button[stop-delete] מחיקת בנגקוק",
+      "dlg-tip: itinerary > button[flex] הסבר על יעד גמיש",
+      "dlg-replan: itinerary > button[replan-open] שינוי תאריכים ותכנון מחדש",
+      "dlg-cats: money > button[cats-open] עריכת סכומים",
+      "dlg-cat: money > button[cat-edit] שם והעברת כסף: טיסה",
+      "dlg-profile: money > button[profile-open] לטעון תבנית אחרת",
+      "dlg-expense: money > button[expense-add] הוספת הוצאה",
+      "dlg-expense-delete: money > button[expense-delete] מחיקת הוצאת דוגמה",
+      "dlg-person-delete: money > button[person-delete] הסרת חבר א",
+      "dlg-confirm: money > button[repay] לרשום החזר: חבר ב לחבר א",
+      "dlg-rates: money > button[rates-open] עריכת שערים",
+      "dlg-item: checklist > button[item-add] הוספת פריט",
+      "dlg-list-confirm: checklist > button[item-delete] מחיקת דרכון",
+      "dlg-transfer: transfers > button[transfer-add] הוספה",
+      "dlg-transfer-delete: transfers > button[transfer-delete] מחיקת א – ב",
+      "dlg-checkin: transfers > button[checkin-add] צ'ק-אין חדש",
+      "dlg-checkin-delete: transfers > button[checkin-delete] מחיקת מלון דוגמה",
+      "dlg-note: calendar > button[note-edit] הערה ליום יום שישי, 20 בדצמבר",
+      "dlg-photo: calendar > button[] תמונה מיום שבת, 21 בדצמבר, בנג",
+      "dlg-photo-delete: calendar > button[] תמונה מיום שבת, 21 בדצמבר, בנג > button[photo-delete] מחיקת התמונה",
+      "dlg-place: places > button[place-add] מקום חדש",
+      "dlg-place-share: places > button[place-share] שיתוף מקום דוגמה",
+      "dlg-place-delete: places > button[place-delete] מחיקת מקום דוגמה",
+      "dlg-show: summary > button[show-play] הפעלת מצגת",
+      "dlg-bag: luggage > button[bag-add] תיק חדש",
+      "dlg-luggage-delete: luggage > button[bag-delete] מחיקת תיק דוגמה",
+      "dlg-luggage-item: luggage > button[luggage-item-edit] עריכת פריט דוגמה",
+      "dlg-reset: settings > button[reset-open] איפוס הנתונים",
+      "dlg-budget: home > button[] הגדירו תקציב",
+      "dlg-seed: itinerary > button[seed-open] לטעון מסלול מוצע",
+      "dlg-template: money > button[template-open] לעבור לתבנית",
+      "dlg-note-delete: calendar > note-edit 2030-12-21 > note-delete"
+    ]
+  },
+  "K3 every dialog in the app was reached from the keyboard": {
+    "result": "PASS",
+    "notReached": [],
+    "total": 38
+  },
+  "no JS errors": {
+    "result": "PASS",
+    "errors": []
+  }
+}

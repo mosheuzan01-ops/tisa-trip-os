@@ -1,0 +1,50 @@
+{
+  "W 390px light: no horizontal scroll and nothing sticks out, on all 14 screens": {
+    "result": "PASS",
+    "bad": {}
+  },
+  "W 390px light: tap targets 44px and text 14px on all screens": {
+    "result": "PASS",
+    "small": {}
+  },
+  "W 768px light: no horizontal scroll and nothing sticks out, on all 14 screens": {
+    "result": "PASS",
+    "bad": {}
+  },
+  "W 1024px light: no horizontal scroll and nothing sticks out, on all 14 screens": {
+    "result": "PASS",
+    "bad": {}
+  },
+  "W 1440px light: no horizontal scroll and nothing sticks out, on all 14 screens": {
+    "result": "PASS",
+    "bad": {}
+  },
+  "W 390px dark: no horizontal scroll and nothing sticks out, on all 14 screens": {
+    "result": "PASS",
+    "bad": {}
+  },
+  "W 390px dark: tap targets 44px and text 14px on all screens": {
+    "result": "PASS",
+    "small": {}
+  },
+  "W 768px dark: no horizontal scroll and nothing sticks out, on all 14 screens": {
+    "result": "PASS",
+    "bad": {}
+  },
+  "W 1024px dark: no horizontal scroll and nothing sticks out, on all 14 screens": {
+    "result": "PASS",
+    "bad": {}
+  },
+  "W 1440px dark: no horizontal scroll and nothing sticks out, on all 14 screens": {
+    "result": "PASS",
+    "bad": {}
+  },
+  "no JS errors": {
+    "result": "PASS",
+    "errors": []
+  },
+  "no requests outside the app": {
+    "result": "PASS",
+    "outside": []
+  }
+}

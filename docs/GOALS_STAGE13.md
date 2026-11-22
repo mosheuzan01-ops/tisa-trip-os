@@ -65,3 +65,27 @@
 - **האתר החי ו-PageSpeed:** מדיניות הרשת של סביבת הענן חוסמת את `mosheuzan01-ops.github.io` (קוד 000, ‏2026-11-22). R9 מודד במחשב, בלי האטה, ולא מחליף את PageSpeed. אחרי המיזוג: M12 ב-`docs/MANUAL_TESTS_STAGE13.md`.
 - **אייפון ואנדרואיד אמיתיים:** רק בעל המוצר (`docs/MANUAL_TESTS_STAGE13.md`).
 - **SEO:** לא בתוכנית, לפי הפרומפט.
+
+## תוצאות (2026-11-22, 1.0.0)
+| # | בדיקה | תוצאה | ראיה |
+|---|---|---|---|
+| 1 | `npm test` × 3 | **PASS:** 429/429 בכל ריצה | `docs/evidence/stage13/regression/run*/npm-test.txt` |
+| 2 | 36 סקריפטי דפדפן × 3 | **PASS:** ‏108/108, ‏exit 0 בכולם, ואף FAIL בקובצי התוצאה | `regression/summary.log`, ‏`regression/run*/` |
+| 3 | 14 מסכים × 4 רוחבים × 2 מצבים | **PASS:** 12/12 (W) | `browser/layout-browser.json`, צילומים ב-`browser/layout/` (390 ו-1440) |
+| 4 | ניגודיות | **PASS** | `regression/run*/contrast-browser/` |
+| 5 | שמות נגישים | **PASS:** ‏138 שדות, 4 שדות קובץ מוסתרים ידועים | `regression/run*/a11y-names-browser/` |
+| 6 | מקלדת | **PASS:** ‏38/38 דיאלוגים, ‏K1 עד K3 | `browser/keyboard-browser.json` |
+| 7 | סורק סטטי | **FAIL 0 (אחרי KNOWN), WARN 3.** ה-FAIL הם 4 ה-KNOWN של כלל 7: ‏h1, ‏`#/home`, ‏`#/settings`, ושדות עטופים ב-label (`a11y-names` עבר באותה ריצה). WARN: ‏W2 ו-reduced-motion (KNOWN), ותמונות בלי lazy בתוך חלונות | `regression/run*/qa-scan-index.txt` |
+| 8 | קבצים ומטמון | **PASS** (B9) | `npm test` |
+| 9 | ביצועים במחשב | **PASS:** ‏LCP ‏312 עד 388ms, ‏CLS 0 (היה 0.397), ‏68 בקשות, ‏155 עד 166KB. **PageSpeed: NOT CHECKED** | `browser/release-browser.json` › R9, red ב-`browser-red-release.txt` |
+| 10 | מיגרציה מ-0.7.1 | **PASS:** ‏U1, ‏U4 עד U6 | `browser/upgrade-browser.json` |
+| 11 | עדכון ששומר נתונים | **PASS:** ‏U2, ‏U3, ‏U7, וגם C5 | `browser/upgrade-browser.json`, ‏`regression/run*/stage7-close-browser/` |
+| 12 | PWA | **PASS** (R12). ‏W1 כ-WARN | `browser/release-browser.json` |
+| 13 | מצב טיסה | **PASS** (R13, וגם stage7-offline, ‏info, ‏places, ‏smart-bag) | `browser/airplane-home-mobile.jpg` |
+| 14 | גיבוי JSON | **PASS** (R14) | `browser/release-browser.json` |
+| 15 | ZIP תמונות | **PASS** (S7-8, ‏C3) | `regression/run*/stage7-browser/`, ‏`stage7-close-browser/` |
+| 16 | תזכורת גיבוי | **PASS** (R16, וגם Node S13-2) | `browser/backup-reminder-home-mobile.jpg` |
+| 17 | גרסה | **PASS:** ‏1.0.0 בכל מקום (R17, ‏S13-3) | |
+| 18 | פרטיות | **PASS** (R18, ‏PR-1 עד PR-5). אין בקשות החוצה בשום סקריפט | `browser/privacy-settings-mobile.jpg` |
+
+**לפני ואחרי:** `docs/evidence/stage13/shots/`, הבית וההגדרות, 390 ו-1440, בהיר וכהה. מסך הבית הסופי זהה. בהגדרות נוספו שני החלונות המתקפלים.
