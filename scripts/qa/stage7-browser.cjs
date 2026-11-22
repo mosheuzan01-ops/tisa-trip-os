@@ -2,6 +2,7 @@
 // 390px for the flow, 1280px for layout. Waits for UI state, not fixed sleeps (rule 6). Run 3 times before PASS.
 // Writes only to QA_OUT, default docs/evidence/stage7/browser (rule 10). Run from the repo root (port 8121).
 const { chromium } = require('playwright');
+const { openMoneyDetails } = require('./lib/money-details.cjs');
 const { spawn } = require('node:child_process');
 const fs = require('node:fs');
 const path = require('node:path');
@@ -143,6 +144,7 @@ async function open(browser, viewport, extra = {}) {
 
     // S7-6 and slideshow: summary numbers equal the money screen, category by category.
     await page.goto(`${BASE}#/money`);
+    await openMoneyDetails(page); // 1.0.1: the categories are under "details"
     await page.locator('#panel-money li.cat[data-cat]').first().waitFor();
     const money = await page.evaluate(() => Object.fromEntries([...document.querySelectorAll('#panel-money [data-slot="cat-list"] li.cat[data-cat]')]
       .map((li) => [li.dataset.cat, { plan: Number(li.dataset.planMinor), used: Number(li.dataset.usedMinor) }])));
