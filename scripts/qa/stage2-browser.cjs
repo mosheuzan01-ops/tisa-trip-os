@@ -35,6 +35,16 @@ async function ready(page) {
 
 const visible = (page, sel) => page.locator(sel).isVisible();
 
+// Stage 13 (owner, 2026-11-22): a new install starts with the shared dates and a route, so new dates open the replan
+// preview, as for any trip with stops; "trip dates only" saves the dates and keeps the stops (see B14).
+async function datesOnlyIfAsked(page) {
+  const asked = await page.waitForSelector('#dlg-replan[open]', { timeout: 1500 }).then(() => true, () => false);
+  if (!asked) return;
+  await page.check('[data-form="replan"] input[name="mode"][value="datesOnly"]');
+  await page.click('[data-slot="replan-save"]');
+  await page.waitForSelector('#dlg-replan:not([open])', { state: 'attached' });
+}
+
 (async () => {
   const base = 'http://127.0.0.1:8091/';
   const server = serve(ROOT, 8091);
@@ -99,7 +109,7 @@ const visible = (page, sel) => page.locator(sel).isVisible();
     await open('settings');
     await page.fill('[data-form="settings-dates"] [name="start"]', '2026-12-05');
     await page.fill('[data-form="settings-dates"] [name="end"]', '2027-01-03');
-    await page.click('[data-form="settings-dates"] [type="submit"]');
+    await page.click('[data-form="settings-dates"] [type="submit"]'); await datesOnlyIfAsked(page);
     await page.click('label.choice:has(input[value="dark"])');
     await sleep(700); // autosave pause
     await page.reload();
@@ -125,7 +135,7 @@ const visible = (page, sel) => page.locator(sel).isVisible();
     const backup = JSON.parse(fs.readFileSync(backupPath, 'utf8'));
     await page.fill('[data-form="settings-dates"] [name="start"]', '2027-02-01');
     await page.fill('[data-form="settings-dates"] [name="end"]', '2027-02-10');
-    await page.click('[data-form="settings-dates"] [type="submit"]');
+    await page.click('[data-form="settings-dates"] [type="submit"]'); await datesOnlyIfAsked(page);
     await sleep(300);
     // Pre-stage-10 PR B (owner decision): the first dates built the suggested route, so new dates open the replan
     // preview; "trip dates only" saves the dates and keeps the stops, as before.
@@ -231,7 +241,7 @@ const visible = (page, sel) => page.locator(sel).isVisible();
     await page.click('.settings-btn');
     await page.fill('[data-form="settings-dates"] [name="start"]', '2026-12-05');
     await page.fill('[data-form="settings-dates"] [name="end"]', '2027-01-03');
-    await page.click('[data-form="settings-dates"] [type="submit"]');
+    await page.click('[data-form="settings-dates"] [type="submit"]'); await datesOnlyIfAsked(page);
     const inMemory = await page.evaluate(() => document.querySelector('[data-form="settings-dates"] [name="start"]').value);
     await page.click('[data-tab="home"]');
     await page.waitForSelector('#panel-home:not([hidden])');
@@ -305,7 +315,7 @@ const visible = (page, sel) => page.locator(sel).isVisible();
     await page.waitForFunction(() => navigator.serviceWorker.controller !== null);
     await page.fill('[data-form="settings-dates"] [name="start"]', '2026-12-05');
     await page.fill('[data-form="settings-dates"] [name="end"]', '2027-01-03');
-    await page.click('[data-form="settings-dates"] [type="submit"]');
+    await page.click('[data-form="settings-dates"] [type="submit"]'); await datesOnlyIfAsked(page);
     await sleep(300);
     const cacheBefore = await page.evaluate(() => caches.keys());
     const swFile = path.join(copy, 'sw.js');

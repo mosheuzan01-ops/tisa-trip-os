@@ -127,17 +127,21 @@ async function addExpense(page, o) {
     const sum = (st) => normal.filter((e) => e.status === st).reduce((a, e) => a + e.baseMinor, 0);
     const total = Object.entries(t.budget.categoriesMinor).filter(([k]) => k !== 'emergency').reduce((a, [, v]) => a + v, 0);
     const want = { paid: sum('paid'), planned: sum('planned'), committed: sum('committed') };
-    want.free = total - want.paid - want.planned - want.committed;
+    // Stage 13 (owner, 2026-11-22): the flight's plan is set aside until flight expenses cover it (docs/BUDGET_AND_START.md).
+    const flightUsed = normal.filter((e) => e.category === 'flight' && ['paid', 'planned', 'committed'].includes(e.status)).reduce((a, e) => a + e.baseMinor, 0);
+    want.reserved = Math.max((t.budget.categoriesMinor.flight ?? 0) - flightUsed, 0);
+    want.free = total - want.paid - want.planned - want.committed - want.reserved;
     const shown = {};
     for (const k of ['paid', 'planned', 'committed', 'total']) shown[k] = Math.round(num(await page.locator(`[data-slot="money-${k}"]`).textContent()) * 100);
     shown.free = Math.round(num(await page.locator('[data-slot="money-free-small"]').textContent()) * 100);
     shown.big = Math.round(num(await page.locator('[data-slot="money-free"]').textContent()) * 100);
+    shown.reserved = (await page.locator('[data-slot="money-reserved-row"]').isVisible()) ? Math.round(num(await page.locator('[data-slot="money-reserved"]').textContent()) * 100) : 0;
     const foodOver = await page.locator('.cat-list .cat.is-over').allTextContents();
     const foodLine = await page.locator('.cat-list .cat.c-4').textContent();
     const emText = await page.locator('[data-slot="cat-emergency"]').textContent();
     await shot(page, 'after-money-full-375-light');
     pass('S4-6', shown.paid === want.paid && shown.planned === want.planned && shown.committed === want.committed && shown.free === want.free && shown.big === want.free
-      && shown.total === total && shown.paid + shown.planned + shown.committed + shown.free === shown.total, { want, shown, total });
+      && shown.reserved === want.reserved && shown.total === total && shown.paid + shown.planned + shown.committed + shown.reserved + shown.free === shown.total, { want, shown, total });
     pass('S4-4', foodOver.length === 1 && /אוכל/.test(foodOver[0]) && /חריגה/.test(foodLine) && /1,000/.test(emText) && /200/.test(emText) && /800/.test(emText),
       { foodOver: foodOver.map((x) => x.slice(0, 60)), emergency: emText.slice(0, 80) });
 
@@ -225,18 +229,21 @@ async function addExpense(page, o) {
     const after = await trip(page);
     fs.unlinkSync(file);
     const same = (k) => JSON.stringify(before[k]) === JSON.stringify(after[k]);
-    pass('S4-9', wiped.expenses.length === 0 && wiped.destinations.length === 0 && ['destinations', 'budget', 'rates', 'expenses'].every(same) && after.destinations.length === 11 && after.expenses.length === 5,
+    // Stage 13: a reset now starts from the shared dates and their route (docs/BUDGET_AND_START.md), not from 0 stops.
+    pass('S4-9', wiped.expenses.length === 0 && wiped.startDate === '2026-12-20' && wiped.destinations.every((x) => x.suggested) && ['destinations', 'budget', 'rates', 'expenses'].every(same) && after.destinations.length === 11 && after.expenses.length === 5,
       { wiped: { expenses: wiped.expenses.length, destinations: wiped.destinations.length }, same: Object.fromEntries(['destinations', 'budget', 'rates', 'expenses'].map((k) => [k, same(k)])) });
     await ctx.close();
   }
 
   // ---------- S4-5: "left for today" by the trip clock, fake dates ----------
   {
+    // Stage 13 (owner, 2026-11-22): the flight's 3,900 is set aside until a flight expense covers it, so free is
+    // 15,270 - 3,900 = 11,370: 30 days -> 379, 15 days -> 758, the last day -> 11,370 (docs/BUDGET_AND_START.md).
     const cases = [
-      ['before', '2026-11-19T09:00:00+07:00', /509/],
-      ['middle', '2026-12-20T09:00:00+07:00', /1,018/],
-      ['last-day', '2027-01-03T09:00:00+07:00', /15,270/],
-      ['bangkok-midnight', '2027-01-02T17:30:00Z', /15,270/], // 00:30 on 3.1 in Bangkok, still 2.1 in UTC and in Israel
+      ['before', '2026-11-19T09:00:00+07:00', /379/],
+      ['middle', '2026-12-20T09:00:00+07:00', /758/],
+      ['last-day', '2027-01-03T09:00:00+07:00', /11,370/],
+      ['bangkok-midnight', '2027-01-02T17:30:00Z', /11,370/], // 00:30 on 3.1 in Bangkok, still 2.1 in UTC and in Israel
       ['after', '2027-01-04T09:00:00+07:00', /הטיול הסתיים/],
     ];
     const got = {};
