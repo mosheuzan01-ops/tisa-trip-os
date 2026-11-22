@@ -3,6 +3,7 @@
 // Waits for UI state, not fixed sleeps (docs/RULES.md rule 6). Run 3 times before calling it PASS.
 // Writes only to docs/evidence/stage5 (rule 10). Run from the repo root: node scripts/qa/stage5-browser.cjs (port 8088)
 const { chromium } = require('playwright');
+const { blankTrip } = require('./lib/blank-trip.cjs');
 const { spawn } = require('node:child_process');
 const fs = require('node:fs');
 const path = require('node:path');
@@ -30,6 +31,7 @@ function watch(page) {
 }
 async function fresh(browser, when, extra = {}) {
   const ctx = await browser.newContext({ ...VIEW, serviceWorkers: 'block', ...extra });
+  await blankTrip(ctx); // pre-stage-10 PR B: start from a 0.8.3-style trip (no budget), see scripts/qa/lib/blank-trip.cjs
   const page = await ctx.newPage();
   watch(page);
   await page.clock.setFixedTime(new Date(when));
@@ -281,6 +283,7 @@ async function addTask(page, { title, due, status }) {
   // ---------- S5-10: offline ----------
   {
     const ctx = await browser.newContext({ ...VIEW });
+    await blankTrip(ctx); // pre-stage-10 PR B: start from a 0.8.3-style trip (no budget), see scripts/qa/lib/blank-trip.cjs
     const page = await ctx.newPage();
     watch(page);
     await page.goto(`${BASE}#/checklist`);
