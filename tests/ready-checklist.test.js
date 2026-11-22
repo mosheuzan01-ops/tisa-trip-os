@@ -206,8 +206,9 @@ test('A-14: data summary for the settings screen: created date and counts, nothi
 // ---------- wiring ----------
 test('A-15: the app fills a new trip and a reset trip; the old seed buttons are gone', () => {
   const app = readText('src/js/app.js');
-  assert.match(app, /status === 'new'[^\n]*readyChecklist|readyChecklist[^\n]*status === 'new'/);
-  assert.match(app, /storage\.reset\(\)[\s\S]{0,300}readyChecklist/);
+  // PR B: readyTrip (core/template.js) fills the checklist through readyChecklist, and adds the budget.
+  assert.match(app, /status === 'new'[^\n]*(readyChecklist|readyTrip)/);
+  assert.match(app, /storage\.reset\(\)[\s\S]{0,300}(readyChecklist|readyTrip)/);
   const html = readText('index.html');
   assert.doesNotMatch(html, /data-action="list-seed"|data-action="list-flight-items"/);
   assert.match(html, /data-slot="builtin-offer"/);

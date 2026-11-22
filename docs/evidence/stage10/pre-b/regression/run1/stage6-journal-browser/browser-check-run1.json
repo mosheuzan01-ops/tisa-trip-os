@@ -1,0 +1,139 @@
+{
+  "JB-1 write mobile": {
+    "result": "PASS",
+    "head": "הערה ליום 2\n\nיום ראשון, 6 בדצמבר\nאיפה: בנגקוק\n\nמה היה היום?\nשמירה\nביטול",
+    "shown": "שוק צף בבוקר\nלחזור לדוכן המנגו",
+    "addLabel": "הערה ליום",
+    "editLabel": "עריכת ההערה",
+    "journal": {
+      "2026-12-06": {
+        "note": "שוק צף בבוקר\nלחזור לדוכן המנגו",
+        "updatedAt": "2026-12-06T03:00:00.000Z"
+      }
+    }
+  },
+  "JB-2 travel day mobile": {
+    "result": "PASS",
+    "travel": "איפה: בנגקוק ← צ'יאנג מאי"
+  },
+  "JB-3 empty mobile": {
+    "result": "PASS",
+    "journal7": false,
+    "err": "ההערה ריקה. כדי למחוק אותה לוחצים על \"מחיקת ההערה\".",
+    "stillOpen": 1
+  },
+  "JB-4 too long mobile": {
+    "result": "PASS",
+    "longErr": "ההערה ארוכה מדי. עד 1000 תווים."
+  },
+  "JB-5 edit mobile": {
+    "result": "PASS",
+    "prefilled": "שוק צף בבוקר\nלחזור לדוכן המנגו",
+    "journal": {
+      "2026-12-06": {
+        "note": "שוק צף, ואז מסאז'",
+        "updatedAt": "2026-12-06T03:00:00.000Z"
+      }
+    }
+  },
+  "JB-6 delete asks first mobile": {
+    "result": "PASS",
+    "ask": "למחוק את ההערה?\n\nההערה של יום ראשון, 6 בדצמבר תימחק. אי אפשר לבטל.\n\nכן, למחוק\nביטול",
+    "afterNo": "שוק צף, ואז מסאז'",
+    "journal": {},
+    "gone": 0,
+    "label": "הערה ליום",
+    "noDeleteOnEmpty": true
+  },
+  "JB-7 reload and destination mobile": {
+    "result": "PASS",
+    "after": "יום 3\nיום שני, 7 בדצמבר\n\nקרבי\n\nאין תכנון ליום זה\n\nיום מנוחה\n\nעריכת ההערה\nתמונה ליום הזה"
+  },
+  "JB-8 layout mobile": {
+    "result": "PASS",
+    "hscroll": false,
+    "small": [],
+    "tiny": [],
+    "clipped": [],
+    "labelled": true,
+    "dir": "rtl"
+  },
+  "JB-9 backup mobile": {
+    "result": "PASS",
+    "download": true
+  },
+  "JB-1 write desktop": {
+    "result": "PASS",
+    "head": "הערה ליום 2\n\nיום ראשון, 6 בדצמבר\nאיפה: בנגקוק\n\nמה היה היום?\nשמירה\nביטול",
+    "shown": "שוק צף בבוקר\nלחזור לדוכן המנגו",
+    "addLabel": "הערה ליום",
+    "editLabel": "עריכת ההערה",
+    "journal": {
+      "2026-12-06": {
+        "note": "שוק צף בבוקר\nלחזור לדוכן המנגו",
+        "updatedAt": "2026-12-06T03:00:00.000Z"
+      }
+    }
+  },
+  "JB-2 travel day desktop": {
+    "result": "PASS",
+    "travel": "איפה: בנגקוק ← צ'יאנג מאי"
+  },
+  "JB-3 empty desktop": {
+    "result": "PASS",
+    "journal7": false,
+    "err": "ההערה ריקה. כדי למחוק אותה לוחצים על \"מחיקת ההערה\".",
+    "stillOpen": 1
+  },
+  "JB-4 too long desktop": {
+    "result": "PASS",
+    "longErr": "ההערה ארוכה מדי. עד 1000 תווים."
+  },
+  "JB-5 edit desktop": {
+    "result": "PASS",
+    "prefilled": "שוק צף בבוקר\nלחזור לדוכן המנגו",
+    "journal": {
+      "2026-12-06": {
+        "note": "שוק צף, ואז מסאז'",
+        "updatedAt": "2026-12-06T03:00:00.000Z"
+      }
+    }
+  },
+  "JB-6 delete asks first desktop": {
+    "result": "PASS",
+    "ask": "למחוק את ההערה?\n\nההערה של יום ראשון, 6 בדצמבר תימחק. אי אפשר לבטל.\n\nכן, למחוק\nביטול",
+    "afterNo": "שוק צף, ואז מסאז'",
+    "journal": {},
+    "gone": 0,
+    "label": "הערה ליום",
+    "noDeleteOnEmpty": true
+  },
+  "JB-7 reload and destination desktop": {
+    "result": "PASS",
+    "after": "יום 3\nיום שני, 7 בדצמבר\n\nקרבי\n\nאין תכנון ליום זה\n\nיום מנוחה\n\nעריכת ההערה\nתמונה ליום הזה"
+  },
+  "JB-8 layout desktop": {
+    "result": "PASS",
+    "hscroll": false,
+    "small": [],
+    "tiny": [],
+    "clipped": [],
+    "labelled": true,
+    "dir": "rtl"
+  },
+  "JB-9 backup desktop": {
+    "result": "PASS",
+    "download": true
+  },
+  "JB-10 offline": {
+    "result": "PASS",
+    "cached": [
+      "/src/js/core/journal.js"
+    ]
+  },
+  "no JS errors, no outside requests": {
+    "result": "PASS",
+    "errors": [],
+    "external": []
+  }
+}

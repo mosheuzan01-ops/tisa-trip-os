@@ -3,6 +3,7 @@
 // Waits for UI state (rule 6). Run 3 times before PASS. QA_OUT for reruns (rule 10).
 // Run from the repo root: node scripts/qa/assistant-browser.cjs   (port 8078)
 const { chromium } = require('playwright');
+const { blankTrip } = require('./lib/blank-trip.cjs');
 const { spawn } = require('node:child_process');
 const fs = require('node:fs');
 const path = require('node:path');
@@ -24,6 +25,7 @@ const ready = (page) => page.waitForFunction(() => document.querySelector('[data
 
 async function context(browser, w, h, tag) {
   const ctx = await browser.newContext({ viewport: { width: w, height: h }, deviceScaleFactor: 2, locale: 'he-IL', reducedMotion: 'reduce', serviceWorkers: 'block', timezoneId: 'Asia/Jerusalem' });
+  await blankTrip(ctx); // pre-stage-10 PR B: start from a 0.8.3-style trip (no budget), see scripts/qa/lib/blank-trip.cjs
   const page = await ctx.newPage();
   page.on('pageerror', (e) => errors.push(`${tag}: ${e.message}`));
   page.on('console', (m) => { if (m.type() === 'error' && !/Service Worker registration blocked/.test(m.text())) errors.push(`${tag}: ${m.text()}`); });

@@ -1,0 +1,174 @@
+{
+  "B7-0 photos screen opens": {
+    "result": "PASS"
+  },
+  "S7-4 auto place by EXIF date": {
+    "result": "PASS",
+    "place1": "בנגקוק",
+    "p1": {
+      "id": "c9cce5ec-1d07-425e-97bf-7038c68a6efa",
+      "date": "2026-12-06",
+      "dateSource": "exif",
+      "stopId": null,
+      "caption": "",
+      "featured": false,
+      "width": 400,
+      "height": 300,
+      "bytes": 55355,
+      "addedAt": "2026-12-11T03:00:00.000Z"
+    }
+  },
+  "S7-2 10 MB compressed under 600 KB": {
+    "result": "PASS",
+    "original": 12558976,
+    "stored": 225739,
+    "w": 1280,
+    "h": 914
+  },
+  "S7-4 outside the route is shown as not assigned": {
+    "result": "PASS",
+    "date": "2026-11-01"
+  },
+  "S7-3 no image data in localStorage": {
+    "result": "PASS",
+    "bytes": 9516
+  },
+  "S7-1 survives a reload": {
+    "result": "PASS"
+  },
+  "B7-1 calendar day shows its photos": {
+    "result": "PASS"
+  },
+  "B7-2 edit date, caption and star": {
+    "result": "PASS",
+    "e2": {
+      "id": "63897b8b-e821-468e-9625-015b7d970514",
+      "date": "2026-12-09",
+      "dateSource": "manual",
+      "stopId": null,
+      "caption": "שוק לילה",
+      "featured": true,
+      "width": 1280,
+      "height": 914,
+      "bytes": 225739,
+      "addedAt": "2026-12-11T03:00:00.000Z"
+    },
+    "place2": "צ'יאנג מאי"
+  },
+  "S7-6 summary equals the money screen in every category": {
+    "result": "PASS",
+    "money": {
+      "flight": {
+        "plan": 450000,
+        "used": 250000
+      },
+      "insurance-sim-gear": {
+        "plan": 0,
+        "used": 0
+      },
+      "lodging": {
+        "plan": 400000,
+        "used": 0
+      },
+      "food": {
+        "plan": 300000,
+        "used": 15000
+      },
+      "transport": {
+        "plan": 0,
+        "used": 0
+      },
+      "green": {
+        "plan": 0,
+        "used": 0
+      },
+      "attractions": {
+        "plan": 0,
+        "used": 0
+      },
+      "misc": {
+        "plan": 0,
+        "used": 0
+      }
+    },
+    "sum": {
+      "food": {
+        "plan": 300000,
+        "paid": 3000,
+        "planned": 12000,
+        "committed": 0,
+        "free": 285000
+      },
+      "lodging": {
+        "plan": 400000,
+        "paid": 0,
+        "planned": 0,
+        "committed": 0,
+        "free": 400000
+      },
+      "flight": {
+        "plan": 450000,
+        "paid": 0,
+        "planned": 0,
+        "committed": 250000,
+        "free": 200000
+      },
+      "total": {
+        "plan": 1150000,
+        "paid": 3000,
+        "planned": 12000,
+        "committed": 250000,
+        "free": 885000
+      }
+    }
+  },
+  "B7-3 summary shows days and places": {
+    "result": "PASS",
+    "days": "30"
+  },
+  "B7-4 slideshow shows the starred photo": {
+    "result": "PASS",
+    "cap": "יום 5, 9 בדצמבר, צ'יאנג מאי. שוק לילה"
+  },
+  "S7-8 photo backup round trip": {
+    "result": "PASS",
+    "file": "tisa-photos-2026-12-11.zip",
+    "sizeText": "2 תמונות, בערך 302 KB.",
+    "missing": 2,
+    "back1": {
+      "full": 55355,
+      "thumb": 21614,
+      "type": "image/jpeg"
+    },
+    "back2": {
+      "full": 225739,
+      "thumb": 2080,
+      "type": "image/jpeg"
+    }
+  },
+  "S7-5 delete asks, then removes from IndexedDB too": {
+    "result": "PASS",
+    "kept": true
+  },
+  "S7-11 390px: no horizontal scroll on the new screens": {
+    "result": "PASS"
+  },
+  "S7-11 390px: tap targets 44px, text 14px": {
+    "result": "PASS",
+    "bad": []
+  },
+  "B7-5 storage warning near the limit": {
+    "result": "PASS"
+  },
+  "B7-6 desktop: no horizontal scroll": {
+    "result": "PASS"
+  },
+  "S7-11 no JS errors": {
+    "result": "PASS",
+    "errors": []
+  },
+  "no external requests": {
+    "result": "PASS",
+    "external": []
+  }
+}

@@ -126,6 +126,14 @@ const visible = (page, sel) => page.locator(sel).isVisible();
     await page.fill('[data-form="settings-dates"] [name="end"]', '2027-02-10');
     await page.click('[data-form="settings-dates"] [type="submit"]');
     await sleep(300);
+    // Pre-stage-10 PR B (owner decision): the first dates built the suggested route, so new dates open the replan
+    // preview; "trip dates only" saves the dates and keeps the stops, as before.
+    if (await page.locator('#dlg-replan[open]').count()) {
+      await page.check('[data-form="replan"] input[name="mode"][value="datesOnly"]');
+      await page.click('[data-slot="replan-save"]');
+      await page.waitForSelector('#dlg-replan:not([open])', { state: 'attached' });
+      await sleep(300);
+    }
     const before = await page.evaluate(() => localStorage.getItem('tisa:v1'));
     await page.setInputFiles('#import-file', backupPath);
     await page.waitForSelector('#dlg-import[open]');

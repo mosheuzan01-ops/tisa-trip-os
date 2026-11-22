@@ -3,6 +3,7 @@
 // Waits for UI state, not fixed sleeps (rule 6). Run 3 times before calling it PASS. QA_OUT for reruns (rule 10).
 // Run from the repo root: node scripts/qa/search-browser.cjs   (port 8085)
 const { chromium } = require('playwright');
+const { blankTrip } = require('./lib/blank-trip.cjs');
 const { spawn } = require('node:child_process');
 const fs = require('node:fs');
 const path = require('node:path');
@@ -27,6 +28,7 @@ const typeSearch = async (page, screen, q) => {
 
 async function setup(browser, w, h) {
   const ctx = await browser.newContext({ viewport: { width: w, height: h }, deviceScaleFactor: 2, locale: 'he-IL', reducedMotion: 'reduce', serviceWorkers: 'block' });
+  await blankTrip(ctx); // pre-stage-10 PR B: start from a 0.8.3-style trip (no budget), see scripts/qa/lib/blank-trip.cjs
   const page = await ctx.newPage();
   page.on('pageerror', (e) => errors.push(`${w}: ${e.message}`));
   page.on('console', (m) => { if (m.type() === 'error' && !/Service Worker registration blocked/.test(m.text())) errors.push(`${w}: ${m.text()}`); });

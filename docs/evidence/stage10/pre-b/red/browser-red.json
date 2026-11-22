@@ -1,0 +1,26 @@
+{
+  "T1 fresh install: plan20k budget saved (20,000 with the flight, emergency 2,500 apart) and shown": {
+    "result": "FAIL",
+    "profile": null,
+    "total": 0
+  },
+  "T2 390px: no sideways scroll on the money screen": {
+    "result": "PASS"
+  },
+  "T3 dates on a new trip: the suggested route is built at once, from the day after departure to the return date, and kept after a reload": {
+    "result": "FAIL",
+    "stops": [],
+    "stopCards": 0
+  },
+  "T4 390px: no sideways scroll on the itinerary": {
+    "result": "PASS"
+  },
+  "run": {
+    "result": "FAIL",
+    "error": "page.check: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-form=\"replan\"] input[name=\"mode\"][value=\"template\"]')\u001b[22m\n\n    at /home/user/tisa-trip-os/scripts/qa/ready-trip-browser.cjs:113:18"
+  },
+  "no JS errors": {
+    "result": "PASS",
+    "errors": []
+  }
+}
