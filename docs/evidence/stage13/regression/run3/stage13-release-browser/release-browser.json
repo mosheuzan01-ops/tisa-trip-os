@@ -1,19 +1,19 @@
 {
   "R9 speed on this computer (local server, no throttling; not PageSpeed), reduced motion reduce: LCP under 2500 ms, CLS under 0.1": {
     "result": "PASS",
-    "lcp": 396,
+    "lcp": 388,
     "cls": 0,
-    "dom": 155,
-    "kb": 187,
-    "requests": 68
+    "dom": 144,
+    "kb": 189,
+    "requests": 69
   },
   "R9 speed on this computer (local server, no throttling; not PageSpeed), reduced motion no-preference: LCP under 2500 ms, CLS under 0.1": {
     "result": "PASS",
-    "lcp": 344,
+    "lcp": 320,
     "cls": 0,
-    "dom": 151,
-    "kb": 185,
-    "requests": 68
+    "dom": 166,
+    "kb": 235,
+    "requests": 69
   },
   "R12 PWA: manifest (name, start_url, standalone, RTL, Hebrew), icons 192/512/maskable with their real sizes, apple-touch-icon, service worker in control": {
     "result": "PASS",

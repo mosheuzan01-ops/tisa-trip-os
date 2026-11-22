@@ -6,7 +6,7 @@
     "result": "PASS",
     "outExp": [
       {
-        "id": "5f4af207-c122-46dd-bca1-6784315f2ae3",
+        "id": "2b2a6db3-db9a-483c-ae74-972d975f6dd3",
         "amountMinor": 300000,
         "currency": "ILS",
         "rate": 1,
@@ -18,7 +18,7 @@
         "method": "card",
         "status": "paid",
         "note": "",
-        "transferId": "ff53925f-3d73-41e1-8643-94c02b5dd1a9"
+        "transferId": "0fe06d92-e11a-44cd-b933-9c71d044efcb"
       }
     ]
   },

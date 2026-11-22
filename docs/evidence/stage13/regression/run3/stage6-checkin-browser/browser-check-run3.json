@@ -12,7 +12,7 @@
     "h": "מלון בבנגקוק\n\nמלון\n5 בדצמ׳\n14:00\nשעון תאילנד\n\nבשעון ישראל: 09:00\n\nתחנה: בנגקוק",
     "checkins": [
       {
-        "id": "ab2c4611-ffb7-491d-8a95-d1f24345d0fb",
+        "id": "f649983b-d9c7-4dbc-a950-b3003b359a03",
         "kind": "flight",
         "title": "צ'ק-אין לטיסה",
         "transferId": "t1",
@@ -26,7 +26,7 @@
         "done": false
       },
       {
-        "id": "0e81bc5b-5cd3-4fb0-bbba-6ec61d481463",
+        "id": "81e841b7-4c2f-4046-9f92-688704c1abf3",
         "kind": "hotel",
         "title": "מלון בבנגקוק",
         "transferId": null,
@@ -89,7 +89,7 @@
     "h": "מלון בבנגקוק\n\nמלון\n5 בדצמ׳\n14:00\nשעון תאילנד\n\nבשעון ישראל: 09:00\n\nתחנה: בנגקוק",
     "checkins": [
       {
-        "id": "5a5dd94c-2a46-45dd-b61d-44419d33d401",
+        "id": "496eaa7b-62a4-4af5-a290-afdd74b7a586",
         "kind": "flight",
         "title": "צ'ק-אין לטיסה",
         "transferId": "t1",
@@ -103,7 +103,7 @@
         "done": false
       },
       {
-        "id": "a4fb43ae-1b6c-438d-82ec-53bb7aa081c0",
+        "id": "69a2958c-6eed-414b-b26f-b641e4b44dda",
         "kind": "hotel",
         "title": "מלון בבנגקוק",
         "transferId": null,

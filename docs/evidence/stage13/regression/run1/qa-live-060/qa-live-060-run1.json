@@ -9,8 +9,8 @@
       "minText": 14,
       "bodyText": 16,
       "lowContrast": [],
-      "contrastEstimated": 24,
-      "checkedTexts": 55
+      "contrastEstimated": 22,
+      "checkedTexts": 53
     },
     "itinerary 360 light": {
       "dir": "rtl",
@@ -369,8 +369,8 @@
       "minText": 14,
       "bodyText": 16,
       "lowContrast": [],
-      "contrastEstimated": 24,
-      "checkedTexts": 55
+      "contrastEstimated": 19,
+      "checkedTexts": 50
     },
     "itinerary 390 dark": {
       "dir": "rtl",
@@ -609,8 +609,8 @@
       "minText": 14,
       "bodyText": 16,
       "lowContrast": [],
-      "contrastEstimated": 24,
-      "checkedTexts": 55
+      "contrastEstimated": 22,
+      "checkedTexts": 53
     },
     "itinerary 768 dark": {
       "dir": "rtl",
@@ -849,8 +849,8 @@
       "minText": 14,
       "bodyText": 16,
       "lowContrast": [],
-      "contrastEstimated": 24,
-      "checkedTexts": 55
+      "contrastEstimated": 22,
+      "checkedTexts": 53
     },
     "itinerary 1280 dark": {
       "dir": "rtl",
@@ -1663,8 +1663,8 @@
     "minTextUnder14": [],
     "bodyTextUnder16": [],
     "lowContrast": [],
-    "contrastEstimated": 518,
-    "checkedTexts": 9046,
+    "contrastEstimated": 507,
+    "checkedTexts": 9035,
     "dialogsLoseFocus": [],
     "dialogsNoRing": [],
     "dialogsFocusNotReturned": [],

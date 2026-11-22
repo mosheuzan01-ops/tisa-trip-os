@@ -9,8 +9,8 @@
       "minText": 14,
       "bodyText": 16,
       "lowContrast": [],
-      "contrastEstimated": 22,
-      "checkedTexts": 53
+      "contrastEstimated": 24,
+      "checkedTexts": 55
     },
     "itinerary 360 light": {
       "dir": "rtl",
@@ -129,8 +129,8 @@
       "minText": 14,
       "bodyText": 16,
       "lowContrast": [],
-      "contrastEstimated": 24,
-      "checkedTexts": 55
+      "contrastEstimated": 22,
+      "checkedTexts": 53
     },
     "itinerary 360 dark": {
       "dir": "rtl",

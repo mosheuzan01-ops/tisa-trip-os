@@ -6,7 +6,7 @@
     "result": "PASS",
     "place1": "בנגקוק",
     "p1": {
-      "id": "d997591c-05c7-4039-8d56-1241ef552cb9",
+      "id": "accab09d-4117-4e01-8f47-3b1ec5d914f0",
       "date": "2026-12-06",
       "dateSource": "exif",
       "stopId": null,
@@ -42,7 +42,7 @@
   "B7-2 edit date, caption and star": {
     "result": "PASS",
     "e2": {
-      "id": "62d13502-5203-4529-aeea-8ab56134699e",
+      "id": "1b86b5be-cd3d-428f-a6fd-6dec5d2aeb2d",
       "date": "2026-12-09",
       "dateSource": "manual",
       "stopId": null,
