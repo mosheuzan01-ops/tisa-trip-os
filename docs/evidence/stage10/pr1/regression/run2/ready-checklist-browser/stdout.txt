@@ -1,0 +1,14 @@
+PASS  R1 fresh install: the full built-in list is saved and shown, nothing ticked
+PASS  R2 four separate progress bars (prep, carry-on, checked bag, after landing)
+PASS  R3 no offer card and no add button when nothing is missing
+PASS  R4 390px: no sideways scroll on the lists screen
+PASS  R5 a tick survives two reloads, and reloading adds no items
+PASS  R6 after a reset the full list is back, nothing ticked
+PASS  R7 settings show where the data lives and what it holds; the iPhone note is there
+PASS  R8 old data: the card offers the missing items and nothing is changed before yes
+PASS  R9 yes: every old item and tick stays exactly; only missing items are added, no repeated names, none ticked
+PASS  R10 after a reload: no card, no add button, no new items
+PASS  R11 "not now": only the answer is saved, the card stays hidden after a reload, the button adds the missing items once
+PASS  O offline: the full list shows and a tick is saved with no network
+PASS  no JS errors
+ALL PASS

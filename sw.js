@@ -1,7 +1,7 @@
 // Service worker: keeps a full copy of the app on the device so it opens and works with no connection.
 // Data lives in localStorage and is never touched here. A new VERSION means a new cache; the new worker
 // waits until the user taps "Update" in the app (message SKIP_WAITING), then old caches are deleted.
-const VERSION = '0.8.4';
+const VERSION = '0.9.0';
 const CACHE = `tisa-${VERSION}`;
 const PRECACHE = [
   './',
@@ -23,6 +23,7 @@ const PRECACHE = [
   './src/js/photo-store.js',
   './src/js/photos-view.js',
   './src/js/summary-view.js',
+  './src/js/places-view.js',
   './src/js/theme-boot.js',
   './src/js/core/autosave.js',
   './src/js/core/backup.js',
@@ -45,6 +46,8 @@ const PRECACHE = [
   './src/js/core/zip.js',
   './src/js/core/photo-backup.js',
   './src/js/core/summary.js',
+  './src/js/core/places.js',
+  './src/js/core/geo.js',
   './src/js/core/route-plan.js',
   './src/js/core/template.js',
   './src/js/core/itinerary.js',

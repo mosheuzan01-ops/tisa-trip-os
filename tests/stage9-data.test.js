@@ -135,11 +135,12 @@ test('S9-4: the old route and the three old templates are in the archive, marked
 test('v6: real v5 data migrates with nothing lost; archive and category fields are added', () => {
   const before = v5();
   const out = migrate(structuredClone(before), opts);
-  assert.equal(SCHEMA_VERSION, 6);
-  assert.equal(out.schemaVersion, 6);
+  assert.ok(SCHEMA_VERSION >= 6, 'the 5 -> 6 step stays in the chain (Stage 10 added 6 -> 7)');
+  assert.equal(out.schemaVersion, SCHEMA_VERSION);
   const a = before.trips.t;
   const b = out.trips.t;
   for (const k of Object.keys(a)) if (k !== 'budget') assert.deepEqual(b[k], a[k], k);
+  assert.deepEqual(Object.keys(b).filter((k) => !(k in a)).sort(), ['archive', 'places', 'templateOffer'], 'only additions (places: Stage 10)');
   assert.deepEqual({ ...b.budget, categoryNames: undefined, hidden: undefined }, { ...a.budget, categoryNames: undefined, hidden: undefined });
   assert.deepEqual(b.budget.categoryNames, {});
   assert.deepEqual(b.budget.hidden, []);
@@ -160,7 +161,7 @@ test('v6: before migrating, the storage keeps a one-time copy of the old data un
   storage.save(loaded.state);
   createStorage({ backend, key: 'tisa:v1', ...opts, premigrationPrefix: 'tisa:premigration:' }).load();
   assert.equal(map.get('tisa:premigration:v5'), raw, 'never overwritten later');
-  assert.equal(JSON.parse(map.get('tisa:v1')).schemaVersion, 6);
+  assert.equal(JSON.parse(map.get('tisa:v1')).schemaVersion, SCHEMA_VERSION);
 });
 
 // ---------- S9-5: applying the template to a user who already has data ----------
