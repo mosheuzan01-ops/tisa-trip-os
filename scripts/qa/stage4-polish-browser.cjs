@@ -83,7 +83,9 @@ async function addExpense(page, o) {
     const big = num(await page.locator('[data-slot="money-free"]').textContent());
     const before = (await page.locator('[data-slot="money-free-before"]').textContent()).trim();
     const today = (await page.locator('[data-slot="money-today"]').textContent()).trim();
-    pass('S4-18', big === 6800 && /פנוי לפני התכנון: .*8,800/.test(before) && /^פנוי היום: .*453/.test(today)
+    // Stage 13 (owner, 2026-11-22): the saver profile's flight (2,600) is set aside until a flight expense covers it:
+    // free 9,800 - 1,000 - 2,000 - 2,600 = 4,200; before planning 9,800 - 1,000 - 2,600 = 6,200; 4,200 / 15 days = 280.
+    pass('S4-18', big === 4200 && /פנוי לפני התכנון: .*6,200/.test(before) && /^פנוי היום: .*280/.test(today)
       && (await page.locator('#money-free-label').textContent()).trim() === 'פנוי אחרי התכנון', { big, before, today });
 
     // S4-19: is it worth it?
@@ -103,8 +105,9 @@ async function addExpense(page, o) {
     const prefilled = [await page.inputValue('#dlg-expense [name="amount"]'), await page.inputValue('#dlg-expense [name="currency"]'), await page.inputValue('#dlg-expense [name="description"]')];
     await page.click('#dlg-expense [data-close]');
     await closed(page, '#dlg-expense');
-    pass('S4-19', /בתוך התקציב/.test(ok[0]) && /6,800/.test(ok[1]) && /6,600/.test(ok[2]) && /453.*440/.test(ok[3])
-      && /חריגה של .*1,200/.test(over[0]) && /-1,200|1,200-|‎-1,200/.test(over[2]) && /6,600/.test(thb[2]) && prefilled.join('|') === '2000|THB|מתנה',
+    // Stage 13: from free 4,200 (above): 200 leaves 4,000 (266 a day over 15 days); 8,000 is 3,800 over; 2,000 THB = 200 ILS.
+    pass('S4-19', /בתוך התקציב/.test(ok[0]) && /4,200/.test(ok[1]) && /4,000/.test(ok[2]) && /280.*266/.test(ok[3])
+      && /חריגה של .*3,800/.test(over[0]) && /-3,800|3,800-|‎-3,800/.test(over[2]) && /4,000/.test(thb[2]) && prefilled.join('|') === '2000|THB|מתנה',
     { ok, over, thb, prefilled });
 
     // S4-20: CSV

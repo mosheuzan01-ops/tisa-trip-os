@@ -7,7 +7,7 @@ import assert from 'node:assert/strict';
 import { readyTrip, fillRoute, rebuildRoute, stopNameFor, TEMPLATE_ID } from '../src/js/core/template.js';
 import { createDefaultState } from '../src/js/core/schema.js';
 import { planRoute, tripCounts } from '../src/js/core/route-plan.js';
-import { summarize, dailyBase, effectiveRates } from '../src/js/core/money.js';
+import { summarize, dailyBase, effectiveRates, profileToBudget } from '../src/js/core/money.js';
 import { saveTransfer } from '../src/js/core/transfers.js';
 import { addDays } from '../src/js/core/itinerary.js';
 import { daysBetween } from '../src/js/core/trip.js';
@@ -21,20 +21,22 @@ const END = '2031-01-20';
 const fresh = () => { const st = createDefaultState(opts); return st.trips[st.activeTripId]; };
 const sum = (o) => Object.values(o).reduce((s, v) => s + v, 0);
 
-test('B-1: a new trip gets the plan20k budget (20,000 with the flight, emergency 2,500 apart) and the full checklist', () => {
+// Stage 13 (owner, 2026-11-22, docs/BUDGET_AND_START.md): B-1 now checks the new start. The 20,000 template is no
+// longer the default (each user enters their own budget) and a new trip starts with the shared dates and the route.
+test('B-1: a new trip gets the full checklist, the template categories at 0 (no budget yet), the shared dates and the route', () => {
   const trip = fresh();
   readyTrip(trip, TH, 'he', idGen('r'));
-  assert.equal(trip.budget.profileId, TEMPLATE_ID);
+  assert.equal(trip.budget.profileId, null);
   const { emergency, ...rest } = trip.budget.categoriesMinor;
-  assert.equal(sum(rest), 2_000_000);
-  assert.equal(rest.flight, 500_000);
-  assert.equal(sum(rest) - rest.flight, 1_500_000);
-  assert.equal(emergency, 250_000);
-  assert.equal(trip.templateOffer, 'applied', 'no "switch to the template" card for a trip that is already on it');
+  assert.equal(sum(rest), 0);
+  assert.ok('flight' in rest && 'lodging' in rest, 'the category names are there, at 0');
+  assert.equal(emergency, 0);
+  assert.equal(trip.templateOffer, 'new', 'no "switch to the template" card for a trip that started in this version');
   assert.equal(trip.checklist.length, TH.checklistBuiltin.length);
   assert.ok(trip.checklist.every((x) => !x.done));
-  assert.deepEqual(trip.destinations, [], 'no dates yet, so no route');
-  assert.equal(trip.startDate, null);
+  assert.equal(trip.startDate, TH.defaultTrip.start);
+  assert.equal(trip.endDate, TH.defaultTrip.end);
+  assert.ok(trip.destinations.length > 0, 'the route for the shared dates');
 });
 
 test('B-2: a trip with its own budget keeps it; readyTrip twice changes nothing', () => {
@@ -99,10 +101,12 @@ test('B-5: a rebuild that cannot make a route changes nothing', () => {
 });
 
 test('B-6: route, calendar and budget agree: every night after the flight has one stop; the flight counts once', () => {
+  // Stage 13: the template budget is now a manual choice, so it is loaded here as the user would; own dates first.
   const trip = fresh();
-  readyTrip(trip, TH, 'he', idGen('r'));
   trip.startDate = START;
   trip.endDate = END;
+  readyTrip(trip, TH, 'he', idGen('r'));
+  trip.budget = { ...trip.budget, ...profileToBudget(TH.budgetTemplates.find((x) => x.id === TEMPLATE_ID), 'he') };
   fillRoute(trip, TH, 'he', idGen('f'));
   const nights = daysBetween(START, END);
   for (let i = 1; i < nights; i += 1) {

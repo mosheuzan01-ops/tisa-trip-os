@@ -307,6 +307,7 @@ function renderTrip({ t, locale, country, trip }) {
   const passDates = $('[data-slot="pass-dates"]');
   $('[data-slot="today-title"]').textContent = t(`today.title.${status.phase}`);
   $('.home').dataset.setup = progress.done === progress.total ? 'done' : 'open';
+  delete $('.home').dataset.boot; // Stage 13 (F1): the home cards show only once their order is known, so nothing jumps
   if (status.phase === 'unset') {
     statusEl.hidden = true;
     sub.textContent = t('today.empty');

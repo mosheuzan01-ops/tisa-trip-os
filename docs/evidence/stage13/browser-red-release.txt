@@ -1,0 +1,18 @@
+# red, before any stage 13 fix (main d2a0e61 + the new scripts), 2026-11-22T14:15:48Z
+# QA_OUT=<scratch> SHOTS=0 node scripts/qa/stage13-release-browser.cjs
+FAIL  R9 speed on this computer (local server, no throttling; not PageSpeed): LCP under 2500 ms, CLS under 0.1
+PASS  R12 PWA: manifest (name, start_url, standalone, RTL, Hebrew), icons 192/512/maskable with their real sizes, apple-touch-icon, service worker in control
+PASS  R13 airplane mode: all 14 screens open, the photo shows, a new list item survives a reload, this version
+PASS  R14 JSON backup: export, reset, import: the trip comes back whole (places, info notes, smart suitcase, photo details, money, route)
+PASS  R16 (S13-2) backup reminder: not 1 minute before 7 days, shown at 7 days on the home screen, not on other screens, gone after the backup
+PASS  R17 (S13-3) the version in settings = config = package.json = sw.js
+FAIL  R18 (S13-4) privacy in settings: opens from the keyboard and says: on this device, photos in IndexedDB, no server, Google Maps only on tap, no passport or card numbers, clearing site data deletes, so back up; terms of use next to it
+PASS  no JS errors
+PASS  no requests outside the app
+FAIL 2
+
+# details of the failing checks
+R9 speed on this computer (local server, no throttling; not PageSpeed): LCP under 2500 ms, CLS under 0.1
+  {"result":"FAIL","lcp":128,"cls":0.397,"dom":189,"kb":405,"requests":68}
+R18 (S13-4) privacy in settings: opens from the keyboard and says: on this device, photos in IndexedDB, no server, Google Maps only on tap, no passport or card numbers, clearing site data deletes, so back up; terms of use next to it
+  {"result":"FAIL","has":0}

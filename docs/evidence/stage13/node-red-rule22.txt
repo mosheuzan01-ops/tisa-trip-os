@@ -1,0 +1,9 @@
+# red for rule 22: tests/stage13-release.test.js R-22 run on a copy of the repo at 4ebf792 (the keyboard script still had its own sample copy), 2026-11-22T17:59:59Z
+not ok 1 - R-22 (rule 22) browser scripts from stage 13 on use the shared sample data (scripts/qa/lib/), not a copy of their own
+    +   'stage13-keyboard-browser.cjs'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'stage13-keyboard-browser.cjs'
+# pass 0
+# fail 1

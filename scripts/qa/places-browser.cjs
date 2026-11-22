@@ -6,6 +6,7 @@ const { chromium } = require('playwright');
 const { spawn } = require('node:child_process');
 const fs = require('node:fs');
 const path = require('node:path');
+const { blankState } = require('./lib/blank-trip.cjs');
 
 const ROOT = path.join(__dirname, '..', '..');
 const APP = path.resolve(process.env.APP_ROOT ?? ROOT);
@@ -110,7 +111,9 @@ async function beforeShots(browser) {
   }
   try {
     // ---------- G1: reachable from the itinerary; empty screen; nothing asked or loaded on its own ----------
-    const a = await open(browser, { route: 'itinerary' });
+    // Stage 13: a new install now starts with the shared dates and a route; G1 needs a trip with no dates yet
+    // (as an older version left it), so its sample dates build the route here: lib/blank-trip.cjs.
+    const a = await open(browser, { seed: await blankState(), route: 'itinerary' });
     await setDates(a.page);
     await a.page.goto(`${BASE}#/itinerary`);
     await a.page.locator('#panel-itinerary').waitFor();

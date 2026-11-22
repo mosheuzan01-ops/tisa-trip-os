@@ -5,6 +5,7 @@
 import { isIsoDate, daysBetween } from './trip.js';
 
 export const EMERGENCY = 'emergency';
+export const FLIGHT = 'flight'; // stage 13: its plan is set aside in "free" until flight expenses cover it
 export const BASE_CURRENCY = 'ILS';
 export const STATUSES = ['paid', 'planned', 'committed'];
 export const METHODS = ['cash', 'card', 'transfer', 'other'];
@@ -139,8 +140,9 @@ const sumBy = (list, pick) => list.reduce((s, x) => s + pick(x), 0);
 
 /**
  * The whole money picture, in shekel minor units.
- * Running budget = the eight categories (or the home total while there are no categories). Emergency is separate.
- * paid + planned + committed + free = running budget, exactly.
+ * Running budget = the categories (or the home total while no category has an amount). Emergency is separate.
+ * Stage 13 (owner, 2026-11-22): the money planned for the flight is set aside until flight expenses cover it.
+ * paid + planned + committed + set aside for the flight + free = running budget, exactly. docs/BUDGET_AND_START.md.
  */
 export function summarize(budget, expenses = [], rates = null) {
   const cats = budget?.categoriesMinor ?? {};
@@ -154,7 +156,8 @@ export function summarize(budget, expenses = [], rates = null) {
     const rate = rates ? rateToBase(cur, rates) : NaN;
     if (Number.isFinite(rate)) homeTotal = Math.round(homeTotal * rate); else { unconvertible = cur; homeTotal = 0; }
   }
-  const totalMinor = running.length ? sumBy(running, ([, v]) => v) : homeTotal;
+  const runningSum = sumBy(running, ([, v]) => v);
+  const totalMinor = runningSum > 0 ? runningSum : homeTotal; // category names at 0 are not a budget yet
   const list = expenses.filter((e) => e && Number.isInteger(e.baseMinor));
   const normal = list.filter((e) => e.category !== EMERGENCY);
   const by = (status) => sumBy(normal.filter((e) => e.status === status), (e) => e.baseMinor);
@@ -171,13 +174,19 @@ export function summarize(budget, expenses = [], rates = null) {
   };
   const ids = [...new Set([...Object.keys(cats), ...list.map((e) => e.category)])].filter((k) => k !== EMERGENCY);
   const em = line(EMERGENCY);
+  // Set aside for the flight: its plan, less the flight expenses so far (never below 0). "Before planning" counts
+  // only what was paid, like the rest of that figure.
+  const flightPlanMinor = runningSum > 0 && isMinor(cats[FLIGHT]) ? cats[FLIGHT] : 0;
+  const flightBy = (statuses) => sumBy(normal.filter((e) => e.category === FLIGHT && statuses.includes(e.status)), (e) => e.baseMinor);
+  const flightReserveMinor = Math.max(flightPlanMinor - flightBy(['paid', 'planned', 'committed']), 0);
+  const flightReserveBeforeMinor = Math.max(flightPlanMinor - flightBy(['paid']), 0);
   return {
-    hasBudget: totalMinor > 0 || hasCategories,
+    hasBudget: totalMinor > 0 || em.planMinor > 0,
     hasCategories,
-    unconvertible: running.length ? null : unconvertible,
-    totalMinor, paidMinor, plannedMinor, committedMinor,
-    freeMinor: totalMinor - paidMinor - plannedMinor - committedMinor,
-    freeBeforePlanMinor: totalMinor - paidMinor,
+    unconvertible: runningSum > 0 ? null : unconvertible,
+    totalMinor, paidMinor, plannedMinor, committedMinor, flightReserveMinor,
+    freeMinor: totalMinor - paidMinor - plannedMinor - committedMinor - flightReserveMinor,
+    freeBeforePlanMinor: totalMinor - paidMinor - flightReserveBeforeMinor,
     categories: ids.map(line),
     emergency: { planMinor: em.planMinor, usedMinor: em.usedMinor, leftMinor: em.leftMinor, over: em.over },
   };
@@ -276,7 +285,7 @@ export function dailyBase(budget, dates) {
   const cats = budget?.categoriesMinor ?? {};
   if (!dates || !isIsoDate(dates.start) || !isIsoDate(dates.end)) return null;
   const days = daysBetween(dates.start, dates.end) + 1;
-  const base = Object.entries(cats).filter(([k, v]) => k !== EMERGENCY && k !== 'flight' && isMinor(v)).reduce((s, [, v]) => s + v, 0);
+  const base = Object.entries(cats).filter(([k, v]) => k !== EMERGENCY && k !== FLIGHT && isMinor(v)).reduce((s, [, v]) => s + v, 0);
   if (!(days > 0) || base <= 0) return null;
   return Math.floor(base / days);
 }

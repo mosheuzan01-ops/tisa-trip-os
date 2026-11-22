@@ -15,7 +15,8 @@ const hasData = (trip) => hasBudget(trip?.budget) || (trip?.destinations?.length
 
 /** True once, for a trip that already has a budget, stops or expenses and is not on the template yet. */
 export function needsTemplateOffer(trip) {
-  if (!trip || trip.templateOffer === 'applied' || trip.templateOffer === 'declined') return false;
+  // 'new' (stage 13): a trip that started in this version; the switch offer is only for trips from before the template.
+  if (!trip || trip.templateOffer === 'applied' || trip.templateOffer === 'declined' || trip.templateOffer === 'new') return false;
   if (trip.budget?.profileId === TEMPLATE_ID) return false;
   return hasData(trip);
 }
@@ -76,14 +77,29 @@ export function stopNameFor(trip, id) {
 
 // ---------- Pre-stage-10 PR B (owner, 2026-11-21): a new trip comes ready ----------
 
-/** A new (or reset) trip: the built-in checklist and, when it has no budget of its own, the plan20k budget.
- *  The route waits for the trip dates (fillRoute). A trip with data of its own is left as it is. */
+/** A budget with the template's category names and every amount at 0: "no budget yet" (stage 13, owner 2026-11-22).
+ *  Each user enters their own; the 20,000 template itself is a manual choice ("load another template"). */
+function blankBudget(tpl, locale) {
+  const b = profileToBudget(tpl, locale);
+  return { ...b, categoriesMinor: Object.fromEntries(Object.keys(b.categoriesMinor).map((k) => [k, 0])), profileId: null, estimate: false };
+}
+
+/** A new (or reset) trip: the built-in checklist; the shared trip dates and the suggested route (stage 13); and,
+ *  when it has no budget of its own, the template's categories at 0. A trip with data of its own is left as it is:
+ *  own dates keep their own route, own stops are never touched, own budget stays. docs/BUDGET_AND_START.md. */
 export function readyTrip(trip, pack, locale, makeId) {
   readyChecklist(trip, pack, locale, makeId);
+  const d = pack?.defaultTrip;
+  const noDates = !isIsoDate(trip.startDate) && !isIsoDate(trip.endDate);
+  if (noDates && !cleanStops(trip.destinations).length && isIsoDate(d?.start) && isIsoDate(d?.end)) {
+    trip.startDate = d.start;
+    trip.endDate = d.end;
+  }
+  fillRoute(trip, pack, locale, makeId);
   const tpl = pack?.budgetTemplates?.find((x) => x.id === TEMPLATE_ID);
   if (!tpl || hasBudget(trip.budget) || trip.budget?.profileId) return;
-  trip.budget = { ...trip.budget, ...profileToBudget(tpl, locale) };
-  if (trip.templateOffer == null) trip.templateOffer = 'applied';
+  trip.budget = { ...trip.budget, ...blankBudget(tpl, locale) };
+  if (trip.templateOffer == null) trip.templateOffer = 'new';
 }
 
 /** Dates were saved: a trip with no stops gets the suggested route at once. Stops that exist are never touched. */

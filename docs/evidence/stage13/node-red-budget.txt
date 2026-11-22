@@ -1,0 +1,58 @@
+# red: node --test tests/stage13-budget.test.js, before the budget and start changes, 2026-11-22T17:54:17Z
+not ok 1 - NB-1 a new trip has no budget of its own: the template category names at 0, emergency 0, not the template, not an estimate
+  error: '{"flight":500000,"lodging":500000,"food":350000,"transport":220000,"attractions":230000,"insurance-sim-gear":100000,"misc":100000,"emergency":250000}'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+not ok 2 - NB-2 a new trip does not get the "switch to the template" card (it is for older trips); the template stays a manual choice
+  error: |-
+  name: 'AssertionError'
+  expected: 'new'
+  actual: 'applied'
+not ok 3 - NB-3 a new trip starts with the shared trip dates and the suggested route, and the built-in checklist
+  error: |-
+  name: 'AssertionError'
+  expected:
+ok 4 - NB-4 a trip with dates, stops or a budget of its own is left exactly as it is
+not ok 5 - NB-5 a trip with dates but no stops gets the route for its own dates, not the default dates
+  error: 'no route for the trip dates'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+not ok 6 - NB-6 a budget entered at home counts while the categories are all 0
+  error: |-
+  name: 'AssertionError'
+  expected: 1500000
+  actual: 2000000
+not ok 7 - FR-1 template budget, no flight expense yet: free 15,000 and free before planning 15,000 (5,000 set aside)
+  error: |-
+  name: 'AssertionError'
+  expected: 500000
+not ok 8 - FR-2 a 5,000 flight (planned, committed or paid) is taken once, never twice
+  error: |-
+  name: 'AssertionError'
+  expected: 0
+not ok 9 - FR-3 a flight above the plan takes the real cost (5,600: free 14,400); below it, the rest stays set aside (4,200: free 15,000)
+  error: |-
+  name: 'AssertionError'
+  expected: 80000
+not ok 10 - FR-4 paid + planned + committed + set aside + free = the running budget, exactly
+  error: |-
+  name: 'AssertionError'
+  expected: 2000000
+  actual: NaN
+not ok 11 - FR-5 "free today" follows the new free: 15,000 over 32 days is 468 a day, not 625
+  error: |-
+  name: 'AssertionError'
+  expected:
+  actual:
+not ok 12 - FR-6 no flight category, or only a total entered at home: nothing is set aside (as before)
+  error: |-
+  name: 'AssertionError'
+  expected: 0
+not ok 13 - FR-7 the emergency fund stays apart: a flight paid from emergency does not cover the flight plan
+  error: |-
+  name: 'AssertionError'
+  expected: 500000
+# pass 1
+# fail 12

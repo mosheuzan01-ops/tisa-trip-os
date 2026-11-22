@@ -26,7 +26,7 @@ test('S4-2: money code never stores decimals; amounts go through parseMoney / wh
 test('S4-10: new files are cached for offline use and the cache version moved past 0.3.x', () => {
   const sw = readText('sw.js');
   for (const f of ['./src/js/money-view.js', './src/js/core/money.js', './src/js/core/split.js']) assert.ok(sw.includes(`'${f}'`), f);
-  assert.match(readJson('config/app.config.json').appVersion, /^0\.([4-9]|[1-9]\d)\.\d+$/);
+  assert.match(readJson('config/app.config.json').appVersion, /^(0\.([4-9]|[1-9]\d)\.\d+|[1-9]\d*\.\d+\.\d+)$/);
   assert.deepEqual(readJson('config/app.config.json').budgetCurrencies, ['ILS', 'THB', 'USD'], 'no currency without a planning rate');
 });
 

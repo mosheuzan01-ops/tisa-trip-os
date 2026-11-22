@@ -1,0 +1,11 @@
+PASS  AB-1 no data (mobile)
+PASS  AB-2 money (mobile)
+PASS  AB-3 today (mobile)
+PASS  AB-4 tasks due (mobile)
+PASS  AB-5 layout (mobile)
+PASS  AB-1 no data (desktop)
+PASS  AB-2 money (desktop)
+PASS  AB-3 today (desktop)
+PASS  AB-4 tasks due (desktop)
+PASS  AB-5 layout (desktop)
+PASS  no JS errors

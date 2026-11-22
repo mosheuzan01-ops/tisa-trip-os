@@ -48,7 +48,7 @@
     <main id="main" tabindex="-1">
       <div class="banners" data-slot="banners" hidden></div>
       <!-- HOME -->
-      <section class="panel home" data-setup="open" id="panel-home" role="tabpanel" aria-labelledby="tab-home">
+      <section class="panel home" data-setup="open" data-boot id="panel-home" role="tabpanel" aria-labelledby="tab-home">
         <div class="home-grid">
           <div class="col">
             <div class="hero">
@@ -371,6 +371,7 @@
             <div><dt><span class="dot dot-paid" aria-hidden="true"></span><span data-i18n="money.paid">שולם</span></dt><dd class="ltr" data-slot="money-paid"></dd></div>
             <div><dt><span class="dot dot-planned" aria-hidden="true"></span><span data-i18n="money.planned">מתוכנן</span><button class="tip-btn" type="button" data-tip="planned"></button></dt><dd class="ltr" data-slot="money-planned"></dd></div>
             <div><dt><span class="dot dot-committed" aria-hidden="true"></span><span data-i18n="money.committed">התחייבות עתידית</span><button class="tip-btn" type="button" data-tip="committed"></button></dt><dd class="ltr" data-slot="money-committed"></dd></div>
+            <div data-slot="money-reserved-row" hidden><dt><span class="dot dot-reserved" aria-hidden="true"></span><span data-i18n="money.reserved">שמור לטיסה</span></dt><dd class="ltr" data-slot="money-reserved"></dd></div>
             <div><dt><span class="dot dot-free" aria-hidden="true"></span><span data-i18n="money.freeShort">פנוי אחרי התכנון</span></dt><dd class="ltr" data-slot="money-free-small"></dd></div>
             <div class="money-split-total"><dt data-i18n="money.total">תקציב שוטף</dt><dd class="ltr" data-slot="money-total"></dd></div>
           </dl>
@@ -969,6 +970,29 @@
             <li data-i18n="settings.limits.iphone">באייפון חובה להתקין למסך הבית.</li>
           </ul>
         </section>
+
+        <details class="card surface settings-card fold" data-slot="privacy">
+          <summary class="fold-head"><h2 data-i18n="privacy.title">פרטיות ונתונים</h2><span class="fold-sub" data-i18n="privacy.sub">מה נשמר, איפה, ומה יוצא מהטלפון</span></summary>
+          <ul class="settings-list">
+            <li data-i18n="privacy.device">הנתונים של הטיול נשמרים רק במכשיר הזה, בזיכרון של הדפדפן (localStorage). אין שרת ואין חשבון, ואף אחד אחר לא רואה אותם.</li>
+            <li data-i18n="privacy.photos">גם התמונות נשמרות במכשיר, במאגר נפרד של הדפדפן (IndexedDB). הן לא נכנסות לגיבוי הרגיל, ויש להן קובץ ZIP משלהן.</li>
+            <li data-i18n="privacy.host">האפליקציה נטענת מאתר ב-GitHub Pages, ועותק שלה נשמר במכשיר כדי לעבוד בלי אינטרנט. כמו בכל אתר, שרת האחסון רואה שהקבצים נטענו (למשל כתובת IP). הנתונים שלכם לא נשלחים אליו.</li>
+            <li data-i18n="privacy.links">יוצאים החוצה רק בלחיצה שלכם: "פתיחה ב-Google Maps" שולחת ל-Google את המיקום או את הכתובת של המקום. גם חיוג, שיתוף וקישורים שהקלדתם נפתחים רק בלחיצה.</li>
+            <li data-i18n="privacy.location">"המיקום שלי" נקרא מהטלפון פעם אחת, בלחיצה, ולא נשמר בלי "שמירה".</li>
+            <li data-i18n="privacy.dont">לא לשמור כאן מספר דרכון, פרטי כרטיס אשראי או סיסמאות. הנתונים לא מוצפנים.</li>
+            <li data-i18n="privacy.wipe">מחיקת נתוני האתר בדפדפן מוחקת את כל הנתונים, וגם מחיקת האפליקציה ממסך הבית עלולה למחוק אותם. לכן מגבים: גיבוי JSON וקובץ ZIP לתמונות, ושומרים אותם מחוץ לטלפון.</li>
+          </ul>
+        </details>
+
+        <details class="card surface settings-card fold" data-slot="terms">
+          <summary class="fold-head"><h2 data-i18n="terms.title">תנאי שימוש</h2><span class="fold-sub" data-i18n="terms.sub">קצר, לשימוש בין חברים</span></summary>
+          <ul class="settings-list">
+            <li data-i18n="terms.personal">כלי לשימוש אישי בין חברים. בחינם, בלי פרסומות ובלי איסוף נתונים.</li>
+            <li data-i18n="terms.asis">האפליקציה ניתנת כמו שהיא, בלי אחריות. ייתכנו טעויות ותקלות.</li>
+            <li data-i18n="terms.info">המידע כאן (מספרים, כתובות, תקציבים ושערים) הוא לעזרה בלבד. מה שמסומן "לבדוק" עוד לא אומת. לפני החלטה חשובה בודקים מול מקור רשמי.</li>
+            <li data-i18n="terms.data">הנתונים והגיבויים באחריותכם. הערות ותקלות: בקבוצת הוואטסאפ.</li>
+          </ul>
+        </details>
 
         <section class="card surface settings-card" aria-labelledby="set-reset-title">
           <h2 id="set-reset-title" data-i18n="settings.reset.title">התחלה מחדש</h2>

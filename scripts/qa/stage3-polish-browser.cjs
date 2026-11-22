@@ -7,6 +7,7 @@ const { chromium } = require('playwright');
 const { spawn } = require('node:child_process');
 const fs = require('node:fs');
 const path = require('node:path');
+const { blankTrip } = require('./lib/blank-trip.cjs');
 
 const ROOT = path.join(__dirname, '..', '..');
 const OUT = process.env.QA_OUT ? path.resolve(process.env.QA_OUT) : path.join(ROOT, 'docs/evidence/stage3/polish'); // rule 10: reruns write elsewhere
@@ -24,6 +25,7 @@ const isOpen = (page, id) => page.locator(id).evaluate((d) => d.open);
 
 async function seeded(browser, when, bag) {
   const ctx = await browser.newContext(VIEW);
+  await blankTrip(ctx); // stage 13: a new install now has the shared dates and a route; start from a trip with no stops (lib/blank-trip.cjs)
   const page = await ctx.newPage();
   page.on('pageerror', (e) => bag.push(e.message));
   page.on('console', (m) => { if (m.type() === 'error') bag.push(m.text()); });
@@ -102,6 +104,7 @@ async function seeded(browser, when, bag) {
 
     // no stops: dates save straight away, as before
     const c3 = await browser.newContext(VIEW);
+    await blankTrip(c3); // stage 13: a new install now has the shared dates and a route; start from a trip with no stops (lib/blank-trip.cjs)
     const p3 = await c3.newPage();
     await p3.goto(`${BASE}#/settings`);
     await ready(p3);

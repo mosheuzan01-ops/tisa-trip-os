@@ -6,6 +6,7 @@ const { chromium } = require('playwright');
 const { spawn } = require('node:child_process');
 const fs = require('node:fs');
 const path = require('node:path');
+const { blankTrip } = require('./lib/blank-trip.cjs');
 
 const ROOT = path.join(__dirname, '..', '..');
 const OUT = process.env.QA_OUT ? path.resolve(process.env.QA_OUT) : path.join(ROOT, 'docs/evidence/stage3'); // rule 10: reruns write elsewhere
@@ -48,6 +49,7 @@ async function addStop(page, { name, start, end, note = '' }) {
   // ---------- S3-1, S3-3, S3-4, S3-2 on screen ----------
   {
     const ctx = await browser.newContext({ ...VIEW, serviceWorkers: 'block' });
+    await blankTrip(ctx); // stage 13: a new install now has the shared dates and a route; start from a trip with no stops (lib/blank-trip.cjs)
     const page = await ctx.newPage();
     watch(page, bag);
     await page.clock.setFixedTime(new Date('2026-11-19T10:00:00+07:00'));
@@ -127,6 +129,7 @@ async function addStop(page, { name, start, end, note = '' }) {
       ['after', '2027-01-05T09:00:00+07:00', { phase: 'after', place: '', today: null }],
     ]) {
       const ctx = await browser.newContext({ ...VIEW, serviceWorkers: 'block', timezoneId: 'Asia/Jerusalem' });
+      await blankTrip(ctx); // stage 13: a new install now has the shared dates and a route; start from a trip with no stops (lib/blank-trip.cjs)
       const page = await ctx.newPage();
       watch(page, bag);
       await page.clock.setFixedTime(new Date(when));
@@ -156,6 +159,7 @@ async function addStop(page, { name, start, end, note = '' }) {
   // ---------- S3-11 replan + S3-7 backup round trip + S3-9 layout ----------
   {
     const ctx = await browser.newContext({ ...VIEW, serviceWorkers: 'block', acceptDownloads: true });
+    await blankTrip(ctx); // stage 13: a new install now has the shared dates and a route; start from a trip with no stops (lib/blank-trip.cjs)
     const page = await ctx.newPage();
     watch(page, bag);
     await page.clock.setFixedTime(new Date('2026-11-19T10:00:00+07:00'));
@@ -222,7 +226,10 @@ async function addStop(page, { name, start, end, note = '' }) {
     await page.click('[data-action="reset-open"]');
     await page.fill('[data-slot="reset-input"]', 'איפוס');
     await page.click('[data-action="reset-confirm"]');
-    const wiped = (await stored(page)).destinations.length;
+    // Stage 13: a reset now starts from the shared dates and their suggested route, so "wiped" means the user's
+    // stops are gone and only the suggested ones are there (docs/BUDGET_AND_START.md).
+    const wipedStops = (await stored(page)).destinations;
+    const wiped = JSON.stringify(wipedStops) !== before && wipedStops.every((x) => x.suggested) ? 0 : wipedStops.length;
     await page.setInputFiles('#import-file', file);
     await page.click('[data-action="import-confirm"]');
     await page.waitForFunction(() => !document.querySelector('#dlg-import').open);
@@ -238,6 +245,7 @@ async function addStop(page, { name, start, end, note = '' }) {
   // ---------- S3-6: offline. Service worker installs v-cache, then the itinerary works with the network off ----------
   {
     const ctx = await browser.newContext({ ...VIEW });
+    await blankTrip(ctx); // stage 13: a new install now has the shared dates and a route; start from a trip with no stops (lib/blank-trip.cjs)
     const page = await ctx.newPage();
     watch(page, bag);
     await page.goto(`${BASE}#/itinerary`);
