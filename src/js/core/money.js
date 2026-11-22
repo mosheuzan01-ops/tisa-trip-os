@@ -7,6 +7,7 @@ import { isIsoDate, daysBetween } from './trip.js';
 export const EMERGENCY = 'emergency';
 export const FLIGHT = 'flight'; // stage 13: its plan is set aside in "free" until flight expenses cover it
 export const BASE_CURRENCY = 'ILS';
+export const ANCHOR_TOTAL = 'total'; // 1.0.1: budget.anchor when the user typed one total (docs/BUDGET_AND_START.md)
 export const STATUSES = ['paid', 'planned', 'committed'];
 export const METHODS = ['cash', 'card', 'transfer', 'other'];
 export const DESCRIPTION_MAX = 80;
@@ -143,6 +144,8 @@ const sumBy = (list, pick) => list.reduce((s, x) => s + pick(x), 0);
  * Running budget = the categories (or the home total while no category has an amount). Emergency is separate.
  * Stage 13 (owner, 2026-11-22): the money planned for the flight is set aside until flight expenses cover it.
  * paid + planned + committed + set aside for the flight + free = running budget, exactly. docs/BUDGET_AND_START.md.
+ * 1.0.1: a budget with anchor 'total' uses the total the user typed instead (see the anchored branch below);
+ * every budget without it (all data from 1.0.0 and before) gives exactly the 1.0.0 numbers.
  */
 export function summarize(budget, expenses = [], rates = null) {
   const cats = budget?.categoriesMinor ?? {};
@@ -176,19 +179,45 @@ export function summarize(budget, expenses = [], rates = null) {
   const em = line(EMERGENCY);
   // Set aside for the flight: its plan, less the flight expenses so far (never below 0). "Before planning" counts
   // only what was paid, like the rest of that figure.
-  const flightPlanMinor = runningSum > 0 && isMinor(cats[FLIGHT]) ? cats[FLIGHT] : 0;
+  const anchored = budget?.anchor === ANCHOR_TOTAL && isMinor(budget?.totalMinor);
+  const flightPlanMinor = (anchored || runningSum > 0) && isMinor(cats[FLIGHT]) ? cats[FLIGHT] : 0;
   const flightBy = (statuses) => sumBy(normal.filter((e) => e.category === FLIGHT && statuses.includes(e.status)), (e) => e.baseMinor);
   const flightReserveMinor = Math.max(flightPlanMinor - flightBy(['paid', 'planned', 'committed']), 0);
   const flightReserveBeforeMinor = Math.max(flightPlanMinor - flightBy(['paid']), 0);
+  const emergency = { planMinor: em.planMinor, usedMinor: em.usedMinor, leftMinor: em.leftMinor, over: em.over };
+  if (anchored) {
+    // 1.0.1 (owner, 2026-11-22): the total the user typed is the anchor; the categories are a plan inside it. The
+    // emergency fund is part of the total: set aside like the flight, and its own expenses use it up first, so
+    // nothing is counted twice (held = the larger of its plan and what was spent from it).
+    const anchorTotal = budget.totalMinor;
+    const emPaid = em.paidMinor;
+    const emergencyHeldMinor = Math.max(em.planMinor, em.usedMinor);
+    return {
+      anchored: true,
+      hasBudget: anchorTotal > 0,
+      hasCategories,
+      unconvertible: null,
+      totalMinor: anchorTotal, paidMinor, plannedMinor, committedMinor, flightReserveMinor, emergencyHeldMinor,
+      allocatedMinor: runningSum + em.planMinor,
+      unallocatedMinor: anchorTotal - runningSum - em.planMinor,
+      freeMinor: anchorTotal - paidMinor - plannedMinor - committedMinor - flightReserveMinor - emergencyHeldMinor,
+      freeBeforePlanMinor: anchorTotal - paidMinor - flightReserveBeforeMinor - Math.max(em.planMinor, emPaid),
+      categories: ids.map(line),
+      emergency,
+    };
+  }
   return {
+    anchored: false,
     hasBudget: totalMinor > 0 || em.planMinor > 0,
     hasCategories,
     unconvertible: runningSum > 0 ? null : unconvertible,
-    totalMinor, paidMinor, plannedMinor, committedMinor, flightReserveMinor,
+    totalMinor, paidMinor, plannedMinor, committedMinor, flightReserveMinor, emergencyHeldMinor: 0,
+    allocatedMinor: runningSum,
+    unallocatedMinor: totalMinor - runningSum,
     freeMinor: totalMinor - paidMinor - plannedMinor - committedMinor - flightReserveMinor,
     freeBeforePlanMinor: totalMinor - paidMinor - flightReserveBeforeMinor,
     categories: ids.map(line),
-    emergency: { planMinor: em.planMinor, usedMinor: em.usedMinor, leftMinor: em.leftMinor, over: em.over },
+    emergency,
   };
 }
 
@@ -285,7 +314,10 @@ export function dailyBase(budget, dates) {
   const cats = budget?.categoriesMinor ?? {};
   if (!dates || !isIsoDate(dates.start) || !isIsoDate(dates.end)) return null;
   const days = daysBetween(dates.start, dates.end) + 1;
-  const base = Object.entries(cats).filter(([k, v]) => k !== EMERGENCY && k !== FLIGHT && isMinor(v)).reduce((s, [, v]) => s + v, 0);
+  const plan = (id) => (isMinor(cats[id]) ? cats[id] : 0);
+  const base = budget?.anchor === ANCHOR_TOTAL && isMinor(budget?.totalMinor)
+    ? budget.totalMinor - plan(FLIGHT) - plan(EMERGENCY) // 1.0.1: the typed total, less the flight and the emergency fund set aside
+    : Object.entries(cats).filter(([k, v]) => k !== EMERGENCY && k !== FLIGHT && isMinor(v)).reduce((s, [, v]) => s + v, 0);
   if (!(days > 0) || base <= 0) return null;
   return Math.floor(base / days);
 }
@@ -316,4 +348,64 @@ export function visibleCategories(budget, expenses = [], ids = []) {
   const hidden = new Set(Array.isArray(budget?.hidden) ? budget.hidden : []);
   const plan = budget?.categoriesMinor ?? {};
   return ids.filter((id) => !hidden.has(id) || (isMinor(plan[id]) && plan[id] > 0) || expenses.some((e) => e?.category === id));
+}
+
+
+// ---------- 1.0.1 (owner, 2026-11-22): one total; the categories are an optional plan inside it ----------
+
+/** The total as typed: whole shekels, commas only between thousands. Minor units, or NaN. */
+export function parseWholeShekels(text) {
+  const clean = String(text ?? '').trim().replace(/\s/g, '');
+  if (!/^(\d{1,3}(,\d{3})+|\d+)$/.test(clean)) return NaN;
+  const minor = Number(clean.replace(/,/g, '')) * 100;
+  return minor > 0 && minor <= MAX_MINOR / 10 ? minor : NaN;
+}
+
+/** The budget with this total, in shekels, as the anchor. Categories, names, emergency and the rest stay. */
+export const setTotal = (budget, minor) => ({ ...(budget ?? {}), totalMinor: minor, currency: BASE_CURRENCY, anchor: ANCHOR_TOTAL });
+
+/**
+ * A suggested split of the total over the pack's existing categories, by the ratios of the approved 20,000 template
+ * (owner, 2026-11-22: a starting point only; everything stays editable). Whole shekels, rounded down; the rounding
+ * rest goes to "misc" so it adds up exactly. A category the template has no amount for gets 0. No emergency share.
+ * Nothing is saved here: the screen shows it, and only applySuggestion (an explicit approval) stores it.
+ */
+export function suggestSplit(totalMinor, pack) {
+  const tpl = (pack?.budgetTemplates ?? []).find((x) => x.id === 'plan20k');
+  const ids = (pack?.budgetCategories ?? []).map((c) => c.id).filter((id) => id !== EMERGENCY);
+  const shares = Object.fromEntries(ids.map((id) => [id, Number(tpl?.categories?.[id]) > 0 ? Number(tpl.categories[id]) : 0]));
+  const whole = Object.values(shares).reduce((a, v) => a + v, 0);
+  const shekels = Number.isInteger(totalMinor) && totalMinor > 0 ? Math.floor(totalMinor / 100) : 0;
+  const out = Object.fromEntries(ids.map((id) => [id, whole ? Math.floor((shekels * shares[id]) / whole) * 100 : 0]));
+  const rest = shekels * 100 - Object.values(out).reduce((a, v) => a + v, 0);
+  const sink = ids.includes('misc') ? 'misc' : ids[0];
+  if (sink && rest > 0) out[sink] += rest;
+  return out;
+}
+
+/** Approve a suggestion: it becomes the categories. The total, the anchor, the emergency amount and names stay. */
+export function applySuggestion(budget, suggestion) {
+  const cats = budget?.categoriesMinor ?? {};
+  const em = isMinor(cats[EMERGENCY]) ? cats[EMERGENCY] : 0;
+  return { ...(budget ?? {}), categoriesMinor: { ...suggestion, [EMERGENCY]: em }, profileId: null, estimate: true };
+}
+
+/** Load a profile or the template into a budget. A user's own emergency amount is never wiped; an anchored total stays. */
+export function withProfile(budget, profile, locale = 'he') {
+  const next = profileToBudget(profile, locale);
+  const own = budget?.categoriesMinor?.[EMERGENCY];
+  if (Number.isInteger(own) && own > 0) next.categoriesMinor[EMERGENCY] = own;
+  const merged = { ...(budget ?? {}), ...next, currency: BASE_CURRENCY };
+  if (budget?.anchor === ANCHOR_TOTAL && isMinor(budget?.totalMinor)) { merged.totalMinor = budget.totalMinor; merged.anchor = ANCHOR_TOTAL; }
+  return merged;
+}
+
+/** The total in the trip's other currencies (from its rates: the country pack, rule G11), whole units, shown small under the shekel field. */
+export function fxApprox(minor, rates) {
+  const out = {};
+  for (const c of currenciesFor(rates ?? {}).filter((x) => x !== BASE_CURRENCY)) {
+    const r = rateToBase(c, rates ?? {});
+    if (Number.isFinite(r) && r > 0 && Number.isInteger(minor)) out[c] = Math.round(minor / 100 / r);
+  }
+  return out;
 }

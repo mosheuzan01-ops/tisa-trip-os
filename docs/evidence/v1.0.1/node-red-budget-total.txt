@@ -1,0 +1,60 @@
+# red: node --test tests/budget-total.test.js, before the 1.0.1 code (main 60d09c4 + empty exports so the file loads), 2026-11-22T22:54:44Z
+not ok 1 - BT-1 one total, nothing else: free = total - expenses; no flight or emergency set aside
+  error: |-
+  name: 'AssertionError'
+  expected: 'total'
+not ok 2 - BT-2 setTotal changes only the total (and marks it as the anchor): categories, names and emergency stay
+  error: |-
+  name: 'AssertionError'
+  expected: 1500000
+  actual: ~
+not ok 3 - BT-3 the total is the anchor: categories are a plan; "left to split" or "over" is shown, the total never moves
+  error: |-
+  name: 'AssertionError'
+  expected: 1500000
+  actual: 900000
+not ok 4 - BT-4 the emergency fund is part of the total: set aside in free, counted once (its expenses use it up first)
+  error: |-
+  name: 'AssertionError'
+  expected: 200000
+not ok 5 - BT-5 flight reserve as in 1.0.0, only from a saved flight category; with a total only there is none
+  error: |-
+  name: 'AssertionError'
+  expected: 1500000
+  actual: 0
+not ok 6 - BT-6 existing data (no anchor) gives exactly the 1.0.0 results
+  error: |-
+  name: 'AssertionError'
+  expected: 0
+not ok 7 - BT-7 the suggested split: the approved template ratios, only existing categories, whole shekels, exactly the total
+  error: |-
+  name: 'AssertionError'
+  expected:
+  actual:
+not ok 8 - BT-8 a suggestion changes nothing until it is approved; approving keeps the total, the anchor, emergency and names
+  error: |-
+  name: 'AssertionError'
+  expected: 1400000
+  actual: 0
+not ok 9 - BT-9 loading the template on an anchored budget changes only the categories; the total stays
+  error: |-
+  name: 'AssertionError'
+  expected: 1500000
+  actual: ~
+not ok 10 - BT-10 the total is typed as whole shekels: "15,000" and "15000" are fine; decimals, 0 and text are refused
+  error: |-
+  name: 'AssertionError'
+  expected: 1500000
+  actual: NaN
+not ok 11 - BT-11 the total in dollars and baht, by the trip rates, as whole units
+  error: |-
+  name: 'AssertionError'
+  expected:
+  actual:
+not ok 12 - BT-12 daily base on an anchored budget: the total less the flight and the emergency fund, over the dates
+  error: |-
+  name: 'AssertionError'
+  expected: 40625
+  actual: ~
+# pass 0
+# fail 12
