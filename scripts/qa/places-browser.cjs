@@ -313,8 +313,8 @@ async function beforeShots(browser) {
     const tb = before.trips[before.activeTripId];
     const keep = ['expenses', 'transfers', 'checklist', 'tasks', 'checkins', 'photos', 'destinations', 'journal'];
     const copy = await m.page.evaluate(() => localStorage.getItem('tisa:premigration:v5'));
-    pass('G13 v5 sample data: schema 7, places empty, every old list kept exactly, the old text kept once',
-      s13.schemaVersion === 7 && Array.isArray(t13.places) && t13.places.length === 0 && keep.every((k) => JSON.stringify(t13[k]) === JSON.stringify(tb[k])) && copy === v5,
+    pass('G13 v5 sample data: schema 7 or later (Stage 12: 8), places empty, every old list kept exactly, the old text kept once',
+      s13.schemaVersion >= 7 && Array.isArray(t13.places) && t13.places.length === 0 && keep.every((k) => JSON.stringify(t13[k]) === JSON.stringify(tb[k])) && copy === v5,
       { schema: s13.schemaVersion });
     await m.ctx.close();
 

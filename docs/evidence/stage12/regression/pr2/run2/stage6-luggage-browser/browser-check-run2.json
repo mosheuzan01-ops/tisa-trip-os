@@ -1,0 +1,126 @@
+{
+  "LB-1 open and back mobile": {
+    "result": "PASS",
+    "url": "#/luggage",
+    "lit": "lists",
+    "empty": true
+  },
+  "LB-2 bags mobile": {
+    "result": "PASS",
+    "bagErr": "כתבו שם לתיק. המגבלה צריכה להיות משקל בק״ג, למשל 7 או 7.5.",
+    "noLimit": "סה״כ 0 ק״ג. עוד לא נקבעה מגבלה."
+  },
+  "LB-3 no limit, no warning mobile": {
+    "result": "PASS",
+    "back": "סה״כ 2.2 ק״ג. עוד לא נקבעה מגבלה."
+  },
+  "LB-4 at the limit and over mobile": {
+    "result": "PASS",
+    "itemErr": "המשקל צריך להיות בק״ג, למשל 0.85.",
+    "atLimit": "סה״כ 23 ק״ג מתוך 23 ק״ג · נשארו 0 ק״ג.",
+    "over": "חריגה של 0.3 ק״ג מעל המגבלה.",
+    "grams": [
+      22500,
+      500,
+      300
+    ]
+  },
+  "LB-5 move and change the limit mobile": {
+    "result": "PASS",
+    "bags": [
+      "מזוודה גדולה",
+      "תיק גב"
+    ],
+    "backOver2": "חריגה של 0.5 ק״ג מעל המגבלה."
+  },
+  "LB-6 delete asks first mobile": {
+    "result": "PASS",
+    "askItem": "למחוק?\n\n\"מחשב\" יימחק מהתיק. אי אפשר לבטל.\n\nכן, למחוק\nביטול",
+    "askBag": "למחוק?\n\nהתיק \"תיק גב\" יימחק, יחד עם 2 פריטים. אי אפשר לבטל.\n\nכן, למחוק\nביטול",
+    "afterItem": [
+      "נעליים",
+      "מטען"
+    ]
+  },
+  "LB-7 layout and the packing list mobile": {
+    "result": "PASS",
+    "hscroll": false,
+    "dir": "rtl",
+    "small": [],
+    "tiny": [],
+    "clipped": []
+  },
+  "LB-8 reload and backup mobile": {
+    "result": "PASS",
+    "reloaded": "סה״כ 23 ק״ג מתוך 23 ק״ג · נשארו 0 ק״ג.",
+    "rt": true
+  },
+  "LB-1 open and back desktop": {
+    "result": "PASS",
+    "url": "#/luggage",
+    "lit": "lists",
+    "empty": true
+  },
+  "LB-2 bags desktop": {
+    "result": "PASS",
+    "bagErr": "כתבו שם לתיק. המגבלה צריכה להיות משקל בק״ג, למשל 7 או 7.5.",
+    "noLimit": "סה״כ 0 ק״ג. עוד לא נקבעה מגבלה."
+  },
+  "LB-3 no limit, no warning desktop": {
+    "result": "PASS",
+    "back": "סה״כ 2.2 ק״ג. עוד לא נקבעה מגבלה."
+  },
+  "LB-4 at the limit and over desktop": {
+    "result": "PASS",
+    "itemErr": "המשקל צריך להיות בק״ג, למשל 0.85.",
+    "atLimit": "סה״כ 23 ק״ג מתוך 23 ק״ג · נשארו 0 ק״ג.",
+    "over": "חריגה של 0.3 ק״ג מעל המגבלה.",
+    "grams": [
+      22500,
+      500,
+      300
+    ]
+  },
+  "LB-5 move and change the limit desktop": {
+    "result": "PASS",
+    "bags": [
+      "מזוודה גדולה",
+      "תיק גב"
+    ],
+    "backOver2": "חריגה של 0.5 ק״ג מעל המגבלה."
+  },
+  "LB-6 delete asks first desktop": {
+    "result": "PASS",
+    "askItem": "למחוק?\n\n\"מחשב\" יימחק מהתיק. אי אפשר לבטל.\n\nכן, למחוק\nביטול",
+    "askBag": "למחוק?\n\nהתיק \"תיק גב\" יימחק, יחד עם 2 פריטים. אי אפשר לבטל.\n\nכן, למחוק\nביטול",
+    "afterItem": [
+      "נעליים",
+      "מטען"
+    ]
+  },
+  "LB-7 layout and the packing list desktop": {
+    "result": "PASS",
+    "hscroll": false,
+    "dir": "rtl",
+    "small": [],
+    "tiny": [],
+    "clipped": []
+  },
+  "LB-8 reload and backup desktop": {
+    "result": "PASS",
+    "reloaded": "סה״כ 23 ק״ג מתוך 23 ק״ג · נשארו 0 ק״ג.",
+    "rt": true
+  },
+  "LB-9 offline and dark": {
+    "result": "PASS",
+    "cached": [
+      "/src/js/luggage-view.js",
+      "/src/js/core/luggage.js"
+    ]
+  },
+  "no JS errors, no outside requests": {
+    "result": "PASS",
+    "errors": [],
+    "external": []
+  }
+}

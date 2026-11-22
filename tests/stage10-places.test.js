@@ -198,20 +198,20 @@ test('P-16 (L6): no tracking anywhere: no watchPosition, and only core/geo.js as
 
 // ---------- L11: storage, migration, backup ----------
 test('P-17 (L11): schema 7 adds an empty places list to every trip; nothing else changes', () => {
-  assert.equal(SCHEMA_VERSION, 7);
+  assert.ok(SCHEMA_VERSION >= 7, 'the 6 -> 7 step stays in the chain (Stage 12 added 7 -> 8)');
   assert.ok(TRIP_FEATURE_FIELDS.includes('places'));
   const fresh = createDefaultState(opts);
   assert.deepEqual(fresh.trips['trip-1'].places, []);
   const v6 = migrate(readJson('tests/fixtures/v5-stage7.json'), opts);
   const before = structuredClone(v6);
   before.schemaVersion = 6;
-  for (const t of Object.values(before.trips)) delete t.places; // a real v6 trip has no places field
+  for (const t of Object.values(before.trips)) { delete t.places; delete t.smartBag; } // a real v6 trip has neither (smartBag: Stage 12)
   const out = migrate(structuredClone(before), opts);
-  assert.equal(out.schemaVersion, 7);
+  assert.equal(out.schemaVersion, SCHEMA_VERSION);
   assert.deepEqual(validateState(out), []);
   for (const [id, t] of Object.entries(out.trips)) {
     assert.deepEqual(t.places, []);
-    const { places, ...rest } = t;
+    const { places, smartBag, ...rest } = t; // smartBag: the Stage 12 step (7 -> 8), checked in B-13
     assert.deepEqual(rest, before.trips[id], `trip ${id} unchanged apart from places`);
   }
   const kept = structuredClone(before);

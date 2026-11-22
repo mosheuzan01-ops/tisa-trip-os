@@ -1,0 +1,18 @@
+FAIL  L0 the lists screen has a "מזוודה חכמה" button
+FAIL  ERROR the run stopped
+[
+  [
+    "L0 the lists screen has a \"מזוודה חכמה\" button",
+    {
+      "result": "FAIL",
+      "entry": 0
+    }
+  ],
+  [
+    "ERROR the run stopped",
+    {
+      "result": "FAIL",
+      "message": "no smart suitcase entry"
+    }
+  ]
+]

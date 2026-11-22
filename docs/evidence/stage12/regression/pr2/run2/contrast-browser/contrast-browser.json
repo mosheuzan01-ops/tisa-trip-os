@@ -1,0 +1,32 @@
+{
+  "light: every text button outside a card reaches its contrast (4.5:1, large text 3:1)": {
+    "result": "PASS",
+    "measured": 19,
+    "lowest": {
+      "route": "home",
+      "label": "home-emergency: \"חירוםמספרים מאומתים, חיוג בלחי\"",
+      "ratio": 6.574,
+      "need": 4.5,
+      "bg": "rgb(255, 255, 255)"
+    },
+    "low": [],
+    "onImage": []
+  },
+  "dark: every text button outside a card reaches its contrast (4.5:1, large text 3:1)": {
+    "result": "PASS",
+    "measured": 19,
+    "lowest": {
+      "route": "home",
+      "label": "home-emergency: \"חירוםמספרים מאומתים, חיוג בלחי\"",
+      "ratio": 8.636,
+      "need": 4.5,
+      "bg": "rgb(18, 26, 30)"
+    },
+    "low": [],
+    "onImage": []
+  },
+  "no JS errors": {
+    "result": "PASS",
+    "errors": []
+  }
+}

@@ -11,3 +11,5 @@ export const loadLocale = (locale) => loadJson(`./locales/${locale}.json`);
 export const loadCountry = (id) => loadJson(`./data/countries/${id}.json`);
 /** Stage 11: emergency and info facts, each with status, source and check date. */
 export const loadCountryInfo = (id) => loadJson(`./data/info/${id}.json`);
+/** Stage 12: the smart suitcase rules (suggestions only). */
+export const loadPacking = (id) => loadJson(`./data/packing/${id}.json`);
