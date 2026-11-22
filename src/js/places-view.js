@@ -149,7 +149,7 @@ export function renderPlaces(ctx) {
 }
 
 /** Copy text: the clipboard API, or the older copy command where it is missing or refused. */
-async function copyText(text) {
+export async function copyText(text) {
   try {
     if (navigator.clipboard?.writeText) { await navigator.clipboard.writeText(text); return true; }
   } catch { /* fall through to the older way */ }

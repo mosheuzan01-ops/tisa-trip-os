@@ -1041,3 +1041,52 @@ body::before {
 .place-photo-opt:has(input:checked) { outline: 3px solid var(--accent); outline-offset: -3px; }
 .place-photo-opt:has(input:focus-visible) { outline: 3px solid var(--focus); outline-offset: -3px; }
 .place-photo-count { color: var(--muted); }
+
+/* ---------- Stage 11: info and emergency (#/info). Own names (rule 14), existing tokens only. ---------- */
+.home-sos {
+  display: flex; align-items: center; gap: var(--space-3); width: 100%; min-height: 56px; padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-lg); border: 2px solid var(--danger); background: var(--surface); color: var(--danger);
+  text-align: start; cursor: pointer; font: inherit;
+}
+.home-sos .icon { width: 28px; height: 28px; flex: none; }
+.home-sos-text { display: grid; gap: 2px; }
+.home-sos-title { font-size: var(--text-lead); font-weight: 700; line-height: 1.3; }
+.home-sos-desc { font-size: var(--text-body); color: var(--ink); }
+.home-sos:active { transform: scale(.98); }
+.info { display: grid; gap: var(--space-4); }
+.info-section { display: grid; gap: var(--space-3); }
+.info-cards { display: grid; gap: var(--space-3); }
+.info-sos { border: 2px solid var(--danger); display: grid; gap: var(--space-2); }
+.info-dial-note, .info-checked { font-size: var(--text-caption); }
+.info-list { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-3); }
+.info-row { display: grid; gap: var(--space-1); padding-block: var(--space-2); border-top: 1px solid var(--line); }
+.info-list > .info-row:first-child { border-top: 0; }
+.info-row-top { display: flex; align-items: center; justify-content: space-between; gap: var(--space-2); flex-wrap: wrap; }
+.info-label { font-weight: 700; color: var(--ink); }
+.info-value { color: var(--ink); line-height: 1.5; overflow-wrap: anywhere; text-align: start; }
+.info-value-phone { font: 600 var(--text-lead)/1.3 var(--font-mono); }
+.info-sos .info-value-phone { font-size: var(--text-h3); }
+.info-src, .info-how, .info-note-text { font-size: var(--text-caption); color: var(--muted); line-height: 1.5; overflow-wrap: anywhere; }
+.info-src-url { unicode-bidi: isolate; }
+.info-acts { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.info-badge.is-verified { color: var(--ink); border-color: var(--accent); }
+.info-badge.is-user { color: var(--ink); border-color: var(--line-strong); }
+.info-badge.is-pending { color: var(--danger); border-color: var(--danger); background: var(--surface); }
+.info-card { display: grid; gap: var(--space-2); }
+.info-card-head { display: flex; align-items: center; justify-content: space-between; gap: var(--space-2); flex-wrap: wrap; }
+.info-card-title { font-size: var(--text-lead); font-weight: 700; color: var(--ink); }
+.info-card-sub { overflow-wrap: anywhere; }
+.info-prio.is-high { color: var(--ink); border-color: var(--danger); }
+.info-map { justify-self: start; }
+.info-pending, .info-note { border-top: 1px solid var(--line); padding-top: var(--space-2); }
+.info-pending-sum, .info-note-sum { cursor: pointer; min-height: var(--tap); display: flex; align-items: center; font-weight: 600; color: var(--ink); }
+.info-note { display: grid; gap: var(--space-2); }
+.info-note[open] { display: grid; }
+.info-note-field textarea { min-height: 88px; }
+.info-note-save { justify-self: start; }
+.info-draft { padding: var(--space-3); border-radius: var(--radius-md); border: 1px dashed var(--line-strong); color: var(--ink); background: var(--surface-2); }
+.info-error { color: var(--danger); }
+.info-sub-title { font-size: var(--text-body); font-weight: 700; }
+.info-quick-call { justify-self: start; }
+.info-fold { display: grid; gap: var(--space-2); border-top: 1px solid var(--line); padding-top: var(--space-2); }
+.info-fold-sum { cursor: pointer; min-height: var(--tap); display: flex; align-items: center; font-weight: 600; color: var(--ink); }

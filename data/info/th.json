@@ -1,0 +1,1030 @@
+{
+ "id": "th",
+ "checkedAt": "2026-11-22",
+ "sources": {
+  "thgov-phones": {
+   "title": {
+    "he": "ממשלת תאילנד (thailand.go.th): מספרי טלפון חשובים",
+    "en": "Thai government (thailand.go.th): important phone numbers"
+   },
+   "url": "https://www.thailand.go.th/issue-focus-detail/009_152",
+   "checkedAt": "2026-11-22"
+  },
+  "thgov-emergency": {
+   "title": {
+    "he": "ממשלת תאילנד (thailand.go.th): מספרי חירום",
+    "en": "Thai government (thailand.go.th): emergency numbers"
+   },
+   "url": "https://www.thailand.go.th/guide-book-detail/009-017",
+   "checkedAt": "2026-11-22"
+  },
+  "uk-fcdo": {
+   "title": {
+    "he": "ממשלת בריטניה (GOV.UK): עזרה בתאילנד",
+    "en": "UK government (GOV.UK): getting help in Thailand"
+   },
+   "url": "https://www.gov.uk/foreign-travel-advice/thailand/getting-help",
+   "checkedAt": "2026-11-22"
+  },
+  "au-smartraveller": {
+   "title": {
+    "he": "ממשלת אוסטרליה (Smartraveller): תאילנד",
+    "en": "Australian government (Smartraveller): Thailand"
+   },
+   "url": "https://www.smartraveller.gov.au/destinations/asia/thailand",
+   "checkedAt": "2026-11-22"
+  },
+  "chabad-bkk": {
+   "title": {
+    "he": "בית חב\"ד תאילנד: בית חב\"ד בנגקוק",
+    "en": "Chabad Thailand: Chabad House Bangkok"
+   },
+   "url": "https://chabadthailand.co.il/houses/bangkok/",
+   "checkedAt": "2026-11-22"
+  },
+  "bh-dir-bangkok": {
+   "title": {
+    "he": "Bangkok Hospital: רשימת בתי החולים, בנגקוק",
+    "en": "Bangkok Hospital: hospital directory, Bangkok"
+   },
+   "url": "https://www.bangkokhospital.com/en/directory?area=bangkok",
+   "checkedAt": "2026-11-22"
+  },
+  "bh-dir-south": {
+   "title": {
+    "he": "Bangkok Hospital: רשימת בתי החולים, דרום",
+    "en": "Bangkok Hospital: hospital directory, south"
+   },
+   "url": "https://www.bangkokhospital.com/en/directory?area=south",
+   "checkedAt": "2026-11-22"
+  },
+  "bh-samui-er": {
+   "title": {
+    "he": "Bangkok Hospital Samui: מחלקת טראומה ומיון",
+    "en": "Bangkok Hospital Samui: trauma and emergency department"
+   },
+   "url": "https://www.bangkokhospital.com/en/samui/center-clinic/trauma/trauma-and-emergency-departmen-bsh/overview",
+   "checkedAt": "2026-11-22"
+  },
+  "bh-phangan": {
+   "title": {
+    "he": "Bangkok Hospital Samui: Phangan International Hospital",
+    "en": "Bangkok Hospital Samui: Phangan International Hospital"
+   },
+   "url": "https://www.bangkokhospital.com/en/samui/branch/phangan-international-hospital",
+   "checkedAt": "2026-11-22"
+  },
+  "krabi-nakharin": {
+   "title": {
+    "he": "האתר הרשמי של Krabi Nakharin International Hospital",
+    "en": "Krabi Nakharin International Hospital official site"
+   },
+   "url": "https://www.krabinakharin.co.th/",
+   "checkedAt": "2026-11-22"
+  },
+  "nakornping": {
+   "title": {
+    "he": "האתר הרשמי של Nakornping Hospital",
+    "en": "Nakornping Hospital official site"
+   },
+   "url": "https://www.nkp-hospital.go.th/th/",
+   "checkedAt": "2026-11-22"
+  }
+ },
+ "emergency": [
+  {
+   "key": "ambulance",
+   "kind": "phone",
+   "value": "1669",
+   "status": "verified-official",
+   "source": "thgov-phones",
+   "checkedAt": "2026-11-22",
+   "label": {
+    "he": "אמבולנס וחילוץ",
+    "en": "Ambulance and rescue"
+   }
+  },
+  {
+   "key": "police",
+   "kind": "phone",
+   "value": "191",
+   "status": "verified-official",
+   "source": "thgov-phones",
+   "checkedAt": "2026-11-22",
+   "label": {
+    "he": "משטרה (כל מקרה דחוף)",
+    "en": "Police (any urgent matter)"
+   }
+  },
+  {
+   "key": "fire",
+   "kind": "phone",
+   "value": "199",
+   "status": "verified-official",
+   "source": "uk-fcdo",
+   "checkedAt": "2026-11-22",
+   "label": {
+    "he": "כיבוי אש",
+    "en": "Fire"
+   },
+   "note": {
+    "he": "גם ממשלת אוסטרליה מציינת 199. בדף של ממשלת תאילנד מופיע 1155 לשריפה, וזו כנראה טעות בדף.",
+    "en": "The Australian government also lists 199. The Thai government page lists 1155 for fire, likely an error on that page."
+   }
+  },
+  {
+   "key": "tourist-police",
+   "kind": "phone",
+   "value": "1155",
+   "status": "verified-official",
+   "source": "thgov-phones",
+   "checkedAt": "2026-11-22",
+   "label": {
+    "he": "משטרת תיירים",
+    "en": "Tourist Police"
+   }
+  },
+  {
+   "key": "tourist-info",
+   "kind": "phone",
+   "value": "1672",
+   "status": "verified-official",
+   "source": "thgov-phones",
+   "checkedAt": "2026-11-22",
+   "label": {
+    "he": "מידע וסיוע לתיירים (TAT)",
+    "en": "Tourist information and help (TAT)"
+   },
+   "note": {
+    "he": "לעזרה ומידע, לא למקרה חירום.",
+    "en": "For help and information, not for emergencies."
+   }
+  }
+ ],
+ "contacts": [
+  {
+   "key": "embassy-israel",
+   "title": {
+    "he": "שגרירות ישראל בבנגקוק",
+    "en": "Embassy of Israel, Bangkok"
+   },
+   "fields": [
+    {
+     "key": "address",
+     "kind": "address",
+     "value": "Ocean Tower 2, 25th floor, 75 Sukhumvit Soi 19, Bangkok",
+     "status": "user-provided",
+     "checkedAt": "2026-11-22",
+     "note": {
+      "he": "האתר הרשמי של השגרירות לא נפתח מכאן בבדיקה, ולכן הכתובת לא סומנה כמאומתת.",
+      "en": "The embassy's official site did not open from here, so the address is not marked verified."
+     }
+    },
+    {
+     "key": "phone",
+     "kind": "phone",
+     "value": null,
+     "status": "unverified",
+     "how": {
+      "he": "לבדוק באתר השגרירות (embassies.gov.il) או באתר משרד החוץ.",
+      "en": "Check the embassy site (embassies.gov.il) or the foreign ministry site."
+     }
+    },
+    {
+     "key": "emergencyPhone",
+     "kind": "phone",
+     "value": null,
+     "status": "hidden",
+     "how": {
+      "he": "מספר חירום נייד יוצג רק אחרי אימות באתר רשמי.",
+      "en": "An emergency mobile number is shown only after it is verified on an official site."
+     }
+    }
+   ]
+  },
+  {
+   "key": "chabad-bangkok",
+   "title": {
+    "he": "בית חב\"ד בנגקוק",
+    "en": "Chabad House Bangkok"
+   },
+   "fields": [
+    {
+     "key": "address",
+     "kind": "address",
+     "value": "18 Phra Athit Road, Chana Songkhram, Phra Nakhon, Bangkok 10200, Thailand",
+     "status": "verified-official",
+     "source": "chabad-bkk",
+     "checkedAt": "2026-11-22"
+    },
+    {
+     "key": "phone",
+     "kind": "phone",
+     "value": "+66 2 629 2770",
+     "status": "verified-official",
+     "source": "chabad-bkk",
+     "checkedAt": "2026-11-22"
+    },
+    {
+     "key": "hours",
+     "kind": "text",
+     "value": {
+      "he": "בית חב\"ד: מ-09:00 עד 00:00",
+      "en": "Chabad house: 09:00 to 00:00"
+     },
+     "status": "verified-official",
+     "source": "chabad-bkk",
+     "checkedAt": "2026-11-22"
+    }
+   ]
+  }
+ ],
+ "hospitals": {
+  "draft": true,
+  "draftNote": {
+   "he": "טיוטה: הרשימה תותאם למסלול הסופי. נשמר כאן רק מה שנבדק.",
+   "en": "Draft: the list will follow the final route. Only checked details are kept."
+  },
+  "list": [
+   {
+    "key": "bangkok",
+    "area": {
+     "he": "בנגקוק",
+     "en": "Bangkok"
+    },
+    "priority": "high",
+    "fields": [
+     {
+      "key": "name",
+      "kind": "text",
+      "value": "Bangkok Hospital (Headquarters)",
+      "status": "verified-official",
+      "source": "bh-dir-bangkok",
+      "checkedAt": "2026-11-22"
+     },
+     {
+      "key": "nameTh",
+      "kind": "text",
+      "value": null,
+      "status": "unverified",
+      "how": {
+       "he": "שם בתאית רק מהאתר הרשמי של בית החולים.",
+       "en": "A Thai name only from the hospital's official site."
+      }
+     },
+     {
+      "key": "site",
+      "kind": "url",
+      "value": "https://www.bangkokhospital.com/en/bangkok",
+      "status": "verified-official",
+      "source": "bh-dir-bangkok",
+      "checkedAt": "2026-11-22"
+     },
+     {
+      "key": "address",
+      "kind": "address",
+      "value": "2 Soi Soonvijai 7, New Petchburi Rd., Huaykwang, Bangkok 10310 Thailand",
+      "status": "verified-official",
+      "source": "bh-dir-bangkok",
+      "checkedAt": "2026-11-22"
+     },
+     {
+      "key": "phone",
+      "kind": "phone",
+      "value": "+66 2 310 3000",
+      "status": "verified-official",
+      "source": "bh-dir-bangkok",
+      "checkedAt": "2026-11-22"
+     },
+     {
+      "key": "er",
+      "kind": "text",
+      "value": null,
+      "status": "unverified",
+      "how": {
+       "he": "לבדוק באתר בית החולים או בטלפון: מיון ושעות פעילות.",
+       "en": "Check the hospital site or call: emergency room and hours."
+      }
+     },
+     {
+      "key": "english",
+      "kind": "text",
+      "value": null,
+      "status": "unverified",
+      "how": {
+       "he": "לבדוק באתר בית החולים או בטלפון: שירות באנגלית או מחלקה בינלאומית.",
+       "en": "Check the hospital site or call: English service or an international department."
+      }
+     },
+     {
+      "key": "insurance",
+      "kind": "text",
+      "value": null,
+      "status": "unverified",
+      "how": {
+       "he": "לבדוק בפוליסה אחרי רכישת הביטוח: האם יש הסדר עם בית החולים.",
+       "en": "Check in the policy once insurance is bought: is there an arrangement with this hospital?"
+      }
+     },
+     {
+      "key": "preapproval",
+      "kind": "text",
+      "value": null,
+      "status": "unverified",
+      "how": {
+       "he": "לבדוק בפוליסה או במוקד הביטוח: האם צריך אישור מראש.",
+       "en": "Check the policy or the insurer's line: is approval needed in advance?"
+      }
+     },
+     {
+      "key": "payment",
+      "kind": "text",
+      "value": null,
+      "status": "unverified",
+      "how": {
+       "he": "לבדוק מול הביטוח ובית החולים: תשלום ישיר או החזר.",
+       "en": "Check with the insurer and the hospital: direct billing or refund."
+      }
+     }
+    ]
+   },
+   {
+    "key": "samui",
+    "area": {
+     "he": "קו סמוי",
+     "en": "Koh Samui"
+    },
+    "priority": "high",
+    "fields": [
+     {
+      "key": "name",
+      "kind": "text",
+      "value": "Bangkok Hospital Samui",
+      "status": "verified-official",
+      "source": "bh-dir-south",
+      "checkedAt": "2026-11-22"
+     },
+     {
+      "key": "nameTh",
+      "kind": "text",
+      "value": null,
+      "status": "unverified",
+      "how": {
+       "he": "שם בתאית רק מהאתר הרשמי של בית החולים.",
+       "en": "A Thai name only from the hospital's official site."
+      }
+     },
+     {
+      "key": "site",
+      "kind": "url",
+      "value": "https://www.bangkokhospital.com/en/samui",
+      "status": "verified-official",
+      "source": "bh-dir-south",
+      "checkedAt": "2026-11-22"
+     },
+     {
+      "key": "address",
+      "kind": "address",
+      "value": "57 Moo 3, Taweerat Phadee Rd, Bophud, Koh Samui, Surat Thani 84320 Thailand",
+      "status": "verified-official",
+      "source": "bh-dir-south",
+      "checkedAt": "2026-11-22"
+     },
+     {
+      "key": "phone",
+      "kind": "phone",
+      "value": "+66 77 429 500",
+      "status": "verified-official",
+      "source": "bh-dir-south",
+      "checkedAt": "2026-11-22"
+     },
+     {
+      "key": "er",
+      "kind": "text",
+      "value": {
+       "he": "מיון 24 שעות",
+       "en": "24-hour emergency care"
+      },
+      "status": "verified-official",
+      "source": "bh-samui-er",
+      "checkedAt": "2026-11-22"
+     },
+     {
+      "key": "english",
+      "kind": "text",
+      "value": null,
+      "status": "unverified",
+      "how": {
+       "he": "לבדוק באתר בית החולים או בטלפון: שירות באנגלית או מחלקה בינלאומית.",
+       "en": "Check the hospital site or call: English service or an international department."
+      }
+     },
+     {
+      "key": "insurance",
+      "kind": "text",
+      "value": null,
+      "status": "unverified",
+      "how": {
+       "he": "לבדוק בפוליסה אחרי רכישת הביטוח: האם יש הסדר עם בית החולים.",
+       "en": "Check in the policy once insurance is bought: is there an arrangement with this hospital?"
+      }
+     },
+     {
+      "key": "preapproval",
+      "kind": "text",
+      "value": null,
+      "status": "unverified",
+      "how": {
+       "he": "לבדוק בפוליסה או במוקד הביטוח: האם צריך אישור מראש.",
+       "en": "Check the policy or the insurer's line: is approval needed in advance?"
+      }
+     },
+     {
+      "key": "payment",
+      "kind": "text",
+      "value": null,
+      "status": "unverified",
+      "how": {
+       "he": "לבדוק מול הביטוח ובית החולים: תשלום ישיר או החזר.",
+       "en": "Check with the insurer and the hospital: direct billing or refund."
+      }
+     }
+    ]
+   },
+   {
+    "key": "krabi",
+    "area": {
+     "he": "קראבי",
+     "en": "Krabi"
+    },
+    "priority": "normal",
+    "fields": [
+     {
+      "key": "name",
+      "kind": "text",
+      "value": null,
+      "status": "unverified",
+      "how": {
+       "he": "שם באנגלית: לבדוק בגרסה האנגלית של האתר הרשמי.",
+       "en": "English name: check the English version of the official site."
+      }
+     },
+     {
+      "key": "nameTh",
+      "kind": "text",
+      "value": "โรงพยาบาลกระบี่นครินทร์ อินเตอร์เนชั่นแนล",
+      "status": "verified-official",
+      "source": "krabi-nakharin",
+      "checkedAt": "2026-11-22"
+     },
+     {
+      "key": "site",
+      "kind": "url",
+      "value": "https://www.krabinakharin.co.th/",
+      "status": "verified-official",
+      "source": "krabi-nakharin",
+      "checkedAt": "2026-11-22"
+     },
+     {
+      "key": "address",
+      "kind": "address",
+      "value": null,
+      "status": "unverified",
+      "how": {
+       "he": "כתובת באנגלית: לבדוק באתר הרשמי.",
+       "en": "Address in English: check the official site."
+      }
+     },
+     {
+      "key": "addressTh",
+      "kind": "address",
+      "value": "เลขที่ 1 ถ.พิศาลภพ ต.ปากน้ำ อ.เมือง จ.กระบี่ 81000",
+      "status": "verified-official",
+      "source": "krabi-nakharin",
+      "checkedAt": "2026-11-22"
+     },
+     {
+      "key": "phone",
+      "kind": "phone",
+      "value": "075-626-555",
+      "status": "verified-official",
+      "source": "krabi-nakharin",
+      "checkedAt": "2026-11-22"
+     },
+     {
+      "key": "hours",
+      "kind": "text",
+      "value": {
+       "he": "פתוח 24 שעות (כך כתוב בכותרת האתר הרשמי)",
+       "en": "Open 24 hours (as the official site's title says)"
+      },
+      "status": "verified-official",
+      "source": "krabi-nakharin",
+      "checkedAt": "2026-11-22"
+     },
+     {
+      "key": "er",
+      "kind": "text",
+      "value": null,
+      "status": "unverified",
+      "how": {
+       "he": "לבדוק באתר בית החולים או בטלפון: מיון ושעות פעילות.",
+       "en": "Check the hospital site or call: emergency room and hours."
+      }
+     },
+     {
+      "key": "english",
+      "kind": "text",
+      "value": null,
+      "status": "unverified",
+      "how": {
+       "he": "לבדוק באתר בית החולים או בטלפון: שירות באנגלית או מחלקה בינלאומית.",
+       "en": "Check the hospital site or call: English service or an international department."
+      }
+     },
+     {
+      "key": "insurance",
+      "kind": "text",
+      "value": null,
+      "status": "unverified",
+      "how": {
+       "he": "לבדוק בפוליסה אחרי רכישת הביטוח: האם יש הסדר עם בית החולים.",
+       "en": "Check in the policy once insurance is bought: is there an arrangement with this hospital?"
+      }
+     },
+     {
+      "key": "preapproval",
+      "kind": "text",
+      "value": null,
+      "status": "unverified",
+      "how": {
+       "he": "לבדוק בפוליסה או במוקד הביטוח: האם צריך אישור מראש.",
+       "en": "Check the policy or the insurer's line: is approval needed in advance?"
+      }
+     },
+     {
+      "key": "payment",
+      "kind": "text",
+      "value": null,
+      "status": "unverified",
+      "how": {
+       "he": "לבדוק מול הביטוח ובית החולים: תשלום ישיר או החזר.",
+       "en": "Check with the insurer and the hospital: direct billing or refund."
+      }
+     }
+    ]
+   },
+   {
+    "key": "koh-phangan",
+    "area": {
+     "he": "קופנגן (רק אם במסלול)",
+     "en": "Koh Phangan (only if on the route)"
+    },
+    "priority": "normal",
+    "fields": [
+     {
+      "key": "name",
+      "kind": "text",
+      "value": "Phangan International Hospital",
+      "status": "verified-official",
+      "source": "bh-phangan",
+      "checkedAt": "2026-11-22"
+     },
+     {
+      "key": "nameTh",
+      "kind": "text",
+      "value": null,
+      "status": "unverified",
+      "how": {
+       "he": "שם בתאית רק מהאתר הרשמי של בית החולים.",
+       "en": "A Thai name only from the hospital's official site."
+      }
+     },
+     {
+      "key": "site",
+      "kind": "url",
+      "value": "https://www.bangkokhospital.com/en/samui/branch/phangan-international-hospital",
+      "status": "verified-official",
+      "source": "bh-phangan",
+      "checkedAt": "2026-11-22"
+     },
+     {
+      "key": "address",
+      "kind": "address",
+      "value": "1/17 Moo 1 Baan Tai, Koh Phangan, Suratthani, Thailand 84280",
+      "status": "verified-official",
+      "source": "bh-phangan",
+      "checkedAt": "2026-11-22"
+     },
+     {
+      "key": "phone",
+      "kind": "phone",
+      "value": "077-429-559",
+      "status": "verified-official",
+      "source": "bh-phangan",
+      "checkedAt": "2026-11-22"
+     },
+     {
+      "key": "hours",
+      "kind": "text",
+      "value": {
+       "he": "פתוח 24 שעות",
+       "en": "Open 24 hours"
+      },
+      "status": "verified-official",
+      "source": "bh-phangan",
+      "checkedAt": "2026-11-22"
+     },
+     {
+      "key": "er",
+      "kind": "text",
+      "value": null,
+      "status": "unverified",
+      "how": {
+       "he": "לבדוק באתר בית החולים או בטלפון: מיון ושעות פעילות.",
+       "en": "Check the hospital site or call: emergency room and hours."
+      }
+     },
+     {
+      "key": "english",
+      "kind": "text",
+      "value": null,
+      "status": "unverified",
+      "how": {
+       "he": "לבדוק באתר בית החולים או בטלפון: שירות באנגלית או מחלקה בינלאומית.",
+       "en": "Check the hospital site or call: English service or an international department."
+      }
+     },
+     {
+      "key": "insurance",
+      "kind": "text",
+      "value": null,
+      "status": "unverified",
+      "how": {
+       "he": "לבדוק בפוליסה אחרי רכישת הביטוח: האם יש הסדר עם בית החולים.",
+       "en": "Check in the policy once insurance is bought: is there an arrangement with this hospital?"
+      }
+     },
+     {
+      "key": "preapproval",
+      "kind": "text",
+      "value": null,
+      "status": "unverified",
+      "how": {
+       "he": "לבדוק בפוליסה או במוקד הביטוח: האם צריך אישור מראש.",
+       "en": "Check the policy or the insurer's line: is approval needed in advance?"
+      }
+     },
+     {
+      "key": "payment",
+      "kind": "text",
+      "value": null,
+      "status": "unverified",
+      "how": {
+       "he": "לבדוק מול הביטוח ובית החולים: תשלום ישיר או החזר.",
+       "en": "Check with the insurer and the hospital: direct billing or refund."
+      }
+     }
+    ]
+   },
+   {
+    "key": "koh-tao",
+    "area": {
+     "he": "קו טאו",
+     "en": "Koh Tao"
+    },
+    "priority": "normal",
+    "fields": [
+     {
+      "key": "name",
+      "kind": "text",
+      "value": null,
+      "status": "unverified",
+      "how": {
+       "he": "לא נמצא אתר רשמי של בית חולים או מרפאה בקו טאו. לבדוק מול הביטוח או מול בית החולים בקו סמוי.",
+       "en": "No official site found for a hospital or clinic on Koh Tao. Check with the insurer or the Samui hospital."
+      }
+     },
+     {
+      "key": "nameTh",
+      "kind": "text",
+      "value": null,
+      "status": "unverified",
+      "how": {
+       "he": "שם בתאית רק מהאתר הרשמי של בית החולים.",
+       "en": "A Thai name only from the hospital's official site."
+      }
+     },
+     {
+      "key": "site",
+      "kind": "url",
+      "value": null,
+      "status": "unverified",
+      "how": {
+       "he": "לבדוק מול מקור רשמי.",
+       "en": "Check an official source."
+      }
+     },
+     {
+      "key": "address",
+      "kind": "address",
+      "value": null,
+      "status": "unverified",
+      "how": {
+       "he": "לבדוק מול מקור רשמי.",
+       "en": "Check an official source."
+      }
+     },
+     {
+      "key": "phone",
+      "kind": "phone",
+      "value": null,
+      "status": "unverified",
+      "how": {
+       "he": "לבדוק מול מקור רשמי.",
+       "en": "Check an official source."
+      }
+     },
+     {
+      "key": "er",
+      "kind": "text",
+      "value": null,
+      "status": "unverified",
+      "how": {
+       "he": "לבדוק באתר בית החולים או בטלפון: מיון ושעות פעילות.",
+       "en": "Check the hospital site or call: emergency room and hours."
+      }
+     },
+     {
+      "key": "english",
+      "kind": "text",
+      "value": null,
+      "status": "unverified",
+      "how": {
+       "he": "לבדוק באתר בית החולים או בטלפון: שירות באנגלית או מחלקה בינלאומית.",
+       "en": "Check the hospital site or call: English service or an international department."
+      }
+     },
+     {
+      "key": "insurance",
+      "kind": "text",
+      "value": null,
+      "status": "unverified",
+      "how": {
+       "he": "לבדוק בפוליסה אחרי רכישת הביטוח: האם יש הסדר עם בית החולים.",
+       "en": "Check in the policy once insurance is bought: is there an arrangement with this hospital?"
+      }
+     },
+     {
+      "key": "preapproval",
+      "kind": "text",
+      "value": null,
+      "status": "unverified",
+      "how": {
+       "he": "לבדוק בפוליסה או במוקד הביטוח: האם צריך אישור מראש.",
+       "en": "Check the policy or the insurer's line: is approval needed in advance?"
+      }
+     },
+     {
+      "key": "payment",
+      "kind": "text",
+      "value": null,
+      "status": "unverified",
+      "how": {
+       "he": "לבדוק מול הביטוח ובית החולים: תשלום ישיר או החזר.",
+       "en": "Check with the insurer and the hospital: direct billing or refund."
+      }
+     }
+    ]
+   },
+   {
+    "key": "phuket-siriroj",
+    "area": {
+     "he": "פוקט (רק אם במסלול)",
+     "en": "Phuket (only if on the route)"
+    },
+    "priority": "normal",
+    "fields": [
+     {
+      "key": "name",
+      "kind": "text",
+      "value": "Bangkok Hospital Siriroj",
+      "status": "verified-official",
+      "source": "bh-dir-south",
+      "checkedAt": "2026-11-22"
+     },
+     {
+      "key": "nameTh",
+      "kind": "text",
+      "value": null,
+      "status": "unverified",
+      "how": {
+       "he": "שם בתאית רק מהאתר הרשמי של בית החולים.",
+       "en": "A Thai name only from the hospital's official site."
+      }
+     },
+     {
+      "key": "site",
+      "kind": "url",
+      "value": "https://www.bangkokhospital.com/en/siriroj",
+      "status": "verified-official",
+      "source": "bh-dir-south",
+      "checkedAt": "2026-11-22"
+     },
+     {
+      "key": "address",
+      "kind": "address",
+      "value": "44 Chaloem Phrakiat Rama 9 Rd, Wichit, Mueang, Phuket 83000 Thailand",
+      "status": "verified-official",
+      "source": "bh-dir-south",
+      "checkedAt": "2026-11-22"
+     },
+     {
+      "key": "phone",
+      "kind": "phone",
+      "value": "+66 76 361 888",
+      "status": "verified-official",
+      "source": "bh-dir-south",
+      "checkedAt": "2026-11-22"
+     },
+     {
+      "key": "er",
+      "kind": "text",
+      "value": null,
+      "status": "unverified",
+      "how": {
+       "he": "לבדוק באתר בית החולים או בטלפון: מיון ושעות פעילות.",
+       "en": "Check the hospital site or call: emergency room and hours."
+      }
+     },
+     {
+      "key": "english",
+      "kind": "text",
+      "value": null,
+      "status": "unverified",
+      "how": {
+       "he": "לבדוק באתר בית החולים או בטלפון: שירות באנגלית או מחלקה בינלאומית.",
+       "en": "Check the hospital site or call: English service or an international department."
+      }
+     },
+     {
+      "key": "insurance",
+      "kind": "text",
+      "value": null,
+      "status": "unverified",
+      "how": {
+       "he": "לבדוק בפוליסה אחרי רכישת הביטוח: האם יש הסדר עם בית החולים.",
+       "en": "Check in the policy once insurance is bought: is there an arrangement with this hospital?"
+      }
+     },
+     {
+      "key": "preapproval",
+      "kind": "text",
+      "value": null,
+      "status": "unverified",
+      "how": {
+       "he": "לבדוק בפוליסה או במוקד הביטוח: האם צריך אישור מראש.",
+       "en": "Check the policy or the insurer's line: is approval needed in advance?"
+      }
+     },
+     {
+      "key": "payment",
+      "kind": "text",
+      "value": null,
+      "status": "unverified",
+      "how": {
+       "he": "לבדוק מול הביטוח ובית החולים: תשלום ישיר או החזר.",
+       "en": "Check with the insurer and the hospital: direct billing or refund."
+      }
+     }
+    ]
+   },
+   {
+    "key": "chiang-mai",
+    "area": {
+     "he": "צ'אנג מאי (לא במסלול)",
+     "en": "Chiang Mai (not on the route)"
+    },
+    "priority": "low",
+    "fields": [
+     {
+      "key": "name",
+      "kind": "text",
+      "value": "Nakornping Hospital",
+      "status": "verified-official",
+      "source": "nakornping",
+      "checkedAt": "2026-11-22"
+     },
+     {
+      "key": "nameTh",
+      "kind": "text",
+      "value": "โรงพยาบาลนครพิงค์",
+      "status": "verified-official",
+      "source": "nakornping",
+      "checkedAt": "2026-11-22"
+     },
+     {
+      "key": "site",
+      "kind": "url",
+      "value": "https://www.nkp-hospital.go.th/",
+      "status": "verified-official",
+      "source": "nakornping",
+      "checkedAt": "2026-11-22"
+     },
+     {
+      "key": "address",
+      "kind": "address",
+      "value": null,
+      "status": "unverified",
+      "how": {
+       "he": "כתובת באנגלית: לבדוק באתר הרשמי.",
+       "en": "Address in English: check the official site."
+      }
+     },
+     {
+      "key": "addressTh",
+      "kind": "address",
+      "value": "159 หมู่ที่ 10 ถนนโชตนา ตำบลดอนแก้ว อำเภอแม่ริม จังหวัดเชียงใหม่ 50180",
+      "status": "verified-official",
+      "source": "nakornping",
+      "checkedAt": "2026-11-22"
+     },
+     {
+      "key": "phone",
+      "kind": "phone",
+      "value": "053-999-200",
+      "status": "verified-official",
+      "source": "nakornping",
+      "checkedAt": "2026-11-22"
+     },
+     {
+      "key": "er",
+      "kind": "text",
+      "value": null,
+      "status": "unverified",
+      "how": {
+       "he": "לבדוק באתר בית החולים או בטלפון: מיון ושעות פעילות.",
+       "en": "Check the hospital site or call: emergency room and hours."
+      }
+     },
+     {
+      "key": "english",
+      "kind": "text",
+      "value": null,
+      "status": "unverified",
+      "how": {
+       "he": "לבדוק באתר בית החולים או בטלפון: שירות באנגלית או מחלקה בינלאומית.",
+       "en": "Check the hospital site or call: English service or an international department."
+      }
+     },
+     {
+      "key": "insurance",
+      "kind": "text",
+      "value": null,
+      "status": "unverified",
+      "how": {
+       "he": "לבדוק בפוליסה אחרי רכישת הביטוח: האם יש הסדר עם בית החולים.",
+       "en": "Check in the policy once insurance is bought: is there an arrangement with this hospital?"
+      }
+     },
+     {
+      "key": "preapproval",
+      "kind": "text",
+      "value": null,
+      "status": "unverified",
+      "how": {
+       "he": "לבדוק בפוליסה או במוקד הביטוח: האם צריך אישור מראש.",
+       "en": "Check the policy or the insurer's line: is approval needed in advance?"
+      }
+     },
+     {
+      "key": "payment",
+      "kind": "text",
+      "value": null,
+      "status": "unverified",
+      "how": {
+       "he": "לבדוק מול הביטוח ובית החולים: תשלום ישיר או החזר.",
+       "en": "Check with the insurer and the hospital: direct billing or refund."
+      }
+     }
+    ]
+   }
+  ]
+ },
+ "phrases": {
+  "status": "hidden",
+  "items": [],
+  "note": {
+   "he": "משפטים בתאית יוצגו רק ממקור אמין שמצוין לידם. עדיין לא נבדק מקור כזה.",
+   "en": "Thai phrases are shown only from a named, reliable source. None has been checked yet."
+  }
+ },
+ "conduct": {
+  "status": "hidden",
+  "items": [],
+  "note": {
+   "he": "כללי התנהגות יוצגו רק ממקור אמין שמצוין לידם. עדיין לא נבדק מקור כזה.",
+   "en": "Conduct rules are shown only from a named, reliable source. None has been checked yet."
+  }
+ }
+}

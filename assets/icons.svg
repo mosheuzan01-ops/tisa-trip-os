@@ -36,4 +36,6 @@
   <symbol id="i-next" viewBox="0 0 24 24"><path d="M9.5 5.5 15.5 12l-6 6.5"/></symbol>
   <symbol id="i-prev" viewBox="0 0 24 24"><path d="M14.5 5.5 8.5 12l6 6.5"/></symbol>
   <symbol id="i-summary" viewBox="0 0 24 24"><path d="M4.5 20V10M10 20V4.5M15.5 20v-7M21 20H3"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><path d="M7.2 3.5h2.6l1.4 4.2-2 1.4a11.5 11.5 0 0 0 5.7 5.7l1.4-2 4.2 1.4v2.6a2.2 2.2 0 0 1-2.2 2.2A15.8 15.8 0 0 1 5 5.7a2.2 2.2 0 0 1 2.2-2.2z"/></symbol>
+  <symbol id="i-sos" viewBox="0 0 24 24"><path d="M12 3.8 21 19.5H3z"/><path d="M12 9.5v4.5M12 16.6v.4"/></symbol>
 </svg>
