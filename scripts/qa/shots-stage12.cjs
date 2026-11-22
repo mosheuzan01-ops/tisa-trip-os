@@ -14,7 +14,9 @@ const PHASE = process.env.PHASE ?? 'after';
 const PORT = Number(process.env.PORT ?? 8171);
 const BASE = `http://127.0.0.1:${PORT}/`;
 const VIEWS = { mobile: { width: 390, height: 844 }, desktop: { width: 1280, height: 900 } };
-const SCREENS = ['money', 'itinerary', 'checklist', 'info', 'settings'];
+// ONLY=checklist,smart-bag limits the screens (and skips the place dialog); PR 2 uses PHASE=pr2-after.
+const ONLY = (process.env.ONLY ?? '').split(',').filter(Boolean);
+const SCREENS = ONLY.length ? ONLY : ['money', 'itinerary', 'checklist', 'info', 'settings'];
 const EXTRA = (process.env.SCREENS ?? '').split(',').filter(Boolean);
 
 (async () => {
@@ -40,6 +42,7 @@ const EXTRA = (process.env.SCREENS ?? '').split(',').filter(Boolean);
           await page.screenshot({ path: path.join(OUT, file), fullPage: false, type: 'jpeg', quality: 80 });
           made.push(file);
         }
+        if (ONLY.length) { await ctx.close(); continue; }
         // the place dialog (planned day / visited date)
         await page.goto(`${BASE}#/places`);
         await page.waitForFunction(() => !document.querySelector('#panel-places')?.hidden);

@@ -517,6 +517,9 @@
         <button class="btn btn-ghost itin-transfers-link" type="button" data-go="luggage">
           <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-bag"/></svg><span data-i18n="lug.open">משקל מזוודה</span>
         </button>
+        <button class="btn btn-ghost itin-transfers-link" type="button" data-go="smart-bag">
+          <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-bag"/></svg><span data-i18n="sbag.open">מזוודה חכמה: הצעות לאריזה</span>
+        </button>
 
         <div class="lists-body">
           <div class="filter-bar" data-slot="lists-bar">
@@ -802,6 +805,48 @@
       </section>
 
       <!-- ASSISTANT (0.5.4): rule-based, from the user's own data only. A full AI chat is a future version. -->
+      <!-- Stage 12 PR 2: smart suitcase (src/js/smart-bag-view.js), opened from the lists -->
+      <section class="panel smart-bag" id="panel-smart-bag" role="tabpanel" aria-labelledby="smart-bag-title" hidden>
+        <div class="itin-head">
+          <h1 class="display" id="smart-bag-title" tabindex="-1" data-i18n="sbag.title">מזוודה חכמה</h1>
+          <p class="muted" data-i18n="sbag.lead">הצעות בלבד, לפי הימים, היעדים והפעילויות. שום דבר לא נוסף לרשימות בלי לחיצה.</p>
+        </div>
+        <section class="card surface sbag-trip" aria-labelledby="sbag-trip-title">
+          <h2 class="tool-title" id="sbag-trip-title" data-i18n="sbag.trip">לפי הטיול</h2>
+          <p data-slot="sbag-days"></p>
+          <p data-slot="sbag-kinds" hidden></p>
+          <p class="muted" data-slot="sbag-unclassified" hidden></p>
+        </section>
+        <fieldset class="card surface sbag-acts">
+          <legend class="tool-title sbag-legend" data-i18n="sbag.activities">פעילויות</legend>
+          <div class="sbag-chips" data-slot="sbag-activities"></div>
+        </fieldset>
+        <section class="card surface sbag-group" aria-labelledby="sbag-must-title">
+          <div class="money-card-head">
+            <h2 class="tool-title" id="sbag-must-title" tabindex="-1" data-i18n="sbag.must">חובה</h2>
+            <button class="btn btn-primary btn-small" type="button" data-action="sbag-add-all">
+              <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-plus"/></svg><span data-i18n="sbag.addAll">להוסיף את כל החובה</span>
+            </button>
+          </div>
+          <ul class="sbag-list" data-slot="sbag-must"></ul>
+          <p class="muted" data-slot="sbag-must-none" data-i18n="sbag.none" hidden>אין הצעות כאן. מה שמתאים כבר ברשימות.</p>
+        </section>
+        <section class="card surface sbag-group" aria-labelledby="sbag-nice-title">
+          <h2 class="tool-title" id="sbag-nice-title" tabindex="-1" data-i18n="sbag.nice">רצוי</h2>
+          <ul class="sbag-list" data-slot="sbag-nice"></ul>
+          <p class="muted" data-slot="sbag-nice-none" data-i18n="sbag.none" hidden>אין הצעות כאן. מה שמתאים כבר ברשימות.</p>
+        </section>
+        <section class="card surface sbag-group" aria-labelledby="sbag-avoid-title">
+          <h2 class="tool-title" id="sbag-avoid-title" tabindex="-1" data-i18n="sbag.avoid">לא כדאי</h2>
+          <ul class="sbag-list" data-slot="sbag-avoid"></ul>
+          <p class="muted" data-slot="sbag-avoid-none" data-i18n="sbag.noneAvoid" hidden>אין כאן כלום.</p>
+        </section>
+        <p class="muted" data-i18n="sbag.where">מה שמוסיפים נכנס לרשימות, לפס "מזוודה" או "תיק יד". שם אפשר לערוך כמות ולסמן כשהפריט מוכן.</p>
+        <button class="btn btn-ghost itin-transfers-link" type="button" data-go="checklist">
+          <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-list"/></svg><span data-i18n="sbag.toLists">לרשימות</span>
+        </button>
+      </section>
+
       <section class="panel assistant" id="panel-assistant" role="tabpanel" aria-labelledby="assistant-title" hidden>
         <div class="itin-head">
           <h1 class="display" id="assistant-title" data-i18n="ast.title">עוזר</h1>

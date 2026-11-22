@@ -140,7 +140,7 @@ test('v6: real v5 data migrates with nothing lost; archive and category fields a
   const a = before.trips.t;
   const b = out.trips.t;
   for (const k of Object.keys(a)) if (k !== 'budget') assert.deepEqual(b[k], a[k], k);
-  assert.deepEqual(Object.keys(b).filter((k) => !(k in a)).sort(), ['archive', 'places', 'templateOffer'], 'only additions (places: Stage 10)');
+  assert.deepEqual(Object.keys(b).filter((k) => !(k in a)).sort(), ['archive', 'places', 'smartBag', 'templateOffer'], 'only additions (places: Stage 10, smartBag: Stage 12)');
   assert.deepEqual({ ...b.budget, categoryNames: undefined, hidden: undefined }, { ...a.budget, categoryNames: undefined, hidden: undefined });
   assert.deepEqual(b.budget.categoryNames, {});
   assert.deepEqual(b.budget.hidden, []);

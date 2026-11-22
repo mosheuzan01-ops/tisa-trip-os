@@ -1106,3 +1106,23 @@ body::before {
 .sheet .tip-btn:hover, .sheet .tip-btn[aria-expanded="true"] { color: var(--on-dmetal); }
 .tip-sheet .tip-text { color: var(--on-dmetal); }
 /* end Stage 12: info button */
+
+/* Stage 12 PR 2: smart suitcase (own class names, rule 14; tokens only) */
+.sbag-acts { min-width: 0; }
+.sbag-legend { float: inline-start; width: 100%; padding: 0; margin-block-end: var(--space-3); }
+.sbag-legend + * { clear: both; }
+.sbag-chips { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.sbag-chip {
+  display: inline-flex; align-items: center; gap: var(--space-2); min-height: var(--tap); padding: 0 var(--space-3);
+  border: 1px solid var(--line); border-radius: 999px; background: var(--surface); color: var(--ink); cursor: pointer;
+}
+.sbag-chip:has(input:checked) { border-color: var(--line-strong); background: var(--surface-2); font-weight: 700; }
+.sbag-chip input { width: 20px; height: 20px; accent-color: var(--accent); }
+.sbag-list { display: grid; gap: var(--space-2); list-style: none; padding: 0; margin: 0; }
+.sbag-item { display: grid; gap: var(--space-1); padding-block: var(--space-2); border-top: 1px solid var(--line); }
+.sbag-item:first-child { border-top: 0; }
+.sbag-item-top { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); }
+.sbag-item-name { font-weight: 600; color: var(--ink); }
+.sbag-item-note { color: var(--muted); }
+.sbag-add { justify-self: start; }
+/* end Stage 12 PR 2 */
