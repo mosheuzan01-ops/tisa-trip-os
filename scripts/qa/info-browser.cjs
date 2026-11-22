@@ -65,7 +65,7 @@ async function open(browser, { route = 'home', viewport = MOBILE, extra = {}, sw
     const want = ['tel:1669', 'tel:191', 'tel:199', 'tel:1155', 'tel:1672'];
     pass('J2 emergency: exactly the five verified numbers, each with a tel: link, a copy button, its source and check date; 1155 (not 1151)',
       rows.length === 5 && rows.every((r) => r.status === 'verified-official' && r.copy && /מקור:/.test(r.src) && /22\.11\.2026/.test(r.src) && /https:\/\//.test(r.src))
-      && JSON.stringify(rows.map((r) => r.href)) === JSON.stringify(want) && !(await a.page.content()).includes('1151'), { rows });
+      && JSON.stringify(rows.map((r) => r.href)) === JSON.stringify(want) && !(await a.page.locator('#panel-info').innerText()).includes('1151'), { rows }); // visible text only: random ids in the HTML can hold "1151" (Stage 12)
     const dialNote = await a.page.locator('#panel-info .info-dial-note').innerText();
     pass('J3 the screen explains that calling needs a phone signal and is not guaranteed in airplane mode', /קליטה/.test(dialNote) && /מצב טיסה/.test(dialNote), { dialNote });
     if (SHOTS) await a.page.screenshot({ path: `${OUT}/after-info-mobile-light-top.png` });
