@@ -3,6 +3,7 @@
 // Waits for UI state (rule 6). Run 3 times before PASS. QA_OUT for reruns (rule 10).
 // Run from the repo root: node scripts/qa/transfers-browser.cjs   (port 8081)
 const { chromium } = require('playwright');
+const { openMoneyDetails } = require('./lib/money-details.cjs');
 const { blankTrip } = require('./lib/blank-trip.cjs');
 const { spawn } = require('node:child_process');
 const fs = require('node:fs');
@@ -46,6 +47,7 @@ async function fill(page, o) {
     await page.click('[data-action="seed-confirm"]');
     await closed(page, '#dlg-seed');
     await page.click('[data-tab="budget"]');
+    await openMoneyDetails(page); // 1.0.1: inside "details"
     await page.click('[data-slot="money-empty"] [data-action="profile-open"]');
     await page.locator('#dlg-profile details.profile-archive').evaluate((d) => { d.open = true; }); await page.check('#dlg-profile input[value="realistic"]');
     await page.click('#dlg-profile [type="submit"]');
