@@ -1,0 +1,19 @@
+PASS  G1 itinerary -> saved places; the itinerary tab stays lit; empty state; no location asked and no map opened on load
+PASS  G2 add: name, category, status, exact coordinates, address, stop, planned day and note saved as typed; visit date empty
+PASS  G2b adding a place with a planned day changes no dates, stops, expenses or budget
+PASS  G3 empty name and bad coordinates are refused with messages; nothing saved
+PASS  G4 edit to "visited": visit date stays empty and the planned day stays; a typed visit date is kept apart
+PASS  G5 views "want" and "visited" (loved counts as visited), filters by category, stop and status, text search, "no results"
+PASS  G6 390px: no sideways scroll on the places screen
+PASS  G7 Google Maps: only the place with coordinates has the button; one tap opens one link built from its coordinates; no outside request
+PASS  G8 delete asks first: "cancel" keeps it, "yes" removes only that place
+PASS  G9 reload: the places are kept
+PASS  G10 location allowed: no reading on load; one reading per tap with a time limit; coordinates and accuracy shown; nothing saved until "save"; map from the reading
+PASS  G10b "my location" in the form fills the field and says it is not saved yet; cancel saves nothing
+PASS  G11 permission refused: a calm message with how to allow it and the typing option; no save button; nothing saved
+PASS  G12 no signal / airplane mode, timeout and no support each get their own calm message; offline a place can still be added by hand
+PASS  G13 v5 sample data: schema 7, places empty, every old list kept exactly, the old text kept once
+PASS  G14 desktop: no sideways scroll; every field has a name
+PASS  G14b 390px: the dialog has no sideways scroll
+PASS  G15 airplane mode (service worker): places files cached; the screen opens offline and a place is saved; the map button is still there (it needs the network only when tapped)
+PASS  no JS errors, no outside requests

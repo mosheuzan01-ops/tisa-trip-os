@@ -216,6 +216,10 @@ h2, .section-title { font-size: var(--text-h3); font-weight: 700; line-height: 1
 .btn .icon { width: 20px; height: 20px; }
 .btn:hover { filter: brightness(1.05); }
 .btn:active { transform: scale(.97); }
+/* 0.9.1 QA gate: a ghost button outside a card had no colors of its own and got the browser's gray (4.498:1 in dark).
+   Base look on the page; cards, sheets and the setup card keep their own rules below (higher specificity). */
+.btn-ghost { background: var(--surface); color: var(--ink); border-color: var(--line-strong); }
+.btn-ghost:hover { background: var(--surface-2); }
 .setup .btn-ghost { background: transparent; color: var(--on-dmetal); border-color: var(--on-dmetal-muted); }
 .setup :focus-visible { outline-color: var(--metal-4); }
 

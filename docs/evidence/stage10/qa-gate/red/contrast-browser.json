@@ -1,0 +1,75 @@
+{
+  "light: every text button outside a card reaches its contrast (4.5:1, large text 3:1)": {
+    "result": "PASS",
+    "measured": 17,
+    "low": [],
+    "onImage": []
+  },
+  "dark: every text button outside a card reaches its contrast (4.5:1, large text 3:1)": {
+    "result": "FAIL",
+    "measured": 17,
+    "low": [
+      {
+        "route": "checklist",
+        "label": "luggage: \"משקל מזוודה\"",
+        "ratio": 4.498,
+        "need": 4.5,
+        "bg": "rgb(107, 107, 107)"
+      },
+      {
+        "route": "transfers",
+        "label": "flights-import: \"ייבוא טיסות\"",
+        "ratio": 4.498,
+        "need": 4.5,
+        "bg": "rgb(107, 107, 107)"
+      },
+      {
+        "route": "itinerary",
+        "label": "transfers: \"טיסות ומעברים\"",
+        "ratio": 4.498,
+        "need": 4.5,
+        "bg": "rgb(107, 107, 107)"
+      },
+      {
+        "route": "itinerary",
+        "label": "calendar: \"לוח שנה\"",
+        "ratio": 4.498,
+        "need": 4.5,
+        "bg": "rgb(107, 107, 107)"
+      },
+      {
+        "route": "itinerary",
+        "label": "photos: \"תמונות\"",
+        "ratio": 4.498,
+        "need": 4.5,
+        "bg": "rgb(107, 107, 107)"
+      },
+      {
+        "route": "itinerary",
+        "label": "places: \"מקומות שמורים\"",
+        "ratio": 4.498,
+        "need": 4.5,
+        "bg": "rgb(107, 107, 107)"
+      },
+      {
+        "route": "itinerary",
+        "label": "summary: \"סיכום הטיול\"",
+        "ratio": 4.498,
+        "need": 4.5,
+        "bg": "rgb(107, 107, 107)"
+      },
+      {
+        "route": "places",
+        "label": "places-import: \"ייבוא קובץ מקומות\"",
+        "ratio": 4.498,
+        "need": 4.5,
+        "bg": "rgb(107, 107, 107)"
+      }
+    ],
+    "onImage": []
+  },
+  "no JS errors": {
+    "result": "PASS",
+    "errors": []
+  }
+}
