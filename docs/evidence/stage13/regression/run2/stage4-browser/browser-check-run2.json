@@ -41,15 +41,17 @@
       "paid": 22335,
       "planned": 250000,
       "committed": 120000,
-      "free": 1174715
+      "reserved": 390000,
+      "free": 784715
     },
     "shown": {
       "paid": 22335,
       "planned": 250000,
       "committed": 120000,
       "total": 1567050,
-      "free": 1174715,
-      "big": 1174715
+      "free": 784715,
+      "big": 784715,
+      "reserved": 390000
     },
     "total": 1567050
   },
@@ -122,7 +124,7 @@
     "result": "PASS",
     "wiped": {
       "expenses": 0,
-      "destinations": 0
+      "destinations": 7
     },
     "same": {
       "destinations": true,
@@ -134,23 +136,23 @@
   "S4-5": {
     "result": "PASS",
     "before": {
-      "money": "פנוי היום: ‏509 ‏₪",
-      "home": "פנוי היום: ‏509 ‏₪",
+      "money": "פנוי היום: ‏379 ‏₪",
+      "home": "פנוי היום: ‏379 ‏₪",
       "ok": true
     },
     "middle": {
-      "money": "פנוי היום: ‏1,018 ‏₪",
-      "home": "פנוי היום: ‏1,018 ‏₪",
+      "money": "פנוי היום: ‏758 ‏₪",
+      "home": "פנוי היום: ‏758 ‏₪",
       "ok": true
     },
     "last-day": {
-      "money": "פנוי היום: ‏15,270 ‏₪",
-      "home": "פנוי היום: ‏15,270 ‏₪",
+      "money": "פנוי היום: ‏11,370 ‏₪",
+      "home": "פנוי היום: ‏11,370 ‏₪",
       "ok": true
     },
     "bangkok-midnight": {
-      "money": "פנוי היום: ‏15,270 ‏₪",
-      "home": "פנוי היום: ‏15,270 ‏₪",
+      "money": "פנוי היום: ‏11,370 ‏₪",
+      "home": "פנוי היום: ‏11,370 ‏₪",
       "ok": true
     },
     "after": {

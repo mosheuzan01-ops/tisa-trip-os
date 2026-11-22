@@ -24,18 +24,18 @@
   "S51-5 totals unchanged (mobile)": {
     "result": "PASS",
     "t0": {
-      "after": "‏12,575 ‏₪",
-      "before": "פנוי לפני התכנון: ‏12,575 ‏₪"
+      "after": "‏8,675 ‏₪",
+      "before": "פנוי לפני התכנון: ‏8,675 ‏₪"
     },
     "t1": {
-      "after": "‏12,575 ‏₪",
-      "before": "פנוי לפני התכנון: ‏12,575 ‏₪"
+      "after": "‏8,675 ‏₪",
+      "before": "פנוי לפני התכנון: ‏8,675 ‏₪"
     }
   },
   "S51-6 money sticky (mobile)": {
     "result": "PASS",
     "moneySticky": {
-      "scrollY": 4277,
+      "scrollY": 4311,
       "barTop": 0,
       "barBottom": 142,
       "inView": true,
@@ -124,18 +124,18 @@
   "S51-5 totals unchanged (desktop)": {
     "result": "PASS",
     "t0": {
-      "after": "‏12,575 ‏₪",
-      "before": "פנוי לפני התכנון: ‏12,575 ‏₪"
+      "after": "‏8,675 ‏₪",
+      "before": "פנוי לפני התכנון: ‏8,675 ‏₪"
     },
     "t1": {
-      "after": "‏12,575 ‏₪",
-      "before": "פנוי לפני התכנון: ‏12,575 ‏₪"
+      "after": "‏8,675 ‏₪",
+      "before": "פנוי לפני התכנון: ‏8,675 ‏₪"
     }
   },
   "S51-6 money sticky (desktop)": {
     "result": "PASS",
     "moneySticky": {
-      "scrollY": 3837,
+      "scrollY": 3871,
       "barTop": 0,
       "barBottom": 142,
       "inView": true,

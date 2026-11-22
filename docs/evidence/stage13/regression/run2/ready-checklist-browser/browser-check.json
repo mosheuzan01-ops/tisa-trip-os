@@ -30,7 +30,7 @@
   },
   "R7 settings show where the data lives and what it holds; the iPhone note is there": {
     "result": "PASS",
-    "device": "הנתונים כאן (דפדפן): נוצרו ב-11 בדצמבר 2026 בשעה 05:00. 61 פריטים, 0 תחנות, 0 הוצאות, 0 תמונות."
+    "device": "הנתונים כאן (דפדפן): נוצרו ב-11 בדצמבר 2026 בשעה 05:00. 61 פריטים, 7 תחנות, 0 הוצאות, 0 תמונות."
   },
   "R8 old data: the card offers the missing items and nothing is changed before yes": {
     "result": "PASS",

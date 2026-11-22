@@ -6,7 +6,7 @@
   "G2 add: name, category, status, exact coordinates, address, stop, planned day and note saved as typed; visit date empty": {
     "result": "PASS",
     "place": {
-      "id": "d56717d0-2dcb-4bcf-b388-f600bdd2020e",
+      "id": "312ad6a0-c20c-4520-8a09-9713394bbbe6",
       "name": "שוק לילה לדוגמה",
       "category": "market",
       "status": "want",
@@ -14,7 +14,7 @@
       "lng": "100.50180",
       "address": "רחוב לדוגמה 1",
       "note": "לבוא בערב",
-      "stopId": "cf6e6fd4-1be2-499d-9806-13a87a1506b1",
+      "stopId": "143e5a0e-247d-44a0-b104-945bd4ac4df6",
       "plannedDate": "2030-12-22",
       "visitedDate": null,
       "photoIds": [],

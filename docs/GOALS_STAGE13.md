@@ -104,15 +104,15 @@
 ## תוצאות (2026-11-22, 1.0.0)
 | # | בדיקה | תוצאה | ראיה |
 |---|---|---|---|
-| 1 | `npm test` × 3 | **PASS:** 429/429 בכל ריצה | `docs/evidence/stage13/regression/run*/npm-test.txt` |
-| 2 | 36 סקריפטי דפדפן × 3 | **PASS:** ‏108/108, ‏exit 0 בכולם, ואף FAIL בקובצי התוצאה | `regression/summary.log`, ‏`regression/run*/` |
+| 1 | `npm test` × 3 | **PASS:** 443/443 בכל ריצה. אחרי תיקון B14: עוד 3 ריצות, 443/443 | `docs/evidence/stage13/regression/run*/npm-test.txt`, ‏`regression/stage2-rerun/` |
+| 2 | 36 סקריפטי דפדפן × 3 | **PASS:** ‏108/108 עם exit 0. בקובצי התוצאה נמצא FAIL אחד בלבד: B14 ב-stage2 (מפורט מתחת לטבלה) | `regression/summary.log`, ‏`regression/run*/`, ‏`regression/stage2-rerun/` |
 | 3 | 14 מסכים × 4 רוחבים × 2 מצבים | **PASS:** 12/12 (W) | `browser/layout-browser.json`, צילומים ב-`browser/layout/` (390 ו-1440) |
 | 4 | ניגודיות | **PASS** | `regression/run*/contrast-browser/` |
 | 5 | שמות נגישים | **PASS:** ‏138 שדות, 4 שדות קובץ מוסתרים ידועים | `regression/run*/a11y-names-browser/` |
 | 6 | מקלדת | **PASS:** ‏38/38 דיאלוגים, ‏K1 עד K3 | `browser/keyboard-browser.json` |
 | 7 | סורק סטטי | **FAIL 0 (אחרי KNOWN), WARN 3.** ה-FAIL הם 4 ה-KNOWN של כלל 7: ‏h1, ‏`#/home`, ‏`#/settings`, ושדות עטופים ב-label (`a11y-names` עבר באותה ריצה). WARN: ‏W2 ו-reduced-motion (KNOWN), ותמונות בלי lazy בתוך חלונות | `regression/run*/qa-scan-index.txt` |
 | 8 | קבצים ומטמון | **PASS** (B9) | `npm test` |
-| 9 | ביצועים במחשב | **PASS:** ‏LCP ‏312 עד 388ms, ‏CLS 0 (היה 0.397), ‏68 בקשות, ‏155 עד 166KB. **PageSpeed: NOT CHECKED** | `browser/release-browser.json` › R9, red ב-`browser-red-release.txt` |
+| 9 | ביצועים במחשב | **PASS:** ‏LCP ‏248 עד 388ms, ‏CLS 0 (היה 0.397), ‏68 בקשות, 283 עד 289KB. **בכל מסך עם נתונים שמורים (R21): CLS מתחת ל-0.1 ב-14 מתוך 14.** PageSpeed: ‏NOT CHECKED | `browser/release-browser.json` › R9, R21, red ב-`browser-red-release.txt` |
 | 10 | מיגרציה מ-0.7.1 | **PASS:** ‏U1, ‏U4 עד U6 | `browser/upgrade-browser.json` |
 | 11 | עדכון ששומר נתונים | **PASS:** ‏U2, ‏U3, ‏U7, וגם C5 | `browser/upgrade-browser.json`, ‏`regression/run*/stage7-close-browser/` |
 | 12 | PWA | **PASS** (R12). ‏W1 כ-WARN | `browser/release-browser.json` |
@@ -123,4 +123,19 @@
 | 17 | גרסה | **PASS:** ‏1.0.0 בכל מקום (R17, ‏S13-3) | |
 | 18 | פרטיות | **PASS** (R18, ‏PR-1 עד PR-5). אין בקשות החוצה בשום סקריפט | `browser/privacy-settings-mobile.jpg` |
 
-**לפני ואחרי:** `docs/evidence/stage13/shots/`, הבית וההגדרות, 390 ו-1440, בהיר וכהה. מסך הבית הסופי זהה. בהגדרות נוספו שני החלונות המתקפלים.
+**B14 (stage2), נמצא ברגרסיה:** בשלוש הריצות B14 נכשלה, כי היא ציפתה לטיול בלי תאריכים אחרי איפוס. זה שינוי מכוון: איפוס מתחיל עכשיו מהתאריכים המשותפים.
+- **למה הסיכום לא הראה את זה:** stage2 לא החזיר exit 1 על בדיקה שנכשלה, רק על קריסה. בקובץ התוצאה כתוב FAIL.
+- **התיקון:** ציפייה ל-`2026-12-20` אחרי איפוס, ו-exit 1 על כל בדיקה שנכשלת.
+- **אחרי התיקון:** stage2 רץ שוב 3 פעמים ברצף, עם 12/12 ו-B14 עבר. גם `npm test` ×3 עבר. קוד האפליקציה לא השתנה מאז הרגרסיה (`regression/stage2-rerun/summary.log`).
+- **שאר הסקריפטים:** כולם מחזירים exit 1 על בדיקה שנכשלת. בכל קובצי התוצאה של הרגרסיה אין FAIL אחר.
+
+**תוספת התקציב וההתחלה:**
+| # | בדיקה | תוצאה | ראיה |
+|---|---|---|---|
+| NB, FR | ‏`tests/stage13-budget.test.js`: התחלה חדשה ושריון טיסה (13 בדיקות) | **PASS** (red קודם: 12 מתוך 13 נכשלו על assertion) | `node-red-budget.txt` |
+| R19 | התקנה חדשה: תאריכים משותפים, מסלול של 7 תחנות, צ'ק-ליסט של 61 פריטים, תקציב "—", בלי כרטיס התבנית | **PASS** | `browser/new-install-money-mobile.jpg` |
+| R20 | התבנית ביד: פנוי 15,000, ‏"שמור לטיסה" 5,000, ‏468 ליום. אחרי טיסה של 5,000: פנוי עדיין 15,000 | **PASS** (red: השורה חסרה, והאזהרה הוצגה) | `browser-red-budget.txt` |
+| R21 | ‏CLS בכל מסך, עם נתונים שמורים | **PASS** ‏14/14 | |
+| R-22 | כלל 22: נתוני דוגמה משותפים | **PASS** (red: הסקריפט מ-`4ebf792` נתפס) | `node-red-rule22.txt` |
+
+**לפני ואחרי:** `docs/evidence/stage13/shots/`: הבית, ההגדרות, כסף בהתקנה חדשה, וכסף עם התבנית. 390 ו-1440, בהיר וכהה. מסך הבית הסופי זהה. בהגדרות נוספו שני החלונות המתקפלים. בכסף: התקנה חדשה מציגה "—" ולא 20,000. עם התבנית, "פנוי" ירד מ-19,950 ל-15,000, ונוספה השורה "שמור לטיסה".

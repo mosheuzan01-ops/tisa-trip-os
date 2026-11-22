@@ -73,10 +73,10 @@
   "H9 a photo linked to a place (by id, no copy) joins the slideshow with the place name; no star changed; photos not copied": {
     "result": "PASS",
     "strip": [
-      "5be05648-b2de-4138-aae9-e60a030f9ce5"
+      "ae7e546c-44ec-4eec-b0f5-2c54e92b3350"
     ],
     "note9": "1 תמונות: עם כוכב, ושל מקומות שמורים. עד 12 בסך הכול.",
-    "caption": "22 בנובמבר, לא משויך ליעד. שוק לילה לדוגמה"
+    "caption": "23 בנובמבר, לא משויך ליעד. שוק לילה לדוגמה"
   },
   "H10 10 starred + 5 place photos: 12 in the slideshow (all 10 starred, then the first 2 place photos by date); every star as it was": {
     "result": "PASS",

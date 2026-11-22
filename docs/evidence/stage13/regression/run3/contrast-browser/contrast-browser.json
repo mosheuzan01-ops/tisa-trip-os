@@ -1,7 +1,7 @@
 {
   "light: every text button outside a card reaches its contrast (4.5:1, large text 3:1)": {
     "result": "PASS",
-    "measured": 19,
+    "measured": 20,
     "lowest": {
       "route": "home",
       "label": "home-emergency: \"חירוםמספרים מאומתים, חיוג בלחי\"",
@@ -14,7 +14,7 @@
   },
   "dark: every text button outside a card reaches its contrast (4.5:1, large text 3:1)": {
     "result": "PASS",
-    "measured": 19,
+    "measured": 20,
     "lowest": {
       "route": "home",
       "label": "home-emergency: \"חירוםמספרים מאומתים, חיוג בלחי\"",

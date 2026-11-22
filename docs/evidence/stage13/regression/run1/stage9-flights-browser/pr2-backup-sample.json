@@ -118,7 +118,7 @@
             "note": ""
           },
           {
-            "id": "d0360cca-2e4e-4d96-b544-1247588b7f33",
+            "id": "6a841aae-3127-4d63-9fb2-080e0cb5d35a",
             "amountMinor": 200000,
             "currency": "ILS",
             "rate": 1,
@@ -130,7 +130,7 @@
             "method": "card",
             "status": "committed",
             "note": "",
-            "transferId": "e299201d-4c38-4245-b330-4a8610651237"
+            "transferId": "af9098ea-63c1-4e5a-8f9a-e2fa6e61756f"
           }
         ],
         "people": [],
@@ -169,7 +169,7 @@
             "expenseId": null
           },
           {
-            "id": "e299201d-4c38-4245-b330-4a8610651237",
+            "id": "af9098ea-63c1-4e5a-8f9a-e2fa6e61756f",
             "kind": "flight",
             "from": "א",
             "to": "ב",
@@ -182,7 +182,7 @@
             "link": "",
             "status": "booked",
             "note": "",
-            "expenseId": "d0360cca-2e4e-4d96-b544-1247588b7f33",
+            "expenseId": "6a841aae-3127-4d63-9fb2-080e0cb5d35a",
             "flightNo": "ZZ 201",
             "seat": "3B",
             "seatPriceMinor": 4000,

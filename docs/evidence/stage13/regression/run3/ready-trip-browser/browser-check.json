@@ -1,8 +1,14 @@
 {
-  "T1 fresh install: plan20k budget saved (20,000 with the flight, emergency 2,500 apart) and shown": {
+  "T1 fresh install: no budget of its own (template categories at 0, \"—\"), no template card; the shared dates and their route": {
     "result": "PASS",
-    "profile": "plan20k",
-    "total": 2000000
+    "profile": null,
+    "total": 0,
+    "free": "—",
+    "dates": [
+      "2026-12-20",
+      "2027-01-20"
+    ],
+    "stops": 7
   },
   "T2 390px: no sideways scroll on the money screen": {
     "result": "PASS"
@@ -40,7 +46,7 @@
   "T8 \"not now\": only the answer is saved; the card stays hidden after a reload": {
     "result": "PASS"
   },
-  "O offline: budget is there and entering dates builds the route with no network": {
+  "O offline: on a trip with no dates yet, entering dates builds the route with no network": {
     "result": "PASS",
     "stops": 7
   },

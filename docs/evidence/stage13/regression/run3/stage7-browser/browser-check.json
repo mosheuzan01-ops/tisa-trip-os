@@ -6,7 +6,7 @@
     "result": "PASS",
     "place1": "בנגקוק",
     "p1": {
-      "id": "c91dc2dd-3db3-424d-a4d0-5f30b11b8b2d",
+      "id": "ac41bb34-c699-487a-85c1-71216ee646ac",
       "date": "2026-12-06",
       "dateSource": "exif",
       "stopId": null,
@@ -42,7 +42,7 @@
   "B7-2 edit date, caption and star": {
     "result": "PASS",
     "e2": {
-      "id": "137cf94b-f1df-4edf-ad66-8638ba8fab70",
+      "id": "ab7069f3-0482-44a7-83a6-370c89d61ba7",
       "date": "2026-12-09",
       "dateSource": "manual",
       "stopId": null,
@@ -118,7 +118,7 @@
         "paid": 3000,
         "planned": 12000,
         "committed": 250000,
-        "free": 885000
+        "free": 685000
       }
     }
   },
