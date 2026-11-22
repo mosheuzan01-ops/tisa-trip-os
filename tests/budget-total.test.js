@@ -164,3 +164,11 @@ test('BT-12 daily base on an anchored budget: the total less the flight and the 
   assert.equal(dailyBase(total(16000), dates), ILS(500));
   assert.equal(dailyBase(legacyTemplate(), dates), Math.floor(ILS(15000) / 32), 'old data: as in 1.0.0');
 });
+
+test('BT-13 1.0.1 in every place the version is set (docs/FREEZE.md: a fix reaches phones only with a new version)', async () => {
+  const { readFileSync } = await import('node:fs');
+  const read = (p) => readFileSync(new URL(`../${p}`, import.meta.url), 'utf8');
+  assert.equal(JSON.parse(read('config/app.config.json')).appVersion, '1.0.1');
+  assert.equal(JSON.parse(read('package.json')).version, '1.0.1');
+  assert.equal(/const VERSION = '([^']+)'/.exec(read('sw.js'))[1], '1.0.1');
+});
