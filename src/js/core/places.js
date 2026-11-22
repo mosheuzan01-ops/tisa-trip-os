@@ -68,7 +68,9 @@ export function makePlace(input, makeId, nowIso, existing = null) {
     stopId: input.stopId || null,
     plannedDate: isIsoDate(input.plannedDate) ? input.plannedDate : null,
     visitedDate: isIsoDate(input.visitedDate) ? input.visitedDate : null,
-    photoIds: Array.isArray(existing?.photoIds) ? existing.photoIds : [],
+    // PR 2: links to existing photos by id (never a copy). The form sends them; without them the links stay.
+    photoIds: Array.isArray(input.photoIds) ? [...new Set(input.photoIds.filter((x) => typeof x === 'string' && x))]
+      : Array.isArray(existing?.photoIds) ? existing.photoIds : [],
     createdAt: existing?.createdAt ?? nowIso,
     updatedAt: nowIso,
   };

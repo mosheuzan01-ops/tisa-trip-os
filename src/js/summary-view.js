@@ -5,7 +5,8 @@ import { interpolate } from './core/i18n.js';
 import { formatDate } from './core/itinerary.js';
 import { todayIn } from './core/trip.js';
 import { tripSummary, budgetTable } from './core/summary.js';
-import { slideshow, placeOf } from './core/photos.js';
+import { slideshow, placeOf, FEATURE_MAX } from './core/photos.js';
+import { placeOfPhoto } from './core/place-share.js';
 import { moneyState, formatMinor, catName } from './money-view.js';
 import { photoUrl } from './photo-store.js';
 import { thumbButton, fillThumbs } from './photos-view.js';
@@ -91,7 +92,7 @@ export function renderSummary(ctx) {
   const show = slideshow(trip);
   $('[data-action="show-play"]').disabled = show.list.length === 0;
   $('[data-slot="sum-show-note"]').textContent = !show.list.length ? t('sum.show.none')
-    : interpolate(t(show.auto ? 'sum.show.auto' : 'sum.show.chosen'), { n: show.list.length });
+    : interpolate(t(show.auto ? 'sum.show.auto' : show.list.some((p) => !p.featured) ? 'sum.show.chosenPlaces' : 'sum.show.chosen'), { n: show.list.length, max: FEATURE_MAX });
   const strip = $('[data-slot="sum-strip"]');
   strip.replaceChildren(...show.list.map((p) => { const li = el('li'); li.append(thumbButton(ctx, p, 'sum-thumb')); return li; }));
   fillThumbs(ctx, strip);
@@ -127,9 +128,12 @@ export function setupSummary(ctx, { wireDialog }) {
     const date = p.date ? formatDate(p.date, fmtLocale, { day: 'numeric', month: 'long' }) : t('photo.noDate');
     const n = p.date && trip.startDate ? Math.round((Date.parse(`${p.date}T00:00:00Z`) - Date.parse(`${trip.startDate}T00:00:00Z`)) / 86400000) + 1 : null;
     const base = n && n > 0 ? interpolate(t('sum.show.caption'), { n, date, place }) : interpolate(t('sum.show.captionNoDay'), { date, place });
-    caption.textContent = p.caption ? `${base}. ${p.caption}` : base;
+    // Stage 10: a photo linked to a saved place shows the place's name on the slide
+    const saved = placeOfPhoto(p.id, trip.places);
+    const withPlace = saved ? interpolate(t('sum.show.withPlace'), { base, name: saved.name }) : base;
+    caption.textContent = p.caption ? `${withPlace}. ${p.caption}` : withPlace;
     count.textContent = `${i + 1} / ${list.length}`;
-    img.alt = p.caption || base;
+    img.alt = p.caption || withPlace;
     const url = await photoUrl(p.id, 'full').catch(() => null);
     if (list[i] === p) { if (url) img.src = url; else img.removeAttribute('src'); }
     if (playing) setPlaying(true);

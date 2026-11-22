@@ -630,6 +630,9 @@
             </button>
             <button class="btn btn-ghost" type="button" data-action="place-here-save" data-i18n="place.here.save" hidden>לשמור כמקום</button>
             <button class="btn btn-ghost" type="button" data-action="place-here-map" data-i18n="place.map" hidden>פתיחה ב-Google Maps</button>
+            <button class="btn btn-ghost" type="button" data-action="place-here-share" hidden>
+              <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-share"/></svg><span data-i18n="place.here.share">שיתוף המיקום</span>
+            </button>
           </div>
         </section>
 
@@ -639,6 +642,17 @@
             <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-plus"/></svg><span data-i18n="place.add">מקום חדש</span>
           </button>
         </div>
+
+        <div class="place-files">
+          <button class="btn btn-ghost btn-small" type="button" data-action="places-import">
+            <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-upload"/></svg><span data-i18n="place.file.import">ייבוא קובץ מקומות</span>
+          </button>
+          <button class="btn btn-ghost btn-small" type="button" data-action="places-export" hidden>
+            <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-download"/></svg><span data-slot="places-export-label"></span>
+          </button>
+        </div>
+        <input class="sr-only" type="file" id="places-file" accept="application/json,.json" tabindex="-1" aria-hidden="true" aria-label="קובץ מקומות" data-i18n-label="place.file.input">
+        <p class="form-error" data-slot="places-import-error" role="alert"></p>
 
         <div class="place-views" role="group" aria-label="תצוגה" data-i18n-label="place.views">
           <button class="place-view-btn" type="button" data-place-view="all" aria-pressed="true"><span data-i18n="place.view.all">הכול</span> <span class="place-view-n" data-slot="place-n-all"></span></button>
@@ -1345,6 +1359,11 @@
         </div>
         <p class="sheet-hint" id="place-visited-hint" data-i18n="place.visitedHint">התאריך לא מתמלא לבד, גם כשמסמנים "ביקרתי".</p>
         <label class="field"><span data-i18n="place.note">הערה (לא חובה)</span><textarea name="note" rows="2" maxlength="280" aria-describedby="place-error"></textarea></label>
+        <fieldset class="place-photos" data-slot="place-photos">
+          <legend data-i18n="place.photos.title">תמונות של המקום (לא חובה)</legend>
+          <p class="sheet-hint" data-slot="place-photos-hint"></p>
+          <ul class="place-photo-pick" data-slot="place-photo-pick"></ul>
+        </fieldset>
         <p class="form-error" id="place-error" role="alert"></p>
         <div class="sheet-actions">
           <button class="btn metal-btn" type="submit" data-i18n="form.save">שמירה</button>
@@ -1360,6 +1379,42 @@
         <p class="sheet-hint" id="dlg-place-delete-text" data-slot="place-delete-text"></p>
         <div class="sheet-actions">
           <button class="btn metal-btn" type="button" data-action="place-delete-yes" data-i18n="place.deleteYes">כן, למחוק</button>
+          <button class="btn btn-ghost" type="button" data-close data-i18n="form.cancel">ביטול</button>
+        </div>
+      </div>
+    </dialog>
+
+    <!-- Share a place (Stage 10 PR 2): only the ticked fields; the phone's share sheet, or copy. No server. -->
+    <dialog class="sheet dmetal" id="dlg-place-share" aria-labelledby="dlg-place-share-title">
+      <div class="sheet-form">
+        <h2 id="dlg-place-share-title" data-slot="place-share-title"></h2>
+        <fieldset class="place-share-fields">
+          <legend data-i18n="place.share.fields">מה לשתף</legend>
+          <div class="place-share-checks" data-slot="place-share-checks"></div>
+        </fieldset>
+        <p class="sheet-hint" data-i18n="place.share.previewLabel">כך זה ייראה:</p>
+        <p class="place-share-preview" data-slot="place-share-preview" aria-live="polite"></p>
+        <p class="sheet-hint" data-i18n="place.share.sheetHint">"שיתוף" פותח את חלון השיתוף של הטלפון: וואטסאפ, הודעות ועוד.</p>
+        <p class="sheet-hint" data-slot="place-share-status" role="status"></p>
+        <div class="sheet-actions">
+          <button class="btn metal-btn" type="button" data-action="place-share-send">
+            <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-share"/></svg><span data-i18n="place.share.send">שיתוף</span>
+          </button>
+          <button class="btn btn-ghost" type="button" data-action="place-share-copy">
+            <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-copy"/></svg><span data-i18n="place.share.copy">העתקה</span>
+          </button>
+          <button class="btn btn-ghost" type="button" data-action="place-share-file" data-i18n="place.share.file">שמירה כקובץ מקומות</button>
+          <button class="btn btn-ghost" type="button" data-close data-i18n="place.share.close">סגירה</button>
+        </div>
+      </div>
+    </dialog>
+
+    <dialog class="sheet dmetal" id="dlg-places-import" aria-labelledby="dlg-places-import-title" aria-describedby="dlg-places-import-text">
+      <div class="sheet-form">
+        <h2 id="dlg-places-import-title" data-i18n="place.import.title">ייבוא מקומות</h2>
+        <p class="sheet-hint" id="dlg-places-import-text" data-slot="places-import-text"></p>
+        <div class="sheet-actions">
+          <button class="btn metal-btn" type="button" data-action="places-import-yes" data-i18n="place.import.yes">להוסיף אותם</button>
           <button class="btn btn-ghost" type="button" data-close data-i18n="form.cancel">ביטול</button>
         </div>
       </div>

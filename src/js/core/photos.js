@@ -156,12 +156,18 @@ export function toggleFeatured(photos, id) {
   return { photos: photos.map((p) => (p.id === id ? { ...p, featured: !p.featured } : p)) };
 }
 
-/** The slideshow: the starred photos in trip order; with none starred, up to 12 spread evenly over the trip (auto). */
+/**
+ * The slideshow: the starred photos and (Stage 10) the photos linked to a saved place, at most 12 in all: starred
+ * first, then place photos by date; shown in trip order. Stars are never changed here. With neither, up to 12 spread
+ * evenly over the trip (auto), as before.
+ */
 export function slideshow(trip, max = FEATURE_MAX) {
   const dated = cleanPhotos(trip?.photos).map((p) => ({ ...p, date: p.date ?? '' })).sort(byDateThenAdded);
   const pick = (list) => list.map((p) => cleanPhotos(trip.photos).find((x) => x.id === p.id));
   const starred = dated.filter((p) => p.featured);
-  if (starred.length) return { auto: false, list: pick(starred.slice(0, max)) };
+  const linked = new Set((Array.isArray(trip?.places) ? trip.places : []).flatMap((x) => (isObj(x) && Array.isArray(x.photoIds) ? x.photoIds : [])));
+  const fromPlaces = dated.filter((p) => !p.featured && linked.has(p.id));
+  if (starred.length || fromPlaces.length) return { auto: false, list: pick([...starred, ...fromPlaces].slice(0, max).sort(byDateThenAdded)) };
   if (dated.length <= max) return { auto: true, list: pick(dated) };
   // One per day first (spread over the days), then fill evenly from the rest, kept in trip order.
   const firstOfDay = dated.filter((p, i) => i === 0 || dated[i - 1].date !== p.date);

@@ -1,0 +1,902 @@
+TAP version 13
+# Subtest: S-1 (L8): the share text has only the fields the user chose, in a fixed order; the note is off by default
+not ok 1 - S-1 (L8): the share text has only the fields the user chose, in a fixed order; the note is off by default
+  ---
+  duration_ms: 2.054548
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage10-share.test.js:22:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + []
+    - [
+    -   'name',
+    -   'category',
+    -   'address',
+    -   'coords',
+    -   'map',
+    -   'planned',
+    -   'visited',
+    -   'note'
+    - ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 'name'
+    1: 'category'
+    2: 'address'
+    3: 'coords'
+    4: 'map'
+    5: 'planned'
+    6: 'visited'
+    7: 'note'
+  actual:
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage10-share.test.js:23:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.start (node:internal/test_runner/test:944:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+  ...
+# Subtest: S-2 (L8): a chosen field that is empty adds nothing; no coordinates means no map line; nothing invented
+not ok 2 - S-2 (L8): a chosen field that is empty adds nothing; no coordinates means no map line; nothing invented
+  ---
+  duration_ms: 0.740056
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage10-share.test.js:35:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + null
+    - 'שוק לילה לדוגמה\n[place.cat.market]'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: |-
+    שוק לילה לדוגמה
+    [place.cat.market]
+  actual: ~
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage10-share.test.js:37:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: S-3: sharing my current location: a one-time reading, coordinates and map link only
+not ok 3 - S-3: sharing my current location: a one-time reading, coordinates and map link only
+  ---
+  duration_ms: 0.234505
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage10-share.test.js:41:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + null
+    - '[place.share.hereName]\n' +
+    -   '13.756300, 100.501800\n' +
+    -   'https://www.google.com/maps/search/?api=1&query=13.756300%2C100.501800'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: |-
+    [place.share.hereName]
+    13.756300, 100.501800
+    https://www.google.com/maps/search/?api=1&query=13.756300%2C100.501800
+  actual: ~
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage10-share.test.js:43:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: S-4 (L8, L9): share sheet first, then copy; no direct WhatsApp link and no new outside address
+not ok 4 - S-4 (L8, L9): share sheet first, then copy; no direct WhatsApp link and no new outside address
+  ---
+  duration_ms: 1.239929
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage10-share.test.js:46:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /navigator\.share\(/. Input:
+    
+    '// Stage 10 saved places screen (#/places, opened from the itinerary; that tab stays lit). Data: core/places.js.\n' +
+      '// "My location" is read only when the user taps (core/geo.js): one reading, no tracking, nothing sent anywhere.\n' +
+      '// Google Maps opens only when the user taps "open in Google Maps" (rule 5); nothing is loaded in the background.\n' +
+      '// Own class names and data attributes (rule 14). All copy from locales.\n' +
+      "import { interpolate } from './core/i18n.js';\n" +
+      "import { formatDate, cleanStops, sortStops } from './core/itinerary.js';\n" +
+      'import {\n' +
+      '  PLACE_STATUSES, PLACE_CATEGORIES, validatePlace, makePlace, savePlace, removePlace, cleanPlaces, filterPlaces,\n' +
+      '  placeCounts, mapsUrl, planDay, coordsText,\n' +
+      "} from './core/places.js';\n" +
+      "import { locate, geoPermission } from './core/geo.js';\n" +
+      "import { makeId } from './core/ids.js';\n" +
+      "import { setupSearch } from './search-view.js';\n" +
+      '\n' +
+      'const $ = (sel, root = document) => root.querySelector(sel);\n' +
+      "const ICONS = './assets/icons.svg#';\n" +
+      'const el = (tag, className, text) => {\n' +
+      '  const node = document.createElement(tag);\n' +
+      '  if (className) node.className = className;\n' +
+      '  if (text !== undefined) node.textContent = text;\n' +
+      '  return node;\n' +
+      '};\n' +
+      "const option = (value, label) => Object.assign(document.createElement('option'), { value, textContent: label });\n" +
+      'const iconButton = (icon, label, action, id) => {\n' +
+      "  const b = el('button', 'icon-btn place-btn');\n" +
+      "  b.type = 'button';\n" +
+      '  b.dataset.action = action;\n' +
+      '  b.dataset.placeId = id;\n' +
+      "  b.setAttribute('aria-label', label);\n" +
+      '  b.innerHTML = `<svg class="icon" aria-hidden="true"><use href="${ICONS}${icon}"/></svg>`;\n' +
+      '  return b;\n' +
+      '};\n' +
+      '\n' +
+      '// Screen state that is not saved: the view, filters and the last location reading.\n' +
+      "const ui = { view: 'all', q: '', category: '', stopId: '', status: '', here: null, hereMsg: null };\n" +
+      '\n' +
+      'const stopsOf = (trip) => sortStops(cleanStops(trip?.destinations));\n' +
+      '\n' +
+      '\n' +
+      '/** The location line: what was read, or why there is no reading, in calm words. */\n' +
+      'function hereText(ctx) {\n' +
+      '  const { t } = ctx;\n' +
+      "  if (ui.hereMsg === 'busy') return t('place.here.busy');\n" +
+      '  if (ui.hereMsg) return t(`place.geo.${ui.hereMsg}`);\n' +
+      "  if (ui.here) return interpolate(t('place.here.found'), { coords: `⁦${ui.here.lat}, ${ui.here.lng}⁩`, m: ui.here.accuracy });\n" +
+      "  return t('place.here.idle');\n" +
+      '}\n' +
+      '\n' +
+      'export function renderPlaces(ctx) {\n' +
+      "  const panel = $('#panel-places');\n" +
+      '  if (!panel) return;\n' +
+      '  const { t, fmtLocale } = ctx;\n' +
+      '  const trip = ctx.trip();\n' +
+      '  const all = cleanPlaces(trip.places);\n' +
+      '  const stops = stopsOf(trip);\n' +
+      '  const counts = placeCounts(all);\n' +
+      '\n' +
+      '  // My location\n' +
+      `  $('[data-slot="place-here-text"]').textContent = hereText(ctx);\n` +
+      `  $('[data-action="place-here-save"]').hidden = !ui.here;\n` +
+      `  $('[data-action="place-here-map"]').hidden = !ui.here;\n` +
+      '\n' +
+      '  // Views and filters\n' +
+      "  for (const b of panel.querySelectorAll('[data-place-view]')) b.setAttribute('aria-pressed', String(b.dataset.placeView === ui.view));\n" +
+      '  for (const k of [\'all\', \'want\', \'visited\']) $(`[data-slot="place-n-${k}"]`).textContent = String(counts[k]);\n' +
+      '  const fill = (sel, items, value) => {\n' +
+      '    const s = panel.querySelector(`[data-place-filter="${sel}"]`);\n' +
+      '    const key = JSON.stringify(items);\n' +
+      '    if (s.dataset.key !== key) { s.replaceChildren(...items.map(([v, l]) => option(v, l))); s.dataset.key = key; }\n' +
+      "    s.value = items.some(([v]) => v === value) ? value : '';\n" +
+      '    return s.value;\n' +
+      '  };\n' +
+      "  ui.category = fill('category', [['', t('place.f.all')], ...PLACE_CATEGORIES.map((c) => [c, t(`place.cat.${c}`)])], ui.category);\n" +
+      "  ui.stopId = fill('stopId', [['', t('place.f.all')], ...stops.map((s) => [s.id, s.name])], ui.stopId);\n" +
+      "  ui.status = fill('status', [['', t('place.f.all')], ...PLACE_STATUSES.map((s) => [s, t(`place.st.${s}`)])], ui.status);\n" +
+      '\n' +
+      '  const shown = filterPlaces(all, ui);\n' +
+      `  $('[data-slot="place-count"]').textContent = !all.length ? '' : all.length === 1 ? t('place.count.one') : interpolate(t('place.count.other'), { n: all.length });\n` +
+      `  $('[data-slot="place-empty"]').hidden = all.length > 0;\n` +
+      `  $('[data-slot="place-filter-bar"]').hidden = all.length === 0;\n` +
+      "  panel.querySelector('.place-views').hidden = all.length === 0;\n" +
+      `  $('[data-slot="place-none"]').hidden = all.length === 0 || shown.length > 0;\n` +
+      '\n' +
+      `  const box = $('[data-slot="place-list"]');\n` +
+      '  const focused = box.contains(document.activeElement) ? [document.activeElement.dataset.action, document.activeElement.dataset.placeId] : null;\n' +
+      '  box.replaceChildren(...shown.map((p) => {\n' +
+      "    const li = el('li', `card surface place-card is-${p.status}`);\n" +
+      '    li.dataset.placeId = p.id;\n' +
+      "    const head = el('div', 'place-top');\n" +
+      "    const title = el('h2', 'place-name', p.name);\n" +
+      '    title.id = `place-${p.id}`;\n' +
+      "    li.setAttribute('aria-labelledby', title.id);\n" +
+      "    const actions = el('div', 'place-actions');\n" +
+      '    actions.append(\n' +
+      "      iconButton('i-edit', interpolate(t('place.editLabel'), { name: p.name }), 'place-edit', p.id),\n" +
+      "      iconButton('i-trash', interpolate(t('place.deleteLabel'), { name: p.name }), 'place-delete', p.id),\n" +
+      '    );\n' +
+      '    head.append(title, actions);\n' +
+      '    li.append(head);\n' +
+      '\n' +
+      "    const tags = el('p', 'place-tags');\n" +
+      "    tags.append(el('span', `badge place-status is-${p.status}`, t(`place.st.${p.status}`)), el('span', 'badge', t(`place.cat.${p.category}`)));\n" +
+      '    li.append(tags);\n' +
+      '\n' +
+      '    const stop = stops.find((s) => s.id === p.stopId);\n' +
+      "    if (stop) li.append(el('p', 'place-line', interpolate(t('place.line.stop'), { name: stop.name })));\n" +
+      '    if (p.plannedDate) {\n' +
+      '      const d = planDay(p.plannedDate, trip);\n' +
+      "      const date = formatDate(p.plannedDate, fmtLocale, { day: 'numeric', month: 'long' });\n" +
+      "      const line = el('p', 'place-line place-planned', d?.n ? interpolate(t('place.line.plannedDay'), { n: d.n, date }) : interpolate(t('place.line.planned'), { date }));\n" +
+      '      line.dataset.plannedDate = p.plannedDate;\n' +
+      '      li.append(line);\n' +
+      '    }\n' +
+      '    if (p.visitedDate) {\n' +
+      "      const line = el('p', 'place-line place-visited', interpolate(t('place.line.visited'), { date: formatDate(p.visitedDate, fmtLocale, { day: 'numeric', month: 'long' }) }));\n" +
+      '      line.dataset.visitedDate = p.visitedDate;\n' +
+      '      li.append(line);\n' +
+      '    }\n' +
+      "    if (p.address) li.append(el('p', 'place-line', p.address));\n" +
+      "    if (p.lat && p.lng) li.append(el('p', 'place-line place-coords ltr', coordsText(p)));\n" +
+      "    if (p.note) li.append(el('p', 'place-line muted', p.note));\n" +
+      '    if (mapsUrl(p, ctx.config.mapsSearchUrl)) {\n' +
+      "      const map = el('button', 'btn btn-ghost btn-small place-map-btn');\n" +
+      "      map.type = 'button';\n" +
+      "      map.dataset.action = 'place-map';\n" +
+      '      map.dataset.placeId = p.id;\n' +
+      "      map.setAttribute('aria-label', interpolate(t('place.mapLabel'), { name: p.name }));\n" +
+      '      map.innerHTML = `<svg class="icon" aria-hidden="true"><use href="${ICONS}i-pin"/></svg>`;\n' +
+      "      map.append(el('span', '', t('place.map')));\n" +
+      '      li.append(map);\n' +
+      '    }\n' +
+      '    return li;\n' +
+      '  }));\n' +
+      '  if (focused) box.querySelector(`[data-action="${focused[0]}"][data-place-id="${focused[1]}"]`)?.focus();\n' +
+      '}\n' +
+      '\n' +
+      'export function setupPlaces(ctx, { wireDialog, showFormErrors }) {\n' +
+      "  const panel = $('#panel-places');\n" +
+      '  if (!panel) return;\n' +
+      '  const { t, config } = ctx;\n' +
+      '  let opener = null;\n' +
+      `  const restore = () => { (opener?.isConnected ? opener : panel.querySelector('[data-action="place-add"]')).focus(); };\n` +
+      '  const places = () => cleanPlaces(ctx.trip().places);\n' +
+      '  const commit = (fn, message) => {\n' +
+      '    const result = ctx.change((st) => { const trip = st.trips[st.activeTripId]; trip.places = fn(Array.isArray(trip.places) ? trip.places : []); }, { now: true });\n' +
+      "    ctx.toast(result?.ok ? message : 'form.saveFailed');\n" +
+      '  };\n' +
+      '\n' +
+      '  // ---------- Search, views, filters ----------\n' +
+      `  setupSearch($('[data-search="places"]'), (q) => { ui.q = q; renderPlaces(ctx); });\n` +
+      "  for (const b of panel.querySelectorAll('[data-place-view]')) b.addEventListener('click', () => { ui.view = b.dataset.placeView; renderPlaces(ctx); });\n" +
+      "  for (const s of panel.querySelectorAll('[data-place-filter]')) s.addEventListener('change', () => { ui[s.dataset.placeFilter] = s.value; renderPlaces(ctx); });\n" +
+      '\n' +
+      '  // ---------- Location: one reading per tap ----------\n' +
+      '  async function readLocation() {\n' +
+      '    ui.here = null;\n' +
+      "    ui.hereMsg = 'busy';\n" +
+      '    renderPlaces(ctx);\n' +
+      '    const before = await geoPermission();\n' +
+      "    if (before === 'denied') { ui.hereMsg = 'denied'; renderPlaces(ctx); return null; }\n" +
+      '    const r = await locate();\n' +
+      '    ui.hereMsg = r.ok ? null : r.error;\n' +
+      '    ui.here = r.ok ? r : null;\n' +
+      '    renderPlaces(ctx);\n' +
+      '    return r;\n' +
+      '  }\n' +
+      '\n' +
+      '  // ---------- Add or edit ----------\n' +
+      "  const dlg = $('#dlg-place');\n" +
+      `  const form = $('[data-form="place"]');\n` +
+      '  let editing = null;\n' +
+      '  wireDialog(dlg, restore);\n' +
+      '  function open(p, from, preset = {}) {\n' +
+      '    opener = from;\n' +
+      '    editing = p;\n' +
+      '    form.reset();\n' +
+      "    showFormErrors(t, form, [], 'placeErr');\n" +
+      '    const trip = ctx.trip();\n' +
+      `    $('[data-slot="place-dlg-title"]').textContent = t(p ? 'place.editTitle' : 'place.addTitle');\n` +
+      '    $(\'[data-slot="place-category"]\').replaceChildren(...PLACE_CATEGORIES.map((c) => option(c, t(`place.cat.${c}`))));\n' +
+      '    $(\'[data-slot="place-status"]\').replaceChildren(...PLACE_STATUSES.map((s) => option(s, t(`place.st.${s}`))));\n' +
+      `    $('[data-slot="place-stop"]').replaceChildren(option('', t('place.noStop')), ...stopsOf(trip).map((s) => option(s.id, s.name)));\n` +
+      "    form.plannedDate.min = trip.startDate ?? '';\n" +
+      "    form.plannedDate.max = trip.endDate ?? '';\n" +
+      "    const v = p ?? { category: 'sight', status: 'want', ...preset };\n" +
+      "    form.name.value = v.name ?? '';\n" +
+      '    form.category.value = v.category;\n' +
+      '    form.status.value = v.status;\n' +
+      '    form.coords.value = coordsText(v);\n' +
+      "    form.address.value = v.address ?? '';\n" +
+      "    form.stopId.value = v.stopId && stopsOf(trip).some((s) => s.id === v.stopId) ? v.stopId : '';\n" +
+      "    form.plannedDate.value = v.plannedDate ?? '';\n" +
+      "    form.visitedDate.value = v.visitedDate ?? '';\n" +
+      "    form.note.value = v.note ?? '';\n" +
+      `    $('[data-slot="place-coords-hint"]').textContent = t('place.coordsHint');\n` +
+      `    $('[data-action="place-delete-from-form"]').hidden = !p;\n` +
+      '    dlg.showModal();\n' +
+      '    form.name.focus();\n' +
+      '  }\n' +
+      "  form.addEventListener('submit', (e) ="... 3361 more characters
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    // Stage 10 saved places screen (#/places, opened from the itinerary; that tab stays lit). Data: core/places.js.
+    // "My location" is read only when the user taps (core/geo.js): one reading, no tracking, nothing sent anywhere.
+    // Google Maps opens only when the user taps "open in Google Maps" (rule 5); nothing is loaded in the background.
+    // Own class names and data attributes (rule 14). All copy from locales.
+    import { interpolate } from './core/i18n.js';
+    import { formatDate, cleanStops, sortStops } from './core/itinerary.js';
+    import {
+      PLACE_STATUSES, PLACE_CATEGORIES, validatePlace, makePlace, savePlace, removePlace, cleanPlaces, filterPlaces,
+      placeCounts, mapsUrl, planDay, coordsText,
+    } from './core/places.js';
+    import { locate, geoPermission } from './core/geo.js';
+    import { makeId } from './core/ids.js';
+    import { setupSearch } from './search-view.js';
+    
+    const $ = (sel, root = document) => root.querySelector(sel);
+    const ICONS = './assets/icons.svg#';
+    const el = (tag, className, text) => {
+      const node = document.createElement(tag);
+      if (className) node.className = className;
+      if (text !== undefined) node.textContent = text;
+      return node;
+    };
+    const option = (value, label) => Object.assign(document.createElement('option'), { value, textContent: label });
+    const iconButton = (icon, label, action, id) => {
+      const b = el('button', 'icon-btn place-btn');
+      b.type = 'button';
+      b.dataset.action = action;
+      b.dataset.placeId = id;
+      b.setAttribute('aria-label', label);
+      b.innerHTML = `<svg class="icon" aria-hidden="true"><use href="${ICONS}${icon}"/></svg>`;
+      return b;
+    };
+    
+    // Screen state that is not saved: the view, filters and the last location reading.
+    const ui = { view: 'all', q: '', category: '', stopId: '', status: '', here: null, hereMsg: null };
+    
+    const stopsOf = (trip) => sortStops(cleanStops(trip?.destinations));
+    
+    
+    /** The location line: what was read, or why there is no reading, in calm words. */
+    function hereText(ctx) {
+      const { t } = ctx;
+      if (ui.hereMsg === 'busy') return t('place.here.busy');
+      if (ui.hereMsg) return t(`place.geo.${ui.hereMsg}`);
+      if (ui.here) return interpolate(t('place.here.found'), { coords: `⁦${ui.here.lat}, ${ui.here.lng}⁩`, m: ui.here.accuracy });
+      return t('place.here.idle');
+    }
+    
+    export function renderPlaces(ctx) {
+      const panel = $('#panel-places');
+      if (!panel) return;
+      const { t, fmtLocale } = ctx;
+      const trip = ctx.trip();
+      const all = cleanPlaces(trip.places);
+      const stops = stopsOf(trip);
+      const counts = placeCounts(all);
+    
+      // My location
+      $('[data-slot="place-here-text"]').textContent = hereText(ctx);
+      $('[data-action="place-here-save"]').hidden = !ui.here;
+      $('[data-action="place-here-map"]').hidden = !ui.here;
+    
+      // Views and filters
+      for (const b of panel.querySelectorAll('[data-place-view]')) b.setAttribute('aria-pressed', String(b.dataset.placeView === ui.view));
+      for (const k of ['all', 'want', 'visited']) $(`[data-slot="place-n-${k}"]`).textContent = String(counts[k]);
+      const fill = (sel, items, value) => {
+        const s = panel.querySelector(`[data-place-filter="${sel}"]`);
+        const key = JSON.stringify(items);
+        if (s.dataset.key !== key) { s.replaceChildren(...items.map(([v, l]) => option(v, l))); s.dataset.key = key; }
+        s.value = items.some(([v]) => v === value) ? value : '';
+        return s.value;
+      };
+      ui.category = fill('category', [['', t('place.f.all')], ...PLACE_CATEGORIES.map((c) => [c, t(`place.cat.${c}`)])], ui.category);
+      ui.stopId = fill('stopId', [['', t('place.f.all')], ...stops.map((s) => [s.id, s.name])], ui.stopId);
+      ui.status = fill('status', [['', t('place.f.all')], ...PLACE_STATUSES.map((s) => [s, t(`place.st.${s}`)])], ui.status);
+    
+      const shown = filterPlaces(all, ui);
+      $('[data-slot="place-count"]').textContent = !all.length ? '' : all.length === 1 ? t('place.count.one') : interpolate(t('place.count.other'), { n: all.length });
+      $('[data-slot="place-empty"]').hidden = all.length > 0;
+      $('[data-slot="place-filter-bar"]').hidden = all.length === 0;
+      panel.querySelector('.place-views').hidden = all.length === 0;
+      $('[data-slot="place-none"]').hidden = all.length === 0 || shown.length > 0;
+    
+      const box = $('[data-slot="place-list"]');
+      const focused = box.contains(document.activeElement) ? [document.activeElement.dataset.action, document.activeElement.dataset.placeId] : null;
+      box.replaceChildren(...shown.map((p) => {
+        const li = el('li', `card surface place-card is-${p.status}`);
+        li.dataset.placeId = p.id;
+        const head = el('div', 'place-top');
+        const title = el('h2', 'place-name', p.name);
+        title.id = `place-${p.id}`;
+        li.setAttribute('aria-labelledby', title.id);
+        const actions = el('div', 'place-actions');
+        actions.append(
+          iconButton('i-edit', interpolate(t('place.editLabel'), { name: p.name }), 'place-edit', p.id),
+          iconButton('i-trash', interpolate(t('place.deleteLabel'), { name: p.name }), 'place-delete', p.id),
+        );
+        head.append(title, actions);
+        li.append(head);
+    
+        const tags = el('p', 'place-tags');
+        tags.append(el('span', `badge place-status is-${p.status}`, t(`place.st.${p.status}`)), el('span', 'badge', t(`place.cat.${p.category}`)));
+        li.append(tags);
+    
+        const stop = stops.find((s) => s.id === p.stopId);
+        if (stop) li.append(el('p', 'place-line', interpolate(t('place.line.stop'), { name: stop.name })));
+        if (p.plannedDate) {
+          const d = planDay(p.plannedDate, trip);
+          const date = formatDate(p.plannedDate, fmtLocale, { day: 'numeric', month: 'long' });
+          const line = el('p', 'place-line place-planned', d?.n ? interpolate(t('place.line.plannedDay'), { n: d.n, date }) : interpolate(t('place.line.planned'), { date }));
+          line.dataset.plannedDate = p.plannedDate;
+          li.append(line);
+        }
+        if (p.visitedDate) {
+          const line = el('p', 'place-line place-visited', interpolate(t('place.line.visited'), { date: formatDate(p.visitedDate, fmtLocale, { day: 'numeric', month: 'long' }) }));
+          line.dataset.visitedDate = p.visitedDate;
+          li.append(line);
+        }
+        if (p.address) li.append(el('p', 'place-line', p.address));
+        if (p.lat && p.lng) li.append(el('p', 'place-line place-coords ltr', coordsText(p)));
+        if (p.note) li.append(el('p', 'place-line muted', p.note));
+        if (mapsUrl(p, ctx.config.mapsSearchUrl)) {
+          const map = el('button', 'btn btn-ghost btn-small place-map-btn');
+          map.type = 'button';
+          map.dataset.action = 'place-map';
+          map.dataset.placeId = p.id;
+          map.setAttribute('aria-label', interpolate(t('place.mapLabel'), { name: p.name }));
+          map.innerHTML = `<svg class="icon" aria-hidden="true"><use href="${ICONS}i-pin"/></svg>`;
+          map.append(el('span', '', t('place.map')));
+          li.append(map);
+        }
+        return li;
+      }));
+      if (focused) box.querySelector(`[data-action="${focused[0]}"][data-place-id="${focused[1]}"]`)?.focus();
+    }
+    
+    export function setupPlaces(ctx, { wireDialog, showFormErrors }) {
+      const panel = $('#panel-places');
+      if (!panel) return;
+      const { t, config } = ctx;
+      let opener = null;
+      const restore = () => { (opener?.isConnected ? opener : panel.querySelector('[data-action="place-add"]')).focus(); };
+      const places = () => cleanPlaces(ctx.trip().places);
+      const commit = (fn, message) => {
+        const result = ctx.change((st) => { const trip = st.trips[st.activeTripId]; trip.places = fn(Array.isArray(trip.places) ? trip.places : []); }, { now: true });
+        ctx.toast(result?.ok ? message : 'form.saveFailed');
+      };
+    
+      // ---------- Search, views, filters ----------
+      setupSearch($('[data-search="places"]'), (q) => { ui.q = q; renderPlaces(ctx); });
+      for (const b of panel.querySelectorAll('[data-place-view]')) b.addEventListener('click', () => { ui.view = b.dataset.placeView; renderPlaces(ctx); });
+      for (const s of panel.querySelectorAll('[data-place-filter]')) s.addEventListener('change', () => { ui[s.dataset.placeFilter] = s.value; renderPlaces(ctx); });
+    
+      // ---------- Location: one reading per tap ----------
+      async function readLocation() {
+        ui.here = null;
+        ui.hereMsg = 'busy';
+        renderPlaces(ctx);
+        const before = await geoPermission();
+        if (before === 'denied') { ui.hereMsg = 'denied'; renderPlaces(ctx); return null; }
+        const r = await locate();
+        ui.hereMsg = r.ok ? null : r.error;
+        ui.here = r.ok ? r : null;
+        renderPlaces(ctx);
+        return r;
+      }
+    
+      // ---------- Add or edit ----------
+      const dlg = $('#dlg-place');
+      const form = $('[data-form="place"]');
+      let editing = null;
+      wireDialog(dlg, restore);
+      function open(p, from, preset = {}) {
+        opener = from;
+        editing = p;
+        form.reset();
+        showFormErrors(t, form, [], 'placeErr');
+        const trip = ctx.trip();
+        $('[data-slot="place-dlg-title"]').textContent = t(p ? 'place.editTitle' : 'place.addTitle');
+        $('[data-slot="place-category"]').replaceChildren(...PLACE_CATEGORIES.map((c) => option(c, t(`place.cat.${c}`))));
+        $('[data-slot="place-status"]').replaceChildren(...PLACE_STATUSES.map((s) => option(s, t(`place.st.${s}`))));
+        $('[data-slot="place-stop"]').replaceChildren(option('', t('place.noStop')), ...stopsOf(trip).map((s) => option(s.id, s.name)));
+        form.plannedDate.min = trip.startDate ?? '';
+        form.plannedDate.max = trip.endDate ?? '';
+        const v = p ?? { category: 'sight', status: 'want', ...preset };
+        form.name.value = v.name ?? '';
+        form.category.value = v.category;
+        form.status.value = v.status;
+        form.coords.value = coordsText(v);
+        form.address.value = v.address ?? '';
+        form.stopId.value = v.stopId && stopsOf(trip).some((s) => s.id === v.stopId) ? v.stopId : '';
+        form.plannedDate.value = v.plannedDate ?? '';
+        form.visitedDate.value = v.visitedDate ?? '';
+        form.note.value = v.note ?? '';
+        $('[data-slot="place-coords-hint"]').textContent = t('place.coordsHint');
+        $('[data-action="place-delete-from-form"]').hidden = !p;
+        dlg.showModal();
+        form.name.focus();
+      }
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const trip = ctx.trip();
+        const input = {
+          name: form.name.value, category: form.category.value, status: form.status.value, coords: form.coords.value, address: form.address.value,
+          stopId: form.stopId.value, plannedDate: form.plannedDate.value, visitedDate: form.visitedDate.value, note: form.note.value,
+        };
+        const errors = validatePlace(input, { stopIds: stopsOf(trip).map((s) => s.id), trip });
+        if (errors.length) { showFormErrors(t, form, errors, 'placeErr'); return; }
+        const next = makePlace(input, () => makeId(), new Date().toISOString(), editing);
+        commit((list) => savePlace(list, next), 'place.saved');
+        opener = panel.querySelector(`[data-action="place-edit"][data-place-id="${next.id}"]`) ?? opener;
+        dlg.close();
+      });
+      // "My location" inside the form fills only the coordinates field; the user still saves.
+      $('[data-action="place-locate"]').addEventListener('click', async (e) => {
+        const btn = e.currentTarget;
+        const hint = $('[data-slot="place-coords-hint"]');
+        btn.disabled = true;
+        hint.textContent = t('place.here.busy');
+        const r = await readLocation();
+        btn.disabled = false;
+        if (r?.ok) { form.coords.value = `${r.lat}, ${r.lng}`; hint.textContent = interpolate(t('place.here.filled'), { m: r.accuracy }); } else hint.textContent = hereText(ctx);
+      });
+    
+      // ---------- Delete, after a yes ----------
+      const dlgDel = $('#dlg-place-delete');
+      let onYes = null;
+      wireDialog(dlgDel, () => { onYes = null; restore(); });
+      $('[data-action="place-delete-yes"]').addEventListener('click', () => {
+        if (onYes) onYes();
+        opener = panel.querySelector('[data-action="place-add"]');
+        dlgDel.close();
+      });
+      function askDelete(p, from) {
+        opener = from;
+        onYes = () => commit((list) => removePlace(list, p.id), 'place.deleted');
+        $('[data-slot="place-delete-text"]').textContent = interpolate(t('place.deleteText'), { name: p.name });
+        dlgDel.showModal();
+        dlgDel.querySelector('[data-close]').focus();
+      }
+      $('[data-action="place-delete-from-form"]').addEventListener('click', () => {
+        const p = editing;
+        if (!p) return;
+        dlg.close();
+        askDelete(p, panel.querySelector(`[data-action="place-edit"][data-place-id="${p.id}"]`));
+      });
+    
+      // ---------- Taps on the screen ----------
+      panel.addEventListener('click', async (e) => {
+        const btn = e.target.closest('button[data-action]');
+        if (!btn) return;
+        const { action, placeId } = btn.dataset;
+        const p = placeId ? places().find((x) => x.id === placeId) : null;
+        if (action === 'place-add') open(null, btn);
+        if (action === 'place-edit' && p) open(p, btn);
+        if (action === 'place-delete' && p) askDelete(p, btn);
+        // The map link opens only here, on the user's tap. Offline, it still opens (the maps app may have offline maps).
+        const url = action === 'place-map' && p ? mapsUrl(p, config.mapsSearchUrl) : action === 'place-here-map' && ui.here ? mapsUrl(ui.here, config.mapsSearchUrl) : null;
+        if (url) { if (navigator.onLine === false) ctx.toast('place.map.offline'); window.open(url, '_blank', 'noopener'); }
+        if (action === 'place-here-locate') { btn.disabled = true; await readLocation(); btn.disabled = false; }
+        if (action === 'place-here-save' && ui.here) open(null, btn, { lat: ui.here.lat, lng: ui.here.lng });
+      });
+    }
+    
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage10-share.test.js:48:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: S-5 (L10): export: a "tisa-places" file with the place details only (no personal dates, status or photos)
+not ok 5 - S-5 (L10): export: a "tisa-places" file with the place details only (no personal dates, status or photos)
+  ---
+  duration_ms: 0.445889
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage10-share.test.js:57:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    '' !== 'tisa-places'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'tisa-places'
+  actual: ''
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage10-share.test.js:60:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: S-6 (L10): parse: bad files are refused with a code; bad entries are skipped and counted, never fixed up
+not ok 6 - S-6 (L10): parse: bad files are refused with a code; bad entries are skipped and counted, never fixed up
+  ---
+  duration_ms: 1.584622
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage10-share.test.js:67:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      {
+    +   ok: true,
+    +   places: []
+    -   error: 'empty',
+    -   ok: false
+      }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    ok: false
+    error: 'empty'
+  actual:
+    ok: true
+    places:
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage10-share.test.js:68:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: S-7 (L10): import adds only new places, as "want to visit", without dates; nothing existing is changed
+not ok 7 - S-7 (L10): import adds only new places, as "want to visit", without dates; nothing existing is changed
+  ---
+  duration_ms: 0.322182
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage10-share.test.js:84:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    -1 !== 1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: -1
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage10-share.test.js:89:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: S-8 (L10): importing the same file twice adds nothing the second time; same name and place counts as the same
+not ok 8 - S-8 (L10): importing the same file twice adds nothing the second time; same name and place counts as the same
+  ---
+  duration_ms: 0.162139
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage10-share.test.js:100:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    -1 !== 2
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 2
+  actual: -1
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage10-share.test.js:106:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: S-9 (L10): an incoming id I already have is the same place, even if I renamed it since: skipped, never overwritten
+not ok 9 - S-9 (L10): an incoming id I already have is the same place, even if I renamed it since: skipped, never overwritten
+  ---
+  duration_ms: 0.561216
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage10-share.test.js:122:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      [
+    +   -1,
+    +   -1
+    -   0,
+    -   1
+      ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 0
+    1: 1
+  actual:
+    0: -1
+    1: -1
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage10-share.test.js:125:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: S-10 (L7): a photo linked to a place joins the slideshow; starred photos stay as they are
+not ok 10 - S-10 (L7): a photo linked to a place joins the slideshow; starred photos stay as they are
+  ---
+  duration_ms: 0.787329
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage10-share.test.js:134:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    starred and place photos, in trip order
+    + actual - expected
+    
+      [
+        'ph01',
+    -   'ph03'
+      ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 'ph01'
+    1: 'ph03'
+  actual:
+    0: 'ph01'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage10-share.test.js:140:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: S-11 (L7): at most 12 in all: starred photos first, then place photos, shown in trip order
+not ok 11 - S-11 (L7): at most 12 in all: starred photos first, then place photos, shown in trip order
+  ---
+  duration_ms: 0.452461
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage10-share.test.js:144:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    10 !== 12
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 12
+  actual: 10
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage10-share.test.js:149:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: S-12 (L7): linking does not touch the 12-star limit; a link to a deleted photo is skipped, not shown
+ok 12 - S-12 (L7): linking does not touch the 12-star limit; a link to a deleted photo is skipped, not shown
+  ---
+  duration_ms: 0.354817
+  type: 'test'
+  ...
+# Subtest: S-13 (L7): the slide shows the place name: the first place that links the photo, or none
+not ok 13 - S-13 (L7): the slide shows the place name: the first place that links the photo, or none
+  ---
+  duration_ms: 0.158015
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage10-share.test.js:167:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + undefined
+    - 'מקדש לדוגמה'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'מקדש לדוגמה'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage10-share.test.js:169:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: S-14 (L7): a place keeps photo ids only (no copy of the image); the dialog can link and unlink
+not ok 14 - S-14 (L7): a place keeps photo ids only (no copy of the image); the dialog can link and unlink
+  ---
+  duration_ms: 0.253704
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage10-share.test.js:175:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + []
+    - [
+    -   'ph01',
+    -   'ph02'
+    - ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 'ph01'
+    1: 'ph02'
+  actual:
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage10-share.test.js:177:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: S-15: version 0.9.1 or later; the new file is cached offline
+not ok 15 - S-15: version 0.9.1 or later; the new file is cached offline
+  ---
+  duration_ms: 0.18804
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage10-share.test.js:185:1'
+  failureType: 'testCodeFailure'
+  error: '0.9.0'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage10-share.test.js:188:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..15
+# tests 15
+# suites 0
+# pass 1
+# fail 14
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 81.56466
