@@ -3,7 +3,7 @@
 import { isIsoDate, daysBetween } from './trip.js';
 import { toMinor } from './money.js';
 
-export const SCHEMA_VERSION = 7;
+export const SCHEMA_VERSION = 8;
 export const DEFAULT_QUESTION_LIMIT = 50;
 export const BACKUP_REMINDER_DAYS = 7;
 
@@ -21,6 +21,8 @@ export const emptyBudget = () => ({ currency: 'ILS', totalMinor: null, categorie
 export const emptyArchive = () => ({ budgets: [], routes: [] });
 /** Stage 6 luggage: bags the user adds by hand; weights in whole grams, no limit until the user sets one. */
 export const emptyLuggage = () => ({ bags: [] });
+/** Stage 12 smart suitcase: the activities the user chose. Suggestions are worked out, never stored. */
+export const emptySmartBag = () => ({ activities: [] });
 
 export function createTrip({ makeId, countryCode, tripName }) {
   const trip = { id: makeId(), countryCode, name: tripName, startDate: null, endDate: null };
@@ -28,6 +30,7 @@ export function createTrip({ makeId, countryCode, tripName }) {
   for (const f of OBJECT_FIELDS) trip[f] = {};
   trip.budget = emptyBudget();
   trip.luggage = emptyLuggage();
+  trip.smartBag = emptySmartBag();
   trip.archive = emptyArchive();
   trip.templateOffer = null;
   return trip;
@@ -71,6 +74,7 @@ export function validateState(state) {
     for (const f of ARRAY_FIELDS) if (!Array.isArray(trip[f])) errors.push(`trip.${id}.${f}`);
     for (const f of OBJECT_FIELDS) if (!isObj(trip[f])) errors.push(`trip.${id}.${f}`);
     if (isObj(trip.luggage) && !Array.isArray(trip.luggage.bags)) errors.push(`trip.${id}.luggage.bags`);
+    if (!isObj(trip.smartBag) || !Array.isArray(trip.smartBag.activities)) errors.push(`trip.${id}.smartBag`);
     if (!isObj(trip.archive) || !Array.isArray(trip.archive.budgets) || !Array.isArray(trip.archive.routes)) errors.push(`trip.${id}.archive`);
     if (isObj(trip.budget) && (!isObj(trip.budget.categoryNames) || !Array.isArray(trip.budget.hidden))) errors.push(`trip.${id}.budget.names`);
   }
@@ -163,6 +167,16 @@ const MIGRATIONS = {
     const next = { ...old, schemaVersion: 7, trips: {} };
     for (const [id, trip] of Object.entries(old.trips ?? {})) {
       next.trips[id] = { ...trip, places: Array.isArray(trip?.places) ? trip.places : [] };
+    }
+    return next;
+  },
+  // 7 -> 8 (Stage 12): the smart suitcase's chosen activities, added empty. Only an addition: checklist items,
+  // bags and every other field stay exactly as they were; a smartBag that already exists is kept.
+  7(old) {
+    const next = { ...old, schemaVersion: 8, trips: {} };
+    for (const [id, trip] of Object.entries(old.trips ?? {})) {
+      const sb = trip?.smartBag;
+      next.trips[id] = { ...trip, smartBag: isObj(sb) && Array.isArray(sb.activities) ? sb : { ...(isObj(sb) ? sb : {}), activities: [] } };
     }
     return next;
   },

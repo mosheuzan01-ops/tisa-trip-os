@@ -1,0 +1,429 @@
+TAP version 13
+# Subtest: B-1 the rules file: 7 activities, a 7-day clothes cap, every rule well formed, names in he and en
+ok 1 - B-1 the rules file: 7 activities, a 7-day clothes cap, every rule well formed, names in he and en
+  ---
+  duration_ms: 1.703102
+  type: 'test'
+  ...
+# Subtest: B-2 the motorbike licence is a "to check" item: Thailand's legal requirements are not stated as fact (owner, 2026-11-22)
+ok 2 - B-2 the motorbike licence is a "to check" item: Thailand's legal requirements are not stated as fact (owner, 2026-11-22)
+  ---
+  duration_ms: 0.486409
+  type: 'test'
+  ...
+# Subtest: B-3 destination kind by name only (owner: names for now): city, island, beach; unknown names are not classified
+not ok 3 - B-3 destination kind by name only (owner: names for now): city, island, beach; unknown names are not classified
+  ---
+  duration_ms: 1.148564
+  type: 'test'
+  location: '/tmp/claude-0/-home-user-tisa-trip-os/85dc2169-9056-4376-b7c8-87ddd2bd3782/scratchpad/wt2/tests/stage12-smart-bag.test.js:62:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + undefined
+    - 'city'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'city'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///tmp/claude-0/-home-user-tisa-trip-os/85dc2169-9056-4376-b7c8-87ddd2bd3782/scratchpad/wt2/tests/stage12-smart-bag.test.js:63:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: B-4 (S12-3) the number of days changes the suggestions and the quantities (cap 7, laundry on the way)
+not ok 4 - B-4 (S12-3) the number of days changes the suggestions and the quantities (cap 7, laundry on the way)
+  ---
+  duration_ms: 0.300199
+  type: 'test'
+  location: '/tmp/claude-0/-home-user-tisa-trip-os/85dc2169-9056-4376-b7c8-87ddd2bd3782/scratchpad/wt2/tests/stage12-smart-bag.test.js:73:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    undefined !== 3
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 3
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///tmp/claude-0/-home-user-tisa-trip-os/85dc2169-9056-4376-b7c8-87ddd2bd3782/scratchpad/wt2/tests/stage12-smart-bag.test.js:74:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: B-5 (S12-3) the destinations change the suggestions: an island brings swimwear and a hat; an unclassified stop brings nothing
+not ok 5 - B-5 (S12-3) the destinations change the suggestions: an island brings swimwear and a hat; an unclassified stop brings nothing
+  ---
+  duration_ms: 0.303812
+  type: 'test'
+  location: '/tmp/claude-0/-home-user-tisa-trip-os/85dc2169-9056-4376-b7c8-87ddd2bd3782/scratchpad/wt2/tests/stage12-smart-bag.test.js:92:1'
+  failureType: 'testCodeFailure'
+  error: 'suggestion swimwear is shown'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    got (file:///tmp/claude-0/-home-user-tisa-trip-os/85dc2169-9056-4376-b7c8-87ddd2bd3782/scratchpad/wt2/tests/stage12-smart-bag.test.js:32:58)
+    TestContext.<anonymous> (file:///tmp/claude-0/-home-user-tisa-trip-os/85dc2169-9056-4376-b7c8-87ddd2bd3782/scratchpad/wt2/tests/stage12-smart-bag.test.js:97:16)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: B-6 (S12-3) the activities change the suggestions; the same item from two rules shows once, at the higher level
+not ok 6 - B-6 (S12-3) the activities change the suggestions; the same item from two rules shows once, at the higher level
+  ---
+  duration_ms: 0.190242
+  type: 'test'
+  location: '/tmp/claude-0/-home-user-tisa-trip-os/85dc2169-9056-4376-b7c8-87ddd2bd3782/scratchpad/wt2/tests/stage12-smart-bag.test.js:105:1'
+  failureType: 'testCodeFailure'
+  error: 'suggestion dive-card is shown'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    got (file:///tmp/claude-0/-home-user-tisa-trip-os/85dc2169-9056-4376-b7c8-87ddd2bd3782/scratchpad/wt2/tests/stage12-smart-bag.test.js:32:58)
+    TestContext.<anonymous> (file:///tmp/claude-0/-home-user-tisa-trip-os/85dc2169-9056-4376-b7c8-87ddd2bd3782/scratchpad/wt2/tests/stage12-smart-bag.test.js:109:16)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: B-7 (S12-4) no suggestion for an item already in the checklist (by name, by built-in key) or in a bag
+not ok 7 - B-7 (S12-4) no suggestion for an item already in the checklist (by name, by built-in key) or in a bag
+  ---
+  duration_ms: 0.631241
+  type: 'test'
+  location: '/tmp/claude-0/-home-user-tisa-trip-os/85dc2169-9056-4376-b7c8-87ddd2bd3782/scratchpad/wt2/tests/stage12-smart-bag.test.js:121:1'
+  failureType: 'testCodeFailure'
+  error: 'other suggestions stay'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///tmp/claude-0/-home-user-tisa-trip-os/85dc2169-9056-4376-b7c8-87ddd2bd3782/scratchpad/wt2/tests/stage12-smart-bag.test.js:133:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: B-8 (S12-4) accepting a suggestion adds one normal item; a second tap adds nothing; nothing else changes
+not ok 8 - B-8 (S12-4) accepting a suggestion adds one normal item; a second tap adds nothing; nothing else changes
+  ---
+  duration_ms: 0.529759
+  type: 'test'
+  location: '/tmp/claude-0/-home-user-tisa-trip-os/85dc2169-9056-4376-b7c8-87ddd2bd3782/scratchpad/wt2/tests/stage12-smart-bag.test.js:136:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    -1 !== 1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: -1
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///tmp/claude-0/-home-user-tisa-trip-os/85dc2169-9056-4376-b7c8-87ddd2bd3782/scratchpad/wt2/tests/stage12-smart-bag.test.js:141:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: B-9 "add all the musts" adds each missing must once; a second time adds nothing; "avoid" is never added
+not ok 9 - B-9 "add all the musts" adds each missing must once; a second time adds nothing; "avoid" is never added
+  ---
+  duration_ms: 0.669021
+  type: 'test'
+  location: '/tmp/claude-0/-home-user-tisa-trip-os/85dc2169-9056-4376-b7c8-87ddd2bd3782/scratchpad/wt2/tests/stage12-smart-bag.test.js:156:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    -1 !== 0
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0
+  actual: -1
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///tmp/claude-0/-home-user-tisa-trip-os/85dc2169-9056-4376-b7c8-87ddd2bd3782/scratchpad/wt2/tests/stage12-smart-bag.test.js:160:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: B-10 the suggestions never change the trip (no item added, edited or removed on its own)
+ok 10 - B-10 the suggestions never change the trip (no item added, edited or removed on its own)
+  ---
+  duration_ms: 0.600935
+  type: 'test'
+  ...
+# Subtest: B-11 activities: only known ids, once each, in the file's order; saved on the trip without touching anything else
+not ok 11 - B-11 activities: only known ids, once each, in the file's order; saved on the trip without touching anything else
+  ---
+  duration_ms: 0.865186
+  type: 'test'
+  location: '/tmp/claude-0/-home-user-tisa-trip-os/85dc2169-9056-4376-b7c8-87ddd2bd3782/scratchpad/wt2/tests/stage12-smart-bag.test.js:175:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + []
+    - [
+    -   'beach',
+    -   'trek'
+    - ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 'beach'
+    1: 'trek'
+  actual:
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///tmp/claude-0/-home-user-tisa-trip-os/85dc2169-9056-4376-b7c8-87ddd2bd3782/scratchpad/wt2/tests/stage12-smart-bag.test.js:176:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: B-12 weather later: an extension point that takes a forecast; today it gets null and changes nothing
+not ok 12 - B-12 weather later: an extension point that takes a forecast; today it gets null and changes nothing
+  ---
+  duration_ms: 0.749075
+  type: 'test'
+  location: '/tmp/claude-0/-home-user-tisa-trip-os/85dc2169-9056-4376-b7c8-87ddd2bd3782/scratchpad/wt2/tests/stage12-smart-bag.test.js:186:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + undefined
+    - {
+    -   avoid: [],
+    -   must: [],
+    -   nice: []
+    - }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    must:
+    nice:
+    avoid:
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///tmp/claude-0/-home-user-tisa-trip-os/85dc2169-9056-4376-b7c8-87ddd2bd3782/scratchpad/wt2/tests/stage12-smart-bag.test.js:188:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: B-13 (S12-5) migration 7 -> 8 adds an empty smartBag; checklist, bags, places and everything else stay exactly
+not ok 13 - B-13 (S12-5) migration 7 -> 8 adds an empty smartBag; checklist, bags, places and everything else stay exactly
+  ---
+  duration_ms: 0.387356
+  type: 'test'
+  location: '/tmp/claude-0/-home-user-tisa-trip-os/85dc2169-9056-4376-b7c8-87ddd2bd3782/scratchpad/wt2/tests/stage12-smart-bag.test.js:194:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    7 !== 8
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 8
+  actual: 7
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///tmp/claude-0/-home-user-tisa-trip-os/85dc2169-9056-4376-b7c8-87ddd2bd3782/scratchpad/wt2/tests/stage12-smart-bag.test.js:195:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: B-14 (S12-6) activities and "packed" ticks on added items are in the backup and come back on restore
+not ok 14 - B-14 (S12-6) activities and "packed" ticks on added items are in the backup and come back on restore
+  ---
+  duration_ms: 2.289688
+  type: 'test'
+  location: '/tmp/claude-0/-home-user-tisa-trip-os/85dc2169-9056-4376-b7c8-87ddd2bd3782/scratchpad/wt2/tests/stage12-smart-bag.test.js:216:1'
+  failureType: 'testCodeFailure'
+  error: 'musts were added'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///tmp/claude-0/-home-user-tisa-trip-os/85dc2169-9056-4376-b7c8-87ddd2bd3782/scratchpad/wt2/tests/stage12-smart-bag.test.js:225:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: B-15 texts: every screen key in he and en; the screen, the data and the core are precached for offline
+not ok 15 - B-15 texts: every screen key in he and en; the screen, the data and the core are precached for offline
+  ---
+  duration_ms: 0.669239
+  type: 'test'
+  location: '/tmp/claude-0/-home-user-tisa-trip-os/85dc2169-9056-4376-b7c8-87ddd2bd3782/scratchpad/wt2/tests/stage12-smart-bag.test.js:236:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + [
+    +   'he:sbag.title',
+    +   'en:sbag.title',
+    +   'he:sbag.lead',
+    +   'en:sbag.lead',
+    +   'he:sbag.open',
+    +   'en:sbag.open',
+    +   'he:sbag.days',
+    +   'en:sbag.days',
+    +   'he:sbag.noDates',
+    +   'en:sbag.noDates',
+    +   'he:sbag.kinds',
+    +   'en:sbag.kinds',
+    +   'he:sbag.unclassified',
+    +   'en:sbag.unclassified',
+    +   'he:sbag.activities',
+    +   'en:sbag.activities',
+    +   'he:sbag.must',
+    +   'en:sbag.must',
+    +   'he:sbag.nice',
+    +   'en:sbag.nice',
+    +   'he:sbag.avoid',
+    +   'en:sbag.avoid',
+    +   'he:sbag.addAll',
+    +   'en:sbag.addAll',
+    +   'he:sbag.add',
+    +   'en:sbag.add',
+    +   'he:sbag.addLabel',
+    +   'en:sbag.addLabel',
+    +   'he:sbag.added',
+    +   'en:sbag.added',
+    +   'he:sbag.addedAll',
+    +   'en:sbag.addedAll',
+    +   'he:sbag.none',
+    +   'en:sbag.none',
+    +   'he:sbag.where',
+    +   'en:sbag.where',
+    +   'he:sbag.toLists',
+    +   'en:sbag.toLists',
+    +   'he:sbag.qty',
+    +   'en:sbag.qty',
+    +   'he:sbag.toCheck',
+    +   'en:sbag.toCheck',
+    +   'he:screen.smartBag',
+    +   'en:screen.smartBag'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'he:sbag.title'
+    1: 'en:sbag.title'
+    2: 'he:sbag.lead'
+    3: 'en:sbag.lead'
+    4: 'he:sbag.open'
+    5: 'en:sbag.open'
+    6: 'he:sbag.days'
+    7: 'en:sbag.days'
+    8: 'he:sbag.noDates'
+    9: 'en:sbag.noDates'
+    10: 'he:sbag.kinds'
+    11: 'en:sbag.kinds'
+    12: 'he:sbag.unclassified'
+    13: 'en:sbag.unclassified'
+    14: 'he:sbag.activities'
+    15: 'en:sbag.activities'
+    16: 'he:sbag.must'
+    17: 'en:sbag.must'
+    18: 'he:sbag.nice'
+    19: 'en:sbag.nice'
+    20: 'he:sbag.avoid'
+    21: 'en:sbag.avoid'
+    22: 'he:sbag.addAll'
+    23: 'en:sbag.addAll'
+    24: 'he:sbag.add'
+    25: 'en:sbag.add'
+    26: 'he:sbag.addLabel'
+    27: 'en:sbag.addLabel'
+    28: 'he:sbag.added'
+    29: 'en:sbag.added'
+    30: 'he:sbag.addedAll'
+    31: 'en:sbag.addedAll'
+    32: 'he:sbag.none'
+    33: 'en:sbag.none'
+    34: 'he:sbag.where'
+    35: 'en:sbag.where'
+    36: 'he:sbag.toLists'
+    37: 'en:sbag.toLists'
+    38: 'he:sbag.qty'
+    39: 'en:sbag.qty'
+    40: 'he:sbag.toCheck'
+    41: 'en:sbag.toCheck'
+    42: 'he:screen.smartBag'
+    43: 'en:screen.smartBag'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///tmp/claude-0/-home-user-tisa-trip-os/85dc2169-9056-4376-b7c8-87ddd2bd3782/scratchpad/wt2/tests/stage12-smart-bag.test.js:242:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..15
+# tests 15
+# suites 0
+# pass 3
+# fail 12
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 98.640772
