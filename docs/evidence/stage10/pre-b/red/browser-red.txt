@@ -1,0 +1,7 @@
+FAIL  T1 fresh install: plan20k budget saved (20,000 with the flight, emergency 2,500 apart) and shown
+PASS  T2 390px: no sideways scroll on the money screen
+FAIL  T3 dates on a new trip: the suggested route is built at once, from the day after departure to the return date, and kept after a reload
+PASS  T4 390px: no sideways scroll on the itinerary
+FAIL  run
+PASS  no JS errors
+FAIL 3
