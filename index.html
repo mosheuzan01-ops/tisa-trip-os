@@ -56,6 +56,11 @@
               <h1 class="display" data-slot="country"></h1>
             </div>
 
+            <button class="home-sos" type="button" data-action="home-emergency">
+              <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-sos"/></svg>
+              <span class="home-sos-text"><span class="home-sos-title" data-i18n="home.emergency">חירום</span><span class="home-sos-desc" data-i18n="home.emergency.desc">מספרים מאומתים, חיוג בלחיצה</span></span>
+            </button>
+
             <button class="pass" type="button" aria-pressed="false" data-i18n-label="pass.flipLabel" data-label-back="pass.flipLabelBack" aria-label="כרטיס הטיול. הקישו כדי לראות את התקציב">
               <span class="pass-inner">
                 <!-- Front: platinum-gold trip pass with an aircraft window -->
@@ -195,9 +200,9 @@
                   <span class="tile-desc" data-i18n="tools.lists.desc">אריזה ומשימות</span>
                 </button>
                 <button class="tile surface" type="button" data-go="info">
-                  <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-doc"/></svg>
-                  <span class="tile-name" data-i18n="tools.docs">מסמכים</span>
-                  <span class="tile-desc" data-i18n="tools.docs.desc">מסמכי הנסיעה</span>
+                  <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-sos"/></svg>
+                  <span class="tile-name" data-i18n="tools.info">מידע וחירום</span>
+                  <span class="tile-desc" data-i18n="tools.info.desc">חירום, שגרירות ובתי חולים</span>
                 </button>
               </div>
             </section>
@@ -207,6 +212,47 @@
       </section>
 
       <!-- Placeholder for the tabs that are not built yet -->
+      <section class="panel info" id="panel-info" role="tabpanel" aria-labelledby="info-title" hidden>
+        <div class="itin-head">
+          <h1 class="display" id="info-title" data-i18n="info.title">מידע וחירום</h1>
+          <p class="muted" data-i18n="info.lead">שמור בטלפון ועובד בלי אינטרנט. ליד כל פרט: מקור ותאריך בדיקה, או "טרם אומת".</p>
+          <p class="muted info-checked" data-slot="info-checked"></p>
+        </div>
+        <p class="card surface info-error" data-slot="info-error" role="alert" data-i18n="info.error" hidden>המידע לא נטען. מספרי חירום: לבדוק בצ'ק-ליסט.</p>
+
+        <section class="card surface info-sos" id="info-emergency" aria-labelledby="info-sos-title">
+          <h2 class="tool-title" id="info-sos-title" data-i18n="info.sos.title">מספרי חירום</h2>
+          <p class="muted info-dial-note" data-i18n="info.dialNote">חיוג דורש קליטה סלולרית. במצב טיסה החיוג לא מובטח. אפשר להעתיק את המספר.</p>
+          <ul class="info-list" data-slot="info-sos"></ul>
+          <div class="info-sos-other" data-slot="info-sos-other" hidden>
+            <h3 class="info-sub-title" data-i18n="info.sos.other">מספרים שעוד לא אומתו</h3>
+            <ul class="info-list"></ul>
+          </div>
+        </section>
+
+        <section class="info-section" aria-labelledby="info-contacts-title">
+          <h2 class="section-title" id="info-contacts-title" data-i18n="info.contacts.title">שגרירות ובית חב"ד</h2>
+          <div class="info-cards" data-slot="info-contacts"></div>
+        </section>
+
+        <section class="info-section" aria-labelledby="info-hospitals-title">
+          <h2 class="section-title" id="info-hospitals-title" data-i18n="info.hospitals.title">בתי חולים לפי יעד</h2>
+          <p class="info-draft" data-slot="info-draft" hidden></p>
+          <div class="info-cards" data-slot="info-hospitals"></div>
+        </section>
+
+        <section class="card surface info-insurance" aria-labelledby="info-insurance-title">
+          <h2 class="tool-title" id="info-insurance-title" data-i18n="info.insurance.title">ביטוח נסיעות</h2>
+          <p class="muted" data-i18n="info.insurance.lead">עוד לא נרכש ביטוח. כיסוי, הסדר, אישור מראש ותשלום ישיר: טרם אומתו. כאן אפשר לרשום את פרטי הפוליסה כשיהיו.</p>
+          <div data-slot="info-insurance"></div>
+        </section>
+
+        <section class="info-section info-more" aria-labelledby="info-more-title">
+          <h2 class="section-title" id="info-more-title" data-i18n="info.more.title">תאילנדית וכללי התנהגות</h2>
+          <div data-slot="info-more"></div>
+        </section>
+      </section>
+
       <section class="panel soon" id="panel-soon" role="tabpanel" hidden>
         <div class="soon-box">
           <span class="soon-icon surface"><svg class="icon" aria-hidden="true"><use data-slot="soon-icon" href="./assets/icons.svg#i-route"/></svg></span>

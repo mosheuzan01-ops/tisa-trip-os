@@ -55,7 +55,11 @@ test('G14 + G15: no secrets, cookies or analytics', () => {
 
 test('G16: no prices or dates in data (Stage 0 must not invent them)', () => {
   const banned = /price|cost|rate|amount|date"\s*:|"\d{4}-\d{2}-\d{2}/i;
+  // Stage 11 (owner, 2026-11-22): data/info/*.json must carry the real date each fact was checked; tests/stage11-info.test.js
+  // (I-2, I-3) holds those dates to a source and to "not in the future". Prices and amounts stay banned there too.
   for (const file of listFiles('data', ['.json'])) {
-    assert.doesNotMatch(readText(file), banned, file);
+    const text = readText(file);
+    if (file.startsWith('data/info/')) { assert.doesNotMatch(text, /price|cost|amount/i, file); continue; }
+    assert.doesNotMatch(text, banned, file);
   }
 });

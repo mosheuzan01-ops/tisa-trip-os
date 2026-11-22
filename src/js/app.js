@@ -1,6 +1,6 @@
 // App entry point: data, navigation, settings, offline. Screens never touch storage directly;
 // they change ctx.state through ctx.change(), and the storage layer saves it after a short pause.
-import { loadConfig, loadLocale, loadCountry } from './core/load.js';
+import { loadConfig, loadLocale, loadCountry, loadCountryInfo } from './core/load.js';
 import { createTranslator, resolveLocale, interpolate } from './core/i18n.js';
 import { buildTitle, validateCountry } from './core/country.js';
 import {
@@ -25,6 +25,8 @@ import { renderLuggage, setupLuggage } from './luggage-view.js';
 import { renderPhotos, setupPhotos, renderPhotoBackup, setupPhotoBackup } from './photos-view.js';
 import { renderSummary, setupSummary } from './summary-view.js';
 import { renderPlaces, setupPlaces } from './places-view.js';
+import { renderInfo, setupInfo } from './info-view.js';
+import { validateInfo } from './core/info.js';
 
 const $ = (sel, root = document) => root.querySelector(sel);
 const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
@@ -42,7 +44,7 @@ const SCREENS = {
   photos: { tab: 'itinerary', title: 'screen.photos', icon: 'i-image' }, // 7.0b, opened from the itinerary
   summary: { tab: 'itinerary', title: 'screen.summary', icon: 'i-summary' }, // 7.0c, opened from the itinerary
   places: { tab: 'itinerary', title: 'screen.places', icon: 'i-pin' }, // Stage 10, opened from the itinerary
-  info: { title: 'screen.info', icon: 'i-doc', soon: true },
+  info: { tab: 'home', title: 'screen.info', icon: 'i-sos' }, // Stage 11, opened from home (tile and emergency button)
   assistant: { tab: 'home', title: 'screen.assistant', icon: 'i-chat' }, // opened from home; the home tab stays lit
   settings: {},
 };
@@ -57,9 +59,12 @@ function parseRoute(hash) {
 async function boot() {
   const config = await loadConfig();
   const locale = resolveLocale(document.documentElement.lang, config);
-  const [dict, country, packModule] = await Promise.all([
+  const [dict, country, packModule, infoData] = await Promise.all([
     loadLocale(locale), loadCountry(config.activeCountry), import(`../../data/packs/${config.activeCountry}.js`).catch(() => ({})),
+    loadCountryInfo(config.activeCountry).catch(() => null),
   ]);
+  // Stage 11: the info file is used only when it passes every rule (no future date check here: the phone's clock may be off).
+  const info = infoData && validateInfo(infoData).length === 0 ? infoData : null;
   const pack = Object.values(packModule)[0] ?? null; // planning data: categories, profiles, rates (estimates, not verified)
   const problems = validateCountry(country);
   if (problems.length) throw new Error(`Invalid country data: ${problems.join(', ')}`);
@@ -94,7 +99,7 @@ async function boot() {
   const loaded = storage.load();
   const fmtLocale = country.dateFormatLocale?.[locale] ?? locale;
   const ctx = {
-    t, locale, fmtLocale, country, config, storage, pack,
+    t, locale, fmtLocale, country, config, storage, pack, info,
     state: loaded.state, status: loaded.status, lastSave: null, route: 'home', waitingWorker: null,
   };
   ctx.trip = () => ctx.state.trips[ctx.state.activeTripId];
@@ -126,6 +131,7 @@ async function boot() {
     renderPhotos(ctx);
     renderSummary(ctx);
     renderPlaces(ctx);
+    renderInfo(ctx);
     renderPhotoBackup(ctx);
     renderAssistant(ctx);
     renderBanners(ctx);
@@ -157,6 +163,7 @@ async function boot() {
   setupPhotos(ctx, { wireDialog, showFormErrors });
   setupSummary(ctx, { wireDialog, showFormErrors });
   setupPlaces(ctx, { wireDialog, showFormErrors });
+  setupInfo(ctx);
   setupPhotoBackup(ctx);
   setupServiceWorker(ctx);
   addEventListener('online', () => renderBanners(ctx));
@@ -452,7 +459,7 @@ function setupSheets(ctx) {
 function setupRouter(ctx) {
   const { t } = ctx;
   const tabs = $$('[role="tab"]');
-  const panels = { home: $('#panel-home'), itinerary: $('#panel-itinerary'), money: $('#panel-money'), checklist: $('#panel-checklist'), transfers: $('#panel-transfers'), calendar: $('#panel-calendar'), luggage: $('#panel-luggage'), photos: $('#panel-photos'), summary: $('#panel-summary'), places: $('#panel-places'), assistant: $('#panel-assistant'), soon: $('#panel-soon'), settings: $('#panel-settings') };
+  const panels = { home: $('#panel-home'), itinerary: $('#panel-itinerary'), money: $('#panel-money'), checklist: $('#panel-checklist'), transfers: $('#panel-transfers'), calendar: $('#panel-calendar'), luggage: $('#panel-luggage'), photos: $('#panel-photos'), summary: $('#panel-summary'), places: $('#panel-places'), info: $('#panel-info'), assistant: $('#panel-assistant'), soon: $('#panel-soon'), settings: $('#panel-settings') };
   const main = $('#main');
   const rtl = () => document.documentElement.dir === 'rtl';
 

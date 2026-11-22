@@ -101,12 +101,14 @@ test('A-5: the owner\'s list is in, in the right groups', () => {
 });
 
 test('A-6: rule-dependent items are "to check"; nothing is stated as verified; no fixed weight', () => {
-  const ruled = ['passport-validity', 'entry-rules', 'driving-permit', 'police-app', 'emergency-numbers', 'leave-early', 'bottle', 'meal',
+  // Stage 11 (owner, 2026-11-22): the emergency numbers were verified against official sources, so that item left this list.
+  const ruled = ['passport-validity', 'entry-rules', 'driving-permit', 'police-app', 'leave-early', 'bottle', 'meal',
     'liquids-bag', 'bag-limits', 'lithium-carry', 'temple-clothes', 'plug-adapter'];
   for (const key of ruled) assert.equal(B.find((x) => x.key === key)?.verify, true, key);
   const emergency = B.find((x) => x.key === 'emergency-numbers');
   for (const n of ['1669', '191', '199', '1155', '1672']) assert.ok(emergency.note.he.includes(n), n);
-  assert.match(emergency.note.he, /טרם אומת/);
+  assert.doesNotMatch(emergency.note.he, /טרם אומת/);
+  assert.match(emergency.note.he, /מידע וחירום/);
   assert.match(B.find((x) => x.key === 'insurance').note.he, /טרם נרכש/);
   assert.match(B.find((x) => x.key === 'driving-permit').note.he, /רק אם/);
   const text = JSON.stringify(B);
@@ -128,8 +130,10 @@ test('A-8: built-in items: key, group, name, note; nothing ticked; rule items op
   assert.equal(list.length, B.length);
   assert.ok(list.every((x) => x.done === false && typeof x.builtin === 'string' && x.qty === 1));
   const em = list.find((x) => x.builtin === 'emergency-numbers');
-  assert.ok(needsCheck(em) && em.verify.checkedAt === null);
+  assert.ok(!needsCheck(em), 'verified in stage 11');
   assert.match(em.note, /1669/);
+  const app = list.find((x) => x.builtin === 'police-app');
+  assert.ok(needsCheck(app) && app.verify.checkedAt === null);
   assert.equal(builtinItems(TH, 'en', idGen('b')).find((x) => x.builtin === 'passport').name, 'Passport');
 });
 

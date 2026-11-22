@@ -1,0 +1,183 @@
+{
+  "S4-7": {
+    "result": "PASS",
+    "afterCancel": {},
+    "loaded": {
+      "profileId": "realistic",
+      "estimate": true,
+      "flight": 390000
+    },
+    "labelText": "הערכת תכנון, לא מאומת",
+    "editedFood": 250050,
+    "emergency": 100000
+  },
+  "S4-3": {
+    "result": "PASS",
+    "first": {
+      "amountMinor": 30000,
+      "rate": 0.1,
+      "baseMinor": 3000
+    },
+    "second": {
+      "rate": 0.08333333333333333,
+      "baseMinor": 2500
+    },
+    "badgeCustom": "שער שערכתם",
+    "badgePlanning": "שער תכנון"
+  },
+  "S4-1": {
+    "result": "PASS",
+    "listed": [
+      "פאד תאי",
+      "שוק לילה"
+    ],
+    "keys": [
+      "tisa:v1"
+    ]
+  },
+  "S4-6": {
+    "result": "PASS",
+    "want": {
+      "paid": 22335,
+      "planned": 250000,
+      "committed": 120000,
+      "free": 1174715
+    },
+    "shown": {
+      "paid": 22335,
+      "planned": 250000,
+      "committed": 120000,
+      "total": 1567050,
+      "free": 1174715,
+      "big": 1174715
+    },
+    "total": 1567050
+  },
+  "S4-4": {
+    "result": "PASS",
+    "foodOver": [
+      "אוכלחריגה‏2,555 ‏₪ מתוך ‏2,500.50 ‏₪חריגה של ‏54.50 ‏₪שם והע"
+    ],
+    "emergency": "חירום‏200 ‏₪ מתוך ‏1,000 ‏₪נשאר ‏800 ‏₪נפרד מהתקציב השוטף. לא נכנס ל\"פנוי\" ולא ל"
+  },
+  "S4-8": {
+    "result": "PASS",
+    "foodCount": 3,
+    "pieFood": [
+      [
+        "food",
+        255500
+      ]
+    ],
+    "pieAll": [
+      [
+        "food",
+        255500
+      ],
+      [
+        "lodging",
+        120000
+      ],
+      [
+        "emergency",
+        20000
+      ],
+      [
+        "attractions",
+        16835
+      ]
+    ],
+    "dayCount": 6,
+    "ask": "למחוק את רופא? אי אפשר לבטל את זה.",
+    "afterNo": 6,
+    "afterYes": 5,
+    "err": "כתבו סכום חיובי, עד שתי ספרות אחרי הנקודה.",
+    "afterBad": 5
+  },
+  "S4-11 (layout)": {
+    "result": "PASS",
+    "screenA": {
+      "hscroll": false,
+      "dir": "rtl",
+      "small": [],
+      "clipped": [],
+      "tiny": []
+    },
+    "dialogA": {
+      "hscroll": false,
+      "dir": "rtl",
+      "small": [],
+      "clipped": [],
+      "tiny": []
+    },
+    "catsA": {
+      "hscroll": false,
+      "dir": "rtl",
+      "small": [],
+      "clipped": [],
+      "tiny": []
+    }
+  },
+  "S4-9": {
+    "result": "PASS",
+    "wiped": {
+      "expenses": 0,
+      "destinations": 0
+    },
+    "same": {
+      "destinations": true,
+      "budget": true,
+      "rates": true,
+      "expenses": true
+    }
+  },
+  "S4-5": {
+    "result": "PASS",
+    "before": {
+      "money": "פנוי היום: ‏509 ‏₪",
+      "home": "פנוי היום: ‏509 ‏₪",
+      "ok": true
+    },
+    "middle": {
+      "money": "פנוי היום: ‏1,018 ‏₪",
+      "home": "פנוי היום: ‏1,018 ‏₪",
+      "ok": true
+    },
+    "last-day": {
+      "money": "פנוי היום: ‏15,270 ‏₪",
+      "home": "פנוי היום: ‏15,270 ‏₪",
+      "ok": true
+    },
+    "bangkok-midnight": {
+      "money": "פנוי היום: ‏15,270 ‏₪",
+      "home": "פנוי היום: ‏15,270 ‏₪",
+      "ok": true
+    },
+    "after": {
+      "money": "הטיול הסתיים.",
+      "home": "הטיול הסתיים.",
+      "ok": true
+    }
+  },
+  "S4-10": {
+    "result": "PASS",
+    "caches": {
+      "keys": [
+        "tisa-0.10.0"
+      ],
+      "files": [
+        "/src/js/money-view.js",
+        "/src/js/core/money.js",
+        "/src/js/core/split.js",
+        "/data/packs/th.js"
+      ]
+    },
+    "version": "0.10.0",
+    "offlineExpenses": 1
+  },
+  "S4-11 (no JS errors, no outside requests)": {
+    "result": "PASS",
+    "errors": [],
+    "external": []
+  }
+}
