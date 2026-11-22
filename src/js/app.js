@@ -8,7 +8,7 @@ import {
 } from './core/trip.js';
 import { createStorage, browserBackend, requestPersistence, isPersisted } from './core/storage.js';
 import { needsBackupReminder } from './core/schema.js';
-import { readyChecklist } from './core/checklist.js';
+import { readyTrip, fillRoute } from './core/template.js';
 import { dataSummary } from './core/device-data.js';
 import { exportBackup, parseBackup, backupFileName } from './core/backup.js';
 import { makeId } from './core/ids.js';
@@ -133,7 +133,8 @@ async function boot() {
   if (loaded.status === 'migrated') ctx.lastSave = storage.save(ctx.state); // move Stage 1 data to the new key (old keys stay)
   // Pre-stage-10 PR A (owner, 2026-11-21): a new trip comes with the built-in checklist, saved at once so a reload
   // keeps the same items (and ticks). Old data is never filled here: the lists screen offers what is missing.
-  if (loaded.status === 'new') { readyChecklist(ctx.trip(), pack, locale, () => makeId()); ctx.lastSave = storage.save(ctx.state); }
+  // PR B: and the plan20k budget; the route follows as soon as the trip dates are entered (fillRoute).
+  if (loaded.status === 'new') { readyTrip(ctx.trip(), pack, locale, () => makeId()); ctx.lastSave = storage.save(ctx.state); }
   if (loaded.status === 'new' || loaded.status === 'migrated') requestPersistence().then(() => renderSettings(ctx));
 
   setupTheme(ctx);
@@ -411,7 +412,9 @@ function setupSheets(ctx) {
       ctx.openReplan(dates, from);
       return;
     }
-    commit((s) => { const trip = s.trips[s.activeTripId]; trip.startDate = dates.start; trip.endDate = dates.end; }, sheets.dates, 'toast.saved');
+    let built = 0; // PR B: a trip with no stops gets the suggested route at once
+    commit((s) => { const trip = s.trips[s.activeTripId]; trip.startDate = dates.start; trip.endDate = dates.end; built = fillRoute(trip, ctx.pack, ctx.locale, () => makeId()).added; }, sheets.dates, 'toast.saved');
+    if (built) ctx.toast('itin.route.built');
   });
 
   $('[data-form="budget"]').addEventListener('submit', (e) => {
@@ -652,8 +655,9 @@ function setupSettings(ctx) {
       });
       return;
     }
-    const result = ctx.change((s) => { const trip = s.trips[s.activeTripId]; trip.startDate = dates.start; trip.endDate = dates.end; }, { now: true });
-    ctx.toast(result?.ok ? 'toast.saved' : 'form.saveFailed');
+    let built = 0; // PR B: a trip with no stops gets the suggested route at once
+    const result = ctx.change((s) => { const trip = s.trips[s.activeTripId]; trip.startDate = dates.start; trip.endDate = dates.end; built = fillRoute(trip, ctx.pack, ctx.locale, () => makeId()).added; }, { now: true });
+    ctx.toast(!result?.ok ? 'form.saveFailed' : built ? 'itin.route.built' : 'toast.saved');
   });
 
   // Theme
@@ -717,7 +721,7 @@ function setupSettings(ctx) {
     e.preventDefault();
     if (resetInput.value.trim() !== word) return;
     const { state } = ctx.storage.reset();
-    readyChecklist(state.trips[state.activeTripId], ctx.pack, ctx.locale, () => makeId());
+    readyTrip(state.trips[state.activeTripId], ctx.pack, ctx.locale, () => makeId());
     const result = ctx.storage.save(state);
     ctx.state = state;
     ctx.status = 'ok';

@@ -5,6 +5,8 @@
 import { profileToBudget, EMERGENCY } from './money.js';
 import { planRoute } from './route-plan.js';
 import { isIsoDate } from './trip.js';
+import { cleanStops } from './itinerary.js';
+import { readyChecklist } from './checklist.js';
 
 export const TEMPLATE_ID = 'plan20k';
 
@@ -69,4 +71,41 @@ export function stopNameFor(trip, id) {
     if (old) return { name: old.name, archived: true };
   }
   return null;
+}
+
+
+// ---------- Pre-stage-10 PR B (owner, 2026-11-21): a new trip comes ready ----------
+
+/** A new (or reset) trip: the built-in checklist and, when it has no budget of its own, the plan20k budget.
+ *  The route waits for the trip dates (fillRoute). A trip with data of its own is left as it is. */
+export function readyTrip(trip, pack, locale, makeId) {
+  readyChecklist(trip, pack, locale, makeId);
+  const tpl = pack?.budgetTemplates?.find((x) => x.id === TEMPLATE_ID);
+  if (!tpl || hasBudget(trip.budget) || trip.budget?.profileId) return;
+  trip.budget = { ...trip.budget, ...profileToBudget(tpl, locale) };
+  if (trip.templateOffer == null) trip.templateOffer = 'applied';
+}
+
+/** Dates were saved: a trip with no stops gets the suggested route at once. Stops that exist are never touched. */
+export function fillRoute(trip, pack, locale, makeId) {
+  if (!isIsoDate(trip?.startDate) || !isIsoDate(trip?.endDate) || cleanStops(trip.destinations).length) return { added: 0, warnings: [] };
+  const route = planRoute(trip.startDate, trip.endDate, pack?.routeTemplate, locale, makeId);
+  if (route.stops.length) trip.destinations = [...(Array.isArray(trip.destinations) ? trip.destinations : []), ...route.stops];
+  return { added: route.stops.length, warnings: route.warnings };
+}
+
+/** "New route from the template", after the preview and a yes: the current route goes to the archive exactly,
+ *  the trip takes the new dates and the suggested route. Nothing changes when no route can be made. */
+export function rebuildRoute(trip, dates, pack, locale, makeId, nowIso) {
+  const route = planRoute(dates?.start, dates?.end, pack?.routeTemplate, locale, makeId);
+  if (!route.stops.length) return { warnings: route.warnings };
+  const archive = trip.archive ?? { budgets: [], routes: [] };
+  archive.budgets = Array.isArray(archive.budgets) ? archive.budgets : [];
+  archive.routes = Array.isArray(archive.routes) ? archive.routes : [];
+  if ((trip.destinations?.length ?? 0) > 0) archive.routes.push({ at: nowIso, destinations: structuredClone(trip.destinations) });
+  trip.archive = archive;
+  trip.startDate = dates.start;
+  trip.endDate = dates.end;
+  trip.destinations = route.stops;
+  return { warnings: route.warnings };
 }

@@ -962,5 +962,14 @@
   "settings.device.browser": "browser",
   "settings.device.summary": "Data here ({where}): created {date}. {items} items, {stops} stops, {expenses} expenses, {photos} photos.",
   "settings.device.iphone": "On iPhone, Safari and the home-screen app keep separate data. If one side looks empty, export a backup where the data is and restore it on the other side. Nothing is merged on its own.",
-  "list.builtin.later": "OK. You can add them later with the button."
+  "list.builtin.later": "OK. You can add them later with the button.",
+  "replan.template": "New route from the template",
+  "replan.template.hint": "You see the new route first. The current one is kept in the archive.",
+  "replan.template.title": "The new route (a suggestion, not booked)",
+  "replan.template.archive": "The current route is kept in the archive. Expenses, flights, check-ins and photos do not change.",
+  "replan.template.done": "Route built from the template. The old one is in the archive.",
+  "itin.tpl.title": "Route from the template",
+  "itin.tpl.text": "You can build a new route from the template and the trip dates. You see it first, and the current route is kept in the archive.",
+  "itin.tpl.open": "See the suggestion",
+  "itin.route.built": "A suggested route was built from the dates. Everything can be edited."
 }

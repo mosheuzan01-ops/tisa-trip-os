@@ -2,7 +2,8 @@
 // the suggested route (only on request) and replanning for new trip dates (before and after shown, saved only on yes).
 // Logic lives in core/itinerary.js; this file only draws and wires. All copy comes from the locale files.
 import { interpolate } from './core/i18n.js';
-import { todayIn, isIsoDate } from './core/trip.js';
+import { todayIn, isIsoDate, validateDates } from './core/trip.js';
+import { needsTemplateOffer, declineTemplate, rebuildRoute } from './core/template.js';
 import {
   sortStops, cleanStops, stopNights, totalNights, validateStop, findOverlaps, stopsOutsideTrip,
   whereToday, moveStop, replan, seedFromPack, formatDate, formatRange,
@@ -68,6 +69,8 @@ export function renderItinerary(ctx) {
   const today = todayIn(country.timeZone);
   const where = whereToday(stops, today);
   const names = new Map(stops.map((x) => [x.id, x.name]));
+  // Pre-stage-10 PR B: the one-time template offer, here too (a route only after the preview and a yes).
+  $('[data-slot="itin-template-card"]').hidden = !(stops.length > 0 && needsTemplateOffer(trip));
 
   $('[data-slot="itin-summary"]').textContent = stops.length
     ? interpolate(t('itin.summary'), { stops: stopsText(t, stops.length), nights: nightsText(t, nights) }) : '';
@@ -294,6 +297,11 @@ export function setupItinerary(ctx, { wireDialog, showFormErrors }) {
     if (action === 'seed-open') openSeed(btn);
     if (action === 'seed-archive-open') openSeed(btn, 'archive');
     if (action === 'replan-open') openReplan(btn);
+    if (action === 'itin-template-open') openReplan(btn, null, null, 'template');
+    if (action === 'itin-template-decline') {
+      commit((s) => declineTemplate(s.trips[s.activeTripId]), 'tpl.declined');
+      $('[data-action="replan-open"]')?.focus();
+    }
   });
 
   // ---------- Suggested route from the country pack (only on request, only into an empty list) ----------
@@ -368,9 +376,10 @@ export function setupItinerary(ctx, { wireDialog, showFormErrors }) {
     const stops = visibleStops(trip);
     const next = { start: rForm.start.value, end: rForm.end.value };
     const mode = rForm.mode.value;
-    const result = replan(stops, tripDates(trip), next, mode);
     preview.replaceChildren();
     plan = null;
+    if (mode === 'template') { previewTemplate(next); return; }
+    const result = replan(stops, tripDates(trip), next, mode);
     if (!result.ok) {
       const flex = stops.find((x) => x.flexible);
       const key = result.error.startsWith('flex.') ? `replanErr.${result.error}` : `err.${result.error}`;
@@ -406,7 +415,29 @@ export function setupItinerary(ctx, { wireDialog, showFormErrors }) {
     rSave.disabled = Boolean(old && old.start === next.start && old.end === next.end && !result.changes.length);
   }
 
-  function openReplan(from, preset = null, cancel = null) {
+  // Pre-stage-10 PR B: "new route from the template": the new stops are listed and the old route goes to the
+  // archive. Nothing is saved before the yes.
+  function previewTemplate(next) {
+    const bad = validateDates(next);
+    rForm.querySelector('.form-error').textContent = bad.length ? t(`err.${bad[0]}`) : '';
+    if (bad.length) { rSave.disabled = true; return; }
+    const route = planRoute(next.start, next.end, ctx.pack?.routeTemplate, ctx.locale, () => 'preview');
+    preview.append(el('h3', 'replan-preview-title', t('replan.template.title')));
+    for (const w of route.warnings) preview.append(el('p', 'form-warn', t(`routeWarn.${w}`)));
+    if (!route.stops.length) { rSave.disabled = true; return; }
+    const ul = el('ul', 'replan-changes replan-new');
+    for (const x of route.stops) {
+      const li = el('li');
+      li.append(el('span', 'replan-name', x.name), el('span', 'replan-will', formatRange(x, fmtLocale)));
+      ul.append(li);
+    }
+    preview.append(ul);
+    if (visibleStops(ctx.trip()).length) preview.append(el('p', 'sheet-hint', t('replan.template.archive')));
+    plan = { dates: next, template: true };
+    rSave.disabled = false;
+  }
+
+  function openReplan(from, preset = null, cancel = null, mode = null) {
     opener = from;
     onCancel = cancel;
     saved = false;
@@ -417,6 +448,7 @@ export function setupItinerary(ctx, { wireDialog, showFormErrors }) {
     const dates = preset ?? tripDates(trip) ?? (stops.length ? { start: stops[0].startDate, end: stops[stops.length - 1].endDate } : { start: '', end: '' });
     rForm.start.value = dates.start;
     rForm.end.value = dates.end;
+    if (mode) rForm.querySelector(`input[name="mode"][value="${mode}"]`).checked = true;
     const flexInput = rForm.querySelector('input[value="flex"]');
     flexInput.disabled = !stops.some((x) => x.flexible);
     flexInput.closest('.replan-mode').classList.toggle('is-disabled', flexInput.disabled);
@@ -439,6 +471,12 @@ export function setupItinerary(ctx, { wireDialog, showFormErrors }) {
     computePlan();
     if (!plan) return;
     const { dates, result } = plan;
+    if (plan.template) {
+      commit((s) => { rebuildRoute(s.trips[s.activeTripId], dates, ctx.pack, ctx.locale, () => makeId(), new Date().toISOString()); }, 'replan.template.done');
+      saved = true;
+      dlgReplan.close();
+      return;
+    }
     commit((s) => {
       const trip = s.trips[s.activeTripId];
       trip.startDate = dates.start;
