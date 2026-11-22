@@ -6,6 +6,9 @@
 // R16 backup reminder (S13-2): not before 7 days, shown at 7 days on the home screen only, gone after a backup
 // R17 the version in settings = package.json = config = sw.js (S13-3)
 // R18 privacy (S13-4): the privacy text in settings is visible, reachable from the keyboard, and says what 1.0.0 does
+// R19 new install (docs/BUDGET_AND_START.md): the shared dates and the route, the checklist, no budget ("—"), no template card
+// R20 the 20,000 template as a manual choice: free 15,000 with 5,000 set aside for the flight; a 5,000 flight is taken once
+// R21 layout shift (CLS) under 0.1 on every screen, opened with saved data (owner-approved QA rule, 2026-11-22)
 // Waits for UI state (rule 6). Run 3 times. QA_OUT (default docs/evidence/stage13/browser), PORT (default 8194).
 const { chromium } = require('playwright');
 const { spawn } = require('node:child_process');
@@ -190,6 +193,80 @@ const pngSize = (buf) => (buf.readUInt32BE(0) === 0x89504e47 ? [buf.readUInt32BE
       await c.ctx.close();
       pass('R16 (S13-2) backup reminder: not 1 minute before 7 days, shown at 7 days on the home screen, not on other screens, gone after the backup',
         !a.on && b.on && gone && stamped !== last.toISOString() && !c.on && /\.json$/.test(dl.suggestedFilename()), { before7: a.on, at7: b.on, gone, onMoney: c.on });
+    }
+
+    // ---------- R19: a new install ----------
+    {
+      const ctx = await context(browser, null);
+      const page = await ctx.newPage();
+      watch(page);
+      await page.clock.setFixedTime(new Date('2026-12-01T10:00:00+07:00'));
+      await go(page, 'home');
+      await ready(page);
+      const st = await stored(page);
+      const trip = st.trips[st.activeTripId];
+      const home = await page.evaluate(() => ({ pass: document.querySelector('[data-slot="pass-dates"]').textContent, left: document.querySelector('[data-slot="kpi-left"]').textContent, empty: !document.querySelector('[data-slot="budget-empty"]').hidden }));
+      await go(page, 'itinerary');
+      const stops = await page.locator('#panel-itinerary [data-slot="stops"] [data-action="stop-edit"]').count();
+      await go(page, 'money');
+      const money = await page.evaluate(() => ({ free: document.querySelector('[data-slot="money-free"]').textContent, today: document.querySelector('[data-slot="money-today"]').textContent, card: !document.querySelector('[data-slot="template-card"]').hidden, cats: document.querySelectorAll('#panel-money [data-action="cat-edit"]').length }));
+      if (SHOTS) await page.screenshot({ path: `${OUT}/new-install-money-mobile.jpg`, type: 'jpeg', quality: 80 });
+      const zero = Object.values(trip.budget.categoriesMinor).every((v) => v === 0);
+      pass('R19 new install: shared dates 20.12.2026-20.1.2027 and the route, the checklist, the category names at 0 ("—", no budget yet), no template card',
+        trip.startDate === '2026-12-20' && trip.endDate === '2027-01-20' && trip.destinations.length > 0 && stops === trip.destinations.length && trip.checklist.length > 0
+        && zero && trip.budget.profileId === null && /20 Dec/.test(home.pass) && home.left === '—' && home.empty && money.free === '—' && /עוד אין תקציב/.test(money.today) && !money.card && money.cats >= 7,
+        { dates: [trip.startDate, trip.endDate], stops, checklist: trip.checklist.length, zero, home, money });
+
+      // ---------- R20: the template as a manual choice, then a flight ----------
+      await page.locator('#panel-money [data-action="profile-open"]:visible').click(); // the empty state's button is hidden while the category names show
+      await page.waitForSelector('#dlg-profile[open]');
+      const warn = await page.locator('[data-slot="profile-warn"]').textContent();
+      const checked = await page.evaluate(() => document.querySelector('#dlg-profile input[name="profile"]:checked')?.value);
+      await page.click('#dlg-profile [type="submit"]');
+      await page.waitForFunction(() => !document.querySelector('#dlg-profile[open]'));
+      const read = () => page.evaluate(() => {
+        const n = (slot) => document.querySelector(`[data-slot="${slot}"]`);
+        return { free: n('money-free').textContent, today: n('money-today').textContent, reserved: !n('money-reserved-row') ? 'missing' : n('money-reserved-row').hidden ? null : n('money-reserved').textContent, planned: n('money-planned').textContent, total: n('money-total').textContent };
+      });
+      const tpl = await read();
+      if (SHOTS) await page.screenshot({ path: `${OUT}/template-reserve-money-mobile.jpg`, type: 'jpeg', quality: 80 });
+      await go(page, 'transfers');
+      await page.click('[data-action="transfer-add"]');
+      await page.waitForSelector('#dlg-transfer[open]');
+      await page.selectOption('#dlg-transfer [name="kind"]', 'flight');
+      await page.fill('#dlg-transfer [name="from"]', 'א');
+      await page.fill('#dlg-transfer [name="to"]', 'ב');
+      await page.fill('#dlg-transfer [name="date"]', '2026-12-20');
+      await page.fill('#dlg-transfer [name="price"]', '5000');
+      await page.selectOption('#dlg-transfer [name="currency"]', 'ILS');
+      await page.click('#dlg-transfer [type="submit"]');
+      await page.waitForFunction(() => !document.querySelector('#dlg-transfer[open]'));
+      await go(page, 'money');
+      const flown = await read();
+      const num = (x) => Number(String(x ?? '0').replace(/[^\d.-]/g, ''));
+      pass('R20 the 20,000 template by hand: free 15,000, 5,000 set aside for the flight, 468 a day; after a 5,000 flight: free still 15,000, nothing set aside',
+        warn === '' && checked === 'plan20k' && num(tpl.total) === 20000 && num(tpl.free) === 15000 && num(tpl.reserved) === 5000 && /468/.test(tpl.today)
+        && num(flown.free) === 15000 && flown.reserved === null && num(flown.planned) === 5000,
+        { warn, checked, tpl, flown });
+      await ctx.close();
+    }
+
+    // ---------- R21: layout shift on every screen, with saved data ----------
+    {
+      const bad = {};
+      for (const s of SCREENS) {
+        const ctx = await context(browser, rich);
+        const page = await ctx.newPage();
+        watch(page);
+        await page.addInitScript(() => { window.__cls = 0; new PerformanceObserver((l) => { for (const e of l.getEntries()) if (!e.hadRecentInput) window.__cls += e.value; }).observe({ type: 'layout-shift', buffered: true }); });
+        await go(page, s);
+        await ready(page);
+        await page.waitForTimeout(800); // let late shifts happen before reading them (a measurement, not a UI wait)
+        const cls = await page.evaluate(() => Math.round(window.__cls * 1000) / 1000);
+        if (cls >= 0.1) bad[s] = cls;
+        await ctx.close();
+      }
+      pass('R21 every screen opened directly with saved data: layout shift (CLS) under 0.1', Object.keys(bad).length === 0, { bad, screens: SCREENS.length });
     }
 
     // ---------- R17, R18: version and privacy in settings ----------

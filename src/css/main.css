@@ -591,6 +591,7 @@ body::before {
 .seg-planned, .dot-planned { background: var(--chart-2); }
 .seg-committed, .dot-committed { background: var(--chart-7); }
 .seg-free, .dot-free { background: var(--line-strong); }
+.seg-reserved, .dot-reserved { background: var(--chart-3); } /* stage 13: the money set aside for the flight */
 .money-split { display: grid; gap: var(--space-2); margin: var(--space-2) 0 0; }
 .money-split div { display: flex; justify-content: space-between; align-items: center; gap: var(--space-3); }
 .money-split dt { display: inline-flex; align-items: center; gap: var(--space-2); color: var(--muted); }

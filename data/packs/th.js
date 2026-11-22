@@ -25,6 +25,11 @@ export const TH = Object.freeze({
   // Stage 9 (owner decision 2026-11-21): the default budget for a new trip. Planning amounts per person, not
   // prices and not real expenses. No dates here: the trip dates are entered in the app (rule 16).
   // `total` is the base budget; the emergency fund is kept apart from it and shown separately.
+  // Stage 13 (owner, 2026-11-22): the friends travel together, so a new install starts with the shared trip dates and
+  // the suggested route built from them (core/template.js readyTrip). Everything stays editable and deletable; a
+  // trip that already has dates or stops is never changed. docs/BUDGET_AND_START.md.
+  defaultTrip: { start: '2026-12-20', end: '2027-01-20' },
+
   budgetTemplates: [
     {
       id: 'plan20k',

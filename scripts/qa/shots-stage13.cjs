@@ -1,5 +1,7 @@
-// Stage 13: before and after screenshots of what changed on screen: settings (privacy and terms, opened) and the
-// home screen (F1: the cards show only once their order is known; the final screen is the same).
+// Stage 13: before and after screenshots of what changed on screen: settings (privacy and terms, opened), the
+// home screen (F1: the cards show only once their order is known; the final screen is the same), and money:
+// a new install (no budget of its own; docs/BUDGET_AND_START.md) and the sample trip on the 20,000 template
+// (the flight's 5,000 set aside in "free").
 // 390 px and desktop (1440), light and dark. Sample trip (rule 16, lib/rich-trip.cjs).
 // APP_DIR: the app to serve (default: this checkout). TAG: before | after (default after).
 // "before": APP_DIR=<a checkout of main> TAG=before node scripts/qa/shots-stage13.cjs
@@ -49,8 +51,25 @@ const BASE = `http://127.0.0.1:${PORT}/`;
         await page.evaluate(() => window.scrollBy(0, -80)); // the sticky top bar
         const settings = `${TAG}-settings-${name}-${theme}.jpg`;
         await page.screenshot({ path: path.join(OUT, settings), type: 'jpeg', quality: 75 });
-        made.push(home, `${settings} (folds: ${opened})`);
+        await page.goto(`${BASE}#/money`);
+        await page.waitForFunction(() => !document.querySelector('#panel-money').hidden);
+        await page.evaluate(() => window.scrollTo(0, 0));
+        const money = `${TAG}-money-template-${name}-${theme}.jpg`;
+        await page.screenshot({ path: path.join(OUT, money), type: 'jpeg', quality: 75 });
+        made.push(home, `${settings} (folds: ${opened})`, money);
         await ctx.close();
+        // A new install: nothing saved yet.
+        const fctx = await browser.newContext({ viewport, deviceScaleFactor: 1, locale: 'he-IL', reducedMotion: 'reduce', timezoneId: 'Asia/Bangkok', serviceWorkers: 'block' });
+        const fpage = await fctx.newPage();
+        await fpage.emulateMedia({ colorScheme: theme });
+        await fpage.clock.setFixedTime(new Date('2026-12-01T10:00:00+07:00'));
+        await fpage.goto(`${BASE}#/money`);
+        await fpage.waitForFunction(() => !document.querySelector('#panel-money').hidden && document.querySelector('[data-slot="version-app"]')?.textContent.length > 0);
+        await fpage.evaluate(() => document.fonts.ready);
+        const fresh = `${TAG}-money-new-install-${name}-${theme}.jpg`;
+        await fpage.screenshot({ path: path.join(OUT, fresh), type: 'jpeg', quality: 75 });
+        made.push(fresh);
+        await fctx.close();
       }
     }
   } finally {

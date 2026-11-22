@@ -1,4 +1,6 @@
 // Pre-stage-10, PR B: a new trip comes with the plan20k budget and, once dates are entered, the suggested route.
+// Stage 13 (owner, 2026-11-22, docs/BUDGET_AND_START.md): T1 and O now check the new start (the shared dates and the
+// route, no budget amounts); T3 starts from a trip with no dates (lib/blank-trip.cjs), as an older version left it.
 // An existing route is rebuilt from the template only after a preview and a yes; the old route goes to the archive.
 // Owner decision 2026-11-21 (docs/GOALS_STAGE10.md "PR B"). Sample dates only (2030, rule 16).
 // Waits for UI state (rule 6). Run 3 times. QA_OUT (default docs/evidence/stage10/pre-b/browser), PORT (default 8132).
@@ -7,6 +9,7 @@ const { chromium } = require('playwright');
 const { spawn } = require('node:child_process');
 const fs = require('node:fs');
 const path = require('node:path');
+const { blankState } = require('./lib/blank-trip.cjs');
 
 const ROOT = path.join(__dirname, '..', '..');
 const APP = path.resolve(process.env.APP_ROOT ?? ROOT);
@@ -78,18 +81,22 @@ async function shots(browser, label) {
     return;
   }
   try {
-    // ---------- T1: a fresh install comes with the plan20k budget ----------
+    // ---------- T1: a fresh install: the shared dates and the route, the template categories at 0 ----------
     const a = await open(browser, null, 'money');
     const t1 = await trip(a.page);
-    const moneyText = await a.page.locator('#panel-money').innerText();
-    pass('T1 fresh install: plan20k budget saved (20,000 with the flight, emergency 2,500 apart) and shown',
-      t1?.budget.profileId === 'plan20k' && sum(t1.budget.categoriesMinor) === 2_000_000 && t1.budget.categoriesMinor.emergency === 250_000
-      && /20,000/.test(moneyText) && !(await visible(a.page, '[data-slot="template-card"]')),
-      { profile: t1?.budget.profileId ?? null, total: t1 ? sum(t1.budget.categoriesMinor) : null });
+    const free = await a.page.locator('[data-slot="money-free"]').textContent();
+    pass('T1 fresh install: no budget of its own (template categories at 0, "—"), no template card; the shared dates and their route',
+      t1?.budget.profileId === null && sum(t1.budget.categoriesMinor) === 0 && 'flight' in t1.budget.categoriesMinor && free === '—'
+      && !(await visible(a.page, '[data-slot="template-card"]')) && t1.startDate === '2026-12-20' && t1.endDate === '2027-01-20' && t1.destinations.length >= 5,
+      { profile: t1?.budget.profileId ?? null, total: t1 ? sum(t1.budget.categoriesMinor) : null, free, dates: [t1?.startDate, t1?.endDate], stops: t1?.destinations.length });
     pass('T2 390px: no sideways scroll on the money screen', !(await hScroll(a.page)));
     if (SHOTS) await a.page.screenshot({ path: `${OUT}/after-fresh-money-mobile.png`, fullPage: true });
 
-    // ---------- T3: entering dates builds the route; a reload keeps it ----------
+    // ---------- T3: entering dates on a trip with no dates builds the route; a reload keeps it ----------
+    await a.ctx.close();
+    const noDates = await open(browser, await blankState(), 'money');
+    a.page = noDates.page;
+    a.ctx = noDates.ctx;
     await setDates(a.page, START, END);
     await a.page.waitForFunction(() => JSON.parse(localStorage.getItem('tisa:v1')).trips[JSON.parse(localStorage.getItem('tisa:v1')).activeTripId].destinations.length > 0, null, { timeout: 5000 }).catch(() => {});
     await a.page.goto(`${BASE}#/itinerary`);
@@ -186,6 +193,7 @@ async function shots(browser, label) {
 
     // ---------- O: offline: dates entered with no network still build the route ----------
     const octx = await browser.newContext({ viewport: MOBILE, locale: 'he-IL', reducedMotion: 'reduce' });
+    await octx.addInitScript((x) => { if (!localStorage.getItem('tisa:v1')) localStorage.setItem('tisa:v1', x); }, await blankState());
     const op = await octx.newPage();
     watch(op);
     await op.goto(BASE);
@@ -198,7 +206,7 @@ async function shots(browser, label) {
     await setDates(op, START, END);
     await op.waitForFunction(() => JSON.parse(localStorage.getItem('tisa:v1')).trips[JSON.parse(localStorage.getItem('tisa:v1')).activeTripId].destinations.length > 0, null, { timeout: 5000 }).catch(() => {});
     const off = await trip(op);
-    pass('O offline: budget is there and entering dates builds the route with no network', off.budget.profileId === 'plan20k' && off.destinations.length >= 5, { stops: off.destinations.length });
+    pass('O offline: on a trip with no dates yet, entering dates builds the route with no network', off.startDate === START && off.destinations.length >= 5, { stops: off.destinations.length });
     await octx.close();
   } catch (error) {
     pass('run', false, { error: String(error.stack ?? error) });

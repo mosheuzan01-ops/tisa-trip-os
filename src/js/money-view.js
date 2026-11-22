@@ -96,6 +96,9 @@ export function renderMoney(ctx) {
   today.dataset.kind = s.hasBudget ? m.daily.kind : 'none';
   for (const k of ['paid', 'planned', 'committed']) $(`[data-slot="money-${k}"]`).textContent = fm(s[`${k}Minor`]);
   $('[data-slot="money-free-small"]').textContent = fm(s.freeMinor);
+  // Stage 13: the money planned for the flight, kept out of "free" until flight expenses cover it (docs/BUDGET_AND_START.md).
+  $('[data-slot="money-reserved-row"]').hidden = !(s.hasBudget && s.flightReserveMinor > 0);
+  $('[data-slot="money-reserved"]').textContent = fm(s.flightReserveMinor);
   $('[data-slot="money-total"]').textContent = fm(s.totalMinor);
   $('[data-slot="money-estimate"]').hidden = !m.trip.budget?.estimate;
   // 9.0b: daily base (budget without the flight / trip dates), the counts, and the emergency fund kept apart.
@@ -114,7 +117,7 @@ export function renderMoney(ctx) {
   if (s.emergency.planMinor > 0) { emEl.textContent = interpolate(t('money.emergencyApart'), { em: fm(s.emergency.planMinor), base: fm(s.totalMinor), both: fm(s.totalMinor + s.emergency.planMinor) }); emEl.append(tipButton(t, 'emergency')); }
   $('[data-slot="template-card"]').hidden = !needsTemplateOffer(m.trip);
   const bar = $('[data-slot="money-bar"]');
-  const parts = [['paid', s.paidMinor], ['planned', s.plannedMinor], ['committed', s.committedMinor], ['free', Math.max(0, s.freeMinor)]];
+  const parts = [['paid', s.paidMinor], ['planned', s.plannedMinor], ['committed', s.committedMinor], ['reserved', s.flightReserveMinor], ['free', Math.max(0, s.freeMinor)]];
   const whole = parts.reduce((a, [, v]) => a + v, 0);
   bar.replaceChildren(...parts.filter(([, v]) => v > 0).map(([k, v]) => {
     const seg = el('span', `seg seg-${k}`);
@@ -557,7 +560,7 @@ export function setupMoney(ctx, { wireDialog, showFormErrors }) {
     box.open = archived.some((p) => p.id === current?.id);
     box.append(el('summary', '', t('money.profile.archive')), ...archived.map((p) => option(p, true)));
     $('[data-slot="profile-options"]').replaceChildren(...templates.map((p) => option(p, false)), ...(archived.length ? [box] : []));
-    $('[data-slot="profile-warn"]').textContent = m.summary.hasCategories ? t('money.profile.replace') : '';
+    $('[data-slot="profile-warn"]').textContent = m.summary.hasBudget ? t('money.profile.replace') : ''; // stage 13: names at 0 have nothing to replace
     dlgProfile.showModal();
     pForm.querySelector('input:checked')?.focus();
   }

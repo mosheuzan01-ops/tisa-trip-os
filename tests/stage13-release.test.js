@@ -92,3 +92,16 @@ test('S13-3 1.0.0 in every place the version is set (the release of stage 13)', 
   assert.equal(JSON.parse(read('package.json')).version, '1.0.0');
   assert.equal(/const VERSION = '([^']+)'/.exec(read('sw.js'))[1], '1.0.0');
 });
+
+test('R-22 (rule 22) browser scripts from stage 13 on use the shared sample data (scripts/qa/lib/), not a copy of their own', () => {
+  // The one exception: the upgrade check builds 0.7.1 data with 0.7.1's own functions, taken from git (its whole point).
+  const EXEMPT = { 'stage13-upgrade-browser.cjs': 'builds 0.7.1 data with the 0.7.1 code from git' };
+  const files = readdirSync(new URL('../scripts/qa/', import.meta.url))
+    .filter((f) => /^(stage(1[3-9]|[2-9]\d)-.*|shots-stage(1[3-9]|[2-9]\d))\.cjs$/.test(f) && !EXEMPT[f]);
+  assert.ok(files.length >= 4, `found ${files}`);
+  const bad = files.filter((f) => {
+    const src = read(`scripts/qa/${f}`);
+    return !/require\('\.\/lib\/[a-z-]+\.cjs'\)/.test(src) || /createDefaultState|readyTrip\(|makeExpense\(|makePlace\(/.test(src);
+  });
+  assert.deepEqual(bad, []);
+});
