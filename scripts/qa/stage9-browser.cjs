@@ -3,6 +3,7 @@
 // only (rule 16): 2030-03-01..2030-04-01 is 32 dates. 390px. Waits for UI state (rule 6). Run 3 times.
 // Writes only to QA_OUT, default docs/evidence/stage9/browser (rule 10). Port 8126.
 const { chromium } = require('playwright');
+const { blankTrip } = require('./lib/blank-trip.cjs');
 const { spawn } = require('node:child_process');
 const fs = require('node:fs');
 const path = require('node:path');
@@ -30,6 +31,7 @@ const hScroll = (page) => page.evaluate(() => document.documentElement.scrollWid
 async function open(browser, seed, route) {
   const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, locale: 'he-IL', reducedMotion: 'reduce', serviceWorkers: 'block', timezoneId: 'Asia/Jerusalem' });
   if (seed) await ctx.addInitScript((x) => { if (!sessionStorage.getItem('seeded')) { localStorage.setItem('tisa:v1', x); sessionStorage.setItem('seeded', '1'); } }, seed);
+  else await blankTrip(ctx); // pre-stage-10 PR B: a 0.8.3-style trip (no budget), see scripts/qa/lib/blank-trip.cjs
   const page = await ctx.newPage();
   watch(page);
   await page.clock.setFixedTime(new Date('2026-12-11T10:00:00+07:00'));
@@ -80,11 +82,17 @@ async function setDates(page, start, end) {
 
     // route from the dates
     await n.page.goto(`${BASE}#/itinerary`);
-    await n.page.click('[data-slot="itin-empty"] [data-action="seed-open"]');
-    await n.page.locator('#dlg-seed[open]').waitFor();
-    const seedText = await text(n.page, '[data-slot="seed-text"]');
-    await n.page.click('[data-action="seed-confirm"]');
-    await closed(n.page, '#dlg-seed');
+    // Pre-stage-10 PR B (owner decision): entering the dates already built the suggested route; the "suggested
+    // route" dialog is only for a trip whose route is empty. The route checks below are unchanged.
+    const autoBuilt = (await trip(n.page)).destinations.length > 0;
+    let seedText = '';
+    if (!autoBuilt) {
+      await n.page.click('[data-slot="itin-empty"] [data-action="seed-open"]');
+      await n.page.locator('#dlg-seed[open]').waitFor();
+      seedText = await text(n.page, '[data-slot="seed-text"]');
+      await n.page.click('[data-action="seed-confirm"]');
+      await closed(n.page, '#dlg-seed');
+    }
     const t2 = await trip(n.page);
     const names = t2.destinations.map((s) => s.name);
     const note = await text(n.page, '[data-slot="route-note"]');
@@ -93,8 +101,8 @@ async function setDates(page, start, end) {
     const counts2 = await (async () => { await n.page.goto(`${BASE}#/money`); return text(n.page, '[data-slot="money-counts"]'); })();
     pass('S9-3 route from the dates: Bangkok first and last, southern islands, marked as a suggestion, transfers not entered',
       names[0] === 'בנגקוק' && names[names.length - 1] === 'בנגקוק' && !names.some((x) => /פאי|צ'יאנג|קראבי/.test(x)) && names.includes('קו לנטה')
-      && t2.destinations.every((s) => s.suggested) && /לא הוזמן/.test(note) && missing === names.length - 1 && /30/.test(counts2) && /\d/.test(seedText),
-      { names, note, missing, counts2 });
+      && t2.destinations.every((s) => s.suggested) && /לא הוזמן/.test(note) && missing === names.length - 1 && /30/.test(counts2) && (autoBuilt || /\d/.test(seedText)),
+      { names, note, missing, counts2, autoBuilt });
     await n.ctx.close();
 
     // ---------- an existing user (real v5 data) ----------
