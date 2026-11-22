@@ -10,6 +10,7 @@ import {
 } from './core/checklist.js';
 import { formatDate } from './core/itinerary.js';
 import { makeId } from './core/ids.js';
+import { tipButton } from './tip.js';
 import { searchList } from './core/search.js';
 import { setupSearch } from './search-view.js';
 
@@ -131,6 +132,7 @@ export function renderLists(ctx) {
           : el('p', 'item-verify', x.verify.source
             ? interpolate(t('list.checkedFrom'), { date: formatDate(x.verify.checkedAt, fmtLocale), source: x.verify.source })
             : interpolate(t('list.checked'), { date: formatDate(x.verify.checkedAt, fmtLocale) }));
+        if (needsCheck(x)) v.append(tipButton(t, 'verify'));
         li.append(v);
       }
       if (x.note) li.append(el('p', 'item-note', x.note));

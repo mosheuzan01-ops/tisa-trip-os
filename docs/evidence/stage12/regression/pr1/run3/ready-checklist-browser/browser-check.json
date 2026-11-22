@@ -1,0 +1,61 @@
+{
+  "R1 fresh install: the full built-in list is saved and shown, nothing ticked": {
+    "result": "PASS",
+    "builtin": 61,
+    "saved": 61,
+    "shown": 61
+  },
+  "R2 four separate progress bars (prep, carry-on, checked bag, after landing)": {
+    "result": "PASS",
+    "prep": "0 מתוך 25 (0%)",
+    "carry": "0 מתוך 20 (0%)",
+    "bag": "0 מתוך 12 (0%)",
+    "arrival": "0 מתוך 4 (0%)"
+  },
+  "R3 no offer card and no add button when nothing is missing": {
+    "result": "PASS"
+  },
+  "R4 390px: no sideways scroll on the lists screen": {
+    "result": "PASS"
+  },
+  "R5 a tick survives two reloads, and reloading adds no items": {
+    "result": "PASS",
+    "done": 1,
+    "saved": 61
+  },
+  "R6 after a reset the full list is back, nothing ticked": {
+    "result": "PASS",
+    "typed": "איפוס",
+    "saved": 61
+  },
+  "R7 settings show where the data lives and what it holds; the iPhone note is there": {
+    "result": "PASS",
+    "device": "הנתונים כאן (דפדפן): נוצרו ב-11 בדצמבר 2026 בשעה 05:00. 61 פריטים, 0 תחנות, 0 הוצאות, 0 תמונות."
+  },
+  "R8 old data: the card offers the missing items and nothing is changed before yes": {
+    "result": "PASS",
+    "cardText": "60 פריטים מובנים חסרים ברשימה שלכם. מה שכבר ברשימה, כולל הסימונים, נשאר כמו שהוא."
+  },
+  "R9 yes: every old item and tick stays exactly; only missing items are added, no repeated names, none ticked": {
+    "result": "PASS",
+    "before": 2,
+    "after": 62,
+    "added": 60
+  },
+  "R10 after a reload: no card, no add button, no new items": {
+    "result": "PASS"
+  },
+  "R11 \"not now\": only the answer is saved, the card stays hidden after a reload, the button adds the missing items once": {
+    "result": "PASS",
+    "notNow": 2,
+    "viaBtn": 62
+  },
+  "O offline: the full list shows and a tick is saved with no network": {
+    "result": "PASS",
+    "offItems": 61
+  },
+  "no JS errors": {
+    "result": "PASS",
+    "errors": []
+  }
+}

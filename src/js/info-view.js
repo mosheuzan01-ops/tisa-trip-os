@@ -6,6 +6,7 @@
 import { interpolate } from './core/i18n.js';
 import { isShown, emergencyNumbers, telHref, mapLink, sourceOf, setNote, noteOf, NOTE_MAX } from './core/info.js';
 import { copyText } from './places-view.js';
+import { tipButton } from './tip.js';
 
 const $ = (sel, root = document) => root.querySelector(sel);
 const ICONS = './assets/icons.svg#';
@@ -17,6 +18,8 @@ const el = (tag, className, text) => {
 };
 const icon = (name) => `<svg class="icon" aria-hidden="true"><use href="${ICONS}${name}"/></svg>`;
 const BADGE = { 'verified-official': 'is-verified', 'user-provided': 'is-user', unverified: 'is-pending' };
+// Stage 12: the statuses that need explaining get an info button (core/tips.js).
+const TIP_OF_STATUS = { 'user-provided': 'userProvided', unverified: 'unverified' };
 const FIELD_ORDER = ['name', 'nameTh', 'address', 'addressTh', 'phone', 'hours', 'er', 'english', 'site', 'emergencyPhone', 'insurance', 'preapproval', 'payment'];
 
 const pick = (v, locale) => (v && typeof v === 'object' ? v[locale] ?? v.he ?? v.en ?? '' : v ?? '');
@@ -31,6 +34,7 @@ function row(ctx, item, label, path) {
   li.dataset.status = item.status;
   const top = el('div', 'info-row-top');
   top.append(el('span', 'info-label', label), el('span', `badge info-badge ${BADGE[item.status]}`, t(`info.status.${item.status}`)));
+  if (TIP_OF_STATUS[item.status]) top.append(tipButton(t, TIP_OF_STATUS[item.status]));
   li.append(top);
   if (item.status === 'unverified') {
     li.append(el('p', 'info-how', pick(item.how, locale)));

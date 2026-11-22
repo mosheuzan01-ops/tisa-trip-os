@@ -1090,3 +1090,19 @@ body::before {
 .info-quick-call { justify-self: start; }
 .info-fold { display: grid; gap: var(--space-2); border-top: 1px solid var(--line); padding-top: var(--space-2); }
 .info-fold-sum { cursor: pointer; min-height: var(--tap); display: flex; align-items: center; font-weight: 600; color: var(--ink); }
+
+/* Stage 12: info button */
+/* src/js/tip.js. A 44px tap area around a 20px icon; the negative margins keep the line and the row exactly as
+   they were, so adding the button does not move the layout. Colours are tokens only. */
+.tip-row { display: flex; align-items: center; gap: var(--space-1); }
+.tip-btn {
+  display: inline-grid; place-items: center; width: var(--tap); height: var(--tap); margin: -12px -6px; padding: 0;
+  vertical-align: middle; border: 0; border-radius: 50%; background: transparent; color: var(--muted); cursor: pointer;
+  flex: none;
+}
+.tip-btn .icon { width: 20px; height: 20px; }
+.tip-btn:hover, .tip-btn[aria-expanded="true"] { color: var(--ink); }
+.sheet .tip-btn { color: var(--on-dmetal-muted); }
+.sheet .tip-btn:hover, .sheet .tip-btn[aria-expanded="true"] { color: var(--on-dmetal); }
+.tip-sheet .tip-text { color: var(--on-dmetal); }
+/* end Stage 12: info button */

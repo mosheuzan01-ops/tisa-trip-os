@@ -1,0 +1,96 @@
+FAIL  K1 all 15 info buttons are on their screens: aria-label "הסבר על <פריט>", aria-haspopup=dialog, aria-controls, closed, at least 44x44
+FAIL  ERROR the run stopped
+[
+  [
+    "K1 all 15 info buttons are on their screens: aria-label \"הסבר על <פריט>\", aria-haspopup=dialog, aria-controls, closed, at least 44x44",
+    {
+      "result": "FAIL",
+      "bad": [
+        [
+          "freeBefore",
+          null
+        ],
+        [
+          "freeAfter",
+          null
+        ],
+        [
+          "planned",
+          null
+        ],
+        [
+          "committed",
+          null
+        ],
+        [
+          "today",
+          null
+        ],
+        [
+          "base",
+          null
+        ],
+        [
+          "emergency",
+          null
+        ],
+        [
+          "rates",
+          null
+        ],
+        [
+          "backup",
+          null
+        ],
+        [
+          "photoBackup",
+          null
+        ],
+        [
+          "unverified",
+          null
+        ],
+        [
+          "userProvided",
+          null
+        ],
+        [
+          "verify",
+          null
+        ],
+        [
+          "flex",
+          null
+        ],
+        [
+          "placeDates",
+          null
+        ]
+      ],
+      "seen": {
+        "freeBefore": null,
+        "freeAfter": null,
+        "planned": null,
+        "committed": null,
+        "today": null,
+        "base": null,
+        "emergency": null,
+        "rates": null,
+        "backup": null,
+        "photoBackup": null,
+        "unverified": null,
+        "userProvided": null,
+        "verify": null,
+        "flex": null,
+        "placeDates": null
+      }
+    }
+  ],
+  [
+    "ERROR the run stopped",
+    {
+      "result": "FAIL",
+      "message": "locator.click: Timeout 30000ms exceeded."
+    }
+  ]
+]

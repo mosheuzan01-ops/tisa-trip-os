@@ -1,0 +1,288 @@
+TAP version 13
+# Subtest: T-1 exactly the 15 approved places, in the approved order
+not ok 1 - T-1 exactly the 15 approved places, in the approved order
+  ---
+  duration_ms: 1.917451
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage12-tips.test.js:17:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + []
+    - [
+    -   'freeBefore',
+    -   'freeAfter',
+    -   'planned',
+    -   'committed',
+    -   'today',
+    -   'base',
+    -   'emergency',
+    -   'rates',
+    -   'backup',
+    -   'photoBackup',
+    -   'unverified',
+    -   'userProvided',
+    -   'verify',
+    -   'flex',
+    -   'placeDates'
+    - ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 'freeBefore'
+    1: 'freeAfter'
+    2: 'planned'
+    3: 'committed'
+    4: 'today'
+    5: 'base'
+    6: 'emergency'
+    7: 'rates'
+    8: 'backup'
+    9: 'photoBackup'
+    10: 'unverified'
+    11: 'userProvided'
+    12: 'verify'
+    13: 'flex'
+    14: 'placeDates'
+  actual:
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage12-tips.test.js:18:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.start (node:internal/test_runner/test:944:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+  ...
+# Subtest: T-2 (S12-2) every tip has a name and a text in he and en; the text is at most 2 short sentences
+not ok 2 - T-2 (S12-2) every tip has a name and a text in he and en; the text is at most 2 short sentences
+  ---
+  duration_ms: 0.324992
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage12-tips.test.js:21:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + [
+    +   'he:tip.label',
+    +   'en:tip.label',
+    +   'he:tip.close',
+    +   'en:tip.close'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'he:tip.label'
+    1: 'en:tip.label'
+    2: 'he:tip.close'
+    3: 'en:tip.close'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage12-tips.test.js:33:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: T-3 (S12-2) every tip used in the page or the screens is a known key, and every key is used
+ok 3 - T-3 (S12-2) every tip used in the page or the screens is a known key, and every key is used
+  ---
+  duration_ms: 0.701583
+  type: 'test'
+  ...
+# Subtest: T-4 one shared explanation dialog, with a close button and its title and text wired for screen readers
+not ok 4 - T-4 one shared explanation dialog, with a close button and its title and text wired for screen readers
+  ---
+  duration_ms: 0.388309
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage12-tips.test.js:46:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    0 !== 1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage12-tips.test.js:48:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: T-5 no static info button sits inside an element whose text the translator replaces (it would be wiped)
+not ok 5 - T-5 no static info button sits inside an element whose text the translator replaces (it would be wiped)
+  ---
+  duration_ms: 2.522536
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage12-tips.test.js:57:1'
+  failureType: 'testCodeFailure'
+  error: 'static info buttons found: 0'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage12-tips.test.js:72:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: T-6 the info icon is a local symbol; the component makes no network call (S12-7)
+not ok 6 - T-6 the info icon is a local symbol; the component makes no network call (S12-7)
+  ---
+  duration_ms: 0.705949
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage12-tips.test.js:76:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /<symbol id="i-info"/. Input:
+    
+    '<svg xmlns="http://www.w3.org/2000/svg">\n' +
+      '  <!-- TISA icon set. Original, drawn for this project. 24x24 grid, 1.8 stroke, round caps. Color = currentColor. -->\n' +
+      '  <symbol id="i-mark" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="6.2"/><rect x="8" y="5.5" width="8" height="13" rx="3.6"/><path d="M8.4 9.6h7.2"/></symbol>\n' +
+      '  <symbol id="i-home" viewBox="0 0 24 24"><path d="M3.5 10.5 12 4l8.5 6.5"/><path d="M5.5 9v10.5h13V9"/><path d="M10 19.5v-5h4v5"/></symbol>\n' +
+      '  <symbol id="i-route" viewBox="0 0 24 24"><circle cx="6" cy="18" r="2.2"/><circle cx="18" cy="6" r="2.2"/><path d="M8.2 18H15a3 3 0 0 0 0-6H9a3 3 0 0 1 0-6h6.8"/></symbol>\n' +
+      '  <symbol id="i-wallet" viewBox="0 0 24 24"><path d="M4 7.5A2.5 2.5 0 0 1 6.5 5H18v3"/><rect x="4" y="8" width="16.5" height="11" rx="2.5"/><path d="M16 13.5h1.5"/></symbol>\n' +
+      '  <symbol id="i-list" viewBox="0 0 24 24"><path d="m4 7 1.6 1.6L8.5 5.7M4 13.5l1.6 1.6 2.9-2.9"/><path d="M11.5 7.2H20M11.5 13.7H20M11.5 19H20"/></symbol>\n' +
+      '  <symbol id="i-doc" viewBox="0 0 24 24"><path d="M6.5 3.5h7l4 4v13h-11z"/><path d="M13.5 3.5v4h4M9 12h6M9 15.5h6"/></symbol>\n' +
+      '  <symbol id="i-bag" viewBox="0 0 24 24"><rect x="4.5" y="7" width="15" height="12.5" rx="2.5"/><path d="M9 7V4.5h6V7M9 11v5M15 11v5"/></symbol>\n' +
+      '  <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/></symbol>\n' +
+      '  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/></symbol>\n' +
+      '  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M19.5 14.5A8 8 0 0 1 9.5 4.5a8 8 0 1 0 10 10z"/></symbol>\n' +
+      '  <symbol id="i-flip" viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 14-5.3M20 12a8 8 0 0 1-14 5.3"/><path d="M18 3v4h-4M6 21v-4h4"/></symbol>\n' +
+      '  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></symbol>\n' +
+      '  <symbol id="i-back" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></symbol>\n' +
+      '  <symbol id="i-plane" viewBox="0 0 24 24"><path d="M21 4.5 3.5 11l6.2 2.3L12 19.5z"/><path d="m9.7 13.3 5.1-4.6"/></symbol>\n' +
+      '  <symbol id="i-gear" viewBox="0 0 24 24"><path d="m12 2.8 1.6 2.3 2.7-.7.6 2.7 2.6 1-.9 2.6 1.9 2.1-1.9 2.1.9 2.6-2.6 1-.6 2.7-2.7-.7L12 21.2l-1.6-2.3-2.7.7-.6-2.7-2.6-1 .9-2.6L3.5 12l1.9-2.1-.9-2.6 2.6-1 .6-2.7 2.7.7z"/><circle cx="12" cy="12" r="3.2"/></symbol>\n' +
+      '  <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4v11M7.5 10.5 12 15l4.5-4.5M5 19.5h14"/></symbol>\n' +
+      '  <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 15V4M7.5 8.5 12 4l4.5 4.5M5 19.5h14"/></symbol>\n' +
+      '  <symbol id="i-chat" viewBox="0 0 24 24"><path d="M6.5 4.5h11A2.5 2.5 0 0 1 20 7v6.5a2.5 2.5 0 0 1-2.5 2.5H11l-4.5 4v-4A2.5 2.5 0 0 1 4 13.5V7a2.5 2.5 0 0 1 2.5-2.5z"/><path d="M8.5 9.5h7M8.5 12.5h4"/></symbol>\n' +
+      '  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>\n' +
+      '  <symbol id="i-edit" viewBox="0 0 24 24"><path d="M4.5 19.5h4l10-10a2.8 2.8 0 0 0-4-4l-10 10z"/><path d="m13 7 4 4"/></symbol>\n' +
+      '  <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4.5 7h15M9.5 7V4.5h5V7M6.5 7l1 13h9l1-13M10.5 11v5.5M13.5 11v5.5"/></symbol>\n' +
+      '  <symbol id="i-up" viewBox="0 0 24 24"><path d="m6 14.5 6-6 6 6"/></symbol>\n' +
+      '  <symbol id="i-down" viewBox="0 0 24 24"><path d="m6 9.5 6 6 6-6"/></symbol>\n' +
+      '  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6"/><path d="m15 15 5 5"/></symbol>\n' +
+      '  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-6.5-6.1-6.5-11a6.5 6.5 0 0 1 13 0c0 4.9-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.4"/></symbol>\n' +
+      '  <symbol id="i-locate" viewBox="0 0 24 24"><circle cx="12" cy="12" r="6.5"/><circle cx="12" cy="12" r="2"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3"/></symbol>\n' +
+      '  <symbol id="i-share" viewBox="0 0 24 24"><circle cx="17.5" cy="5.5" r="2.3"/><circle cx="6.5" cy="12" r="2.3"/><circle cx="17.5" cy="18.5" r="2.3"/><path d="m8.5 10.8 7-4.1M8.5 13.2l7 4.1"/></symbol>\n' +
+      '  <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8.5" y="8.5" width="11" height="11" rx="2.2"/><path d="M15.5 8.5V6.7a2.2 2.2 0 0 0-2.2-2.2H6.7a2.2 2.2 0 0 0-2.2 2.2v6.6a2.2 2.2 0 0 0 2.2 2.2h1.8"/></symbol>\n' +
+      '  <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>\n' +
+      '  <symbol id="i-image" viewBox="0 0 24 24"><rect x="3.5" y="4.5" width="17" height="15" rx="2.5"/><circle cx="9" cy="10" r="1.8"/><path d="M4 17.5l4.5-4.5 3.5 3.5 3-3 5 5"/></symbol>\n' +
+      '  <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3.5l2.6 5.4 5.9.8-4.3 4.1 1 5.9L12 16.9l-5.2 2.8 1-5.9-4.3-4.1 5.9-.8z"/></symbol>\n' +
+      '  <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5.5v13l10.5-6.5z"/></symbol>\n' +
+      '  <symbol id="i-pause" viewBox="0 0 24 24"><path d="M8.5 5.5v13M15.5 5.5v13"/></symbol>\n' +
+      '  <symbol id="i-next" viewBox="0 0 24 24"><path d="M9.5 5.5 15.5 12l-6 6.5"/></symbol>\n' +
+      '  <symbol id="i-prev" viewBox="0 0 24 24"><path d="M14.5 5.5 8.5 12l6 6.5"/></symbol>\n' +
+      '  <symbol id="i-summary" viewBox="0 0 24 24"><path d="M4.5 20V10M10 20V4.5M15.5 20v-7M21 20H3"/></symbol>\n' +
+      '  <symbol id="i-phone" viewBox="0 0 24 24"><path d="M7.2 3.5h2.6l1.4 4.2-2 1.4a11.5 11.5 0 0 0 5.7 5.7l1.4-2 4.2 1.4v2.6a2.2 2.2 0 0 1-2.2 2.2A15.8 15.8 0 0 1 5 5.7a2.2 2.2 0 0 1 2.2-2.2z"/></symbol>\n' +
+      '  <symbol id="i-sos" viewBox="0 0 24 24"><path d="M12 3.8 21 19.5H3z"/><path d="M12 9.5v4.5M12 16.6v.4"/></symbol>\n' +
+      '</svg>\n'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    <svg xmlns="http://www.w3.org/2000/svg">
+      <!-- TISA icon set. Original, drawn for this project. 24x24 grid, 1.8 stroke, round caps. Color = currentColor. -->
+      <symbol id="i-mark" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="6.2"/><rect x="8" y="5.5" width="8" height="13" rx="3.6"/><path d="M8.4 9.6h7.2"/></symbol>
+      <symbol id="i-home" viewBox="0 0 24 24"><path d="M3.5 10.5 12 4l8.5 6.5"/><path d="M5.5 9v10.5h13V9"/><path d="M10 19.5v-5h4v5"/></symbol>
+      <symbol id="i-route" viewBox="0 0 24 24"><circle cx="6" cy="18" r="2.2"/><circle cx="18" cy="6" r="2.2"/><path d="M8.2 18H15a3 3 0 0 0 0-6H9a3 3 0 0 1 0-6h6.8"/></symbol>
+      <symbol id="i-wallet" viewBox="0 0 24 24"><path d="M4 7.5A2.5 2.5 0 0 1 6.5 5H18v3"/><rect x="4" y="8" width="16.5" height="11" rx="2.5"/><path d="M16 13.5h1.5"/></symbol>
+      <symbol id="i-list" viewBox="0 0 24 24"><path d="m4 7 1.6 1.6L8.5 5.7M4 13.5l1.6 1.6 2.9-2.9"/><path d="M11.5 7.2H20M11.5 13.7H20M11.5 19H20"/></symbol>
+      <symbol id="i-doc" viewBox="0 0 24 24"><path d="M6.5 3.5h7l4 4v13h-11z"/><path d="M13.5 3.5v4h4M9 12h6M9 15.5h6"/></symbol>
+      <symbol id="i-bag" viewBox="0 0 24 24"><rect x="4.5" y="7" width="15" height="12.5" rx="2.5"/><path d="M9 7V4.5h6V7M9 11v5M15 11v5"/></symbol>
+      <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/></symbol>
+      <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/></symbol>
+      <symbol id="i-moon" viewBox="0 0 24 24"><path d="M19.5 14.5A8 8 0 0 1 9.5 4.5a8 8 0 1 0 10 10z"/></symbol>
+      <symbol id="i-flip" viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 14-5.3M20 12a8 8 0 0 1-14 5.3"/><path d="M18 3v4h-4M6 21v-4h4"/></symbol>
+      <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></symbol>
+      <symbol id="i-back" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></symbol>
+      <symbol id="i-plane" viewBox="0 0 24 24"><path d="M21 4.5 3.5 11l6.2 2.3L12 19.5z"/><path d="m9.7 13.3 5.1-4.6"/></symbol>
+      <symbol id="i-gear" viewBox="0 0 24 24"><path d="m12 2.8 1.6 2.3 2.7-.7.6 2.7 2.6 1-.9 2.6 1.9 2.1-1.9 2.1.9 2.6-2.6 1-.6 2.7-2.7-.7L12 21.2l-1.6-2.3-2.7.7-.6-2.7-2.6-1 .9-2.6L3.5 12l1.9-2.1-.9-2.6 2.6-1 .6-2.7 2.7.7z"/><circle cx="12" cy="12" r="3.2"/></symbol>
+      <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4v11M7.5 10.5 12 15l4.5-4.5M5 19.5h14"/></symbol>
+      <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 15V4M7.5 8.5 12 4l4.5 4.5M5 19.5h14"/></symbol>
+      <symbol id="i-chat" viewBox="0 0 24 24"><path d="M6.5 4.5h11A2.5 2.5 0 0 1 20 7v6.5a2.5 2.5 0 0 1-2.5 2.5H11l-4.5 4v-4A2.5 2.5 0 0 1 4 13.5V7a2.5 2.5 0 0 1 2.5-2.5z"/><path d="M8.5 9.5h7M8.5 12.5h4"/></symbol>
+      <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+      <symbol id="i-edit" viewBox="0 0 24 24"><path d="M4.5 19.5h4l10-10a2.8 2.8 0 0 0-4-4l-10 10z"/><path d="m13 7 4 4"/></symbol>
+      <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4.5 7h15M9.5 7V4.5h5V7M6.5 7l1 13h9l1-13M10.5 11v5.5M13.5 11v5.5"/></symbol>
+      <symbol id="i-up" viewBox="0 0 24 24"><path d="m6 14.5 6-6 6 6"/></symbol>
+      <symbol id="i-down" viewBox="0 0 24 24"><path d="m6 9.5 6 6 6-6"/></symbol>
+      <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6"/><path d="m15 15 5 5"/></symbol>
+      <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-6.5-6.1-6.5-11a6.5 6.5 0 0 1 13 0c0 4.9-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.4"/></symbol>
+      <symbol id="i-locate" viewBox="0 0 24 24"><circle cx="12" cy="12" r="6.5"/><circle cx="12" cy="12" r="2"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3"/></symbol>
+      <symbol id="i-share" viewBox="0 0 24 24"><circle cx="17.5" cy="5.5" r="2.3"/><circle cx="6.5" cy="12" r="2.3"/><circle cx="17.5" cy="18.5" r="2.3"/><path d="m8.5 10.8 7-4.1M8.5 13.2l7 4.1"/></symbol>
+      <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8.5" y="8.5" width="11" height="11" rx="2.2"/><path d="M15.5 8.5V6.7a2.2 2.2 0 0 0-2.2-2.2H6.7a2.2 2.2 0 0 0-2.2 2.2v6.6a2.2 2.2 0 0 0 2.2 2.2h1.8"/></symbol>
+      <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+      <symbol id="i-image" viewBox="0 0 24 24"><rect x="3.5" y="4.5" width="17" height="15" rx="2.5"/><circle cx="9" cy="10" r="1.8"/><path d="M4 17.5l4.5-4.5 3.5 3.5 3-3 5 5"/></symbol>
+      <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3.5l2.6 5.4 5.9.8-4.3 4.1 1 5.9L12 16.9l-5.2 2.8 1-5.9-4.3-4.1 5.9-.8z"/></symbol>
+      <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5.5v13l10.5-6.5z"/></symbol>
+      <symbol id="i-pause" viewBox="0 0 24 24"><path d="M8.5 5.5v13M15.5 5.5v13"/></symbol>
+      <symbol id="i-next" viewBox="0 0 24 24"><path d="M9.5 5.5 15.5 12l-6 6.5"/></symbol>
+      <symbol id="i-prev" viewBox="0 0 24 24"><path d="M14.5 5.5 8.5 12l6 6.5"/></symbol>
+      <symbol id="i-summary" viewBox="0 0 24 24"><path d="M4.5 20V10M10 20V4.5M15.5 20v-7M21 20H3"/></symbol>
+      <symbol id="i-phone" viewBox="0 0 24 24"><path d="M7.2 3.5h2.6l1.4 4.2-2 1.4a11.5 11.5 0 0 0 5.7 5.7l1.4-2 4.2 1.4v2.6a2.2 2.2 0 0 1-2.2 2.2A15.8 15.8 0 0 1 5 5.7a2.2 2.2 0 0 1 2.2-2.2z"/></symbol>
+      <symbol id="i-sos" viewBox="0 0 24 24"><path d="M12 3.8 21 19.5H3z"/><path d="M12 9.5v4.5M12 16.6v.4"/></symbol>
+    </svg>
+    
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage12-tips.test.js:77:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: T-7 the info button styles use design tokens only (no raw colours)
+not ok 7 - T-7 the info button styles use design tokens only (no raw colours)
+  ---
+  duration_ms: 0.926807
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage12-tips.test.js:82:1'
+  failureType: 'testCodeFailure'
+  error: 'the Stage 12 info button block exists'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage12-tips.test.js:85:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..7
+# tests 7
+# suites 0
+# pass 1
+# fail 6
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 66.411286
