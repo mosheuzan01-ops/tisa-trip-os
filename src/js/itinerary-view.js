@@ -9,6 +9,7 @@ import {
   whereToday, moveStop, replan, seedFromPack, formatDate, formatRange,
 } from './core/itinerary.js';
 import { makeId } from './core/ids.js';
+import { tipButton } from './tip.js';
 import { transfersForStop } from './core/transfers.js';
 import { planRoute } from './core/route-plan.js';
 
@@ -129,7 +130,7 @@ export function renderItinerary(ctx) {
     const head = el('div', 'stop-head');
     head.append(el('span', 'stop-num ltr', String(i + 1).padStart(2, '0')), el('h3', 'stop-name', stop.name));
     if (stop.id === where.currentId) head.append(el('span', 'badge stop-badge-today', t('itin.badge.today')));
-    if (stop.flexible) head.append(el('span', 'badge', t('itin.badge.flex')));
+    if (stop.flexible) head.append(el('span', 'badge', t('itin.badge.flex')), tipButton(t, 'flex'));
     const meta = el('p', 'stop-meta');
     meta.append(el('span', 'stop-dates', formatRange(stop, fmtLocale)), el('span', 'stop-nights', nightsText(t, stopNights(stop))));
     li.append(head, meta);

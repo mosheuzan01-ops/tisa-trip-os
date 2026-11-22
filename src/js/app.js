@@ -26,6 +26,7 @@ import { renderPhotos, setupPhotos, renderPhotoBackup, setupPhotoBackup } from '
 import { renderSummary, setupSummary } from './summary-view.js';
 import { renderPlaces, setupPlaces } from './places-view.js';
 import { renderInfo, setupInfo } from './info-view.js';
+import { setupTips } from './tip.js';
 import { validateInfo } from './core/info.js';
 
 const $ = (sel, root = document) => root.querySelector(sel);
@@ -164,6 +165,7 @@ async function boot() {
   setupSummary(ctx, { wireDialog, showFormErrors });
   setupPlaces(ctx, { wireDialog, showFormErrors });
   setupInfo(ctx);
+  setupTips(ctx, { wireDialog });
   setupPhotoBackup(ctx);
   setupServiceWorker(ctx);
   addEventListener('online', () => renderBanners(ctx));

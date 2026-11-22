@@ -16,6 +16,7 @@ import { searchList, sumBase } from './core/search.js';
 import { setupSearch } from './search-view.js';
 import { sortStops, cleanStops, formatDate } from './core/itinerary.js';
 import { makeId } from './core/ids.js';
+import { tipButton } from './tip.js';
 
 const $ = (sel, root = document) => root.querySelector(sel);
 const ICONS = './assets/icons.svg#';
@@ -86,9 +87,12 @@ export function renderMoney(ctx) {
   // Hero
   $('[data-slot="money-free"]').textContent = s.hasBudget ? fm(s.freeMinor) : '—';
   $('[data-slot="money-free"]').classList.toggle('is-over', s.freeMinor < 0);
-  $('[data-slot="money-free-before"]').textContent = s.hasBudget ? interpolate(t('money.freeBefore'), { amount: fm(s.freeBeforePlanMinor) }) : '';
+  const before = $('[data-slot="money-free-before"]');
+  before.textContent = s.hasBudget ? interpolate(t('money.freeBefore'), { amount: fm(s.freeBeforePlanMinor) }) : '';
+  if (s.hasBudget) before.append(tipButton(t, 'freeBefore'));
   const today = $('[data-slot="money-today"]');
   today.textContent = s.unconvertible ? interpolate(t('money.unconvertible'), { cur: s.unconvertible }) : dailyText(ctx, m);
+  if (!s.unconvertible && s.hasBudget && (m.daily.kind === 'ok' || m.daily.kind === 'over')) today.append(tipButton(t, 'today'));
   today.dataset.kind = s.hasBudget ? m.daily.kind : 'none';
   for (const k of ['paid', 'planned', 'committed']) $(`[data-slot="money-${k}"]`).textContent = fm(s[`${k}Minor`]);
   $('[data-slot="money-free-small"]').textContent = fm(s.freeMinor);
@@ -101,13 +105,13 @@ export function renderMoney(ctx) {
   const counts = dates ? tripCounts(dates.start, dates.end, cleanStops(m.trip.destinations)) : null;
   const baseEl = $('[data-slot="money-base"]');
   baseEl.hidden = baseMinor === null;
-  if (baseMinor !== null) baseEl.textContent = interpolate(t('money.base'), { amount: fm(baseMinor), budget: fm(s.totalMinor - flightMinor), days: counts.dates });
+  if (baseMinor !== null) { baseEl.textContent = interpolate(t('money.base'), { amount: fm(baseMinor), budget: fm(s.totalMinor - flightMinor), days: counts.dates }); baseEl.append(tipButton(t, 'base')); }
   const countsEl = $('[data-slot="money-counts"]');
   countsEl.hidden = !counts;
   if (counts) countsEl.textContent = interpolate(t('money.counts'), { dates: counts.dates, nights: counts.nights, lodging: counts.lodgingNights });
   const emEl = $('[data-slot="money-emergency-note"]');
   emEl.hidden = !(s.emergency.planMinor > 0);
-  if (s.emergency.planMinor > 0) emEl.textContent = interpolate(t('money.emergencyApart'), { em: fm(s.emergency.planMinor), base: fm(s.totalMinor), both: fm(s.totalMinor + s.emergency.planMinor) });
+  if (s.emergency.planMinor > 0) { emEl.textContent = interpolate(t('money.emergencyApart'), { em: fm(s.emergency.planMinor), base: fm(s.totalMinor), both: fm(s.totalMinor + s.emergency.planMinor) }); emEl.append(tipButton(t, 'emergency')); }
   $('[data-slot="template-card"]').hidden = !needsTemplateOffer(m.trip);
   const bar = $('[data-slot="money-bar"]');
   const parts = [['paid', s.paidMinor], ['planned', s.plannedMinor], ['committed', s.committedMinor], ['free', Math.max(0, s.freeMinor)]];

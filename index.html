@@ -362,15 +362,15 @@
         </section>
 
         <section class="card surface money-hero" aria-labelledby="money-free-label">
-          <h2 class="money-hero-label" id="money-free-label" data-i18n="money.free.title">פנוי אחרי התכנון</h2>
+          <div class="tip-row"><h2 class="money-hero-label" id="money-free-label" data-i18n="money.free.title">פנוי אחרי התכנון</h2><button class="tip-btn" type="button" data-tip="freeAfter"></button></div>
           <p class="money-big ltr" data-slot="money-free">—</p>
           <p class="money-before" data-slot="money-free-before"></p>
           <p class="money-today" data-slot="money-today"></p>
           <div class="money-bar" data-slot="money-bar" aria-hidden="true"></div>
           <dl class="money-split">
             <div><dt><span class="dot dot-paid" aria-hidden="true"></span><span data-i18n="money.paid">שולם</span></dt><dd class="ltr" data-slot="money-paid"></dd></div>
-            <div><dt><span class="dot dot-planned" aria-hidden="true"></span><span data-i18n="money.planned">מתוכנן</span></dt><dd class="ltr" data-slot="money-planned"></dd></div>
-            <div><dt><span class="dot dot-committed" aria-hidden="true"></span><span data-i18n="money.committed">התחייבות עתידית</span></dt><dd class="ltr" data-slot="money-committed"></dd></div>
+            <div><dt><span class="dot dot-planned" aria-hidden="true"></span><span data-i18n="money.planned">מתוכנן</span><button class="tip-btn" type="button" data-tip="planned"></button></dt><dd class="ltr" data-slot="money-planned"></dd></div>
+            <div><dt><span class="dot dot-committed" aria-hidden="true"></span><span data-i18n="money.committed">התחייבות עתידית</span><button class="tip-btn" type="button" data-tip="committed"></button></dt><dd class="ltr" data-slot="money-committed"></dd></div>
             <div><dt><span class="dot dot-free" aria-hidden="true"></span><span data-i18n="money.freeShort">פנוי אחרי התכנון</span></dt><dd class="ltr" data-slot="money-free-small"></dd></div>
             <div class="money-split-total"><dt data-i18n="money.total">תקציב שוטף</dt><dd class="ltr" data-slot="money-total"></dd></div>
           </dl>
@@ -482,7 +482,7 @@
         <section class="card surface settings-card" aria-labelledby="money-rates-title">
           <div class="money-card-head">
             <h2 id="money-rates-title" data-i18n="money.rates.title">שערים</h2>
-            <span class="badge" data-slot="rates-badge"></span>
+            <span class="tip-row"><span class="badge" data-slot="rates-badge"></span><button class="tip-btn" type="button" data-tip="rates"></button></span>
           </div>
           <ul class="settings-list rates-list ltr-nums" data-slot="rates-list"></ul>
           <p class="settings-meta" data-slot="rates-updated" hidden></p>
@@ -859,7 +859,7 @@
         </section>
 
         <section class="card surface settings-card" aria-labelledby="set-backup-title" id="backup">
-          <h2 id="set-backup-title" data-i18n="settings.backup.title">גיבוי ושחזור</h2>
+          <div class="tip-row"><h2 id="set-backup-title" data-i18n="settings.backup.title">גיבוי ושחזור</h2><button class="tip-btn" type="button" data-tip="backup"></button></div>
           <p data-i18n="settings.backup.text">קובץ JSON עם כל הנתונים.</p>
           <p class="settings-meta" data-slot="last-backup"></p>
           <div class="settings-actions">
@@ -877,7 +877,7 @@
         </section>
 
         <section class="card surface settings-card" aria-labelledby="set-photos-title" id="photos-backup">
-          <h2 id="set-photos-title" data-i18n="photoBackup.title">גיבוי תמונות</h2>
+          <div class="tip-row"><h2 id="set-photos-title" data-i18n="photoBackup.title">גיבוי תמונות</h2><button class="tip-btn" type="button" data-tip="photoBackup"></button></div>
           <p data-i18n="photoBackup.text">התמונות לא נכנסות לגיבוי הרגיל. הן יוצאות לקובץ ZIP נפרד, שאפשר לפתוח גם במחשב.</p>
           <p class="settings-meta" data-slot="photos-size"></p>
           <div class="settings-actions">
@@ -1403,7 +1403,7 @@
           <label class="field"><span data-i18n="place.planned">יום מתוכנן (לא חובה)</span><input class="ltr" type="date" name="plannedDate" aria-describedby="place-error"></label>
           <label class="field"><span data-i18n="place.visited">תאריך ביקור בפועל (לא חובה)</span><input class="ltr" type="date" name="visitedDate" aria-describedby="place-error place-visited-hint"></label>
         </div>
-        <p class="sheet-hint" id="place-visited-hint" data-i18n="place.visitedHint">התאריך לא מתמלא לבד, גם כשמסמנים "ביקרתי".</p>
+        <p class="sheet-hint tip-row"><span id="place-visited-hint" data-i18n="place.visitedHint">התאריך לא מתמלא לבד, גם כשמסמנים "ביקרתי".</span><button class="tip-btn" type="button" data-tip="placeDates"></button></p>
         <label class="field"><span data-i18n="place.note">הערה (לא חובה)</span><textarea name="note" rows="2" maxlength="280" aria-describedby="place-error"></textarea></label>
         <fieldset class="place-photos" data-slot="place-photos">
           <legend data-i18n="place.photos.title">תמונות של המקום (לא חובה)</legend>
@@ -1533,6 +1533,17 @@
           <button class="btn btn-ghost" type="button" data-close data-i18n="form.cancel">ביטול</button>
         </div>
       </form>
+    </dialog>
+
+    <!-- Stage 12: one shared sheet for every info button (src/js/tip.js) -->
+    <dialog class="sheet dmetal tip-sheet" id="dlg-tip" aria-labelledby="dlg-tip-title" aria-describedby="dlg-tip-text">
+      <div class="sheet-form">
+        <h2 id="dlg-tip-title"></h2>
+        <p class="sheet-hint tip-text" id="dlg-tip-text"></p>
+        <div class="sheet-actions">
+          <button class="btn btn-ghost" type="button" data-close data-i18n="tip.close">סגירה</button>
+        </div>
+      </div>
     </dialog>
 
     <dialog class="sheet dmetal" id="dlg-luggage-delete" aria-labelledby="dlg-luggage-delete-title" aria-describedby="dlg-luggage-delete-text">
