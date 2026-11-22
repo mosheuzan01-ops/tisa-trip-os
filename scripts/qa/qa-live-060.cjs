@@ -162,7 +162,7 @@ const DIALOGS = [
       for (const route of ROUTES) {
         await page.goto(`${BASE}#/${route}`);
         await ready(page);
-        await page.locator(route === 'info' ? '#panel-soon' : `#panel-${route}`).waitFor();
+        await page.locator(`#panel-${route}`).waitFor(); // info is a real screen since 0.10.0 (stage 11)
         report.screens[`${route} ${width} ${scheme}`] = await page.evaluate(audit);
         if (SHOTS && ((width === 390) || (width === 1280 && scheme === 'light'))) {
           await page.screenshot({ path: `${OUT}/${route}-${width}-${scheme}.png`, fullPage: true });
