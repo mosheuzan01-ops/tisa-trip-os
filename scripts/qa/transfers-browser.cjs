@@ -3,6 +3,7 @@
 // Waits for UI state (rule 6). Run 3 times before PASS. QA_OUT for reruns (rule 10).
 // Run from the repo root: node scripts/qa/transfers-browser.cjs   (port 8081)
 const { chromium } = require('playwright');
+const { blankTrip } = require('./lib/blank-trip.cjs');
 const { spawn } = require('node:child_process');
 const fs = require('node:fs');
 const path = require('node:path');
@@ -34,6 +35,7 @@ async function fill(page, o) {
 
   for (const [w, h, tag] of [[375, 812, 'mobile'], [1280, 900, 'desktop']]) {
     const ctx = await browser.newContext({ viewport: { width: w, height: h }, deviceScaleFactor: 2, locale: 'he-IL', reducedMotion: 'reduce', serviceWorkers: 'block', acceptDownloads: true });
+    await blankTrip(ctx); // pre-stage-10 PR B: start from a 0.8.3-style trip (no budget), see scripts/qa/lib/blank-trip.cjs
     const page = await ctx.newPage();
     page.on('pageerror', (e) => errors.push(`${tag}: ${e.message}`));
     page.on('console', (m) => { if (m.type() === 'error' && !/Service Worker registration blocked/.test(m.text())) errors.push(`${tag}: ${m.text()}`); });
@@ -166,6 +168,7 @@ async function fill(page, o) {
   // TB-8 offline: the new files are cached
   {
     const ctx = await browser.newContext({ viewport: { width: 375, height: 812 }, locale: 'he-IL' });
+    await blankTrip(ctx); // pre-stage-10 PR B: start from a 0.8.3-style trip (no budget), see scripts/qa/lib/blank-trip.cjs
     const page = await ctx.newPage();
     await page.goto(`${BASE}#/transfers`);
     await page.waitForFunction(() => document.querySelector('[data-slot="version-app"]')?.textContent.length > 0);
