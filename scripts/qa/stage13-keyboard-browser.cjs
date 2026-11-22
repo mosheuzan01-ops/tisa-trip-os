@@ -9,8 +9,7 @@ const { chromium } = require('playwright');
 const { spawn } = require('node:child_process');
 const fs = require('node:fs');
 const path = require('node:path');
-const { pathToFileURL } = require('node:url');
-const { sampleState } = require('./lib/sample-trip.cjs');
+const { richState, putSamplePhoto } = require('./lib/rich-trip.cjs');
 const { blankState } = require('./lib/blank-trip.cjs');
 
 const ROOT = path.join(__dirname, '..', '..');
@@ -32,46 +31,10 @@ function watch(page, { closePickers = true } = {}) {
 const ready = async (page) => { await page.waitForFunction(() => document.querySelector('[data-slot="version-app"]')?.textContent.length > 0); await page.evaluate(() => document.fonts.ready); };
 const openIds = (page) => page.evaluate(() => [...document.querySelectorAll('dialog[open]')].map((d) => d.id));
 
-const mod = (p) => import(pathToFileURL(path.join(ROOT, p)).href);
-/** The sample trip with one of everything, so every edit and delete dialog has something to open (sample data only). */
-async function richState() {
-  const st = await sampleState();
-  const trip = st.trips[st.activeTripId];
-  const [money, places, jr, ci, lg, tr, { TH }] = await Promise.all(['src/js/core/money.js', 'src/js/core/places.js', 'src/js/core/journal.js',
-    'src/js/core/checkins.js', 'src/js/core/luggage.js', 'src/js/core/transfers.js', 'data/packs/th.js'].map(mod));
-  let n = 0;
-  const makeId = () => `kb-${++n}`;
-  const at = '2030-11-01T10:00:00.000Z';
-  const stop = trip.destinations[0];
-  const rates = money.effectiveRates(trip.rates, TH.planningRates);
-  trip.people = [{ id: 'kb-p1', name: 'חבר א' }, { id: 'kb-p2', name: 'חבר ב' }];
-  const cat = Object.keys(trip.budget.categoriesMinor)[0];
-  trip.expenses = [money.makeExpense({ amount: '50', currency: 'ILS', category: cat, date: stop.startDate, destinationId: stop.id, description: 'הוצאת דוגמה', method: 'card', status: 'paid', note: '' }, rates, makeId)];
-  trip.places = [places.makePlace({ name: 'מקום דוגמה', category: 'food', status: 'want', coords: '13.75, 100.5', stopId: stop.id }, makeId, at)];
-  trip.journal = jr.setNote(trip.journal, stop.startDate, 'הערת דוגמה', at);
-  trip.checkins = [ci.makeCheckin({ kind: 'hotel', title: 'מלון דוגמה', stopId: stop.id, date: stop.startDate, time: '14:00', zone: 'Asia/Bangkok', booking: '', link: '', note: '' }, makeId)];
-  const bag = lg.makeBag({ name: 'תיק דוגמה', limit: '23' }, makeId);
-  trip.luggage = lg.saveItem(lg.saveBag(trip.luggage, bag), lg.makeLuggageItem({ name: 'פריט דוגמה', weight: '1' }, makeId), bag.id);
-  trip.transfers = [tr.makeTransfer({ kind: 'bus', from: 'א', to: 'ב', date: stop.endDate, time: '09:00', company: '', booking: '', price: '', currency: 'THB', link: '', status: 'planned', note: '' }, makeId)];
-  trip.photos = [{ id: 'kb-photo-1', date: stop.startDate, dateSource: 'manual', stopId: null, caption: 'דוגמה', featured: true, width: 40, height: 30, bytes: 100, addedAt: at }];
-  return st;
-}
-
-/** A sample photo: details in the trip, the file in IndexedDB, so the photo dialogs can open. */
-async function putPhoto(page) {
-  await page.evaluate(async () => {
-    const { putPhoto: put } = await import('/src/js/photo-store.js');
-    const c = new OffscreenCanvas(40, 30);
-    c.getContext('2d').fillRect(0, 0, 40, 30);
-    const buf = await (await c.convertToBlob({ type: 'image/jpeg' })).arrayBuffer();
-    await put({ id: 'kb-photo-1', type: 'image/jpeg', full: buf, thumb: buf.slice(0) });
-  });
-}
-
 /** Reset to the sample data and open a screen. */
 async function fresh(page, seed, screen) {
   await page.evaluate((x) => localStorage.setItem('tisa:v1', x), seed);
-  await putPhoto(page);
+  await putSamplePhoto(page);
   await page.goto(`${BASE}#/${screen}`);
   await page.reload();
   await ready(page);
@@ -194,7 +157,8 @@ async function checkDialog(page, id) {
     // ---------- screen buttons, and one level down ----------
     const ringMiss = {};
     const ONLY_FILES = process.env.ONLY_FILES === '1'; // a quick check of the file dialogs alone (not a full run)
-    for (const [seed, s] of ONLY_FILES ? [] : [...SCREENS.map((x) => [seedRich, x]), ...['home', 'itinerary', 'money'].map((x) => [blank, x]), [older, 'money']]) {
+    const ONLY = process.env.ONLY_SCREEN; // debugging one screen (not a full run)
+    for (const [seed, s] of ONLY_FILES ? [] : ONLY ? [[seedRich, ONLY]] : [...SCREENS.map((x) => [seedRich, x]), ...['home', 'itinerary', 'money'].map((x) => [blank, x]), [older, 'money']]) {
       await fresh(page, seed, s);
       // Tab order on the screen: every stop shows a focus mark.
       await page.evaluate(() => document.activeElement?.blur());
@@ -215,6 +179,7 @@ async function checkDialog(page, id) {
       if (miss.length) ringMiss[s] = [...new Set(miss)];
 
       const list = await buttonsIn(page, `#panel-${s}`);
+      if (process.env.DEBUG_LIST) console.log(s, list.map((b) => b.label).join(' | '));
       for (const b of list) {
         await fresh(page, seed, s);
         if (!await press(page, `#panel-${s}`, b.i)) continue;
