@@ -1,0 +1,155 @@
+{
+  "TB-1 add (mobile)": {
+    "result": "PASS",
+    "card": "טיסהתל אביב – בנגקוקהוזמן5 בדצמ׳שעה: עוד לא הוזנהטיסהחברת תעופההזמנה: ABC123‏2,600 ‏₪מושב ליד חלוןקישור להזמנה",
+    "exp": {
+      "id": "df08d16b-4d38-4e17-ac79-a8e353b72c1f",
+      "amountMinor": 260000,
+      "currency": "ILS",
+      "rate": 1,
+      "baseMinor": 260000,
+      "category": "flight",
+      "date": "2026-12-05",
+      "destinationId": null,
+      "description": "תל אביב – בנגקוק",
+      "method": "card",
+      "status": "committed",
+      "note": "",
+      "transferId": "59358de3-b03e-4892-97d6-60ad2e0b9808"
+    }
+  },
+  "TB-5 honest fields (mobile)": {
+    "result": "PASS",
+    "linkErr": "הקישור צריך להתחיל ב-https:// או http://",
+    "noTime": true,
+    "linkRel": [
+      "_blank",
+      "noopener noreferrer",
+      "https://example.org/booking"
+    ],
+    "future": "חיפוש במחירים חיים יגיע בגרסה עתידית. עד אז כל טיסה ומלון נכתבים כאן ידנית, בלי מחירים, שעות או זמינות מומצאים."
+  },
+  "TB-2 budget (mobile)": {
+    "result": "PASS",
+    "committed0": 0,
+    "committed1": 2600,
+    "committed2": 0,
+    "paid": 2500,
+    "linked": 1
+  },
+  "TB-3 itinerary (mobile)": {
+    "result": "PASS",
+    "onStops": [
+      [
+        "בנגקוק",
+        2
+      ],
+      [
+        "צ'יאנג מאי",
+        1
+      ]
+    ],
+    "order": [
+      "תל אביב – בנגקוק",
+      "בנגקוק – צ'יאנג מאי"
+    ]
+  },
+  "TB-4 delete (mobile)": {
+    "result": "PASS",
+    "ask": "למחוק את תל אביב – בנגקוק? אי אפשר לבטל את זה.",
+    "afterNo": 2,
+    "transfers": 1,
+    "keptExpense": true
+  },
+  "TB-6 backup (mobile)": {
+    "result": "PASS"
+  },
+  "TB-7 layout (mobile)": {
+    "result": "PASS",
+    "hscroll": false,
+    "small": [],
+    "tiny": [],
+    "clipped": []
+  },
+  "TB-1 add (desktop)": {
+    "result": "PASS",
+    "card": "טיסהתל אביב – בנגקוקהוזמן5 בדצמ׳שעה: עוד לא הוזנהטיסהחברת תעופההזמנה: ABC123‏2,600 ‏₪מושב ליד חלוןקישור להזמנה",
+    "exp": {
+      "id": "7ad4f290-54e8-4228-9cff-ec23d96e08eb",
+      "amountMinor": 260000,
+      "currency": "ILS",
+      "rate": 1,
+      "baseMinor": 260000,
+      "category": "flight",
+      "date": "2026-12-05",
+      "destinationId": null,
+      "description": "תל אביב – בנגקוק",
+      "method": "card",
+      "status": "committed",
+      "note": "",
+      "transferId": "ac9020ac-a893-4378-9103-49938deeb3aa"
+    }
+  },
+  "TB-5 honest fields (desktop)": {
+    "result": "PASS",
+    "linkErr": "הקישור צריך להתחיל ב-https:// או http://",
+    "noTime": true,
+    "linkRel": [
+      "_blank",
+      "noopener noreferrer",
+      "https://example.org/booking"
+    ],
+    "future": "חיפוש במחירים חיים יגיע בגרסה עתידית. עד אז כל טיסה ומלון נכתבים כאן ידנית, בלי מחירים, שעות או זמינות מומצאים."
+  },
+  "TB-2 budget (desktop)": {
+    "result": "PASS",
+    "committed0": 0,
+    "committed1": 2600,
+    "committed2": 0,
+    "paid": 2500,
+    "linked": 1
+  },
+  "TB-3 itinerary (desktop)": {
+    "result": "PASS",
+    "onStops": [
+      [
+        "בנגקוק",
+        2
+      ],
+      [
+        "צ'יאנג מאי",
+        1
+      ]
+    ],
+    "order": [
+      "תל אביב – בנגקוק",
+      "בנגקוק – צ'יאנג מאי"
+    ]
+  },
+  "TB-4 delete (desktop)": {
+    "result": "PASS",
+    "ask": "למחוק את תל אביב – בנגקוק? אי אפשר לבטל את זה.",
+    "afterNo": 2,
+    "transfers": 1,
+    "keptExpense": true
+  },
+  "TB-6 backup (desktop)": {
+    "result": "PASS"
+  },
+  "TB-7 layout (desktop)": {
+    "result": "PASS",
+    "hscroll": false,
+    "small": [],
+    "tiny": [],
+    "clipped": []
+  },
+  "TB-8 offline": {
+    "result": "PASS",
+    "cached": 2,
+    "saved": 1
+  },
+  "no JS errors": {
+    "result": "PASS",
+    "errors": []
+  }
+}

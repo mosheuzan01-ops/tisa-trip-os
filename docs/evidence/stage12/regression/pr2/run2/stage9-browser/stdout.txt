@@ -1,0 +1,14 @@
+PASS  S9-4 new trip: the template is the default; the 3 old profiles are in a folded archive marked stale
+PASS  S9-1 template: 20,000 base, emergency 2,500 shown apart and not counted in it
+PASS  S9-2 daily base 468.75 for 32 dates; dates, nights and lodging nights shown
+PASS  S9-1 template names; "green" hidden while empty
+PASS  S9-3 route from the dates: Bangkok first and last, southern islands, marked as a suggestion, transfers not entered
+PASS  v6: the old data is kept once under its own key before migrating
+PASS  S9-5 decline: one card, nothing changed, not shown again
+PASS  S9-5 apply: expenses and everything else unchanged; old budget and route archived; own emergency kept
+PASS  S9-6 an expense in hidden "green" keeps it visible; an expense on an archived stop still shows the stop name
+PASS  S9-6 move 500 from reserve to food and rename: total unchanged, expenses unchanged
+PASS  S9-9 390px: no horizontal scroll
+PASS  S9-4 the old route loads only from the archive, marked as an old estimate
+PASS  S9-9 no JS errors
+ALL PASS
