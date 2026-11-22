@@ -216,6 +216,10 @@ h2, .section-title { font-size: var(--text-h3); font-weight: 700; line-height: 1
 .btn .icon { width: 20px; height: 20px; }
 .btn:hover { filter: brightness(1.05); }
 .btn:active { transform: scale(.97); }
+/* 0.9.1 QA gate: a ghost button outside a card had no colors of its own and got the browser's gray (4.498:1 in dark).
+   Base look on the page; cards, sheets and the setup card keep their own rules below (higher specificity). */
+.btn-ghost { background: var(--surface); color: var(--ink); border-color: var(--line-strong); }
+.btn-ghost:hover { background: var(--surface-2); }
 .setup .btn-ghost { background: transparent; color: var(--on-dmetal); border-color: var(--on-dmetal-muted); }
 .setup :focus-visible { outline-color: var(--metal-4); }
 
@@ -1022,3 +1026,18 @@ body::before {
 .place-coords { color: var(--muted); font-variant-numeric: tabular-nums; }
 .place-map-btn, .place-locate-btn { justify-self: start; }
 @media (max-width: 359px) { .place-filters { grid-template-columns: 1fr; } }
+/* Stage 10 PR 2: share, files, photos of a place */
+.place-files { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.place-share-fields, .place-photos { display: grid; gap: var(--space-2); margin: 0; padding: 0; border: 0; min-width: 0; }
+.place-share-fields legend, .place-photos legend { padding: 0; margin-bottom: var(--space-1); font-weight: 600; color: var(--on-dmetal); }
+.place-share-checks { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 140px), 1fr)); gap: var(--space-1) var(--space-3); }
+.place-share-check { display: flex; align-items: center; gap: var(--space-2); min-height: var(--tap); color: var(--on-dmetal); cursor: pointer; }
+.place-share-check input, .place-photo-opt input { width: 22px; height: 22px; flex: none; accent-color: var(--metal-4); }
+.place-share-preview { margin: 0; padding: var(--space-3); border-radius: var(--radius-sm); background: var(--surface); color: var(--ink); white-space: pre-line; overflow-wrap: anywhere; line-height: 1.5; }
+.place-photo-pick { display: grid; grid-template-columns: repeat(auto-fill, minmax(84px, 1fr)); gap: var(--space-2); margin: 0; padding: 0; list-style: none; }
+.place-photo-opt { position: relative; display: block; aspect-ratio: 1; border-radius: var(--radius-sm); overflow: hidden; background: var(--surface-2); cursor: pointer; }
+.place-photo-opt img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.place-photo-opt input { position: absolute; inset-block-start: 6px; inset-inline-start: 6px; }
+.place-photo-opt:has(input:checked) { outline: 3px solid var(--accent); outline-offset: -3px; }
+.place-photo-opt:has(input:focus-visible) { outline: 3px solid var(--focus); outline-offset: -3px; }
+.place-photo-count { color: var(--muted); }

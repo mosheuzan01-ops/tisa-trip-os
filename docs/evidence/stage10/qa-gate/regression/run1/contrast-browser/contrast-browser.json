@@ -1,0 +1,32 @@
+{
+  "light: every text button outside a card reaches its contrast (4.5:1, large text 3:1)": {
+    "result": "PASS",
+    "measured": 17,
+    "lowest": {
+      "route": "checklist",
+      "label": "item-add: \"הוספת פריט\"",
+      "ratio": 6.65,
+      "need": 4.5,
+      "bg": "rgb(11, 102, 114)"
+    },
+    "low": [],
+    "onImage": []
+  },
+  "dark: every text button outside a card reaches its contrast (4.5:1, large text 3:1)": {
+    "result": "PASS",
+    "measured": 17,
+    "lowest": {
+      "route": "checklist",
+      "label": "item-add: \"הוספת פריט\"",
+      "ratio": 10.205,
+      "need": 4.5,
+      "bg": "rgb(111, 203, 214)"
+    },
+    "low": [],
+    "onImage": []
+  },
+  "no JS errors": {
+    "result": "PASS",
+    "errors": []
+  }
+}
