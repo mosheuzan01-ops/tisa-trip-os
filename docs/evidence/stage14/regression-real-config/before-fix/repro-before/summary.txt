@@ -1,0 +1,6 @@
+r1 exit=0 KEYBOARD-2 the account dialogs after sign-in (share, members, confirm, move to account, admin): focus inside, Tab stays inside, Esc closes, focus back
+r2 exit=0 KEYBOARD-2 the account dialogs after sign-in (share, members, confirm, move to account, admin): focus inside, Tab stays inside, Esc closes, focus back
+r3 exit=1 KEYBOARD-2 the account dialogs after sign-in (share, members, confirm, move to account, admin): focus inside, Tab stays inside, Esc closes, focus back  {"result":"FAIL","kb":["dlg-cloud-admin: focus did not return to its button (BUTTON.btn btn-primary[upload]; opener shown, connected)"]}
+r4 exit=1 
+
+[exited with code 0]

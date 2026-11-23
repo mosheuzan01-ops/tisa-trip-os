@@ -1,0 +1,136 @@
+{
+  "S14-1a no cloud set up: the card says so, no buttons, no account dialogs, nothing requested from the cloud or the library": {
+    "result": "PASS",
+    "text": "הסנכרון לענן עוד לא הוגדר. הכול נשמר במכשיר הזה.",
+    "buttons": 0,
+    "dialogs": 0,
+    "lib": 0
+  },
+  "S14-1b data unchanged by opening (1.0.x behaviour)": {
+    "result": "PASS"
+  },
+  "S14-1c cloud set up but no session: no library, no request to Supabase, only \"sign in\" and \"sign up\"; pill hidden": {
+    "result": "PASS",
+    "lib": 0,
+    "calls": 0,
+    "visible": [
+      "signin",
+      "signup"
+    ]
+  },
+  "S14-1d the app works without signing in: home and data as before": {
+    "result": "PASS"
+  },
+  "KEYBOARD sign-in dialog: Enter opens it, focus on the email field, Esc closes, focus returns to the button": {
+    "result": "PASS",
+    "inside": true,
+    "back": true
+  },
+  "A11Y every field in the account dialogs has an accessible name (its wrapping label)": {
+    "result": "PASS",
+    "unnamed": [],
+    "total": 5
+  },
+  "S14-2a sign-up: account is \"waiting for approval\", the name is saved, too-short password refused first": {
+    "result": "PASS",
+    "status": "pending",
+    "text": "ממתין לאישור מנהל. עד האישור הכול נשמר רק במכשיר.",
+    "shortErr": "הסיסמה צריכה 8 תווים לפחות."
+  },
+  "S14-2b a pending user reads only its own profile and sends no trip data": {
+    "result": "PASS",
+    "calls": [
+      "my_profile"
+    ]
+  },
+  "S14-2c local data unchanged while pending": {
+    "result": "PASS"
+  },
+  "S14-2d sign-out: back to \"sign in\", the session key is gone, the data stays": {
+    "result": "PASS",
+    "keys": [
+      "tisa:v1",
+      "latisa:sync:v1"
+    ]
+  },
+  "S14-2e wrong password says so; \"forgot password\" sends the request and explains the manual reset for friends": {
+    "result": "PASS",
+    "wrong": "המייל או הסיסמה לא נכונים."
+  },
+  "S14-2f a blocked user sees \"blocked\", reads only its profile, sends nothing, keeps the local data": {
+    "result": "PASS",
+    "xcalls": [
+      "my_profile"
+    ]
+  },
+  "S14-6a first sign-in offers the move, with counts; a backup file downloads first; the exact data text is kept once": {
+    "result": "PASS",
+    "migrateText": "תאילנד: 7 תחנות, 1 הוצאות, 61 פריטים ברשימות, 1 מקומות.",
+    "file": "tisa-backup-2026-11-23.json"
+  },
+  "S14-6b the trip moved to the account and nothing on the phone changed": {
+    "result": "PASS",
+    "records": 84
+  },
+  "S14-6c a reload syncs again with no duplicate and no second offer": {
+    "result": "PASS",
+    "records": 84
+  },
+  "S14-4a an edit in airplane mode is saved on the phone, the pill says offline, and it syncs once the network is back": {
+    "result": "PASS",
+    "inCloud": 1
+  },
+  "S14-4b a second phone of the owner gets the trip and the offline edit, once, and keeps its own trip too": {
+    "result": "PASS",
+    "items": 1
+  },
+  "S14-5 server error 500, 402 (paused or restricted) and no network: no local byte changes, the waiting changes stay, \"offline\" shown, then it recovers": {
+    "result": "PASS",
+    "fails": {
+      "402": {
+        "same": true,
+        "syncKept": true,
+        "line": "לא מחובר. השינויים נשמרים במכשיר וישלחו כשיחזור החיבור."
+      },
+      "500": {
+        "same": true,
+        "syncKept": true,
+        "line": "לא מחובר. השינויים נשמרים במכשיר וישלחו כשיחזור החיבור."
+      },
+      "network": {
+        "same": true,
+        "syncKept": true,
+        "line": "לא מחובר. השינויים נשמרים במכשיר וישלחו כשיחזור החיבור."
+      }
+    }
+  },
+  "S14-3a sharing by email: an unknown address is refused, the friend sees the shared trip (route, places, people)": {
+    "result": "PASS",
+    "notFound": "לא נמצא משתמש מאושר עם המייל הזה. בקשו מהחבר להירשם, ומהמנהל לאשר אותו."
+  },
+  "S14-3b the friend gets none of the owner's personal data (budget, checklist, bags, journal)": {
+    "result": "PASS"
+  },
+  "S14-3c a friend cannot change the trip dates or share it further (owner only)": {
+    "result": "PASS",
+    "start": "2030-12-20"
+  },
+  "S14-3d a user the trip was not shared with does not see it": {
+    "result": "PASS",
+    "listed": [
+      "0428e9dc-9402-4dda-b178-ac541f44360a"
+    ]
+  },
+  "run": {
+    "result": "FAIL",
+    "error": "page.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-cloud=\"members\"]')\u001b[22m\n\u001b[2m    - locator resolved to <button type=\"button\" data-cloud=\"members\" class=\"btn btn-ghost\">…</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <dialog open=\"\" class=\"sheet dmetal\" id=\"dlg-cloud-share\" aria-labelledby=\"dlg-cloud-share-title\">…</dialog> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <dialog open=\"\" class=\"sheet dmetal\" id=\"dlg-cloud-share\" aria-labelledby=\"dlg-cloud-share-title\">…</dialog> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    58 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <dialog open=\"\" class=\"sheet dmetal\" id=\"dlg-cloud-share\" aria-labelledby=\"dlg-cloud-share-title\">…</dialog> intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\n    at /home/user/tisa-trip-os/scripts/qa/stage14-browser.cjs:347:17"
+  },
+  "no JS errors": {
+    "result": "PASS",
+    "errors": []
+  },
+  "no requests outside the app and the (fake) Supabase project": {
+    "result": "PASS",
+    "outside": []
+  }
+}

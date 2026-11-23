@@ -82,7 +82,7 @@ async function kbDialog(page, openerSel, id) {
   await page.focus(openerSel);
   await page.keyboard.press('Enter');
   const opened = await page.waitForSelector(`#${id}[open]`, { timeout: 5000 }).then(() => true, () => false);
-  if (!opened) return [`${id}: did not open`];
+  if (!opened) { console.log(`  kb ${id}: did not open`); return [`${id}: did not open`]; }
   const where = () => page.evaluate((d) => {
     const a = document.activeElement;
     if (a === document.body) return 'frame';
@@ -98,11 +98,28 @@ async function kbDialog(page, openerSel, id) {
     const w = await where();
     if (w.startsWith('out') || w.startsWith('no-mark')) { bad.push(`${id}: ${key} -> ${w}`); break; }
   }
+  // The app moves focus back in the dialog's "close" event, which the browser fires one task after "open" turns
+  // false. A listener added now runs after the app's own, so when it has run, the app has finished (rule 6: wait
+  // for the event, not for a fixed time; seen 2026-11-23: checking earlier raced it, and the next Enter then went to
+  // the previous dialog's button).
+  await page.evaluate((d) => { window.__kbClosed = false; document.getElementById(d).addEventListener('close', () => { window.__kbClosed = true; }, { once: true }); }, id);
   await page.keyboard.press('Escape');
-  const shut = await page.waitForFunction((d) => !document.getElementById(d).open, id, { timeout: 5000 }).then(() => true, () => false);
+  const shut = await page.waitForFunction(() => window.__kbClosed === true, null, { timeout: 5000 }).then(() => true, () => false);
   if (!shut) bad.push(`${id}: Esc did not close`);
-  const back = await page.evaluate((sel) => document.activeElement === document.querySelector(sel), openerSel);
-  if (!back) bad.push(`${id}: focus did not return to its button`);
+  const sel = openerSel;
+  const focusAt = await page.evaluate((x) => {
+    const a = document.activeElement;
+    const o = document.querySelector(x);
+    if (a === o) return 'opener';
+    return `${a.tagName}${a.id ? `#${a.id}` : ''}.${a.className}${a.dataset?.cloud ? `[${a.dataset.cloud}]` : ''}; opener ${o ? (o.hidden ? 'hidden' : 'shown') : 'gone'}`;
+  }, sel);
+  if (focusAt !== 'opener') bad.push(`${id}: focus did not return to its button (${focusAt})`);
+  const stillOpen = await page.evaluate((x) => { // the dialog the opener sits in (confirm opens from members) stays open
+    const home = document.querySelector(x)?.closest('dialog');
+    return [...document.querySelectorAll('dialog[open]')].filter((d) => d !== home).map((d) => d.id);
+  }, sel);
+  if (stillOpen.length) bad.push(`${id}: still open afterwards: ${stillOpen.join(', ')}`);
+  console.log(`  kb ${id}: ${bad.length ? bad.join(' | ') : 'ok'}`);
   return bad;
 }
 const shot = async (page, name) => { if (SHOTS) await page.screenshot({ path: path.join(SHOT_DIR, `${name}.jpg`), type: 'jpeg', quality: 70, fullPage: false }); };
