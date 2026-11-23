@@ -1,0 +1,153 @@
+{
+  "T1 new install: one total field on the money screen, \"details\" closed, no budget yet; home \"set the budget\" opens the single shekel field (no currency menu)": {
+    "result": "PASS",
+    "form": 1,
+    "m1": {
+      "free": "—",
+      "total": "‏0 ‏₪",
+      "today": "עוד אין תקציב. קובעים אותו בבית או כאן.",
+      "reserved": null,
+      "emheld": null,
+      "unalloc": "",
+      "fx": "",
+      "detailsOpen": false
+    },
+    "homeDialog": true,
+    "homeField": 1,
+    "currencySelect": 0
+  },
+  "T2 \"15,000\" saved as the anchor: free 15,000 with nothing else entered; $4,054 and ฿150,000 shown small; categories untouched": {
+    "result": "PASS",
+    "fxTyping": "בערך ‏4,054 ‏$ או ‏150,000 ‏฿",
+    "m2": {
+      "free": "‏15,000 ‏₪",
+      "total": "‏15,000 ‏₪",
+      "today": "פנוי היום: ‏468 ‏₪",
+      "reserved": null,
+      "emheld": null,
+      "unalloc": "נשאר לחלק: ‏15,000 ‏₪",
+      "fx": "בערך ‏4,054 ‏$ או ‏150,000 ‏฿",
+      "detailsOpen": false
+    },
+    "budget": {
+      "currency": "ILS",
+      "totalMinor": 1500000,
+      "categoriesMinor": {
+        "flight": 0,
+        "lodging": 0,
+        "food": 0,
+        "transport": 0,
+        "attractions": 0,
+        "insurance-sim-gear": 0,
+        "misc": 0,
+        "emergency": 0
+      },
+      "profileId": null,
+      "estimate": false,
+      "categoryNames": {
+        "food": "אוכל ושתייה",
+        "transport": "תחבורה, מעברים וטיסות פנים",
+        "attractions": "אטרקציות וחיי לילה",
+        "insurance-sim-gear": "ביטוח, תקשורת וציוד",
+        "misc": "רזרבה, קניות ומתנות"
+      },
+      "hidden": [
+        "green"
+      ],
+      "anchor": "total"
+    }
+  },
+  "T3 details: \"left to split 15,000\"; the suggestion is marked as a suggestion (not an expense), flight 3,750, the \"already paid flight\" hint; nothing saved, free still 15,000": {
+    "result": "PASS",
+    "sug": {
+      "text": "הצעת חלוקה\n\nהצעה בלבד, לא הוצאה. אפשר לשנות הכול גם אחרי האישור.\n\nטיסה\n‏3,750 ‏₪\nביטוח, תקשורת וציוד\n‏750 ‏₪\nלינה\n‏3,750 ‏₪\nאוכל ושתייה\n‏2,625 ‏₪\nתחבורה, מעברים וטיסות פנים\n‏1,650 ‏₪\nאטרקציות וחיי לילה\n‏1,725 ‏₪\nרזרבה, קניות ומתנות\n‏750 ‏₪\n\nטיסה ששולמה? הוסיפו אותה כהוצאה, ואז הסכום שלה לא נשמר בצד.\n\nלאשר את ההצעה",
+      "flight": "‏3,750 ‏₪",
+      "hint": "טיסה ששולמה? הוסיפו אותה כהוצאה, ואז הסכום שלה לא נשמר בצד.",
+      "apply": true
+    },
+    "m3": {
+      "free": "‏15,000 ‏₪",
+      "total": "‏15,000 ‏₪",
+      "today": "פנוי היום: ‏468 ‏₪",
+      "reserved": null,
+      "emheld": null,
+      "unalloc": "נשאר לחלק: ‏15,000 ‏₪",
+      "fx": "בערך ‏4,054 ‏$ או ‏150,000 ‏฿",
+      "detailsOpen": true
+    }
+  },
+  "T4 approving saves the split (flight 3,750 ... misc 750) and keeps the total 15,000; free 11,250 with 3,750 set aside for the flight; nothing left to split": {
+    "result": "PASS",
+    "m4": {
+      "free": "‏11,250 ‏₪",
+      "total": "‏15,000 ‏₪",
+      "today": "פנוי היום: ‏351 ‏₪",
+      "reserved": "‏3,750 ‏₪",
+      "emheld": null,
+      "unalloc": "נשאר לחלק: ‏0 ‏₪",
+      "fx": "בערך ‏4,054 ‏$ או ‏150,000 ‏฿",
+      "detailsOpen": true
+    }
+  },
+  "T5 food 5,000 and emergency 1,000: total still 15,000, other categories unchanged, \"over 3,375\"; the emergency fund is inside the total (free 10,250, 1,000 held)": {
+    "result": "PASS",
+    "m5": {
+      "free": "‏10,250 ‏₪",
+      "total": "‏15,000 ‏₪",
+      "today": "פנוי היום: ‏320 ‏₪",
+      "reserved": "‏3,750 ‏₪",
+      "emheld": "‏1,000 ‏₪",
+      "unalloc": "חריגה: ‏3,375 ‏₪",
+      "fx": "בערך ‏4,054 ‏$ או ‏150,000 ‏฿",
+      "detailsOpen": true
+    }
+  },
+  "T6 after a reload: the same numbers; \"details\" closed by default": {
+    "result": "PASS",
+    "m6": {
+      "free": "‏10,250 ‏₪",
+      "total": "‏15,000 ‏₪",
+      "today": "פנוי היום: ‏320 ‏₪",
+      "reserved": "‏3,750 ‏₪",
+      "emheld": "‏1,000 ‏₪",
+      "unalloc": "חריגה: ‏3,375 ‏₪",
+      "fx": "בערך ‏4,054 ‏$ או ‏150,000 ‏฿",
+      "detailsOpen": false
+    }
+  },
+  "T7 home: the field shows 15,000 with $ and ฿ below; 16,000 changes the total only, the categories stay": {
+    "result": "PASS",
+    "pre": "15,000",
+    "homeFx": "בערך ‏4,054 ‏$ או ‏150,000 ‏฿"
+  },
+  "T8 \"15000.5\" is refused with a message; nothing changes": {
+    "result": "PASS",
+    "err": "כותבים סכום שלם בשקלים, למשל 15,000."
+  },
+  "T9 existing data: free 15,000 and total 20,000 as in 1.0.0, emergency apart, the field shows 20,000; nothing written (no anchor)": {
+    "result": "PASS",
+    "lm": {
+      "free": "‏15,000 ‏₪",
+      "total": "‏20,000 ‏₪",
+      "today": "פנוי היום: ‏468 ‏₪",
+      "reserved": "‏5,000 ‏₪",
+      "emheld": null,
+      "unalloc": "",
+      "fx": "בערך ‏5,405 ‏$ או ‏200,000 ‏฿",
+      "detailsOpen": false
+    },
+    "field": "20,000"
+  },
+  "T10 390 and 1440, light and dark: no horizontal scroll with \"details\" open": {
+    "result": "PASS",
+    "bad": {}
+  },
+  "no JS errors": {
+    "result": "PASS",
+    "errors": []
+  },
+  "no requests outside the app": {
+    "result": "PASS",
+    "outside": []
+  }
+}

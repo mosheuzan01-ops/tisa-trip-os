@@ -1,0 +1,143 @@
+commit defff2c
+run1 start HEAD defff2c 17:16:52
+run1 npm test exit=0 # pass 510 # fail 0 
+run1 qa_scan index FAIL=5 WARN=3 | brand FAIL=0 WARN=2
+run1 stage14-rls-local exit=0 ALL PASS
+run1 a11y-names-browser exit=0 ALL PASS
+run1 assistant-browser exit=0 PASS  no JS errors
+run1 budget-total-browser exit=0 ALL PASS
+run1 contrast-browser exit=0 PASS  no JS errors
+run1 info-browser exit=0 ALL PASS
+run1 places-browser exit=0 PASS  no JS errors, no outside requests
+run1 places-share-browser exit=0 PASS  no JS errors, no outside requests
+run1 qa-publish-110-browser exit=0 ALL PASS
+run1 ready-checklist-browser exit=0 ALL PASS
+run1 ready-trip-browser exit=0 ALL PASS
+run1 release-055-browser exit=0 PASS  no JS errors
+run1 review-fixes-browser exit=0 ALL PASS
+run1 search-browser exit=0 PASS  no JS errors
+run1 smart-bag-browser exit=0 PASS  L11 (S12-7) zero requests outside the app in the whole run, no page errors
+run1 stage13-keyboard-browser exit=0 ALL PASS
+run1 stage13-layout-browser exit=0 ALL PASS
+run1 stage13-release-browser exit=0 ALL PASS
+run1 stage13-upgrade-browser exit=0 ALL PASS
+run1 stage14-browser exit=0 ALL PASS
+run1 stage2-browser exit=0 B20 PASS
+run1 stage3-browser exit=0 PASS  no errors / no outside requests
+run1 stage3-polish-browser exit=0 PASS  no errors
+run1 stage4-browser exit=0 PASS  S4-11 (no JS errors, no outside requests)
+run1 stage4-polish-browser exit=0 PASS  no JS errors
+run1 stage4-tools-browser exit=0 PASS  no JS errors
+run1 stage5-browser exit=0 PASS  S5-11 (no JS errors, no outside requests)
+run1 stage6-calendar-browser exit=0 PASS  no JS errors, no outside requests
+run1 stage6-checkin-browser exit=0 PASS  no JS errors, no outside requests
+run1 stage6-data-browser exit=0 PASS  no JS errors, no outside requests
+run1 stage6-journal-browser exit=0 PASS  no JS errors, no outside requests
+run1 stage6-luggage-browser exit=0 PASS  no JS errors, no outside requests
+run1 stage7-browser exit=0 ALL PASS
+run1 stage7-close-browser exit=0 ALL PASS
+run1 stage7-offline-browser exit=0 ALL PASS
+run1 stage9-brand-browser exit=0 ALL PASS
+run1 stage9-browser exit=0 ALL PASS
+run1 stage9-flights-browser exit=0 ALL PASS
+run1 tips-browser exit=0 PASS  K10 zero requests outside the app in the whole run (S12-7), no page errors
+run1 transfers-browser exit=0 PASS  no JS errors
+run1 upgrade-100-browser exit=0 ALL PASS
+run1 qa-live-060 exit=0
+run1 files-with-FAIL 0
+run1 end HEAD defff2c 17:34:38
+run2 start HEAD defff2c 17:34:38
+run2 npm test exit=0 # pass 510 # fail 0 
+run2 qa_scan index FAIL=5 WARN=3 | brand FAIL=0 WARN=2
+run2 stage14-rls-local exit=0 ALL PASS
+run2 a11y-names-browser exit=0 ALL PASS
+run2 assistant-browser exit=0 PASS  no JS errors
+run2 budget-total-browser exit=0 ALL PASS
+run2 contrast-browser exit=0 PASS  no JS errors
+run2 info-browser exit=0 ALL PASS
+run2 places-browser exit=0 PASS  no JS errors, no outside requests
+run2 places-share-browser exit=0 PASS  no JS errors, no outside requests
+run2 qa-publish-110-browser exit=0 ALL PASS
+run2 ready-checklist-browser exit=0 ALL PASS
+run2 ready-trip-browser exit=0 ALL PASS
+run2 release-055-browser exit=0 PASS  no JS errors
+run2 review-fixes-browser exit=0 ALL PASS
+run2 search-browser exit=0 PASS  no JS errors
+run2 smart-bag-browser exit=1 ]
+run2 stage13-keyboard-browser exit=0 ALL PASS
+run2 stage13-layout-browser exit=0 ALL PASS
+run2 stage13-release-browser exit=0 ALL PASS
+run2 stage13-upgrade-browser exit=0 ALL PASS
+run2 stage14-browser exit=0 ALL PASS
+run2 stage2-browser exit=0 B20 PASS
+run2 stage3-browser exit=0 PASS  no errors / no outside requests
+run2 stage3-polish-browser exit=0 PASS  no errors
+run2 stage4-browser exit=0 PASS  S4-11 (no JS errors, no outside requests)
+run2 stage4-polish-browser exit=0 PASS  no JS errors
+run2 stage4-tools-browser exit=0 PASS  no JS errors
+run2 stage5-browser exit=0 PASS  S5-11 (no JS errors, no outside requests)
+run2 stage6-calendar-browser exit=0 PASS  no JS errors, no outside requests
+run2 stage6-checkin-browser exit=0 PASS  no JS errors, no outside requests
+run2 stage6-data-browser exit=0 PASS  no JS errors, no outside requests
+run2 stage6-journal-browser exit=0 PASS  no JS errors, no outside requests
+run2 stage6-luggage-browser exit=0 PASS  no JS errors, no outside requests
+run2 stage7-browser exit=0 ALL PASS
+run2 stage7-close-browser exit=0 ALL PASS
+run2 stage7-offline-browser exit=0 ALL PASS
+run2 stage9-brand-browser exit=0 ALL PASS
+run2 stage9-browser exit=0 ALL PASS
+run2 stage9-flights-browser exit=0 ALL PASS
+run2 tips-browser exit=0 PASS  K10 zero requests outside the app in the whole run (S12-7), no page errors
+run2 transfers-browser exit=0 PASS  no JS errors
+run2 upgrade-100-browser exit=0 ALL PASS
+run2 qa-live-060 exit=0
+run2 files-with-FAIL 2
+run2 end HEAD defff2c 17:51:48
+run3 start HEAD defff2c 17:51:48
+run3 npm test exit=0 # pass 510 # fail 0 
+run3 qa_scan index FAIL=5 WARN=3 | brand FAIL=0 WARN=2
+run3 stage14-rls-local exit=0 ALL PASS
+run3 a11y-names-browser exit=0 ALL PASS
+run3 assistant-browser exit=0 PASS  no JS errors
+run3 budget-total-browser exit=0 ALL PASS
+run3 contrast-browser exit=0 PASS  no JS errors
+run3 info-browser exit=0 ALL PASS
+run3 places-browser exit=0 PASS  no JS errors, no outside requests
+run3 places-share-browser exit=0 PASS  no JS errors, no outside requests
+run3 qa-publish-110-browser exit=0 ALL PASS
+run3 ready-checklist-browser exit=0 ALL PASS
+run3 ready-trip-browser exit=0 ALL PASS
+run3 release-055-browser exit=0 PASS  no JS errors
+run3 review-fixes-browser exit=0 ALL PASS
+run3 search-browser exit=0 PASS  no JS errors
+run3 smart-bag-browser exit=0 PASS  L11 (S12-7) zero requests outside the app in the whole run, no page errors
+run3 stage13-keyboard-browser exit=0 ALL PASS
+run3 stage13-layout-browser exit=0 ALL PASS
+run3 stage13-release-browser exit=0 ALL PASS
+run3 stage13-upgrade-browser exit=0 ALL PASS
+run3 stage14-browser exit=0 ALL PASS
+run3 stage2-browser exit=0 B20 PASS
+run3 stage3-browser exit=0 PASS  no errors / no outside requests
+run3 stage3-polish-browser exit=0 PASS  no errors
+run3 stage4-browser exit=0 PASS  S4-11 (no JS errors, no outside requests)
+run3 stage4-polish-browser exit=0 PASS  no JS errors
+run3 stage4-tools-browser exit=0 PASS  no JS errors
+run3 stage5-browser exit=0 PASS  S5-11 (no JS errors, no outside requests)
+run3 stage6-calendar-browser exit=0 PASS  no JS errors, no outside requests
+run3 stage6-checkin-browser exit=0 PASS  no JS errors, no outside requests
+run3 stage6-data-browser exit=0 PASS  no JS errors, no outside requests
+run3 stage6-journal-browser exit=0 PASS  no JS errors, no outside requests
+run3 stage6-luggage-browser exit=0 PASS  no JS errors, no outside requests
+run3 stage7-browser exit=0 ALL PASS
+run3 stage7-close-browser exit=0 ALL PASS
+run3 stage7-offline-browser exit=0 ALL PASS
+run3 stage9-brand-browser exit=0 ALL PASS
+run3 stage9-browser exit=0 ALL PASS
+run3 stage9-flights-browser exit=0 ALL PASS
+run3 tips-browser exit=0 PASS  K10 zero requests outside the app in the whole run (S12-7), no page errors
+run3 transfers-browser exit=0 PASS  no JS errors
+run3 upgrade-100-browser exit=0 ALL PASS
+run3 qa-live-060 exit=0
+run3 files-with-FAIL 0
+run3 end HEAD defff2c 18:09:31
+DONE

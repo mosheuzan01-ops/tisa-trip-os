@@ -1,0 +1,150 @@
+{
+  "R9 speed on this computer (local server, no throttling; not PageSpeed), reduced motion reduce: LCP under 2500 ms, CLS under 0.1": {
+    "result": "PASS",
+    "lcp": 316,
+    "cls": 0,
+    "dom": 127,
+    "kb": 231,
+    "requests": 72
+  },
+  "R9 speed on this computer (local server, no throttling; not PageSpeed), reduced motion no-preference: LCP under 2500 ms, CLS under 0.1": {
+    "result": "PASS",
+    "lcp": 300,
+    "cls": 0,
+    "dom": 145,
+    "kb": 222,
+    "requests": 72
+  },
+  "R12 PWA: manifest (name, start_url, standalone, RTL, Hebrew), icons 192/512/maskable with their real sizes, apple-touch-icon, service worker in control": {
+    "result": "PASS",
+    "themeColorMeta": "WARN: none in index.html (the manifest has theme_color); recorded, not added (no new features in stage 13)",
+    "name": "LATISA, תאילנד",
+    "start_url": "./",
+    "display": "standalone",
+    "dir": "rtl",
+    "lang": "he",
+    "icons": [
+      {
+        "src": "icons/icon-192.png",
+        "sizes": "192x192",
+        "purpose": "any",
+        "ok": true
+      },
+      {
+        "src": "icons/icon-512.png",
+        "sizes": "512x512",
+        "purpose": "any",
+        "ok": true
+      },
+      {
+        "src": "icons/apple-touch-icon-180.png",
+        "sizes": "180x180",
+        "purpose": "any",
+        "ok": true
+      },
+      {
+        "src": "icons/icon-maskable-512.png",
+        "sizes": "512x512",
+        "purpose": "maskable",
+        "ok": true
+      }
+    ],
+    "apple": "./icons/apple-touch-icon-180.png"
+  },
+  "R13 airplane mode: all 14 screens open, the photo shows, a new list item survives a reload, this version": {
+    "result": "PASS",
+    "bad": [],
+    "photoShown": true,
+    "kept": true,
+    "shownVersion": "1.1.0"
+  },
+  "R14 JSON backup: export, reset, import: the trip comes back whole (places, info notes, smart suitcase, photo details, money, route)": {
+    "result": "PASS",
+    "name": "tisa-backup-2026-11-23.json",
+    "places": 1,
+    "info": {
+      "notes": {
+        "insurance": "הערת ביטוח לדוגמה"
+      }
+    },
+    "smartBag": {
+      "activities": [
+        "snorkel"
+      ]
+    },
+    "photos": 1
+  },
+  "R16 (S13-2) backup reminder: not 1 minute before 7 days, shown at 7 days on the home screen, not on other screens, gone after the backup": {
+    "result": "PASS",
+    "before7": false,
+    "at7": true,
+    "gone": true,
+    "onMoney": false
+  },
+  "R19 new install: shared dates 20.12.2026-20.1.2027 and the route, the checklist, the category names at 0 (\"—\", no budget yet), no template card": {
+    "result": "PASS",
+    "dates": [
+      "2026-12-20",
+      "2027-01-20"
+    ],
+    "stops": 7,
+    "checklist": 61,
+    "zero": true,
+    "home": {
+      "pass": "20 Dec – 20 Jan",
+      "left": "—",
+      "empty": true
+    },
+    "money": {
+      "free": "—",
+      "today": "עוד אין תקציב. קובעים אותו בבית או כאן.",
+      "card": false,
+      "cats": 7
+    }
+  },
+  "R20 the 20,000 template by hand: free 15,000, 5,000 set aside for the flight, 468 a day; after a 5,000 flight: free still 15,000, nothing set aside": {
+    "result": "PASS",
+    "warn": "",
+    "checked": "plan20k",
+    "tpl": {
+      "free": "‏15,000 ‏₪",
+      "today": "פנוי היום: ‏468 ‏₪",
+      "reserved": "‏5,000 ‏₪",
+      "planned": "‏0 ‏₪",
+      "total": "‏20,000 ‏₪"
+    },
+    "flown": {
+      "free": "‏15,000 ‏₪",
+      "today": "פנוי היום: ‏468 ‏₪",
+      "reserved": null,
+      "planned": "‏5,000 ‏₪",
+      "total": "‏20,000 ‏₪"
+    }
+  },
+  "R21 every screen opened directly with saved data: layout shift (CLS) under 0.1": {
+    "result": "PASS",
+    "bad": {},
+    "screens": 14
+  },
+  "R17 (S13-3) the version in settings = config = package.json = sw.js": {
+    "result": "PASS",
+    "shownVersion": "1.1.0",
+    "version": "1.1.0",
+    "pkg": "1.1.0",
+    "sw": "1.1.0"
+  },
+  "R18 (S13-4) privacy in settings: opens from the keyboard and says: on this device, photos in IndexedDB, no server, Google Maps only on tap, no passport or card numbers, clearing site data deletes, so back up; terms of use next to it": {
+    "result": "PASS",
+    "has": 1,
+    "missing": [],
+    "terms": 1
+  },
+  "no JS errors": {
+    "result": "PASS",
+    "errors": []
+  },
+  "no requests outside the app": {
+    "result": "PASS",
+    "outside": []
+  }
+}

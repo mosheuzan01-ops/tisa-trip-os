@@ -1,0 +1,106 @@
+{
+  "L0 the lists screen has a \"מזוודה חכמה\" button": {
+    "result": "PASS",
+    "entry": 1
+  },
+  "L1 the lists open \"מזוודה חכמה\"; the lists tab stays lit; the screen shows the days and the stops by kind": {
+    "result": "PASS",
+    "lit": "true",
+    "head": {
+      "days": "32 ימים. בגדים לעד 7 ימים, כי יש כביסה בדרך.",
+      "kinds": "יעדים: עיר: בנגקוק · אי: קו טאו, קו סמוי, קו פי פי, קו לנטה · חוף: פוקט"
+    }
+  },
+  "L2 (S12-3) ticking \"שנורקל או צלילה\" adds a dive-card suggestion; the choice is saved (trip.smartBag) and survives a reload": {
+    "result": "PASS",
+    "kept": true,
+    "smartBag": {
+      "activities": [
+        "snorkel"
+      ]
+    }
+  },
+  "L3 (S12-4) a double tap on \"להוסיף\" adds exactly one item, in the bag or carry-on lists; the row leaves; older items are untouched": {
+    "result": "PASS",
+    "target": "rash-guard",
+    "added": [
+      {
+        "id": "d7524fb5-4c34-4c86-b270-e1133d387e46",
+        "group": "clothing",
+        "name": "חולצת שחייה",
+        "qty": 1,
+        "note": "",
+        "done": false,
+        "smart": "rash-guard"
+      }
+    ],
+    "toast": "נוסף לרשימות: חולצת שחייה"
+  },
+  "L4 \"להוסיף את כל החובה\" adds every must once (no duplicates); the group then says so and the button hides": {
+    "result": "PASS",
+    "mustKeys": [
+      "underwear",
+      "tshirts",
+      "shorts",
+      "toiletries",
+      "toothbrush",
+      "hat",
+      "walking-shoes",
+      "beach-towel",
+      "dive-card"
+    ],
+    "smartKeys": [
+      "rash-guard",
+      "underwear",
+      "tshirts",
+      "shorts",
+      "toiletries",
+      "toothbrush",
+      "hat",
+      "walking-shoes",
+      "beach-towel",
+      "dive-card"
+    ]
+  },
+  "L5 (S12-4) no shown suggestion has a name already in the lists; \"לא כדאי\" has no add button": {
+    "result": "PASS",
+    "dup": [],
+    "avoidHasNoAdd": 0
+  },
+  "L6 (S12-6) the tick on an added item survives a reload; the backup file has the activities and ticks; a restore brings them back": {
+    "result": "PASS",
+    "afterReload": true,
+    "schema": 8,
+    "smartBag": {
+      "activities": [
+        "snorkel"
+      ]
+    }
+  },
+  "L7 (S12-3) a route with only a city changes the stops line (no island); the items already added stay exactly": {
+    "result": "PASS",
+    "kinds7": "יעדים: עיר: בנגקוק"
+  },
+  "L8 390px: no horizontal scroll; each \"להוסיף\" says what it adds and is 44px tall; 7 labelled activity checkboxes in a fieldset": {
+    "result": "PASS",
+    "hs": false,
+    "addsNamed": true,
+    "addsBig": true,
+    "boxes": 7,
+    "boxesNamed": true,
+    "legend": "פעילויות"
+  },
+  "L9 (S12-8) the screen renders in light and dark, at 390px and desktop (screenshots after-smart-bag-*)": {
+    "result": "PASS",
+    "errors": []
+  },
+  "L10 (S12-7) airplane mode: offline, the smart suitcase shows its suggestions from the cache": {
+    "result": "PASS",
+    "offCount": 26
+  },
+  "L11 (S12-7) zero requests outside the app in the whole run, no page errors": {
+    "result": "PASS",
+    "outside": [],
+    "errors": []
+  }
+}

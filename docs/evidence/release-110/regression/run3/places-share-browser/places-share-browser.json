@@ -1,0 +1,113 @@
+{
+  "H1 share window: name, address and map link ticked; category, coordinates, dates and note offered but not ticked; preview has only the ticked fields": {
+    "result": "PASS",
+    "c1": [
+      "name:1",
+      "category:0",
+      "address:1",
+      "coords:0",
+      "map:1",
+      "planned:0",
+      "visited:0",
+      "note:0"
+    ],
+    "p1": "שוק לילה לדוגמה\nרחוב לדוגמה 1\nhttps://www.google.com/maps/search/?api=1&query=13.75630%2C100.50180"
+  },
+  "H1b 390px: the share window has no sideways scroll": {
+    "result": "PASS"
+  },
+  "H2 \"share\": the phone share sheet (WhatsApp is one of its targets) gets the title and exactly the ticked text; no outside request": {
+    "result": "PASS",
+    "shared": {
+      "title": "שוק לילה לדוגמה",
+      "text": "שוק לילה לדוגמה\nhttps://www.google.com/maps/search/?api=1&query=13.75630%2C100.50180\nהערה פרטית"
+    },
+    "s": "נשלח לחלון השיתוף של הטלפון."
+  },
+  "H3 \"copy\": the same text goes to the clipboard and the window says so": {
+    "result": "PASS",
+    "copied": "שוק לילה לדוגמה\nhttps://www.google.com/maps/search/?api=1&query=13.75630%2C100.50180\nהערה פרטית"
+  },
+  "H3b sharing and copying change nothing in the saved place": {
+    "result": "PASS"
+  },
+  "H4 no share sheet: the text is copied and the window says why; cancelled: nothing copied or sent; clipboard refused: the older copy way": {
+    "result": "PASS",
+    "noneStatus": "אין כאן חלון שיתוף, אז הטקסט הועתק. אפשר להדביק בוואטסאפ.",
+    "abCopied": 0,
+    "ncCopied": "exec:שוק לילה לדוגמה\nרחוב לדוגמה 1\nhttps://www.google.com/maps/search/?api=1&query=13.75630%2C100.50180"
+  },
+  "H5 share my location: one reading, then the share sheet with \"my location\", the coordinates and the map link; no file; says there is no tracking; nothing saved": {
+    "result": "PASS",
+    "p5": "המיקום שלי\n13.756300, 100.501800\nhttps://www.google.com/maps/search/?api=1&query=13.756300%2C100.501800",
+    "note5": "זה המיקום מהקריאה האחרונה, פעם אחת. אין מעקב ואין עדכון אחר כך."
+  },
+  "H6 export: a \"tisa-places\" file named by date with the two places, details only (no status, dates, stop or photos)": {
+    "result": "PASS",
+    "name": "tisa-places-2030-11-01.json",
+    "keys": [
+      "id",
+      "name",
+      "category",
+      "lat",
+      "lng",
+      "address",
+      "note"
+    ]
+  },
+  "H6b export of one place from the share window": {
+    "result": "PASS"
+  },
+  "H7 import: preview first (nothing saved before yes); 2 new come in as \"want to visit\" with no dates or stop; mine unchanged": {
+    "result": "PASS",
+    "text1": "בקובץ 2 מקומות: 2 חדשים, 0 כבר אצלך, 0 לא תקינים. רק החדשים ייכנסו, כ\"רוצה לבקר\". שום מקום קיים לא ישתנה."
+  },
+  "H7b the same file again: \"0 new, 2 already here\", no add button, nothing changes": {
+    "result": "PASS",
+    "text2": "בקובץ 2 מקומות: 0 חדשים, 2 כבר אצלך, 0 לא תקינים. רק החדשים ייכנסו, כ\"רוצה לבקר\". שום מקום קיים לא ישתנה."
+  },
+  "H8 a backup or broken file is refused with a message; nothing changes": {
+    "result": "PASS",
+    "err8": "זה לא קובץ מקומות של LATISA. גיבוי מלא משחזרים בהגדרות."
+  },
+  "H9 a photo linked to a place (by id, no copy) joins the slideshow with the place name; no star changed; photos not copied": {
+    "result": "PASS",
+    "strip": [
+      "ba58ab84-f45b-4916-9249-a3f8a4ba84b1"
+    ],
+    "note9": "1 תמונות: עם כוכב, ושל מקומות שמורים. עד 12 בסך הכול.",
+    "caption": "24 בנובמבר, לא משויך ליעד. שוק לילה לדוגמה"
+  },
+  "H10 10 starred + 5 place photos: 12 in the slideshow (all 10 starred, then the first 2 place photos by date); every star as it was": {
+    "result": "PASS",
+    "strip10": [
+      "ph00",
+      "ph20",
+      "ph01",
+      "ph21",
+      "ph02",
+      "ph03",
+      "ph04",
+      "ph05",
+      "ph06",
+      "ph07",
+      "ph08",
+      "ph09"
+    ]
+  },
+  "H11 airplane mode (service worker): place-share.js cached; copy works; an import file is read offline (1 new, 1 already here)": {
+    "result": "PASS",
+    "off": "בקובץ 2 מקומות: 1 חדשים, 1 כבר אצלך, 0 לא תקינים. רק החדשים ייכנסו, כ\"רוצה לבקר\". שום מקום קיים לא ישתנה.",
+    "version": "1.1.0"
+  },
+  "H12 desktop: no sideways scroll; every field in the share window and the screen has a name (the hidden file input too)": {
+    "result": "PASS",
+    "unnamed": [],
+    "fileName": "קובץ מקומות"
+  },
+  "no JS errors, no outside requests": {
+    "result": "PASS",
+    "errors": [],
+    "outside": []
+  }
+}

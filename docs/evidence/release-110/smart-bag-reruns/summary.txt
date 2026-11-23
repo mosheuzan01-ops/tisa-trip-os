@@ -1,0 +1,17 @@
+r1 exit=0 PASS  L10 (S12-7) airplane mode: offline, the smart suitcase shows its suggestions from the cache 
+r2 exit=0 PASS  L10 (S12-7) airplane mode: offline, the smart suitcase shows its suggestions from the cache 
+r3 exit=0 PASS  L10 (S12-7) airplane mode: offline, the smart suitcase shows its suggestions from the cache 
+r4 exit=0 PASS  L10 (S12-7) airplane mode: offline, the smart suitcase shows its suggestions from the cache 
+r5 exit=0 PASS  L10 (S12-7) airplane mode: offline, the smart suitcase shows its suggestions from the cache 
+r6 exit=0 PASS  L10 (S12-7) airplane mode: offline, the smart suitcase shows its suggestions from the cache 
+r7 exit=0 PASS  L10 (S12-7) airplane mode: offline, the smart suitcase shows its suggestions from the cache 
+r8 exit=0 PASS  L10 (S12-7) airplane mode: offline, the smart suitcase shows its suggestions from the cache 
+r9 exit=0 PASS  L10 (S12-7) airplane mode: offline, the smart suitcase shows its suggestions from the cache 
+r10 exit=0 PASS  L10 (S12-7) airplane mode: offline, the smart suitcase shows its suggestions from the cache 
+r11 exit=0 PASS  L10 (S12-7) airplane mode: offline, the smart suitcase shows its suggestions from the cache 
+r12 exit=0 PASS  L10 (S12-7) airplane mode: offline, the smart suitcase shows its suggestions from the cache 
+r13 exit=0 PASS  L10 (S12-7) airplane mode: offline, the smart suitcase shows its suggestions from the cache 
+r14 exit=0 PASS  L10 (S12-7) airplane mode: offline, the smart suitcase shows its suggestions from the cache 
+r15 exit=0 PASS  L10 (S12-7) airplane mode: offline, the smart suitcase shows its suggestions from the cache 
+
+[exited with code 0]
