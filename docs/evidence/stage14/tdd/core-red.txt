@@ -1,0 +1,489 @@
+TAP version 13
+# Subtest: M1: trip -> records -> trip gives back exactly the same trip (every field, unknown and broken ones too)
+not ok 1 - M1: trip -> records -> trip gives back exactly the same trip (every field, unknown and broken ones too)
+  ---
+  duration_ms: 7.97473
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage14-sync.test.js:71:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    
+    {} !== undefined
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  actual:
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage14-sync.test.js:74:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.start (node:internal/test_runner/test:944:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+  ...
+# Subtest: M2: the owner-approved split between shared and personal
+not ok 2 - M2: the owner-approved split between shared and personal
+  ---
+  duration_ms: 1.034699
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage14-sync.test.js:77:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + []
+    - [
+    -   'expense',
+    -   'person',
+    -   'place',
+    -   'repayment',
+    -   'stop',
+    -   'transfer'
+    - ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 'expense'
+    1: 'person'
+    2: 'place'
+    3: 'repayment'
+    4: 'stop'
+    5: 'transfer'
+  actual:
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage14-sync.test.js:81:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: M3: flight details are shared, the price, status, note, booking, seat and linked expense are personal
+not ok 3 - M3: flight details are shared, the price, status, note, booking, seat and linked expense are personal
+  ---
+  duration_ms: 0.250775
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage14-sync.test.js:97:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of undefined (reading 'data')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage14-sync.test.js:100:67)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: M4: isSharedExpense follows the existing split fields only
+not ok 4 - M4: isSharedExpense follows the existing split fields only
+  ---
+  duration_ms: 0.339567
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage14-sync.test.js:109:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    false !== true
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage14-sync.test.js:111:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: E1: first upload, then repeated syncs and a repeated upload create no duplicates and change nothing
+not ok 5 - E1: first upload, then repeated syncs and a repeated upload create no duplicates and change nothing
+  ---
+  duration_ms: 2.045507
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage14-sync.test.js:119:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    '' !== 'created'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'created'
+  actual: ''
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage14-sync.test.js:124:10)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: E2: a friend sees the shared trip without the owner's budget, price or personal expense
+not ok 6 - E2: a friend sees the shared trip without the owner's budget, price or personal expense
+  ---
+  duration_ms: 0.698105
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage14-sync.test.js:139:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + undefined
+    - 'member'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'member'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage14-sync.test.js:149:10)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: E3 (S14-4): edits made offline wait, then sync after the network is back, with no loss or duplicate
+not ok 7 - E3 (S14-4): edits made offline wait, then sync after the network is back, with no loss or duplicate
+  ---
+  duration_ms: 0.455366
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage14-sync.test.js:167:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    one change waits
+    
+    -1 !== 1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: -1
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage14-sync.test.js:176:10)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: E4 (S14-5): server failure "network" never changes or deletes local data, and keeps the waiting changes
+not ok 8 - E4 (S14-5): server failure "network" never changes or deletes local data, and keeps the waiting changes
+  ---
+  duration_ms: 0.434783
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage14-sync.test.js:192:3'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected rejection.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    async TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage14-sync.test.js:201:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: E4 (S14-5): server failure "500" never changes or deletes local data, and keeps the waiting changes
+not ok 9 - E4 (S14-5): server failure "500" never changes or deletes local data, and keeps the waiting changes
+  ---
+  duration_ms: 0.547949
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage14-sync.test.js:192:3'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected rejection.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    async TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage14-sync.test.js:201:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: E4 (S14-5): server failure "502" never changes or deletes local data, and keeps the waiting changes
+not ok 10 - E4 (S14-5): server failure "502" never changes or deletes local data, and keeps the waiting changes
+  ---
+  duration_ms: 0.506681
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage14-sync.test.js:192:3'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected rejection.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    async TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage14-sync.test.js:201:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: E4 (S14-5): server failure "402" never changes or deletes local data, and keeps the waiting changes
+not ok 11 - E4 (S14-5): server failure "402" never changes or deletes local data, and keeps the waiting changes
+  ---
+  duration_ms: 0.330215
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage14-sync.test.js:192:3'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected rejection.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    async TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage14-sync.test.js:201:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: E4 (S14-5): server failure "401" never changes or deletes local data, and keeps the waiting changes
+not ok 12 - E4 (S14-5): server failure "401" never changes or deletes local data, and keeps the waiting changes
+  ---
+  duration_ms: 0.273336
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage14-sync.test.js:192:3'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected rejection.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    async TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage14-sync.test.js:201:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: E5: edit conflict, last edit wins on both phones, and the losing version is kept as a copy
+not ok 13 - E5: edit conflict, last edit wins on both phones, and the losing version is kept as a copy
+  ---
+  duration_ms: 0.585793
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage14-sync.test.js:210:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of undefined (reading '0')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage14-sync.test.js:222:29)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: E6: a stop deleted by a friend leaves the owner's phone, and a copy is kept there
+not ok 14 - E6: a stop deleted by a friend leaves the owner's phone, and a copy is kept there
+  ---
+  duration_ms: 0.323954
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage14-sync.test.js:249:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of undefined (reading 'filter')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage14-sync.test.js:259:59)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: E7: only the owner changes the trip dates; a friend's change is not sent and is kept as a copy
+not ok 15 - E7: only the owner changes the trip dates; a friend's change is not sent and is kept as a copy
+  ---
+  duration_ms: 0.255307
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage14-sync.test.js:268:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of undefined (reading 'start_date')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage14-sync.test.js:281:34)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: E8 (S14-2): a pending user sends and reads no trip data
+not ok 16 - E8 (S14-2): a pending user sends and reads no trip data
+  ---
+  duration_ms: 0.582723
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage14-sync.test.js:293:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'approved'
+    - 'pending'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'pending'
+  actual: 'approved'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage14-sync.test.js:301:12)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: E8 (S14-2): a blocked user sends and reads no trip data
+not ok 17 - E8 (S14-2): a blocked user sends and reads no trip data
+  ---
+  duration_ms: 1.026646
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage14-sync.test.js:293:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'approved'
+    - 'blocked'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'blocked'
+  actual: 'approved'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage14-sync.test.js:301:12)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: E9 (S14-6 / restore): after a backup import the sync waits for the user's choice and sends nothing
+not ok 18 - E9 (S14-6 / restore): after a backup import the sync waits for the user's choice and sends nothing
+  ---
+  duration_ms: 0.352622
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage14-sync.test.js:310:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'approved'
+    - 'restore'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'restore'
+  actual: 'approved'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage14-sync.test.js:319:10)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: E10: an expense that becomes shared moves to the shared list once, and is counted once
+not ok 19 - E10: an expense that becomes shared moves to the shared list once, and is counted once
+  ---
+  duration_ms: 0.558773
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage14-sync.test.js:324:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + []
+    - [
+    -   [
+    -     'personal',
+    -     true
+    -   ],
+    -   [
+    -     'shared',
+    -     false
+    -   ]
+    - ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0:
+      0: 'personal'
+      1: true
+    1:
+      0: 'shared'
+      1: false
+  actual:
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage14-sync.test.js:337:10)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: E11: a trip that is no longer shared with you stays on your phone, unlinked, with a notice
+not ok 20 - E11: a trip that is no longer shared with you stays on your phone, unlinked, with a notice
+  ---
+  duration_ms: 0.438738
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage14-sync.test.js:344:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of undefined (reading 'linked')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage14-sync.test.js:359:32)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: E12: language and the assistant limit follow the account; theme and backup date stay on the phone
+not ok 21 - E12: language and the assistant limit follow the account; theme and backup date stay on the phone
+  ---
+  duration_ms: 0.220979
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage14-sync.test.js:363:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    undefined !== 7
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 7
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage14-sync.test.js:372:10)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: E13: an approved admin syncing a trip never takes other people's personal records
+not ok 22 - E13: an approved admin syncing a trip never takes other people's personal records
+  ---
+  duration_ms: 0.321643
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage14-sync.test.js:377:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of undefined (reading 'totalMinor')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage14-sync.test.js:389:31)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: API1: server answers become clear kinds (offline, auth, denied) and never throw anything else
+not ok 23 - API1: server answers become clear kinds (offline, auth, denied) and never throw anything else
+  ---
+  duration_ms: 0.174764
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage14-sync.test.js:394:1'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected rejection: network'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    async TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage14-sync.test.js:399:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: ST1: the sign-in session can only use latisa:auth: keys; tisa:v1 is out of its reach
+ok 24 - ST1: the sign-in session can only use latisa:auth: keys; tisa:v1 is out of its reach
+  ---
+  duration_ms: 0.486375
+  type: 'test'
+  ...
+1..24
+# tests 24
+# suites 0
+# pass 1
+# fail 23
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 107.22354
