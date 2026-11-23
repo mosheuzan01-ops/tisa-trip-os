@@ -1,0 +1,5 @@
+FAIL  DB1 only the owner of a linked trip sees "Delete trip"; a member does not  {"result":"FAIL","ownerActions":["share","members","password","signout"],"friendActions":["members","password","signout"]}
+FAIL  run  {"result":"FAIL","error":"page.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-cloud=\"delete\"]')\u001b[22m\n\n    at /tmp/claude-0/-home-user-tisa-trip-os/909139a6-7cbd-5b91-a927-cc9933acc96a/scratchpad/mainwt/scripts/qa/stage14-delete-browser.cjs:82:17"}
+PASS  no JS errors
+PASS  no requests outside the app and the (fake) Supabase project
+FAIL 2

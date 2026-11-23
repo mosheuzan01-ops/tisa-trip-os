@@ -1,0 +1,338 @@
+{
+  "320": {
+    "rows": [
+      {
+        "slot": "cloud-actions",
+        "names": [
+          "share",
+          "members",
+          "admin"
+        ],
+        "lines": 3,
+        "gaps": [],
+        "heights": [
+          48
+        ]
+      },
+      {
+        "slot": "cloud-title",
+        "names": [
+          "password",
+          "signout"
+        ],
+        "lines": 2,
+        "gaps": [],
+        "heights": [
+          48
+        ]
+      },
+      {
+        "slot": "set-backup-title",
+        "names": [
+          "ייצוא גיבוי",
+          "ייבוא גיבוי"
+        ],
+        "lines": 2,
+        "gaps": [],
+        "heights": [
+          48
+        ]
+      },
+      {
+        "slot": "set-photos-title",
+        "names": [
+          "ייצוא תמונות",
+          "שחזור תמונות"
+        ],
+        "lines": 2,
+        "gaps": [],
+        "heights": [
+          48
+        ]
+      }
+    ],
+    "overflow": 2
+  },
+  "390": {
+    "rows": [
+      {
+        "slot": "cloud-actions",
+        "names": [
+          "share",
+          "members",
+          "admin"
+        ],
+        "lines": 2,
+        "gaps": [
+          {
+            "top": 429,
+            "buttons": 1,
+            "empty": 158
+          }
+        ],
+        "heights": [
+          48
+        ]
+      },
+      {
+        "slot": "cloud-title",
+        "names": [
+          "password",
+          "signout"
+        ],
+        "lines": 1,
+        "gaps": [],
+        "heights": [
+          48
+        ]
+      },
+      {
+        "slot": "set-backup-title",
+        "names": [
+          "ייצוא גיבוי",
+          "ייבוא גיבוי"
+        ],
+        "lines": 1,
+        "gaps": [],
+        "heights": [
+          48
+        ]
+      },
+      {
+        "slot": "set-photos-title",
+        "names": [
+          "ייצוא תמונות",
+          "שחזור תמונות"
+        ],
+        "lines": 1,
+        "gaps": [],
+        "heights": [
+          48
+        ]
+      }
+    ],
+    "overflow": 0
+  },
+  "430": {
+    "rows": [
+      {
+        "slot": "cloud-actions",
+        "names": [
+          "share",
+          "members",
+          "admin"
+        ],
+        "lines": 2,
+        "gaps": [
+          {
+            "top": 429,
+            "buttons": 1,
+            "empty": 178
+          }
+        ],
+        "heights": [
+          48
+        ]
+      },
+      {
+        "slot": "cloud-title",
+        "names": [
+          "password",
+          "signout"
+        ],
+        "lines": 1,
+        "gaps": [],
+        "heights": [
+          48
+        ]
+      },
+      {
+        "slot": "set-backup-title",
+        "names": [
+          "ייצוא גיבוי",
+          "ייבוא גיבוי"
+        ],
+        "lines": 1,
+        "gaps": [],
+        "heights": [
+          48
+        ]
+      },
+      {
+        "slot": "set-photos-title",
+        "names": [
+          "ייצוא תמונות",
+          "שחזור תמונות"
+        ],
+        "lines": 1,
+        "gaps": [],
+        "heights": [
+          48
+        ]
+      }
+    ],
+    "overflow": 0
+  },
+  "768": {
+    "rows": [
+      {
+        "slot": "cloud-actions",
+        "names": [
+          "share",
+          "members",
+          "admin"
+        ],
+        "lines": 1,
+        "gaps": [],
+        "heights": [
+          48
+        ]
+      },
+      {
+        "slot": "cloud-title",
+        "names": [
+          "password",
+          "signout"
+        ],
+        "lines": 1,
+        "gaps": [],
+        "heights": [
+          48
+        ]
+      },
+      {
+        "slot": "set-backup-title",
+        "names": [
+          "ייצוא גיבוי",
+          "ייבוא גיבוי"
+        ],
+        "lines": 1,
+        "gaps": [],
+        "heights": [
+          48
+        ]
+      },
+      {
+        "slot": "set-photos-title",
+        "names": [
+          "ייצוא תמונות",
+          "שחזור תמונות"
+        ],
+        "lines": 1,
+        "gaps": [],
+        "heights": [
+          48
+        ]
+      }
+    ],
+    "overflow": 0
+  },
+  "1024": {
+    "rows": [
+      {
+        "slot": "cloud-actions",
+        "names": [
+          "share",
+          "members",
+          "admin"
+        ],
+        "lines": 1,
+        "gaps": [],
+        "heights": [
+          48
+        ]
+      },
+      {
+        "slot": "cloud-title",
+        "names": [
+          "password",
+          "signout"
+        ],
+        "lines": 1,
+        "gaps": [],
+        "heights": [
+          48
+        ]
+      },
+      {
+        "slot": "set-backup-title",
+        "names": [
+          "ייצוא גיבוי",
+          "ייבוא גיבוי"
+        ],
+        "lines": 1,
+        "gaps": [],
+        "heights": [
+          48
+        ]
+      },
+      {
+        "slot": "set-photos-title",
+        "names": [
+          "ייצוא תמונות",
+          "שחזור תמונות"
+        ],
+        "lines": 1,
+        "gaps": [],
+        "heights": [
+          48
+        ]
+      }
+    ],
+    "overflow": 0
+  },
+  "1440": {
+    "rows": [
+      {
+        "slot": "cloud-actions",
+        "names": [
+          "share",
+          "members",
+          "admin"
+        ],
+        "lines": 1,
+        "gaps": [],
+        "heights": [
+          48
+        ]
+      },
+      {
+        "slot": "cloud-title",
+        "names": [
+          "password",
+          "signout"
+        ],
+        "lines": 1,
+        "gaps": [],
+        "heights": [
+          48
+        ]
+      },
+      {
+        "slot": "set-backup-title",
+        "names": [
+          "ייצוא גיבוי",
+          "ייבוא גיבוי"
+        ],
+        "lines": 1,
+        "gaps": [],
+        "heights": [
+          48
+        ]
+      },
+      {
+        "slot": "set-photos-title",
+        "names": [
+          "ייצוא תמונות",
+          "שחזור תמונות"
+        ],
+        "lines": 1,
+        "gaps": [],
+        "heights": [
+          48
+        ]
+      }
+    ],
+    "overflow": 0
+  }
+}

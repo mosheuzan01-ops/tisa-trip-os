@@ -1,0 +1,26 @@
+{
+  "run": "red",
+  "red": false,
+  "migrations": [
+    "0001_stage14_init.sql",
+    "0002_stage14_hardening.sql"
+  ],
+  "postgres": "16",
+  "steps": {
+    "stub.sql": "ok",
+    "migration.sql": "ok"
+  },
+  "pass": 58,
+  "fail": 8,
+  "failures": [
+    "D01 a member cannot delete the trip: function public.delete_trip(text) does not exist",
+    "D03 the admin cannot delete someone else's trip: function public.delete_trip(text) does not exist",
+    "D04 a pending user cannot delete a trip: function public.delete_trip(text) does not exist",
+    "D06 the owner deletes the trip: function public.delete_trip(text) does not exist",
+    "D07 deleting it again answers missing: function public.delete_trip(text) does not exist",
+    "D08 the trip, its records (shared and personal) and its members are gone",
+    "D10 anon cannot call delete_trip: function \"public.delete_trip(text)\" does not exist",
+    "N07 exactly 6 owner-rights functions are callable (share, unshare, leave, trip_people, admin_set_status, delete_trip)"
+  ],
+  "rowsLeftAfterCheck": 0
+}

@@ -167,8 +167,27 @@ test('PRIV-14: the privacy text says what 1.1.0 does with an account', () => {
   }
 });
 
-test('VER-14: version 1.1.1 in package.json, config and the service worker (the fix to moving a trip into the account)', () => {
-  assert.equal(readJson('package.json').version, '1.1.1');
-  assert.equal(readJson('config/app.config.json').appVersion, '1.1.1');
-  assert.match(readText('sw.js'), /const VERSION = '1\.1\.1';/);
+test('VER-14: version 1.1.2 in package.json, config and the service worker (deleting a trip, the account card layout)', () => {
+  assert.equal(readJson('package.json').version, '1.1.2');
+  assert.equal(readJson('config/app.config.json').appVersion, '1.1.2');
+  assert.match(readText('sw.js'), /const VERSION = '1\.1\.2';/);
+});
+
+test('MIG-3: 0003 adds delete_trip only: owner and approved checked in the function, search_path pinned, no anon, no table delete', () => {
+  const sql = readText('supabase/migrations/0003_delete_trip.sql');
+  const fns = [...sql.matchAll(/create (?:or replace )?function ([a-z_.]+)\(/g)].map((m) => m[1]);
+  assert.deepEqual(fns, ['public.delete_trip']);
+  assert.match(sql, /security definer set search_path = ''/);
+  assert.match(sql, /if not private\.is_approved\(\) then raise exception 'not_allowed'/);
+  assert.match(sql, /owner_id = auth\.uid\(\)\) then raise exception 'not_allowed'/);
+  assert.match(sql, /delete from public\.trips where id = t and owner_id = auth\.uid\(\);/);
+  assert.match(sql, /revoke all on function public\.delete_trip\(text\) from public, anon, authenticated;/);
+  assert.match(sql, /grant execute on function public\.delete_trip\(text\) to authenticated;/);
+  assert.doesNotMatch(sql, /grant[^;]*to anon/i);
+  assert.doesNotMatch(sql, /grant[^;]*delete on/i, 'no table delete privilege for API users');
+  assert.doesNotMatch(sql, /\b(update|insert into|drop table|truncate)\b/i, 'it changes no data and no table');
+  // the cascade it relies on is in 0001
+  const init = readText('supabase/migrations/0001_stage14_init.sql');
+  assert.match(init, /trip_id\s+text not null references public\.trips \(id\) on delete cascade/);
+  assert.match(init, /trip_id  text not null references public\.trips \(id\) on delete cascade/);
 });

@@ -1,0 +1,102 @@
+TAP version 13
+# Subtest: S14-8a: no server secret in any file of the repository (service_role key, sb_secret_ key, database password)
+ok 1 - S14-8a: no server secret in any file of the repository (service_role key, sb_secret_ key, database password)
+  ---
+  duration_ms: 118.565127
+  type: 'test'
+  ...
+# Subtest: S14-8b: no server secret was ever committed (git history)
+ok 2 - S14-8b: no server secret was ever committed (git history)
+  ---
+  duration_ms: 3758.822875
+  type: 'test'
+  ...
+# Subtest: S14-8c: the app code never names the server role or a secret key; only the public key may be in config
+ok 3 - S14-8c: the app code never names the server role or a secret key; only the public key may be in config
+  ---
+  duration_ms: 4.546217
+  type: 'test'
+  ...
+# Subtest: CSP: one policy, only this site plus Supabase for data, no inline or eval scripts
+ok 4 - CSP: one policy, only this site plus Supabase for data, no inline or eval scripts
+  ---
+  duration_ms: 1.071145
+  type: 'test'
+  ...
+# Subtest: SW: requests to Supabase (another origin) are never handled or cached; only the app files are cached
+ok 5 - SW: requests to Supabase (another origin) are never handled or cached; only the app files are cached
+  ---
+  duration_ms: 0.217694
+  type: 'test'
+  ...
+# Subtest: V5 (stage 14): the library loads only when needed, only from this site, with the pinned hash
+ok 6 - V5 (stage 14): the library loads only when needed, only from this site, with the pinned hash
+  ---
+  duration_ms: 2.624191
+  type: 'test'
+  ...
+# Subtest: S14-7: admin calls live only in admin-view.js, which is loaded only by import() for an approved admin
+ok 7 - S14-7: admin calls live only in admin-view.js, which is loaded only by import() for an approved admin
+  ---
+  duration_ms: 3.061452
+  type: 'test'
+  ...
+# Subtest: MIG: every table has RLS on and nothing for anon; definer functions pin search_path; no role change function
+ok 8 - MIG: every table has RLS on and nothing for anon; definer functions pin search_path; no role change function
+  ---
+  duration_ms: 0.58397
+  type: 'test'
+  ...
+# Subtest: MIG-2: 0002 hardening keeps the policy helpers out of the API schema; definer functions everywhere pin search_path
+ok 9 - MIG-2: 0002 hardening keeps the policy helpers out of the API schema; definer functions everywhere pin search_path
+  ---
+  duration_ms: 0.530975
+  type: 'test'
+  ...
+# Subtest: PRIV-14: the privacy text says what 1.1.0 does with an account
+ok 10 - PRIV-14: the privacy text says what 1.1.0 does with an account
+  ---
+  duration_ms: 3.673027
+  type: 'test'
+  ...
+# Subtest: VER-14: version 1.1.2 in package.json, config and the service worker (deleting a trip, the account card layout)
+not ok 11 - VER-14: version 1.1.2 in package.json, config and the service worker (deleting a trip, the account card layout)
+  ---
+  duration_ms: 0.878536
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage14-rules.test.js:170:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    '1.1.1' !== '1.1.2'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: '1.1.2'
+  actual: '1.1.1'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage14-rules.test.js:171:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: MIG-3: 0003 adds delete_trip only: owner and approved checked in the function, search_path pinned, no anon, no table delete
+ok 12 - MIG-3: 0003 adds delete_trip only: owner and approved checked in the function, search_path pinned, no anon, no table delete
+  ---
+  duration_ms: 0.341561
+  type: 'test'
+  ...
+1..12
+# tests 12
+# suites 0
+# pass 11
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3964.596372

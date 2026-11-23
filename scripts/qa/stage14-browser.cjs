@@ -345,6 +345,9 @@ const shot = async (page, name) => { if (SHOTS) await page.screenshot({ path: pa
     await pageA.goto(`${BASE}#/settings`); await pageA.waitForSelector('#panel-settings:not([hidden])');
     kb.push(...await kbDialog(pageA, '[data-cloud="share"]', 'dlg-cloud-share'));
     kb.push(...await kbDialog(pageA, '[data-cloud="members"]', 'dlg-cloud-members'));
+    // 1.1.2: "Delete trip" (Esc = nothing deleted; the flow itself: scripts/qa/stage14-delete-browser.cjs)
+    kb.push(...await kbDialog(pageA, '[data-cloud="delete"]', 'dlg-cloud-delete'));
+    if (sb.log.some((x) => x.fn === 'delete_trip') || !fake.trips.has(tripId)) kb.push('dlg-cloud-delete: Esc deleted something');
     const ctxB = await context(browser, sb, {});
     const pageB = await open(ctxB, 'friend-b');
     await signIn(pageB, 'friend-b@example.com');
@@ -408,7 +411,7 @@ const shot = async (page, name) => { if (SHOTS) await page.screenshot({ path: pa
       if (await pm.isVisible('#dlg-cloud-migrate[open]')) await pm.click('[data-cloud="migrate-no"]'); // first phone of this account: the offer is expected
       kb.push(...await kbDialog(pm, '[data-cloud="upload"]', 'dlg-cloud-migrate'));
       kb.push(...await kbDialog(pm, '[data-cloud="admin"]', 'dlg-cloud-admin'));
-      pass('KEYBOARD-2 the account dialogs after sign-in (share, members, confirm, move to account, admin): focus inside, Tab stays inside, Esc closes, focus back', kb.length === 0, { kb });
+      pass('KEYBOARD-2 the account dialogs after sign-in (share, members, delete, confirm, move to account, admin): focus inside, Tab stays inside, Esc closes, focus back', kb.length === 0, { kb });
       await pm.click('[data-cloud="admin"]');
       await pm.waitForSelector('#dlg-cloud-admin[open] [data-slot="cloud-admin-users"] li');
       const P = [...fake.users.values()].find((u) => u.email === 'new-p@example.com');
