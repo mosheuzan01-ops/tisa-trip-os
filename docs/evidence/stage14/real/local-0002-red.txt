@@ -1,0 +1,5 @@
+RLS local (full migration): 53 PASS, 3 FAIL, rows left after check: 0
+  FAIL N05 the policy helpers are not in the API schema (not callable over the API)
+  FAIL N06 the admin lists run with the caller's rights (RLS), not as the owner
+  FAIL N07 exactly 5 owner-rights functions are callable (share, unshare, leave, trip_people, admin_set_status)
+FAILED

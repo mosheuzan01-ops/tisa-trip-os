@@ -31,15 +31,18 @@ const as = (cmd, args) => (isRoot ? ['runuser', ['-u', 'postgres', '--', cmd, ..
 const run = (cmd, args, opts = {}) => { const [c, a] = as(cmd, args); return spawnSync(c, a, { encoding: 'utf8', ...opts }); };
 if (isRoot) execFileSync('chown', ['postgres', dir]);
 
-let migration = fs.readFileSync(path.join(ROOT, 'supabase/migrations/0001_stage14_init.sql'), 'utf8');
-if (RED) migration = `${migration.split('-- ==== SECURITY')[0]}\ncommit;\n`;
+// All migrations in order (RLS_UPTO=0001 stops after that one; RLS_RED=1 runs 0001 without its security section).
+const UPTO = process.env.RLS_UPTO ?? '9999';
+const files = fs.readdirSync(path.join(ROOT, 'supabase/migrations')).filter((f) => /^\d{4}_.*\.sql$/.test(f) && f.slice(0, 4) <= UPTO).sort();
+let migration = files.map((f) => fs.readFileSync(path.join(ROOT, 'supabase/migrations', f), 'utf8')).join('\n');
+if (RED) migration = `${fs.readFileSync(path.join(ROOT, 'supabase/migrations', files[0]), 'utf8').split('-- ==== SECURITY')[0]}\ncommit;\n`;
 for (const [name, text] of [
   ['stub.sql', fs.readFileSync(path.join(ROOT, 'supabase/tests/local-auth-stub.sql'), 'utf8')],
   ['migration.sql', migration],
   ['check.sql', fs.readFileSync(path.join(ROOT, 'supabase/tests/rls_check.sql'), 'utf8')],
 ]) fs.writeFileSync(path.join(dir, name), text, { mode: 0o644 });
 
-const result = { run: RUN, red: RED, postgres: path.basename(path.dirname(bin)), steps: {} };
+const result = { run: RUN, red: RED, migrations: RED ? [files[0] + ' (no security section)'] : files, postgres: path.basename(path.dirname(bin)), steps: {} };
 let started = false;
 try {
   const init = run(path.join(bin, 'initdb'), ['-D', path.join(dir, 'data'), '-A', 'trust', '-U', 'postgres']);

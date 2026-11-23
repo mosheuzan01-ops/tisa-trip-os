@@ -2,7 +2,7 @@
 --
 -- How to run in the real project (owner, after 0001 is applied): Supabase dashboard > SQL Editor > paste > Run.
 -- The whole check is ONE block. At the end it ALWAYS raises an error whose text is the result, for example:
---     ERROR:  RLS CHECK RESULT: 41 PASS, 0 FAIL
+--     ERROR:  RLS CHECK RESULT: 56 PASS, 0 FAIL
 -- Raising the error undoes everything the check created (users, trips, records), so nothing is left behind.
 -- "FAIL" lines name the checks that failed. Any other error means the check could not run: send it as is.
 -- Locally the same file runs through scripts/qa/stage14-rls-local.cjs (plain PostgreSQL + supabase/tests/local-auth-stub.sql).
@@ -210,6 +210,17 @@ begin
   if not has_column_privilege('authenticated', 'public.profiles', 'role', 'update')
      and not has_column_privilege('authenticated', 'public.profiles', 'status', 'update') then passes := passes + 1;
   else fails := array_append(fails, 'N04 role and status cannot be updated by API users'::text); end if;
+
+  -- ---------- hardening (migration 0002, after the Supabase advisors on the real project) ----------
+  if not exists (select 1 from pg_proc pr join pg_namespace ns on ns.oid = pr.pronamespace
+                 where ns.nspname = 'public' and pr.proname in ('is_admin', 'is_approved', 'is_trip_member', 'is_trip_owner')) then passes := passes + 1;
+  else fails := array_append(fails, 'N05 the policy helpers are not in the API schema (not callable over the API)'::text); end if;
+  if not (select prosecdef from pg_proc where oid = 'public.admin_list_users()'::regprocedure)
+     and not (select prosecdef from pg_proc where oid = 'public.admin_list_trips()'::regprocedure) then passes := passes + 1;
+  else fails := array_append(fails, 'N06 the admin lists run with the caller''s rights (RLS), not as the owner'::text); end if;
+  if (select count(*) from pg_proc pr join pg_namespace ns on ns.oid = pr.pronamespace where ns.nspname = 'public' and pr.prosecdef
+        and has_function_privilege('authenticated', pr.oid, 'execute')) = 5 then passes := passes + 1;
+  else fails := array_append(fails, 'N07 exactly 5 owner-rights functions are callable (share, unshare, leave, trip_people, admin_set_status)'::text); end if;
 
   raise exception 'RLS CHECK RESULT: % PASS, % FAIL%', passes, coalesce(array_length(fails, 1), 0),
     case when array_length(fails, 1) > 0 then E'\nFAIL: ' || array_to_string(fails, E'\nFAIL: ') else '' end;

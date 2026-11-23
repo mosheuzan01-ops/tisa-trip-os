@@ -124,6 +124,24 @@ test('MIG: every table has RLS on and nothing for anon; definer functions pin se
   assert.doesNotMatch(sql.split('-- After you sign up')[0], /role = 'admin', status/, 'making an admin is only the manual line at the end');
 });
 
+test('MIG-2: 0002 hardening keeps the policy helpers out of the API schema; definer functions everywhere pin search_path', () => {
+  const sql = readText('supabase/migrations/0002_stage14_hardening.sql');
+  for (const f of ['is_admin()', 'is_approved()', 'is_trip_member(text)', 'is_trip_owner(text)']) {
+    assert.match(sql, new RegExp(`drop function public\\.${f.replace('(', '\\(').replace(')', '\\)')};`), `public.${f} dropped`);
+    assert.match(sql, new RegExp(`create function private\\.${f.split('(')[0]}\\(`), `private.${f} created`);
+  }
+  assert.match(sql, /grant usage on schema private to authenticated;/);
+  assert.doesNotMatch(sql, /grant[^;]*to anon/i);
+  assert.match(sql, /create or replace function public\.admin_list_users\(\)[^$]*security invoker/);
+  assert.match(sql, /create or replace function public\.admin_list_trips\(\)[^$]*security invoker/);
+  for (const file of ['0001_stage14_init.sql', '0002_stage14_hardening.sql']) {
+    const text = readText(`supabase/migrations/${file}`);
+    for (const m of text.matchAll(/create (?:or replace )?function ([a-z_.]+)\([^)]*\)[\s\S]*?security definer([^\n]*)/g)) {
+      assert.match(m[2], /set search_path = ''/, `${file}: ${m[1]} pins search_path`);
+    }
+  }
+});
+
 test('PRIV-14: the privacy text says what 1.1.0 does with an account', () => {
   const he = readJson('locales/he.json');
   const text = Object.entries(he).filter(([k]) => k.startsWith('privacy.')).map(([, v]) => v).join('\n');
