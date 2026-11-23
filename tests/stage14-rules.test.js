@@ -167,8 +167,8 @@ test('PRIV-14: the privacy text says what 1.1.0 does with an account', () => {
   }
 });
 
-test('VER-14: version 1.1.0 in package.json, config and the service worker', () => {
-  assert.equal(readJson('package.json').version, '1.1.0');
-  assert.equal(readJson('config/app.config.json').appVersion, '1.1.0');
-  assert.match(readText('sw.js'), /const VERSION = '1\.1\.0';/);
+test('VER-14: version 1.1.1 in package.json, config and the service worker (the fix to moving a trip into the account)', () => {
+  assert.equal(readJson('package.json').version, '1.1.1');
+  assert.equal(readJson('config/app.config.json').appVersion, '1.1.1');
+  assert.match(readText('sw.js'), /const VERSION = '1\.1\.1';/);
 });

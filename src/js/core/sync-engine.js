@@ -17,6 +17,7 @@ const KEEP_COPIES = 300;
 const MAX_RECORD_CHARS = 900_000; // the server refuses a record over 1 MB; a bigger one stays on the phone only
 const SETTINGS_FIELDS = ['language', 'assistantQuestionLimit'];
 const EPOCH = '1970-01-01T00:00:00.000Z';
+const GONE = '#removed-on-this-phone'; // stands in for the shadow of a record deleted on the phone before it was linked
 
 const clone = (v) => (v === undefined ? undefined : JSON.parse(JSON.stringify(v)));
 const later = (a, b) => Date.parse(a) > Date.parse(b);
@@ -81,9 +82,12 @@ async function pullAll(api, tripId, cursor) {
   return out;
 }
 
-/** Sync one linked trip. Returns { trip (or null when nothing changed here), entry, copies, notices }. Throws on failure. */
-export async function syncTrip({ api, entry: entryIn, trip, userId, serverTrip, nowIso }) {
+/** Sync one linked trip. Returns { trip (or null when nothing changed here), entry, copies, notices }. Throws on failure.
+ *  removed: keys this phone sent in an earlier, unfinished move and has deleted since (see migrateTrip). If the cloud
+ *  still has one, it is a delete made on the phone: it is sent, not taken back from the cloud. */
+export async function syncTrip({ api, entry: entryIn, trip, userId, serverTrip, nowIso, removed = [] }) {
   const e = clone(entryIn);
+  const removedHere = new Set(removed);
   const tripId = trip.id;
   let { meta, records } = tripToRecords(trip);
   const copies = [];
@@ -120,7 +124,7 @@ export async function syncTrip({ api, entry: entryIn, trip, userId, serverTrip, 
       const rh = row.deleted ? null : hashValue(row.data);
       const local = records.get(k);
       const lhash = local ? hashValue(local.data) : null;
-      const shadow = e.shadow[k] ?? null;
+      const shadow = e.shadow[k] ?? (removedHere.has(k) && !local ? GONE : null);
       if (rh === shadow) continue;                      // nothing new in the cloud for this record
       if (rh === lhash) { setShadow(k, rh); continue; } // the phone already has it
       const localDirty = lhash !== shadow;
@@ -300,4 +304,70 @@ export function resendAll(syncIn) {
   }
   sync.restorePending = false;
   return sync;
+}
+
+// ---------- moving a trip from this phone into the account (1.1.1: two steps) ----------
+// Step 1 is the backup file (on an iPhone it opens the share sheet). Step 2 starts only when the user comes back and
+// taps "move now". The state of the move is kept in sync.migration (latisa:sync:v1), so the screen can show it after
+// a reload: { tripId, step: 'ready' | 'done' | 'failed', backupAt, stage: 'create' | 'records', kind, at, sentKeys }.
+// sentKeys: the records an unfinished move may have put in the cloud (the answer can be lost after the server took
+// them). A key there that is no longer on the phone was deleted on the phone, so the retry deletes it in the cloud too.
+
+/** Step 1 is done: the backup file was handed to the phone. Returns a new sync state; the trips are not touched. */
+export function markBackup(syncIn, tripId, nowIso) {
+  const sync = clone(syncIn ?? emptySyncState());
+  const sentKeys = sync.migration?.tripId === tripId ? sync.migration.sentKeys : undefined;
+  sync.migration = { tripId, step: 'ready', backupAt: nowIso, stage: null, kind: null, at: nowIso, ...(sentKeys ? { sentKeys } : {}) };
+  return sync;
+}
+
+/** Step 2: create the trip in the account, then send all its records. The trip is linked only when both worked, so a
+ *  failure leaves it "on this device only" and a retry is safe ('exists', records sent again by key, no duplicate).
+ *  Never throws and never changes the phone's trip. Returns { sync, result: 'done' | 'taken' | 'failed', trip, notices }:
+ *  trip is a new trip object only when the cloud changed it (not expected on a first move), else null. */
+export async function migrateTrip({ api, sync: syncIn, trip, nowIso }) {
+  const sync = clone(syncIn ?? emptySyncState());
+  const prev = sync.migration?.tripId === trip.id ? sync.migration : null;
+  const onPhone = [...tripToRecords(trip).records.keys()];
+  const earlier = prev?.sentKeys ?? [];
+  let sentKeys = earlier;
+  const fail = (stage, kind) => {
+    sync.migration = { tripId: trip.id, step: 'failed', backupAt: prev?.backupAt ?? null, stage, kind, at: nowIso, ...(sentKeys.length ? { sentKeys } : {}) };
+    return { sync, result: kind === 'taken' ? 'taken' : 'failed', trip: null, notices: [] };
+  };
+  const kindOf = (e) => (e instanceof CloudError ? e.kind : 'bad');
+  if (!sync.userId) return fail('create', 'auth');
+  let up;
+  try { up = await uploadTrip({ api, sync, trip, nowIso }); } catch (e) { return fail('create', kindOf(e)); }
+  if (up.result === 'taken') return fail('create', 'taken');
+  if (up.result !== 'created' && up.result !== 'exists') return fail('create', 'bad');
+  // The first move: everything on the phone is the newest version (a copy half sent by an earlier attempt loses).
+  const entry = up.sync.trips[trip.id];
+  for (const k of onPhone) entry.dirtyAt[k] = nowIso;
+  entry.meta.shadow = null; // and so is its header (name, country, dates): it is sent, never taken from the cloud
+  // Records an earlier attempt sent that are gone from the phone now were deleted here: deleted in the cloud too.
+  const has = new Set(onPhone);
+  const removed = earlier.filter((k) => !has.has(k));
+  for (const k of removed) entry.dirtyAt[k] = nowIso;
+  // From here records may reach the server even if the answer is lost: remember them for the retry.
+  sentKeys = [...new Set([...earlier, ...onPhone])];
+  let r;
+  try {
+    r = await syncTrip({ api, entry, trip, userId: sync.userId, serverTrip: { id: trip.id }, nowIso, removed });
+  } catch (e) { return fail('records', kindOf(e)); }
+  for (const k of removed) if (!(k in r.entry.shadow)) delete r.entry.dirtyAt[k]; // it never reached the cloud: nothing to send
+  sync.trips[trip.id] = r.entry;
+  delete sync.declined?.[trip.id];
+  keepCopies(sync, r.copies);
+  sync.migration = { tripId: trip.id, step: 'done', backupAt: prev?.backupAt ?? null, stage: null, kind: null, at: nowIso };
+  return { sync, result: 'done', trip: r.trip, notices: r.notices };
+}
+
+/** One run at a time: a second call while the first runs gets the same promise (a double tap moves once). */
+export function singleFlight(fn) {
+  let running = null;
+  return () => {
+    if (!running) running = Promise.resolve().then(fn).finally(() => { running = null; });
+    return running;
+  };
 }

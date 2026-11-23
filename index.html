@@ -1828,9 +1828,11 @@
         <div class="sheet-form">
           <h2 id="dlg-cloud-migrate-title" data-i18n="cloud.migrate.title">להעביר את הטיול לחשבון?</h2>
           <p id="dlg-cloud-migrate-text" data-slot="cloud-migrate-text"></p>
-          <p class="sheet-hint" data-i18n="cloud.migrate.hint">קודם יורד קובץ גיבוי של כל הנתונים. התמונות נשארות בטלפון. אפשר להעביר שוב בלי כפילויות.</p>
+          <p class="sheet-hint" data-i18n="cloud.migrate.hint">שני שלבים: קודם מורידים קובץ גיבוי. אחר כך חוזרים לכאן ולוחצים "העברה לחשבון עכשיו". התמונות נשארות בטלפון. אפשר לנסות שוב בלי כפילויות.</p>
+          <p class="sheet-hint" role="status" data-slot="cloud-migrate-status" data-state="start"></p>
           <div class="sheet-actions">
-            <button class="btn metal-btn" type="button" data-cloud="migrate-yes" data-i18n="cloud.migrate.yes">גיבוי והעברה</button>
+            <button class="btn metal-btn" type="button" data-cloud="migrate-upload" data-i18n="cloud.migrate.upload" hidden>העברה לחשבון עכשיו</button>
+            <button class="btn metal-btn" type="button" data-cloud="migrate-yes" data-i18n="cloud.migrate.yes">הורדת גיבוי</button>
             <button class="btn btn-ghost" type="button" data-cloud="migrate-no" data-i18n="cloud.migrate.no">לא עכשיו</button>
           </div>
         </div>

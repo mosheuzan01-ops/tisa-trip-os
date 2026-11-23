@@ -95,6 +95,9 @@ const kick = (page) => page.evaluate(() => dispatchEvent(new Event('online')));
     await signIn(A, 'e2e-owner@example.com');
     await A.waitForSelector('#dlg-cloud-migrate[open]', { timeout: T });
     const [dl] = await Promise.all([A.waitForEvent('download'), A.click('[data-cloud="migrate-yes"]')]);
+    // 1.1.1: the backup is step 1 only; the move starts with "move now" (step 2)
+    await A.waitForSelector('[data-cloud="migrate-upload"]:not([hidden])', { timeout: T });
+    await A.click('[data-cloud="migrate-upload"]');
     await A.waitForFunction(() => /\(שלי\)/.test(document.querySelector('[data-slot="cloud-trip-list"]').textContent), null, { timeout: T });
     await pill(A, 'מסונכרן');
     const afterMove = await data(A);

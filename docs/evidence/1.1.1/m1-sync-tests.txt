@@ -1,0 +1,232 @@
+TAP version 13
+# Subtest: MG1: success = the trip is created first, then its records go up; only then it is linked, and nothing on the phone changes
+ok 1 - MG1: success = the trip is created first, then its records go up; only then it is linked, and nothing on the phone changes
+  ---
+  duration_ms: 15.627728
+  type: 'test'
+  ...
+# Subtest: MG2: no network when creating: a visible failure (stage create, offline), not linked, nothing sent; a retry then works
+ok 2 - MG2: no network when creating: a visible failure (stage create, offline), not linked, nothing sent; a retry then works
+  ---
+  duration_ms: 2.043984
+  type: 'test'
+  ...
+# Subtest: MG3: the trip already exists in my account (an earlier attempt): no second trip, the records go up, it is linked
+ok 3 - MG3: the trip already exists in my account (an earlier attempt): no second trip, the records go up, it is linked
+  ---
+  duration_ms: 1.79862
+  type: 'test'
+  ...
+# Subtest: MG4: the id belongs to someone else (taken): nothing is linked or sent, and the failure says so
+ok 4 - MG4: the id belongs to someone else (taken): nothing is linked or sent, and the failure says so
+  ---
+  duration_ms: 0.595974
+  type: 'test'
+  ...
+# Subtest: MG5: sending the records fails: no success, not linked, the phone keeps everything; a retry finishes with no duplicate
+ok 5 - MG5: sending the records fails: no success, not linked, the phone keeps everything; a retry finishes with no duplicate
+  ---
+  duration_ms: 1.696427
+  type: 'test'
+  ...
+# Subtest: MG6: records half sent, then edited on the phone, then a retry: the phone's newer version wins in the cloud and on the phone
+ok 6 - MG6: records half sent, then edited on the phone, then a retry: the phone's newer version wins in the cloud and on the phone
+  ---
+  duration_ms: 1.742999
+  type: 'test'
+  ...
+# Subtest: MG7: a double tap runs one move: one create_trip call, one trip
+ok 7 - MG7: a double tap runs one move: one create_trip call, one trip
+  ---
+  duration_ms: 2.506321
+  type: 'test'
+  ...
+# Subtest: MG8: a pending (not approved) user: denied, nothing linked, the failure is kept for the screen
+ok 8 - MG8: a pending (not approved) user: denied, nothing linked, the failure is kept for the screen
+  ---
+  duration_ms: 0.485552
+  type: 'test'
+  ...
+# Subtest: MG9 (M1): records reached the server but the answer was lost, the user deletes one, the retry: it does not come back, on the phone or in the cloud
+ok 9 - MG9 (M1): records reached the server but the answer was lost, the user deletes one, the retry: it does not come back, on the phone or in the cloud
+  ---
+  duration_ms: 3.807898
+  type: 'test'
+  ...
+# Subtest: MG10 (M1): the delete survives a second failed try (offline when creating) and a new backup before the retry
+ok 10 - MG10 (M1): the delete survives a second failed try (offline when creating) and a new backup before the retry
+  ---
+  duration_ms: 2.073017
+  type: 'test'
+  ...
+# Subtest: MG11 (M1): the delete is limited to what this phone sent: a record it never had is still taken from the cloud, and an untouched one stays
+ok 11 - MG11 (M1): the delete is limited to what this phone sent: a record it never had is still taken from the cloud, and an untouched one stays
+  ---
+  duration_ms: 9.432469
+  type: 'test'
+  ...
+# Subtest: MG12 (M1): after the move, normal sync of edits and deletes still works
+ok 12 - MG12 (M1): after the move, normal sync of edits and deletes still works
+  ---
+  duration_ms: 2.387085
+  type: 'test'
+  ...
+# Subtest: M1: trip -> records -> trip gives back exactly the same trip (every field, unknown and broken ones too)
+ok 13 - M1: trip -> records -> trip gives back exactly the same trip (every field, unknown and broken ones too)
+  ---
+  duration_ms: 4.030452
+  type: 'test'
+  ...
+# Subtest: M2: the owner-approved split between shared and personal
+ok 14 - M2: the owner-approved split between shared and personal
+  ---
+  duration_ms: 1.866613
+  type: 'test'
+  ...
+# Subtest: M3: flight details are shared, the price, status, note, booking, seat and linked expense are personal
+ok 15 - M3: flight details are shared, the price, status, note, booking, seat and linked expense are personal
+  ---
+  duration_ms: 0.346804
+  type: 'test'
+  ...
+# Subtest: M4: isSharedExpense follows the existing split fields only
+ok 16 - M4: isSharedExpense follows the existing split fields only
+  ---
+  duration_ms: 0.346889
+  type: 'test'
+  ...
+# Subtest: E1: first upload, then repeated syncs and a repeated upload create no duplicates and change nothing
+ok 17 - E1: first upload, then repeated syncs and a repeated upload create no duplicates and change nothing
+  ---
+  duration_ms: 21.457855
+  type: 'test'
+  ...
+# Subtest: E2: a friend sees the shared trip without the owner's budget, price or personal expense
+ok 18 - E2: a friend sees the shared trip without the owner's budget, price or personal expense
+  ---
+  duration_ms: 11.450341
+  type: 'test'
+  ...
+# Subtest: E3 (S14-4): edits made offline wait, then sync after the network is back, with no loss or duplicate
+ok 19 - E3 (S14-4): edits made offline wait, then sync after the network is back, with no loss or duplicate
+  ---
+  duration_ms: 7.933952
+  type: 'test'
+  ...
+# Subtest: E4 (S14-5): server failure "network" never changes or deletes local data, and keeps the waiting changes
+ok 20 - E4 (S14-5): server failure "network" never changes or deletes local data, and keeps the waiting changes
+  ---
+  duration_ms: 6.722159
+  type: 'test'
+  ...
+# Subtest: E4 (S14-5): server failure "500" never changes or deletes local data, and keeps the waiting changes
+ok 21 - E4 (S14-5): server failure "500" never changes or deletes local data, and keeps the waiting changes
+  ---
+  duration_ms: 6.586037
+  type: 'test'
+  ...
+# Subtest: E4 (S14-5): server failure "502" never changes or deletes local data, and keeps the waiting changes
+ok 22 - E4 (S14-5): server failure "502" never changes or deletes local data, and keeps the waiting changes
+  ---
+  duration_ms: 6.024714
+  type: 'test'
+  ...
+# Subtest: E4 (S14-5): server failure "402" never changes or deletes local data, and keeps the waiting changes
+ok 23 - E4 (S14-5): server failure "402" never changes or deletes local data, and keeps the waiting changes
+  ---
+  duration_ms: 4.009574
+  type: 'test'
+  ...
+# Subtest: E4 (S14-5): server failure "401" never changes or deletes local data, and keeps the waiting changes
+ok 24 - E4 (S14-5): server failure "401" never changes or deletes local data, and keeps the waiting changes
+  ---
+  duration_ms: 3.390969
+  type: 'test'
+  ...
+# Subtest: E5: edit conflict, last edit wins on both phones, and the losing version is kept as a copy
+ok 25 - E5: edit conflict, last edit wins on both phones, and the losing version is kept as a copy
+  ---
+  duration_ms: 9.991134
+  type: 'test'
+  ...
+# Subtest: E6: a stop deleted by a friend leaves the owner's phone, and a copy is kept there
+ok 26 - E6: a stop deleted by a friend leaves the owner's phone, and a copy is kept there
+  ---
+  duration_ms: 3.517313
+  type: 'test'
+  ...
+# Subtest: E7: only the owner changes the trip dates; a friend's change is not sent and is kept as a copy
+ok 27 - E7: only the owner changes the trip dates; a friend's change is not sent and is kept as a copy
+  ---
+  duration_ms: 4.647999
+  type: 'test'
+  ...
+# Subtest: E8 (S14-2): a pending user sends and reads no trip data
+ok 28 - E8 (S14-2): a pending user sends and reads no trip data
+  ---
+  duration_ms: 0.644287
+  type: 'test'
+  ...
+# Subtest: E8 (S14-2): a blocked user sends and reads no trip data
+ok 29 - E8 (S14-2): a blocked user sends and reads no trip data
+  ---
+  duration_ms: 0.479639
+  type: 'test'
+  ...
+# Subtest: E9 (S14-6 / restore): after a backup import the sync waits for the user's choice and sends nothing
+ok 30 - E9 (S14-6 / restore): after a backup import the sync waits for the user's choice and sends nothing
+  ---
+  duration_ms: 1.472382
+  type: 'test'
+  ...
+# Subtest: E10: an expense that becomes shared moves to the shared list once, and is counted once
+ok 31 - E10: an expense that becomes shared moves to the shared list once, and is counted once
+  ---
+  duration_ms: 3.875475
+  type: 'test'
+  ...
+# Subtest: E11: a trip that is no longer shared with you stays on your phone, unlinked, with a notice
+ok 32 - E11: a trip that is no longer shared with you stays on your phone, unlinked, with a notice
+  ---
+  duration_ms: 2.028398
+  type: 'test'
+  ...
+# Subtest: E12: language and the assistant limit follow the account; theme and backup date stay on the phone
+ok 33 - E12: language and the assistant limit follow the account; theme and backup date stay on the phone
+  ---
+  duration_ms: 0.367181
+  type: 'test'
+  ...
+# Subtest: E13: an approved admin syncing a trip never takes other people's personal records
+ok 34 - E13: an approved admin syncing a trip never takes other people's personal records
+  ---
+  duration_ms: 1.506782
+  type: 'test'
+  ...
+# Subtest: E14: one record too big for the server stays on the phone and does not block the others
+ok 35 - E14: one record too big for the server stays on the phone and does not block the others
+  ---
+  duration_ms: 30.531457
+  type: 'test'
+  ...
+# Subtest: API1: server answers become clear kinds (offline, auth, denied) and never throw anything else
+ok 36 - API1: server answers become clear kinds (offline, auth, denied) and never throw anything else
+  ---
+  duration_ms: 0.545216
+  type: 'test'
+  ...
+# Subtest: ST1: the sign-in session can only use latisa:auth: keys; tisa:v1 is out of its reach
+ok 37 - ST1: the sign-in session can only use latisa:auth: keys; tisa:v1 is out of its reach
+  ---
+  duration_ms: 0.388717
+  type: 'test'
+  ...
+1..37
+# tests 37
+# suites 0
+# pass 37
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 219.69764

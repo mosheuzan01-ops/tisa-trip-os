@@ -5,7 +5,7 @@
 // src/js/core/storage.js), and it never resets or replaces the app data. Admin code is not here (admin-view.js).
 import { createKv, authStorage, keepCloudCopy, hasSavedSession, browserBackend, SYNC_KEY, AUTH_KEY } from './core/storage.js';
 import { createCloudApi, toCloudError } from './core/cloud-api.js';
-import { emptySyncState, runSync, uploadTrip, downloadTrip, noteLocalChanges, pendingCount, unlinkAll, resendAll } from './core/sync-engine.js';
+import { emptySyncState, runSync, downloadTrip, noteLocalChanges, pendingCount, unlinkAll, resendAll, markBackup, migrateTrip, singleFlight } from './core/sync-engine.js';
 import { interpolate } from './core/i18n.js';
 
 const LIB = './vendor/supabase/supabase-js-2.119.2.umd.js';
@@ -150,7 +150,33 @@ export function setupCloud(ctx, { wireDialog }) {
   }
   cloud.refresh = refresh;
 
-  // ---------- moving the trip on this phone into the account ----------
+  // ---------- moving the trip on this phone into the account (1.1.1: two steps) ----------
+  // Step 1 downloads the backup (on an iPhone: the share sheet). Step 2 starts only when the user is back and taps
+  // "move now": the trip is created in the account, its records go up, and only then it is linked. The state of the
+  // move is kept in latisa:sync:v1 (sync.migration), so a reload in between shows step 2 or the last failure.
+  const migStatus = $('[data-slot="cloud-migrate-status"]');
+  const migUpload = $('[data-cloud="migrate-upload"]');
+  const migBackup = $('[data-cloud="migrate-yes"]');
+  let migrating = false;
+  function renderMigrate() {
+    const m = cloud.sync.migration?.tripId === ctx.trip().id ? cloud.sync.migration : null;
+    const backedUp = Boolean(m?.backupAt) && m.step !== 'done';
+    let state = 'start';
+    let text = '';
+    if (migrating) { state = 'uploading'; text = t('cloud.migrate.uploading'); } else if (m?.step === 'failed') {
+      state = 'failed';
+      const reason = t(`cloud.err.${m.kind}`);
+      text = interpolate(t(m.stage === 'records' ? 'cloud.migrate.fail.records' : 'cloud.migrate.fail.create'), { reason });
+    } else if (backedUp) { state = 'ready'; text = t('cloud.migrate.ready'); }
+    migStatus.dataset.state = state;
+    migStatus.textContent = text;
+    migStatus.hidden = !text;
+    migUpload.hidden = !backedUp;
+    migUpload.disabled = migrating;
+    migBackup.disabled = migrating;
+    migBackup.textContent = t(backedUp ? 'cloud.migrate.again' : 'cloud.migrate.yes');
+    migBackup.classList.toggle('btn-ghost', backedUp);
+  }
   function offerMigrate(force = false) {
     if (cloud.status !== 'approved' || cloud.sync.restorePending) return;
     const trip = ctx.trip();
@@ -163,26 +189,55 @@ export function setupCloud(ctx, { wireDialog }) {
     $('[data-slot="cloud-migrate-text"]').textContent = interpolate(t('cloud.migrate.text'), {
       name: trip.name, stops: count(trip.destinations), expenses: count(trip.expenses), items: count(trip.checklist), places: count(trip.places),
     });
+    renderMigrate();
     if (!dlg.migrate.open) open(dlg.migrate, $('[data-cloud="upload"]'));
   }
-  async function migrateNow() {
+  function backupStep() {
+    if (migrating) return;
+    keepCloudCopy(backend, ctx.storageKey); // the exact data text, once, on the phone (before anything changes it)
+    ctx.downloadBackup(); // the backup file; nothing is sent to the server here
+    cloud.sync = markBackup(cloud.sync, ctx.trip().id, nowIso());
+    save();
+    renderMigrate();
+    migUpload.focus();
+  }
+  const runMove = singleFlight(async () => {
     const trip = ctx.trip();
-    keepCloudCopy(backend, ctx.storageKey); // 1. the exact data text, once, on the phone (before anything changes it)
-    ctx.downloadBackup(); // 2. and a backup file
+    migrating = true;
+    renderMigrate();
     try {
       const api = await ensureApi();
-      const up = await uploadTrip({ api, sync: cloud.sync, trip, nowIso: nowIso() });
-      if (up.result === 'taken') { ctx.toast('cloud.err.taken'); return; }
-      cloud.sync = up.sync;
+      while (cloud.busy) await new Promise((r) => setTimeout(r, 150)); // a sync in progress finishes first
+      cloud.busy = true;
+      let res;
+      try { res = await migrateTrip({ api, sync: cloud.sync, trip, nowIso: nowIso() }); } finally { cloud.busy = false; }
+      cloud.sync = res.sync;
       save();
-      ctx.toast('cloud.migrate.done');
-      refresh();
+      if (res.trip) ctx.change((s) => { s.trips[trip.id] = res.trip; }, { now: true });
+      if (res.result === 'done') {
+        migrating = false;
+        dlg.migrate.close();
+        ctx.toast('cloud.migrate.done');
+        refresh();
+      }
     } catch (e) {
-      ctx.toast(`cloud.err.${toCloudError(e).kind}`);
-    } finally { renderCloud(ctx); }
-  }
-  $('[data-cloud="migrate-yes"]').addEventListener('click', () => { dlg.migrate.close(); migrateNow(); });
+      // ensureApi failed (the library did not load): kept as a failure of the first stage, shown in the dialog
+      cloud.sync = { ...cloud.sync, migration: { ...(cloud.sync.migration ?? {}), tripId: trip.id, step: 'failed', stage: 'create', kind: toCloudError(e).kind, at: nowIso() } };
+      save();
+    } finally {
+      migrating = false;
+      renderMigrate();
+      renderCloud(ctx);
+    }
+  });
+  migBackup.addEventListener('click', backupStep);
+  migUpload.addEventListener('click', () => {
+    if (migrating) return; // a second tap while moving does nothing
+    migUpload.disabled = true;
+    runMove();
+  });
   $('[data-cloud="migrate-no"]').addEventListener('click', () => {
+    if (migrating) return;
     cloud.sync.declined = { ...(cloud.sync.declined ?? {}), [ctx.trip().id]: true };
     save();
     dlg.migrate.close();

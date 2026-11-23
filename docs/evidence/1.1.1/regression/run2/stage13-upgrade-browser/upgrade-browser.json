@@ -1,0 +1,62 @@
+{
+  "U1 0.7.1 opens the 0.7.1 sample data (schema 5) with no error; the photo file is stored": {
+    "result": "PASS",
+    "shownOld": "0.7.1",
+    "schema": 5,
+    "filesBefore": [
+      "old-photo-1"
+    ],
+    "cachesBefore": [
+      "tisa-0.7.1"
+    ],
+    "errors": []
+  },
+  "U2 the old app shows the update banner; no reload before the tap": {
+    "result": "PASS",
+    "bannerShown": true,
+    "noReload": true
+  },
+  "U3 after the tap: this version, schema 8, the old cache is gone": {
+    "result": "PASS",
+    "shownNew": "1.1.1",
+    "schema": 8,
+    "cachesAfter": [
+      "tisa-1.1.1"
+    ]
+  },
+  "U4 every 0.7.1 field of the trip and of the settings is unchanged (the migration only adds)": {
+    "result": "PASS",
+    "tripDiffs": [],
+    "settingsDiffs": [],
+    "added": [
+      "archive",
+      "templateOffer",
+      "places",
+      "smartBag"
+    ]
+  },
+  "U5 the photo file is still in IndexedDB; no corrupt copy was made": {
+    "result": "PASS",
+    "filesAfter": [
+      "old-photo-1"
+    ],
+    "corrupt": []
+  },
+  "U6 the screens show the 0.7.1 data: every stop, both expenses, the extra list item, the journal note, the check-in, the bag, the photo": {
+    "result": "PASS",
+    "stopsShown": 11,
+    "stops": 11
+  },
+  "U7 a JSON backup from the upgraded app restores to the same trip data": {
+    "result": "PASS",
+    "name": "tisa-backup-2026-11-23.json"
+  },
+  "no JS errors": {
+    "result": "PASS",
+    "errors": []
+  },
+  "no requests outside the app": {
+    "result": "PASS",
+    "outside": []
+  }
+}

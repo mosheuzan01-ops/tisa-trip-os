@@ -1,0 +1,16 @@
+PASS  S14-1a no cloud set up: the card says so, no buttons, no account dialogs, nothing requested from the cloud or the library
+PASS  S14-1b data unchanged by opening (1.0.x behaviour)
+PASS  S14-1c cloud set up but no session: no library, no request to Supabase, only "sign in" and "sign up"; pill hidden
+PASS  S14-1d the app works without signing in: home and data as before
+PASS  KEYBOARD sign-in dialog: Enter opens it, focus on the email field, Esc closes, focus returns to the button
+PASS  A11Y every field in the account dialogs has an accessible name (its wrapping label)
+PASS  S14-2a sign-up: account is "waiting for approval", the name is saved, too-short password refused first
+PASS  S14-2b a pending user reads only its own profile and sends no trip data
+PASS  S14-2c local data unchanged while pending
+PASS  S14-2d sign-out: back to "sign in", the session key is gone, the data stays
+PASS  S14-2e wrong password says so; "forgot password" sends the request and explains the manual reset for friends
+PASS  S14-2f a blocked user sees "blocked", reads only its profile, sends nothing, keeps the local data
+FAIL  run  {"result":"FAIL","error":"page.waitForSelector: Timeout 5000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#dlg-cloud-migrate[open] [data-cloud=\"migrate-upload\"]:not([hidden])') to be visible\u001b[22m\n\n    at /home/user/tisa-trip-os/scripts/qa/stage14-browser.cjs:242:17"}
+PASS  no JS errors
+PASS  no requests outside the app and the (fake) Supabase project
+FAIL 1
