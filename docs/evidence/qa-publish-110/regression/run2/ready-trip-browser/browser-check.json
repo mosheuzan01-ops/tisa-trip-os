@@ -1,0 +1,57 @@
+{
+  "T1 fresh install: no budget of its own (template categories at 0, \"—\"), no template card; the shared dates and their route": {
+    "result": "PASS",
+    "profile": null,
+    "total": 0,
+    "free": "—",
+    "dates": [
+      "2026-12-20",
+      "2027-01-20"
+    ],
+    "stops": 7
+  },
+  "T2 390px: no sideways scroll on the money screen": {
+    "result": "PASS"
+  },
+  "T3 dates on a new trip: the suggested route is built at once, from the day after departure to the return date, and kept after a reload": {
+    "result": "PASS",
+    "stops": [
+      "בנגקוק 2030-12-21–2030-12-24",
+      "קו טאו 2030-12-24–2030-12-28",
+      "קו סמוי 2030-12-28–2031-01-03",
+      "פוקט 2031-01-03–2031-01-08",
+      "קו פי פי 2031-01-08–2031-01-13",
+      "קו לנטה 2031-01-13–2031-01-18",
+      "בנגקוק 2031-01-18–2031-01-20"
+    ],
+    "stopCards": 7
+  },
+  "T4 390px: no sideways scroll on the itinerary": {
+    "result": "PASS"
+  },
+  "T5 template mode shows the new stops and says the old route goes to the archive; cancel changes nothing": {
+    "result": "PASS",
+    "previewText": "המסלול החדש (הצעה, לא הוזמן)\nבנגקוק\n21 בדצמ׳ – 24 בדצמ׳\nקו סמוי\n24 בדצמ׳ – 1 בינו׳\nקו טאו\n1 בינו׳ – 6 בינו׳\nפוקט\n6 בינו׳ – 12 בינו׳\nקו פי פי\n12 בינו׳ – 18 בינו׳\nקו לנטה\n18 בינו׳ – 23 בינו׳\nבנגקוק\n23 בינו׳ – 25 בינו׳\n\nהמסלול הנוכחי יישמר בארכיון. הוצאות, טיסות, צ'ק-אין ותמונות לא משתנים."
+  },
+  "T6 yes: new route ends on the new return date; the previous route is in the archive, unchanged; budget and checklist unchanged": {
+    "result": "PASS",
+    "archived": 1
+  },
+  "T7 old data: the itinerary card opens the template preview (nothing saved before yes); after yes the old stops are archived, expenses and budget unchanged": {
+    "result": "PASS",
+    "card": true,
+    "preset": true,
+    "untouched": true
+  },
+  "T8 \"not now\": only the answer is saved; the card stays hidden after a reload": {
+    "result": "PASS"
+  },
+  "O offline: on a trip with no dates yet, entering dates builds the route with no network": {
+    "result": "PASS",
+    "stops": 7
+  },
+  "no JS errors": {
+    "result": "PASS",
+    "errors": []
+  }
+}

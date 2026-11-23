@@ -1,0 +1,12 @@
+PASS  L0 the lists screen has a "מזוודה חכמה" button
+PASS  L1 the lists open "מזוודה חכמה"; the lists tab stays lit; the screen shows the days and the stops by kind
+PASS  L2 (S12-3) ticking "שנורקל או צלילה" adds a dive-card suggestion; the choice is saved (trip.smartBag) and survives a reload
+PASS  L3 (S12-4) a double tap on "להוסיף" adds exactly one item, in the bag or carry-on lists; the row leaves; older items are untouched
+PASS  L4 "להוסיף את כל החובה" adds every must once (no duplicates); the group then says so and the button hides
+PASS  L5 (S12-4) no shown suggestion has a name already in the lists; "לא כדאי" has no add button
+PASS  L6 (S12-6) the tick on an added item survives a reload; the backup file has the activities and ticks; a restore brings them back
+PASS  L7 (S12-3) a route with only a city changes the stops line (no island); the items already added stay exactly
+PASS  L8 390px: no horizontal scroll; each "להוסיף" says what it adds and is 44px tall; 7 labelled activity checkboxes in a fieldset
+PASS  L9 (S12-8) the screen renders in light and dark, at 390px and desktop (screenshots after-smart-bag-*)
+PASS  L10 (S12-7) airplane mode: offline, the smart suitcase shows its suggestions from the cache
+PASS  L11 (S12-7) zero requests outside the app in the whole run, no page errors
