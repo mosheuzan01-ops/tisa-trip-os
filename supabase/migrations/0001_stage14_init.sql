@@ -63,7 +63,7 @@ create table public.trip_records (
   server_at  timestamptz not null default clock_timestamp(),
   updated_by uuid references public.profiles (id) on delete set null,
   primary key (trip_id, scope, kind, rec_id),
-  check (pg_column_size(data) <= 65536)
+  check (pg_column_size(data) <= 1048576)   -- 1 MB per record (a long archive of old routes); far below the 500 MB plan
 );
 create index trip_records_pull_idx on public.trip_records (trip_id, server_at);
 

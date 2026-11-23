@@ -135,7 +135,7 @@ export function setupCloud(ctx, { wireDialog }) {
       }
       cloud.status = res.status === 'restore' ? 'approved' : res.status;
       cloud.net = 'idle';
-      const notice = res.notices.find((x) => ['replaced', 'datesOwnerOnly', 'lost'].includes(x.type));
+      const notice = res.notices.find((x) => ['replaced', 'datesOwnerOnly', 'lost', 'tooBig'].includes(x.type));
       if (notice) ctx.toast(`cloud.notice.${notice.type}`);
       offerMigrate();
     } catch (e) {
@@ -156,7 +156,9 @@ export function setupCloud(ctx, { wireDialog }) {
     const trip = ctx.trip();
     const e = cloud.sync.trips?.[trip.id];
     if (e?.linked) return;
-    if (!force && (cloud.askedMigrate || cloud.sync.declined?.[trip.id] || !tripHasData(trip))) return;
+    // Offered by itself only on the first phone (no trip in the account yet). On another phone the account's trips
+    // are in "My trips", and this phone's own trip is moved only with the "Move to my account" button.
+    if (!force && (cloud.askedMigrate || cloud.sync.declined?.[trip.id] || !tripHasData(trip) || (cloud.sync.cloudTrips?.length ?? 0) > 0)) return;
     cloud.askedMigrate = true;
     $('[data-slot="cloud-migrate-text"]').textContent = interpolate(t('cloud.migrate.text'), {
       name: trip.name, stops: count(trip.destinations), expenses: count(trip.expenses), items: count(trip.checklist), places: count(trip.places),
@@ -165,8 +167,8 @@ export function setupCloud(ctx, { wireDialog }) {
   }
   async function migrateNow() {
     const trip = ctx.trip();
-    ctx.downloadBackup(); // 1. a backup file first
-    keepCloudCopy(backend, ctx.storageKey); // 2. and the exact data text, once, on the phone
+    keepCloudCopy(backend, ctx.storageKey); // 1. the exact data text, once, on the phone (before anything changes it)
+    ctx.downloadBackup(); // 2. and a backup file
     try {
       const api = await ensureApi();
       const up = await uploadTrip({ api, sync: cloud.sync, trip, nowIso: nowIso() });
@@ -331,6 +333,7 @@ export function setupCloud(ctx, { wireDialog }) {
     if (!b) return;
     const a = b.dataset.cloud;
     if (a === 'signin' || a === 'signup') openAuth(a, b);
+    if (a === 'password') openAuth('newpass', b); // e.g. after the admin set a temporary password (docs/BACKEND_HE.md)
     if (a === 'retry') { await ensureApi().catch(() => {}); refresh(); }
     if (a === 'share') { shareForm.reset(); shareErr.textContent = ''; open(dlg.share, b); shareForm.email.focus(); }
     if (a === 'members') showMembers(b);
@@ -493,6 +496,7 @@ export function renderCloud(ctx) {
   show('members', signedIn && Boolean(active?.linked));
   show('upload', signedIn && !active?.linked && !cloud.sync.restorePending);
   show('admin', signedIn && cloud.sync.profile?.role === 'admin');
+  show('password', configured && ['approved', 'pending'].includes(st));
   show('signout', configured && ['approved', 'pending', 'blocked', 'loading', 'expired'].includes(st));
   renderPill(ctx);
 }

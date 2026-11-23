@@ -391,6 +391,21 @@ test('E13: an approved admin syncing a trip never takes other people\'s personal
   assert.ok(a && m);
 });
 
+test('E14: one record too big for the server stays on the phone and does not block the others', async () => {
+  const { fake, apiA, clientA } = setup(); await signIn(clientA, 'user-a@example.com');
+  const st = richState(); const id = st.activeTripId;
+  let sync = (await uploadTrip({ api: apiA, sync: emptySyncState(), trip: st.trips[id], nowIso: T(1) })).sync;
+  st.trips[id].archive.routes.push({ at: T(1), destinations: [{ id: 'x', note: 'x'.repeat(950_000) }] });
+  st.trips[id].destinations.push({ id: 'stop-big-test', name: 'Sample', startDate: '2026-12-24', endDate: '2026-12-25', note: '' });
+  noteLocalChanges(sync, st, T(2));
+  const res = await runSync({ api: apiA, sync, state: st, nowIso: T(3) });
+  sync = commit(st, sync, res);
+  assert.ok(res.notices.some((x) => x.type === 'tooBig'));
+  assert.ok([...fake.records.values()].some((r) => r.rec_id === 'stop-big-test'), 'the other records were sent');
+  assert.ok(![...fake.records.values()].some((r) => r.kind === 'obj' && r.rec_id === 'archive' && JSON.stringify(r.data).length > 900_000));
+  assert.equal(st.trips[id].archive.routes.at(-1).destinations[0].note.length, 950_000, 'kept on the phone');
+});
+
 // ---------------------------------------------------------------- api errors and storage
 test('API1: server answers become clear kinds (offline, auth, denied) and never throw anything else', async () => {
   const fake = createFakeCloud(); const client = fakeClient(fake); const api = createCloudApi(client);

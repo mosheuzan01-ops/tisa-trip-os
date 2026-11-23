@@ -1359,5 +1359,7 @@
   "cloud.status.pending": "ממתין",
   "cloud.status.approved": "מאושר",
   "cloud.status.blocked": "חסום",
-  "cloud.f.pass": "סיסמה (8 תווים לפחות)"
+  "cloud.f.pass": "סיסמה (8 תווים לפחות)",
+  "cloud.password": "שינוי סיסמה",
+  "cloud.notice.tooBig": "פריט אחד גדול מדי לשמירה בענן. הוא נשאר בטלפון."
 }

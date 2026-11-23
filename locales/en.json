@@ -1359,5 +1359,7 @@
   "cloud.status.pending": "Waiting",
   "cloud.status.approved": "Approved",
   "cloud.status.blocked": "Blocked",
-  "cloud.f.pass": "Password (at least 8 characters)"
+  "cloud.f.pass": "Password (at least 8 characters)",
+  "cloud.password": "Change password",
+  "cloud.notice.tooBig": "One item is too big for the cloud. It stays on the phone."
 }

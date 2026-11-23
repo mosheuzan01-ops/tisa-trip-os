@@ -6,7 +6,7 @@
 //  - the trip header (name, country, dates) is changed only by the owner; a member's local change is kept as a copy.
 // Sync state lives under latisa:sync:v1 (src/js/core/storage.js). Pure apart from the api calls; tests in
 // tests/stage14-sync.test.js. Conflict rule: the later edit time wins (edited_at, the phone's clock when edited).
-import { tripToRecords, recordsToTrip, hashValue, recKey, parseKey } from './sync-map.js';
+import { tripToRecords, recordsToTrip, hashValue, recKey, parseKey, stableJson } from './sync-map.js';
 import { createTrip } from './schema.js';
 import { CloudError } from './cloud-api.js';
 
@@ -14,6 +14,7 @@ const PULL_OVERLAP_MS = 120_000;
 const PAGE = 1000;
 const BATCH = 500;
 const KEEP_COPIES = 300;
+const MAX_RECORD_CHARS = 900_000; // the server refuses a record over 1 MB; a bigger one stays on the phone only
 const SETTINGS_FIELDS = ['language', 'assistantQuestionLimit'];
 const EPOCH = '1970-01-01T00:00:00.000Z';
 
@@ -150,6 +151,7 @@ export async function syncTrip({ api, entry: entryIn, trip, userId, serverTrip, 
     for (const [k, r] of records) {
       const h = hashValue(r.data);
       if (e.shadow[k] === h) continue;
+      if (stableJson(r.data).length > MAX_RECORD_CHARS) { if (!notices.some((x) => x.type === 'tooBig')) notices.push({ type: 'tooBig', tripId, kind: r.kind }); continue; }
       rows.push({ trip_id: tripId, scope: r.scope === 'shared' ? 'shared' : userId, kind: r.kind, rec_id: r.rec_id, data: r.data, deleted: false, edited_at: e.dirtyAt[k] ?? nowIso });
       sent.set(k, h);
     }
