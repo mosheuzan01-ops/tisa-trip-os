@@ -1,0 +1,737 @@
+{
+  "format": "tisa-backup",
+  "schemaVersion": 8,
+  "exportedAt": "2026-11-23T12:27:55.081Z",
+  "data": {
+    "schemaVersion": 8,
+    "appVersion": "1.1.0",
+    "createdAt": "2026-11-23T12:27:50.727Z",
+    "updatedAt": "2026-11-23T12:27:54.646Z",
+    "settings": {
+      "language": "he",
+      "theme": "light",
+      "lastBackupAt": null,
+      "assistantQuestionLimit": 50
+    },
+    "activeTripId": "e9bc1dd2-1ba5-4dc7-852f-2206126ef389",
+    "trips": {
+      "e9bc1dd2-1ba5-4dc7-852f-2206126ef389": {
+        "id": "e9bc1dd2-1ba5-4dc7-852f-2206126ef389",
+        "countryCode": "TH",
+        "name": "תאילנד",
+        "startDate": "2026-12-05",
+        "endDate": "2027-01-03",
+        "destinations": [
+          {
+            "id": "83c121d4-807e-4373-9bce-3b803d463c73",
+            "name": "בנגקוק",
+            "startDate": "2026-12-21",
+            "endDate": "2026-12-24",
+            "note": "",
+            "suggested": true
+          },
+          {
+            "id": "87588f47-63e9-4974-85c1-3672a853d907",
+            "name": "קו טאו",
+            "startDate": "2026-12-24",
+            "endDate": "2026-12-28",
+            "note": "",
+            "suggested": true,
+            "flexible": true,
+            "nightsRange": [
+              2,
+              4
+            ]
+          },
+          {
+            "id": "8cd11d05-0545-4656-bd0d-b0a38cb8780c",
+            "name": "קו סמוי",
+            "startDate": "2026-12-28",
+            "endDate": "2027-01-03",
+            "note": "ליל השנה החדשה: כיוון מועדף, לא סגור",
+            "suggested": true
+          },
+          {
+            "id": "2b2b87c9-8dba-45cf-887c-1d65ef409a6a",
+            "name": "פוקט",
+            "startDate": "2027-01-03",
+            "endDate": "2027-01-08",
+            "note": "",
+            "suggested": true
+          },
+          {
+            "id": "4affc6d8-ee6b-42e5-b2dd-f06119ce1d9d",
+            "name": "קו פי פי",
+            "startDate": "2027-01-08",
+            "endDate": "2027-01-13",
+            "note": "",
+            "suggested": true
+          },
+          {
+            "id": "8dd244ee-a084-4107-a4a3-59cc29358aec",
+            "name": "קו לנטה",
+            "startDate": "2027-01-13",
+            "endDate": "2027-01-18",
+            "note": "",
+            "suggested": true
+          },
+          {
+            "id": "a0e042ad-8b26-4b2b-9bbb-cb1fe7a20af0",
+            "name": "בנגקוק",
+            "startDate": "2027-01-18",
+            "endDate": "2027-01-20",
+            "note": "הלילות האחרונים לפני טיסת החזרה",
+            "suggested": true
+          }
+        ],
+        "expenses": [],
+        "transfers": [],
+        "checklist": [
+          {
+            "id": "3f781d83-ba7d-487c-8e7f-64a285c57ead",
+            "group": "documents",
+            "name": "דרכון",
+            "qty": 1,
+            "note": "",
+            "done": false,
+            "builtin": "passport"
+          },
+          {
+            "id": "8dba7586-3277-4f66-ac9a-b9da700de950",
+            "group": "documents",
+            "name": "תוקף הדרכון",
+            "qty": 1,
+            "note": "לפי דרישות הכניסה",
+            "done": false,
+            "verify": {
+              "source": "",
+              "checkedAt": null
+            },
+            "builtin": "passport-validity"
+          },
+          {
+            "id": "bb0aa271-22fc-479a-93ce-d876632d6dd8",
+            "group": "documents",
+            "name": "אשרה ודרישות כניסה",
+            "qty": 1,
+            "note": "",
+            "done": false,
+            "verify": {
+              "source": "",
+              "checkedAt": null
+            },
+            "builtin": "entry-rules"
+          },
+          {
+            "id": "f7edd6ec-2364-41af-8699-adc67e6174f1",
+            "group": "documents",
+            "name": "צילום דרכון בטלפון ועותק מודפס בנפרד",
+            "qty": 1,
+            "note": "",
+            "done": false,
+            "builtin": "passport-copy"
+          },
+          {
+            "id": "7aaa4475-ea4f-47d0-b1af-c124705957a0",
+            "group": "documents",
+            "name": "כרטיס טיסה וקוד הזמנה זמינים אופליין",
+            "qty": 1,
+            "note": "",
+            "done": false,
+            "builtin": "ticket-offline"
+          },
+          {
+            "id": "c46b9986-0428-4319-949c-aca80b2054e2",
+            "group": "documents",
+            "name": "פרטי ביטוח נסיעות ומספר חירום",
+            "qty": 1,
+            "note": "טרם נרכש",
+            "done": false,
+            "builtin": "insurance"
+          },
+          {
+            "id": "3a68fabd-a196-4db3-bb58-f979c4c4b600",
+            "group": "documents",
+            "name": "כתובת הלינה הראשונה בבנגקוק באנגלית",
+            "qty": 1,
+            "note": "גם בתאית, אם אומתה",
+            "done": false,
+            "builtin": "first-address"
+          },
+          {
+            "id": "bf71a807-5b06-4730-ba04-8f4b91c5a108",
+            "group": "documents",
+            "name": "רישיון נהיגה בינלאומי",
+            "qty": 1,
+            "note": "רק אם מתכננים לנהוג",
+            "done": false,
+            "verify": {
+              "source": "",
+              "checkedAt": null
+            },
+            "builtin": "driving-permit"
+          },
+          {
+            "id": "a064fe3c-ed59-425a-ae9e-37c391cab921",
+            "group": "money",
+            "name": "כרטיס אשראי",
+            "qty": 1,
+            "note": "",
+            "done": false,
+            "builtin": "credit-card"
+          },
+          {
+            "id": "b9a3ef88-777f-4b76-97a2-5bfe19af969a",
+            "group": "money",
+            "name": "כרטיס נוסף לגיבוי",
+            "qty": 1,
+            "note": "",
+            "done": false,
+            "builtin": "backup-card"
+          },
+          {
+            "id": "88692da6-1c70-4184-9e65-c7b4e2d709d2",
+            "group": "money",
+            "name": "מזומן לימים הראשונים",
+            "qty": 1,
+            "note": "",
+            "done": false,
+            "builtin": "cash"
+          },
+          {
+            "id": "aa7e8be5-ef31-45eb-937d-d0b9971fd36f",
+            "group": "comms",
+            "name": "eSIM או כרטיס SIM",
+            "qty": 1,
+            "note": "",
+            "done": false,
+            "builtin": "esim"
+          },
+          {
+            "id": "72b204b1-8f91-453d-af6d-55fde704f91f",
+            "group": "offline",
+            "name": "צ'ק-אין אונליין וכרטיס עלייה שמור אופליין",
+            "qty": 1,
+            "note": "",
+            "done": false,
+            "builtin": "checkin-online"
+          },
+          {
+            "id": "abf7e50d-a02a-4b21-8020-0868d4ff9190",
+            "group": "offline",
+            "name": "אישורי הזמנות שמורים בטלפון",
+            "qty": 1,
+            "note": "",
+            "done": false,
+            "builtin": "bookings-offline"
+          },
+          {
+            "id": "ffe792a7-8694-4fb5-92b4-21ce4fe33175",
+            "group": "offline",
+            "name": "סרטים, סדרות, מוזיקה ופודקאסטים להורדה",
+            "qty": 1,
+            "note": "לטיסות הלוך וחזור",
+            "done": false,
+            "builtin": "downloads"
+          },
+          {
+            "id": "befac1ce-6b22-4aad-bcc2-81a98518333a",
+            "group": "offline",
+            "name": "מפות אופליין לבנגקוק וליעדים במסלול",
+            "qty": 1,
+            "note": "",
+            "done": false,
+            "builtin": "offline-maps"
+          },
+          {
+            "id": "a0250fb5-0193-4167-80dd-8ea18090ba30",
+            "group": "offline",
+            "name": "אפליקציית Thailand Tourist Police",
+            "qty": 1,
+            "note": "רק מהמקור הרשמי, אחרי בדיקה",
+            "done": false,
+            "verify": {
+              "source": "",
+              "checkedAt": null
+            },
+            "builtin": "police-app"
+          },
+          {
+            "id": "f62fcd00-2bfb-48ae-9165-14a37252bd3b",
+            "group": "offline",
+            "name": "מספרי חירום שמורים בטלפון",
+            "qty": 1,
+            "note": "אומתו 22.11.2026: אמבולנס 1669, משטרה 191, כיבוי אש 199, משטרת תיירים 1155, מידע לתיירים 1672. חיוג ב\"מידע וחירום\"",
+            "done": false,
+            "builtin": "emergency-numbers"
+          },
+          {
+            "id": "bfe8663b-25ba-4405-9f2b-83286b68341c",
+            "group": "offline",
+            "name": "מתרגם שעובד בלי קליטה",
+            "qty": 1,
+            "note": "",
+            "done": false,
+            "builtin": "translator"
+          },
+          {
+            "id": "d50d6f65-c4c2-46ed-be12-af4aa31a25d6",
+            "group": "offline",
+            "name": "קובץ גיבוי של האפליקציה",
+            "qty": 1,
+            "note": "",
+            "done": false,
+            "builtin": "app-backup"
+          },
+          {
+            "id": "439061d4-b8b3-4f81-90ad-6bea45b37184",
+            "group": "offline",
+            "name": "מקום פנוי בטלפון לתמונות ולקבצים",
+            "qty": 1,
+            "note": "",
+            "done": false,
+            "builtin": "phone-space"
+          },
+          {
+            "id": "0bd5f85c-d86c-4eb4-b194-94968c611c5d",
+            "group": "offline",
+            "name": "טעינת הטלפון והמטען הנייד",
+            "qty": 1,
+            "note": "",
+            "done": false,
+            "builtin": "charge-phone"
+          },
+          {
+            "id": "fa0f3914-c5d1-49da-b20f-d49e41b23b55",
+            "group": "flightDay",
+            "name": "דרכון, ארנק, טלפון, כרטיס טיסה ותיק יד",
+            "qty": 1,
+            "note": "",
+            "done": false,
+            "builtin": "day-check"
+          },
+          {
+            "id": "cbd523d7-0a5a-45ac-8f3f-2fedefb0d02d",
+            "group": "flightDay",
+            "name": "בדיקת הבית לפני היציאה",
+            "qty": 1,
+            "note": "",
+            "done": false,
+            "builtin": "home-check"
+          },
+          {
+            "id": "6b8e24f4-a70d-49c9-b2a5-3887df34247a",
+            "group": "flightDay",
+            "name": "לצאת לשדה מספיק מוקדם",
+            "qty": 1,
+            "note": "לפי שעת הטיסה והנחיות חברת התעופה. 3 שעות לפני טיסה בינלאומית היא הערכה, לא כלל",
+            "done": false,
+            "verify": {
+              "source": "",
+              "checkedAt": null
+            },
+            "builtin": "leave-early"
+          },
+          {
+            "id": "325a7d62-7837-40a5-9702-9bc956f6d936",
+            "group": "carryOn",
+            "name": "דרכון, ארנק וטלפון",
+            "qty": 1,
+            "note": "",
+            "done": false,
+            "builtin": "carry-basics"
+          },
+          {
+            "id": "78e79602-67e3-4f31-9d7f-9bbb274e1e10",
+            "group": "carryOn",
+            "name": "כבל טעינה ומטען נייד",
+            "qty": 1,
+            "note": "",
+            "done": false,
+            "builtin": "carry-charger"
+          },
+          {
+            "id": "0059f130-cbcb-48d8-ae67-8235ddfe96e7",
+            "group": "carryOn",
+            "name": "אוזניות",
+            "qty": 1,
+            "note": "",
+            "done": false,
+            "builtin": "headphones"
+          },
+          {
+            "id": "21237c71-8f8d-492f-b90d-3e929583d9b4",
+            "group": "carryOn",
+            "name": "תרופות קבועות באריזה מתאימה",
+            "qty": 1,
+            "note": "",
+            "done": false,
+            "builtin": "carry-medicine"
+          },
+          {
+            "id": "c858ee67-5c64-48cc-9f65-f140e4b44df6",
+            "group": "carryOn",
+            "name": "משקפיים או משקפי שמש",
+            "qty": 1,
+            "note": "",
+            "done": false,
+            "builtin": "glasses"
+          },
+          {
+            "id": "516c75b7-2449-454d-994a-efe7c945ef66",
+            "group": "carryOn",
+            "name": "מפתחות לבית",
+            "qty": 1,
+            "note": "",
+            "done": false,
+            "builtin": "house-keys"
+          },
+          {
+            "id": "6ecf3325-a415-4d2b-b1eb-6e4305d41eb4",
+            "group": "flightComfort",
+            "name": "כרית צוואר",
+            "qty": 1,
+            "note": "",
+            "done": false,
+            "builtin": "neck-pillow"
+          },
+          {
+            "id": "a435fd83-4073-45e2-bf38-1c5bec325f2c",
+            "group": "flightComfort",
+            "name": "צעיף גדול או שכבה חמה",
+            "qty": 1,
+            "note": "",
+            "done": false,
+            "builtin": "warm-layer"
+          },
+          {
+            "id": "604933e1-dabe-41fe-bb53-9f7570e89230",
+            "group": "flightComfort",
+            "name": "כיסוי עיניים",
+            "qty": 1,
+            "note": "",
+            "done": false,
+            "builtin": "eye-mask"
+          },
+          {
+            "id": "76be0aa4-6b29-48f8-bd9a-985569835385",
+            "group": "flightComfort",
+            "name": "אטמי אוזניים",
+            "qty": 1,
+            "note": "",
+            "done": false,
+            "builtin": "earplugs"
+          },
+          {
+            "id": "2d6bd819-162a-4e7d-abf5-7c090ac8db9e",
+            "group": "flightComfort",
+            "name": "גרביים עבים או נעליים נוחות",
+            "qty": 1,
+            "note": "",
+            "done": false,
+            "builtin": "socks"
+          },
+          {
+            "id": "482a44ff-845a-45c3-a41d-3028616331b2",
+            "group": "flightComfort",
+            "name": "חולצה ארוכה דקה וחולצה להחלפה",
+            "qty": 1,
+            "note": "",
+            "done": false,
+            "builtin": "long-shirt"
+          },
+          {
+            "id": "a5b99357-099f-4163-a68f-1b1e2f0b4e05",
+            "group": "flightFood",
+            "name": "חטיפים לטיסה",
+            "qty": 1,
+            "note": "",
+            "done": false,
+            "builtin": "snacks"
+          },
+          {
+            "id": "b5ee36e4-8d46-406d-9de3-1babd576478f",
+            "group": "flightFood",
+            "name": "מסטיק או סוכריות",
+            "qty": 1,
+            "note": "",
+            "done": false,
+            "builtin": "gum"
+          },
+          {
+            "id": "c37f1c6c-f3b0-456d-a24e-f06c77868bf7",
+            "group": "flightFood",
+            "name": "בקבוק ריק למילוי אחרי הבידוק",
+            "qty": 1,
+            "note": "לפי כללי שדה התעופה",
+            "done": false,
+            "verify": {
+              "source": "",
+              "checkedAt": null
+            },
+            "builtin": "bottle"
+          },
+          {
+            "id": "1e45d63f-5684-42af-aa38-f5d9fd42a05d",
+            "group": "flightFood",
+            "name": "ארוחה, אם היא לא כלולה בכרטיס",
+            "qty": 1,
+            "note": "",
+            "done": false,
+            "verify": {
+              "source": "",
+              "checkedAt": null
+            },
+            "builtin": "meal"
+          },
+          {
+            "id": "7f0ab6ed-954e-4d1d-b6e5-30508f69df3a",
+            "group": "hygiene",
+            "name": "קרם לחות ושפתון",
+            "qty": 1,
+            "note": "",
+            "done": false,
+            "builtin": "lotion"
+          },
+          {
+            "id": "4edc90c5-fe61-4a7c-b51f-9a559047d5dd",
+            "group": "hygiene",
+            "name": "מגבונים וחומר לחיטוי ידיים",
+            "qty": 1,
+            "note": "",
+            "done": false,
+            "builtin": "wipes"
+          },
+          {
+            "id": "73a2563d-bb69-432d-aefb-78fe4968c4a3",
+            "group": "hygiene",
+            "name": "טיפות עיניים או תרסיס אף",
+            "qty": 1,
+            "note": "רק אם רלוונטי לך",
+            "done": false,
+            "builtin": "eye-drops"
+          },
+          {
+            "id": "20635a35-a924-4358-a05e-3bb5d5f5b548",
+            "group": "hygiene",
+            "name": "שקית נוזלים",
+            "qty": 1,
+            "note": "לפי כללי הביטחון בשדה",
+            "done": false,
+            "verify": {
+              "source": "",
+              "checkedAt": null
+            },
+            "builtin": "liquids-bag"
+          },
+          {
+            "id": "af5e3ccb-b1a5-42e8-96ae-6efddd2a6e50",
+            "group": "checkedBag",
+            "name": "בגדים, נעליים ומוצרי טיפוח",
+            "qty": 1,
+            "note": "",
+            "done": false,
+            "builtin": "bag-clothes"
+          },
+          {
+            "id": "2e747a29-88e6-47a0-a00a-66a9786dc1c6",
+            "group": "checkedBag",
+            "name": "מגבלות משקל ומידות של חברת התעופה",
+            "qty": 1,
+            "note": "לפי הכרטיס שלכם. לא מניחים משקל קבוע",
+            "done": false,
+            "verify": {
+              "source": "",
+              "checkedAt": null
+            },
+            "builtin": "bag-limits"
+          },
+          {
+            "id": "22b87e32-0836-491e-8092-8d26ad8d900a",
+            "group": "checkedBag",
+            "name": "מטען נייד וסוללות ליתיום רק בתיק היד",
+            "qty": 1,
+            "note": "לפי כללי חברת התעופה",
+            "done": false,
+            "verify": {
+              "source": "",
+              "checkedAt": null
+            },
+            "builtin": "lithium-carry"
+          },
+          {
+            "id": "80a9c791-3809-45ad-a226-ff25fa291b4a",
+            "group": "checkedBag",
+            "name": "דרכון, כסף, תרופות חיוניות וציוד יקר בתיק היד",
+            "qty": 1,
+            "note": "",
+            "done": false,
+            "builtin": "valuables-carry"
+          },
+          {
+            "id": "fa6f0633-7e67-4b65-96c9-d08d95ead0aa",
+            "group": "health",
+            "name": "ערכת עזרה ראשונה",
+            "qty": 1,
+            "note": "",
+            "done": false,
+            "builtin": "first-aid"
+          },
+          {
+            "id": "bf3bf07b-f75a-44d9-8d03-39f388633eb8",
+            "group": "health",
+            "name": "קרם הגנה",
+            "qty": 1,
+            "note": "",
+            "done": false,
+            "builtin": "sunscreen"
+          },
+          {
+            "id": "e0bdc0d1-e41f-464b-8bdc-9cf04d840393",
+            "group": "health",
+            "name": "דוחה יתושים",
+            "qty": 1,
+            "note": "",
+            "done": false,
+            "builtin": "repellent"
+          },
+          {
+            "id": "a9c4e0c6-8c3a-49ae-82fc-b418f7807b42",
+            "group": "clothing",
+            "name": "בגדים קלים",
+            "qty": 1,
+            "note": "",
+            "done": false,
+            "builtin": "light-clothes"
+          },
+          {
+            "id": "eca6ffb5-0115-43a2-9a63-b35271292473",
+            "group": "clothing",
+            "name": "בגד ים",
+            "qty": 1,
+            "note": "",
+            "done": false,
+            "builtin": "swimwear"
+          },
+          {
+            "id": "ba270796-6398-4c5d-ad96-76d0ebaf15af",
+            "group": "clothing",
+            "name": "כפכפים או סנדלים",
+            "qty": 1,
+            "note": "",
+            "done": false,
+            "builtin": "sandals"
+          },
+          {
+            "id": "1f595bb2-304d-40b3-b807-c9e22f106718",
+            "group": "clothing",
+            "name": "לבוש לביקור במקדשים",
+            "qty": 1,
+            "note": "",
+            "done": false,
+            "verify": {
+              "source": "",
+              "checkedAt": null
+            },
+            "builtin": "temple-clothes"
+          },
+          {
+            "id": "fb1a3eaf-b36d-4359-a8ea-bf253f89175a",
+            "group": "chargers",
+            "name": "מתאם לשקע החשמל",
+            "qty": 1,
+            "note": "",
+            "done": false,
+            "verify": {
+              "source": "",
+              "checkedAt": null
+            },
+            "builtin": "plug-adapter"
+          },
+          {
+            "id": "06a577cb-0ba8-4977-b286-97f5fb51dd82",
+            "group": "afterLanding",
+            "name": "המזוודה הגיעה? אם לא, לדווח מיד",
+            "qty": 1,
+            "note": "",
+            "done": false,
+            "builtin": "bag-arrived"
+          },
+          {
+            "id": "51af6570-902b-47a7-9c1c-1a055e25082f",
+            "group": "afterLanding",
+            "name": "הפעלת eSIM או SIM, אם נרכש",
+            "qty": 1,
+            "note": "",
+            "done": false,
+            "builtin": "esim-activate"
+          },
+          {
+            "id": "98648198-dc75-4edc-ab1a-24e409f51f3d",
+            "group": "afterLanding",
+            "name": "כתובת הלינה מוכנה להצגה לנהג",
+            "qty": 1,
+            "note": "",
+            "done": false,
+            "builtin": "show-address"
+          },
+          {
+            "id": "486f1bf1-bf33-4d42-9518-e366cd81f04d",
+            "group": "afterLanding",
+            "name": "משיכת כסף או החלפה לפי הצורך",
+            "qty": 1,
+            "note": "",
+            "done": false,
+            "builtin": "cash-arrival"
+          }
+        ],
+        "events": [],
+        "tasks": [],
+        "checkins": [],
+        "photos": [],
+        "places": [],
+        "budget": {
+          "currency": "ILS",
+          "totalMinor": null,
+          "categoriesMinor": {
+            "flight": 0,
+            "lodging": 0,
+            "food": 0,
+            "transport": 0,
+            "attractions": 0,
+            "insurance-sim-gear": 0,
+            "misc": 0,
+            "emergency": 0
+          },
+          "profileId": null,
+          "estimate": false,
+          "categoryNames": {
+            "food": "אוכל ושתייה",
+            "transport": "תחבורה, מעברים וטיסות פנים",
+            "attractions": "אטרקציות וחיי לילה",
+            "insurance-sim-gear": "ביטוח, תקשורת וציוד",
+            "misc": "רזרבה, קניות ומתנות"
+          },
+          "hidden": [
+            "green"
+          ]
+        },
+        "rates": {},
+        "info": {},
+        "assistant": {},
+        "journal": {},
+        "luggage": {
+          "bags": []
+        },
+        "smartBag": {
+          "activities": []
+        },
+        "archive": {
+          "budgets": [],
+          "routes": []
+        },
+        "templateOffer": "new"
+      }
+    }
+  }
+}

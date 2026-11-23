@@ -1,0 +1,4 @@
+start 2026-11-23T12:15:12Z
+end   2026-11-23T13:06:01Z
+config.cloud.url = the real project; regress.sh as in ../regression/; outputs written outside the repo, then JSON and text copied (rule 20)
+real project API/auth logs in this window: 0 requests (query_logs, edge_logs + auth_logs); tables after: 0 rows

@@ -16,7 +16,7 @@
   - `config.cloud` מצביע על הפרויקט, עם המפתח `sb_publishable_` בלבד.
   - **עד המיזוג:** האתר (main) נשאר 1.0.1, בלי חשבון. הכניסה למשתמשים אמיתיים מתחילה רק אחרי מיזוג.
 - **בדיקות:**
-  - **הרגרסיה האחרונה, עם ה-config האמיתי:** `docs/evidence/stage14/regression-real-config/`.
+  - **הרגרסיה האחרונה, עם ה-config האמיתי, ‏×3 ברצף:** ‏`npm test` ‏496/496, ‏RLS מקומי 56/56, ו-120 מתוך 120 הרצות דפדפן עם exit 0. בלי אף בקשה לפרויקט האמיתי. `docs/evidence/stage14/regression-real-config/`.
   - **הפירוט:** `docs/evidence/stage14/README.md` ו-`docs/GOALS_STAGE14.md`.
 
 ## מה נבנה (קבצים)
