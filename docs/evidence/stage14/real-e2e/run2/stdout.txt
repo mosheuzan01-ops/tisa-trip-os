@@ -1,0 +1,16 @@
+PASS  R1 a pending user (real server): "waiting for approval", only my_profile is called, local data unchanged
+PASS  R2 first sign-in on the real server: backup file first, the trip moves, nothing on the phone changes, the exact copy is kept
+PASS  R3 the owner's second phone downloads the same trip from the real server (every synced field, compared as values)
+PASS  R4 sharing on the real server: a pending address is refused; the friend sees route, places, people and shared expenses only
+PASS  R4b the friend gets none of the owner's personal data (budget, list, bags, journal, check-ins, flight price/booking)
+PASS  R5 the friend cannot change the trip dates or share further
+PASS  R6 airplane mode: the edit waits ("offline"), syncs when the network is back, and another phone gets it once
+PASS  R7 the real server unreachable: "offline", no local byte changes, then it recovers by itself
+PASS  R8 the admin (real server) approves a pending user and blocks a friend; the blocked friend sees "blocked" and keeps the phone data
+PASS  R9 regular users: no admin_* call and no admin-view.js
+PASS  R10 removing the friend (real server): the trip stays on the friend's phone, unlinked
+PASS  R11 only tisa:* and latisa:* in storage; the password is stored nowhere
+PASS  R12 no Content-Security-Policy violation with the real server
+PASS  R13 only this site and the project were contacted
+PASS  no JS errors
+ALL PASS

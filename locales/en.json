@@ -1245,7 +1245,7 @@
   "money.emergencyInside": "The emergency fund of {em} is part of your {base} budget. It is set aside and not part of \"free\".",
   "money.cats.left": "Of a {total} budget: {state}",
   "money.cat.emergencyInside": "Part of the budget. Set aside, not part of \"free\" until it is used.",
-  "privacy.cloud": "Signing in is optional. After an admin approves the account, trips are also kept on Supabase's server in Frankfurt, Germany (EU), and sync between your devices.",
+  "privacy.cloud": "Signing in is optional. After an admin approves the account, trips are also kept on Supabase's server in Singapore, and sync between your devices.",
   "privacy.cloudWho": "Friends you share a trip with see only the shared part: route, places, flight details, participants and shared expenses. Your budget, flight price, lists, journal and check-ins stay personal.",
   "privacy.cloudAdmin": "The app's admin can see all the data on the server, to approve users and fix problems.",
   "privacy.cloudPhotos": "Photos are not uploaded. They stay only on the device.",

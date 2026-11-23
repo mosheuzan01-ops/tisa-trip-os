@@ -49,8 +49,10 @@ test('S-4 (L8, L9): share sheet first, then copy; no direct WhatsApp link and no
   assert.match(view, /clipboard\.writeText\(/);
   assert.match(view, /execCommand\('copy'\)/, 'fallback for older browsers');
   assert.doesNotMatch(view, /wa\.me|whatsapp:\/\/|api\.whatsapp/i);
+  const cloudUrl = JSON.parse(readText('config/app.config.json')).cloud?.url || null; // stage 14: rule 5, third exception
+  if (cloudUrl) assert.match(cloudUrl, /^https:\/\/[a-z0-9]{20}\.supabase\.co$/);
   const urls = readText('config/app.config.json').match(/https?:\/\/[^"]+/g) ?? [];
-  assert.deepEqual(urls, [BASE], 'still only the maps address (rule 5)');
+  assert.deepEqual(urls, cloudUrl ? [BASE, cloudUrl] : [BASE], 'only the maps address, and the one Supabase project (rule 5)');
 });
 
 // ---------- L10: places files: export and import, no overwrite, no duplicates ----------

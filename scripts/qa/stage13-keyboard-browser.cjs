@@ -227,7 +227,12 @@ async function checkDialog(page, id) {
     }
     pass('K1 every screen: the first 25 Tab stops are visible and show a focus mark', Object.keys(ringMiss).length === 0, { ringMiss });
 
-    const notReached = allDialogs.filter((d) => !reached.has(d));
+    // Stage 14: these account dialogs open only after a real sign-in (share, members, confirm, move to account, admin),
+    // which this crawler has no server for. Their keyboard rules (focus inside, Tab stays inside, Esc closes, focus back)
+    // are checked with a signed-in user in scripts/qa/stage14-browser.cjs (KEYBOARD-2). The sign-in dialog itself is
+    // reached here like any other dialog.
+    const AFTER_SIGN_IN = ['dlg-cloud-share', 'dlg-cloud-members', 'dlg-cloud-confirm', 'dlg-cloud-migrate', 'dlg-cloud-admin'];
+    const notReached = allDialogs.filter((d) => !reached.has(d) && !AFTER_SIGN_IN.includes(d));
     pass('K2 every dialog: focus starts inside, Tab and Shift+Tab stay inside, a visible focus mark, Esc closes, focus goes back to its button',
       problems.length === 0, { problems, reached: [...reached].map(([d, v]) => `${d}: ${v.where}`) });
     pass('K3 every dialog in the app was reached from the keyboard', notReached.length === 0, { notReached, total: allDialogs.length });

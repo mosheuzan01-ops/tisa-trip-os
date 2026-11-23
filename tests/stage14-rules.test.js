@@ -60,8 +60,14 @@ test('S14-8c: the app code never names the server role or a secret key; only the
   assert.ok(cloud && typeof cloud === 'object', 'config.cloud exists');
   assert.ok(cloud.url === '' || /^https:\/\/[a-z0-9]{20}\.supabase\.co$/.test(cloud.url), 'cloud.url is empty or a project address');
   const k = cloud.publishableKey;
-  const publicJwt = () => { try { return JSON.parse(Buffer.from(k.split('.')[1], 'base64url').toString()).role === 'anon'; } catch { return false; } };
-  assert.ok(k === '' || /^sb_publishable_[A-Za-z0-9_-]+$/.test(k) || publicJwt(), 'only the publishable (anon) key');
+  const keyAllowed = (key) => key === '' || /^sb_publishable_[A-Za-z0-9_-]+$/.test(key);
+  assert.ok(keyAllowed(k), 'only the publishable key');
+  // Owner decision (2026-11-23): only the new publishable key. The legacy "anon" JWT key stops working in late 2026,
+  // in the middle of the trip. A made-up sample of its shape must be refused (sample only, not a real key).
+  const b64 = (o) => Buffer.from(JSON.stringify(o)).toString('base64url');
+  const legacySample = `${b64({ alg: 'HS256', typ: 'JWT' })}.${b64({ iss: 'supabase', ref: 'abcdefghijklmnopqrst', role: 'anon' })}.c2FtcGxl`;
+  assert.equal(keyAllowed(legacySample), false, 'the legacy anon JWT key is refused');
+  assert.equal(keyAllowed('sb_publishable_sample_only'), true, 'the new publishable key shape is accepted');
 });
 
 test('CSP: one policy, only this site plus Supabase for data, no inline or eval scripts', () => {
@@ -147,7 +153,8 @@ test('PRIV-14: the privacy text says what 1.1.0 does with an account', () => {
   const text = Object.entries(he).filter(([k]) => k.startsWith('privacy.')).map(([, v]) => v).join('\n');
   const must = {
     'without an account, only on this device': /בלי כניסה לחשבון[\s\S]*רק במכשיר/,
-    'Supabase, Frankfurt, EU': /Supabase[\s\S]*פרנקפורט[\s\S]*האיחוד האירופי/,
+    'Supabase, Singapore (owner decision 2026-11-23)': /Supabase[\s\S]*בסינגפור/,
+    'no other region named': /^(?![\s\S]*(פרנקפורט|גרמניה|האיחוד האירופי))/,
     'friends see only the shared part': /רואים רק את החלק המשותף/,
     'the admin sees all data': /המנהל[\s\S]*את כל הנתונים/,
     'photos are not uploaded': /התמונות לא עולות/,

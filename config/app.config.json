@@ -21,7 +21,7 @@
   "appVersion": "1.1.0",
   "mapsSearchUrl": "https://www.google.com/maps/search/?api=1&query=",
   "cloud": {
-    "url": "",
-    "publishableKey": ""
+    "url": "https://picrnywobwgvtavozrvn.supabase.co",
+    "publishableKey": "sb_publishable_SzVCTbqH-vPTCnNm09vPRg__mckkWb1"
   }
 }

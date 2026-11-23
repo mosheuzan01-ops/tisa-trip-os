@@ -1,0 +1,16 @@
+TAP version 13
+# Subtest: S14-8c: the app code never names the server role or a secret key; only the public key may be in config
+ok 1 - S14-8c: the app code never names the server role or a secret key; only the public key may be in config
+  ---
+  duration_ms: 6.334009
+  type: 'test'
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 1
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 65.79299

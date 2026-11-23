@@ -74,6 +74,37 @@ async function signIn(page, email, pass = PASS) {
 }
 async function closed(page, sel) { await page.waitForFunction((s) => !document.querySelector(s)?.open, sel); }
 const rpcBy = (sb, uid) => sb.log.filter((x) => x.uid === uid && x.fn).map((x) => x.fn);
+/** Keyboard rules of one dialog, as K2 of scripts/qa/stage13-keyboard-browser.cjs: Enter on its opener opens it,
+ *  focus starts inside, Tab and Shift+Tab stay inside (BODY = the browser frame, allowed), each stop inside shows a
+ *  focus mark, Esc closes it, focus goes back to the opener. Returns a list of problems (empty = all good). */
+async function kbDialog(page, openerSel, id) {
+  const bad = [];
+  await page.focus(openerSel);
+  await page.keyboard.press('Enter');
+  const opened = await page.waitForSelector(`#${id}[open]`, { timeout: 5000 }).then(() => true, () => false);
+  if (!opened) return [`${id}: did not open`];
+  const where = () => page.evaluate((d) => {
+    const a = document.activeElement;
+    if (a === document.body) return 'frame';
+    if (!document.getElementById(d).contains(a)) return `out:${a.tagName}.${a.className}`;
+    const s = getComputedStyle(a);
+    const mark = (s.outlineStyle !== 'none' && parseFloat(s.outlineWidth) > 0) || (s.boxShadow && s.boxShadow !== 'none');
+    return mark ? 'in' : `no-mark:${a.tagName}`;
+  }, id);
+  const start = await where();
+  if (start !== 'in' && !start.startsWith('no-mark')) bad.push(`${id}: focus not inside (${start})`);
+  for (const key of ['Tab', 'Tab', 'Tab', 'Tab', 'Tab', 'Tab', 'Shift+Tab', 'Shift+Tab', 'Shift+Tab', 'Shift+Tab']) {
+    await page.keyboard.press(key);
+    const w = await where();
+    if (w.startsWith('out') || w.startsWith('no-mark')) { bad.push(`${id}: ${key} -> ${w}`); break; }
+  }
+  await page.keyboard.press('Escape');
+  const shut = await page.waitForFunction((d) => !document.getElementById(d).open, id, { timeout: 5000 }).then(() => true, () => false);
+  if (!shut) bad.push(`${id}: Esc did not close`);
+  const back = await page.evaluate((sel) => document.activeElement === document.querySelector(sel), openerSel);
+  if (!back) bad.push(`${id}: focus did not return to its button`);
+  return bad;
+}
 const shot = async (page, name) => { if (SHOTS) await page.screenshot({ path: path.join(SHOT_DIR, `${name}.jpg`), type: 'jpeg', quality: 70, fullPage: false }); };
 
 (async () => {
@@ -269,6 +300,11 @@ const shot = async (page, name) => { if (SHOTS) await page.screenshot({ path: pa
     await pageA.click('#dlg-cloud-share [type="submit"]');
     await closed(pageA, '#dlg-cloud-share');
     const tripId = JSON.parse(original).activeTripId;
+    // KEYBOARD-2: the account dialogs that need a sign-in (the keyboard crawler of stage 13 cannot reach them)
+    const kb = [];
+    await pageA.goto(`${BASE}#/settings`); await pageA.waitForSelector('#panel-settings:not([hidden])');
+    kb.push(...await kbDialog(pageA, '[data-cloud="share"]', 'dlg-cloud-share'));
+    kb.push(...await kbDialog(pageA, '[data-cloud="members"]', 'dlg-cloud-members'));
     const ctxB = await context(browser, sb, {});
     const pageB = await open(ctxB, 'friend-b');
     await signIn(pageB, 'friend-b@example.com');
@@ -306,6 +342,7 @@ const shot = async (page, name) => { if (SHOTS) await page.screenshot({ path: pa
     await pageA.click('[data-cloud="members"]');
     await pageA.waitForSelector('#dlg-cloud-members[open] [data-slot="cloud-members-list"] button');
     await shot(pageA, 'members-dialog-390-light');
+    kb.push(...await kbDialog(pageA, '#dlg-cloud-members [data-slot="cloud-members-list"] button', 'dlg-cloud-confirm')); // Esc = no removal
     await pageA.click('#dlg-cloud-members [data-slot="cloud-members-list"] button');
     await pageA.waitForSelector('#dlg-cloud-confirm[open]');
     await pageA.click('[data-slot="cloud-confirm-yes"]');
@@ -329,6 +366,9 @@ const shot = async (page, name) => { if (SHOTS) await page.screenshot({ path: pa
       await pm.waitForSelector('[data-cloud="admin"]:not([hidden])', { timeout: 15000 });
       await waitPill(pm, 'מסונכרן');
       if (await pm.isVisible('#dlg-cloud-migrate[open]')) await pm.click('[data-cloud="migrate-no"]'); // first phone of this account: the offer is expected
+      kb.push(...await kbDialog(pm, '[data-cloud="upload"]', 'dlg-cloud-migrate'));
+      kb.push(...await kbDialog(pm, '[data-cloud="admin"]', 'dlg-cloud-admin'));
+      pass('KEYBOARD-2 the account dialogs after sign-in (share, members, confirm, move to account, admin): focus inside, Tab stays inside, Esc closes, focus back', kb.length === 0, { kb });
       await pm.click('[data-cloud="admin"]');
       await pm.waitForSelector('#dlg-cloud-admin[open] [data-slot="cloud-admin-users"] li');
       const P = [...fake.users.values()].find((u) => u.email === 'new-p@example.com');

@@ -92,16 +92,17 @@ async function createFakeSupabase() {
   }
 
   /** Route Supabase and serve a config with the cloud set up (the real file has it empty). */
+  /** Route Supabase and serve a config pointing at the fake project. configured: false serves the cloud block empty
+   *  (the 1.0.x-like app with no account part), whatever the real config file holds. Never the real project. */
   async function install(context, { configured = true } = {}) {
     await context.route(`${PROJECT}/**`, handle);
-    if (configured) {
-      await context.route(/\/config\/app\.config\.json(\?.*)?$/, async (route) => {
-        const res = await route.fetch();
-        const cfg = await res.json();
-        cfg.cloud = { url: PROJECT, publishableKey: PUBLISHABLE };
-        await route.fulfill({ response: res, body: JSON.stringify(cfg), headers: { ...res.headers(), 'content-type': 'application/json' } });
-      });
-    }
+    await context.route(/^https:\/\/[a-z0-9]{20}\.supabase\.co\//, (route) => (route.request().url().startsWith(PROJECT) ? route.fallback() : route.abort('blockedbyclient')));
+    await context.route(/\/config\/app\.config\.json(\?.*)?$/, async (route) => {
+      const res = await route.fetch();
+      const cfg = await res.json();
+      cfg.cloud = configured ? { url: PROJECT, publishableKey: PUBLISHABLE } : { url: '', publishableKey: '' };
+      await route.fulfill({ response: res, body: JSON.stringify(cfg), headers: { ...res.headers(), 'content-type': 'application/json' } });
+    });
   }
   return { fake, log, install, PROJECT, PUBLISHABLE };
 }
