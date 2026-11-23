@@ -1,0 +1,92 @@
+{
+  "L1 every action row in settings is filled edge to edge at 320-1440 px (no empty cell beside a button)": {
+    "result": "FAIL",
+    "gapRows": [
+      {
+        "w": "390",
+        "slot": "cloud-actions",
+        "names": [
+          "share",
+          "members",
+          "admin"
+        ],
+        "lines": 2,
+        "gaps": [
+          {
+            "top": 429,
+            "buttons": 1,
+            "empty": 158
+          }
+        ],
+        "heights": [
+          48
+        ]
+      },
+      {
+        "w": "430",
+        "slot": "cloud-actions",
+        "names": [
+          "share",
+          "members",
+          "admin"
+        ],
+        "lines": 2,
+        "gaps": [
+          {
+            "top": 429,
+            "buttons": 1,
+            "empty": 178
+          }
+        ],
+        "heights": [
+          48
+        ]
+      }
+    ],
+    "shown": [
+      "share",
+      "members",
+      "admin",
+      "password",
+      "signout"
+    ]
+  },
+  "L2 the buttons of one row have one height": {
+    "result": "PASS",
+    "tallRows": []
+  },
+  "L3 the card groups trip actions (share, members) apart from account actions (admin, password, sign-out)": {
+    "result": "FAIL",
+    "groups": [
+      [
+        "restore-device",
+        "restore-cloud"
+      ],
+      [
+        "share",
+        "members",
+        "admin"
+      ],
+      [
+        "password",
+        "signout"
+      ]
+    ]
+  },
+  "L4 no sideways scroll of the page at any width": {
+    "result": "FAIL",
+    "overflow": [
+      {
+        "w": "320",
+        "overflow": 2
+      }
+    ]
+  },
+  "L5 \"Trip members\" and \"Admin\" still open their dialogs and close again": {
+    "result": "PASS"
+  },
+  "no JS errors": {
+    "result": "PASS",
+    "errors": []
+  }
+}

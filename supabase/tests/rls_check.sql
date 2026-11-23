@@ -15,6 +15,8 @@ declare
   x constant uuid := '0000d000-0000-4000-8000-00000000000d';  -- approved, later blocked
   m constant uuid := '0000e000-0000-4000-8000-00000000000e';  -- admin
   t constant text := 'rlscheck-trip-0001';
+  t2 constant text := 'rlscheck-trip-0002';             -- a second trip of a, deleted in the D checks (migration 0003)
+  keep bigint;
   n bigint; s text; ok boolean; j jsonb;
   passes int := 0; fails text[] := '{}';
 begin
@@ -198,6 +200,76 @@ begin
   if n = 0 then passes := passes + 1; else fails := array_append(fails, 'U03 settings of others are not visible'::text); end if;
   execute 'reset role';
 
+  -- ---------- deleting a trip (migration 0003): only its approved owner; all of it goes, nothing else ----------
+  perform set_config('request.jwt.claims', json_build_object('sub', a, 'role', 'authenticated')::text, true);
+  perform set_config('request.jwt.claim.sub', a::text, true);
+  execute 'set local role authenticated';
+  perform public.create_trip(t2, 'Sample trip 2', 'TH', null, null);
+  perform * from public.push_records(jsonb_build_array(
+    jsonb_build_object('trip_id', t2, 'scope', 'shared', 'kind', 'stop', 'rec_id', 's1', 'data', '{"name":"Sample stop"}', 'edited_at', '2026-11-23T10:00:00Z'),
+    jsonb_build_object('trip_id', t2, 'scope', a::text, 'kind', 'expense', 'rec_id', 'e1', 'data', '{"amountMinor":100}', 'edited_at', '2026-11-23T10:00:00Z')));
+  perform public.share_trip(t2, 'rls-b@example.invalid');
+  execute 'reset role';
+  select count(*) into keep from public.trip_records where trip_id = t;   -- the other trip's records, before
+  -- b is a member of t2, not its owner
+  perform set_config('request.jwt.claims', json_build_object('sub', b, 'role', 'authenticated')::text, true);
+  perform set_config('request.jwt.claim.sub', b::text, true);
+  execute 'set local role authenticated';
+  begin perform public.delete_trip(t2); fails := array_append(fails, 'D01 a member cannot delete the trip'::text);
+  exception when others then
+    if sqlerrm = 'not_allowed' then passes := passes + 1; else fails := array_append(fails, ('D01 a member cannot delete the trip: ' || sqlerrm)::text); end if;
+  end;
+  begin delete from public.trips where id = t2; fails := array_append(fails, 'D02 no direct delete of a trip over the API'::text);
+  exception when insufficient_privilege then passes := passes + 1; end;
+  execute 'reset role';
+  -- the admin is not the owner either: deleting is the owner's choice only
+  perform set_config('request.jwt.claims', json_build_object('sub', m, 'role', 'authenticated')::text, true);
+  perform set_config('request.jwt.claim.sub', m::text, true);
+  execute 'set local role authenticated';
+  begin perform public.delete_trip(t2); fails := array_append(fails, 'D03 the admin cannot delete someone else''s trip'::text);
+  exception when others then
+    if sqlerrm = 'not_allowed' then passes := passes + 1; else fails := array_append(fails, ('D03 the admin cannot delete someone else''s trip: ' || sqlerrm)::text); end if;
+  end;
+  execute 'reset role';
+  -- a pending user
+  perform set_config('request.jwt.claims', json_build_object('sub', p, 'role', 'authenticated')::text, true);
+  perform set_config('request.jwt.claim.sub', p::text, true);
+  execute 'set local role authenticated';
+  begin perform public.delete_trip(t2); fails := array_append(fails, 'D04 a pending user cannot delete a trip'::text);
+  exception when others then
+    if sqlerrm = 'not_allowed' then passes := passes + 1; else fails := array_append(fails, ('D04 a pending user cannot delete a trip: ' || sqlerrm)::text); end if;
+  end;
+  execute 'reset role';
+  select count(*) into n from public.trip_records where trip_id = t2;
+  if n = 2 and exists (select 1 from public.trips where id = t2) then passes := passes + 1;
+  else fails := array_append(fails, 'D05 the refused deletes changed nothing'::text); end if;
+  -- the owner deletes it
+  perform set_config('request.jwt.claims', json_build_object('sub', a, 'role', 'authenticated')::text, true);
+  perform set_config('request.jwt.claim.sub', a::text, true);
+  execute 'set local role authenticated';
+  begin
+    s := public.delete_trip(t2);
+    if s = 'deleted' then passes := passes + 1; else fails := array_append(fails, ('D06 the owner deletes the trip: ' || coalesce(s, 'null'))::text); end if;
+  exception when others then fails := array_append(fails, ('D06 the owner deletes the trip: ' || sqlerrm)::text);
+  end;
+  begin
+    s := public.delete_trip(t2);
+    if s = 'missing' then passes := passes + 1; else fails := array_append(fails, 'D07 deleting it again answers missing (a retry is safe)'::text); end if;
+  exception when others then fails := array_append(fails, ('D07 deleting it again answers missing: ' || sqlerrm)::text);
+  end;
+  execute 'reset role';
+  select count(*) into n from public.trip_records where trip_id = t2;
+  if n = 0 and not exists (select 1 from public.trips where id = t2) and not exists (select 1 from public.trip_members where trip_id = t2) then passes := passes + 1;
+  else fails := array_append(fails, 'D08 the trip, its records (shared and personal) and its members are gone'::text); end if;
+  select count(*) into n from public.trip_records where trip_id = t;
+  if n = keep and n > 0 and exists (select 1 from public.trips where id = t) then passes := passes + 1;
+  else fails := array_append(fails, 'D09 the owner''s other trip and its records are untouched'::text); end if;
+  begin
+    if not has_function_privilege('anon', 'public.delete_trip(text)', 'execute') then passes := passes + 1;
+    else fails := array_append(fails, 'D10 anon cannot call delete_trip'::text); end if;
+  exception when others then fails := array_append(fails, ('D10 anon cannot call delete_trip: ' || sqlerrm)::text);
+  end;
+
   -- ---------- anon (no sign-in) ----------
   if not has_table_privilege('anon', 'public.trip_records', 'select') and not has_table_privilege('anon', 'public.profiles', 'select')
      and not has_table_privilege('anon', 'public.trips', 'select') then passes := passes + 1;
@@ -219,8 +291,8 @@ begin
      and not (select prosecdef from pg_proc where oid = 'public.admin_list_trips()'::regprocedure) then passes := passes + 1;
   else fails := array_append(fails, 'N06 the admin lists run with the caller''s rights (RLS), not as the owner'::text); end if;
   if (select count(*) from pg_proc pr join pg_namespace ns on ns.oid = pr.pronamespace where ns.nspname = 'public' and pr.prosecdef
-        and has_function_privilege('authenticated', pr.oid, 'execute')) = 5 then passes := passes + 1;
-  else fails := array_append(fails, 'N07 exactly 5 owner-rights functions are callable (share, unshare, leave, trip_people, admin_set_status)'::text); end if;
+        and has_function_privilege('authenticated', pr.oid, 'execute')) = 6 then passes := passes + 1;
+  else fails := array_append(fails, 'N07 exactly 6 owner-rights functions are callable (share, unshare, leave, trip_people, admin_set_status, delete_trip)'::text); end if;
 
   raise exception 'RLS CHECK RESULT: % PASS, % FAIL%', passes, coalesce(array_length(fails, 1), 0),
     case when array_length(fails, 1) > 0 then E'\nFAIL: ' || array_to_string(fails, E'\nFAIL: ') else '' end;

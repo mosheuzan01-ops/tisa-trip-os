@@ -5,7 +5,7 @@
 // src/js/core/storage.js), and it never resets or replaces the app data. Admin code is not here (admin-view.js).
 import { createKv, authStorage, keepCloudCopy, hasSavedSession, browserBackend, SYNC_KEY, AUTH_KEY } from './core/storage.js';
 import { createCloudApi, toCloudError } from './core/cloud-api.js';
-import { emptySyncState, runSync, downloadTrip, noteLocalChanges, pendingCount, unlinkAll, resendAll, markBackup, migrateTrip, singleFlight } from './core/sync-engine.js';
+import { emptySyncState, runSync, downloadTrip, noteLocalChanges, pendingCount, unlinkAll, resendAll, markBackup, migrateTrip, singleFlight, deleteTripFromAccount } from './core/sync-engine.js';
 import { interpolate } from './core/i18n.js';
 
 const LIB = './vendor/supabase/supabase-js-2.119.2.umd.js';
@@ -83,7 +83,7 @@ export function setupCloud(ctx, { wireDialog }) {
   document.body.querySelector('.app').append(frag);
   const dlg = {
     auth: $('#dlg-cloud-auth'), share: $('#dlg-cloud-share'), members: $('#dlg-cloud-members'),
-    confirm: $('#dlg-cloud-confirm'), migrate: $('#dlg-cloud-migrate'), admin: $('#dlg-cloud-admin'),
+    confirm: $('#dlg-cloud-confirm'), migrate: $('#dlg-cloud-migrate'), admin: $('#dlg-cloud-admin'), delete: $('#dlg-cloud-delete'),
   };
   let opener = null;
   for (const d of Object.values(dlg)) wireDialog(d, () => { if (opener?.isConnected) opener.focus(); });
@@ -135,7 +135,7 @@ export function setupCloud(ctx, { wireDialog }) {
       }
       cloud.status = res.status === 'restore' ? 'approved' : res.status;
       cloud.net = 'idle';
-      const notice = res.notices.find((x) => ['replaced', 'datesOwnerOnly', 'lost', 'tooBig'].includes(x.type));
+      const notice = res.notices.find((x) => ['replaced', 'datesOwnerOnly', 'deleted', 'lost', 'tooBig'].includes(x.type));
       if (notice) ctx.toast(`cloud.notice.${notice.type}`);
       offerMigrate();
     } catch (e) {
@@ -381,6 +381,63 @@ export function setupCloud(ctx, { wireDialog }) {
     }
   }
 
+  // ---------- deleting the shown trip from the account (1.1.2, owner only) ----------
+  // The button only opens a dialog; nothing is deleted before "yes". Cancel, Esc and a tap outside only close it.
+  // The server deletes the trip, its records and its members (0003_delete_trip.sql, owner only); this phone keeps its
+  // copy, unlinked ("on this device only"). One request at a time: a double tap deletes once. A failure is shown in
+  // the dialog with its reason and nothing changes on the phone.
+  const delYes = $('[data-cloud="delete-yes"]');
+  const delErr = $('[data-slot="cloud-delete-error"]');
+  let deleting = false;
+  function openDelete(from) {
+    const trip = ctx.trip();
+    const e = cloud.sync.trips?.[trip.id];
+    if (cloud.status !== 'approved' || !e?.linked || e.role !== 'owner') return;
+    dlg.delete.dataset.trip = trip.id; // the trip shown now; switching trips meanwhile does not change what is deleted
+    $('[data-slot="cloud-delete-name"]').textContent = trip.name || t('cloud.trips.noName');
+    $('[data-slot="cloud-delete-what"]').textContent = interpolate(t('cloud.delete.what'), {
+      stops: count(trip.destinations), expenses: count(trip.expenses), items: count(trip.checklist), places: count(trip.places),
+    });
+    delErr.textContent = '';
+    delYes.disabled = false;
+    delYes.textContent = t('cloud.delete.yes');
+    open(dlg.delete, from);
+    $('[data-close]', dlg.delete).focus(); // the safe choice has the focus
+  }
+  const runDelete = singleFlight(async () => {
+    const tripId = dlg.delete.dataset.trip;
+    deleting = true;
+    delYes.disabled = true;
+    delYes.textContent = t('cloud.delete.working');
+    delErr.textContent = '';
+    try {
+      while (cloud.busy) await new Promise((r) => setTimeout(r, 150)); // a sync in progress finishes first
+      cloud.busy = true;
+      let res;
+      try { res = await deleteTripFromAccount({ api: await ensureApi(), sync: cloud.sync, tripId, nowIso: nowIso() }); } finally { cloud.busy = false; }
+      cloud.sync = res.sync;
+      save();
+      deleting = false;
+      if (dlg.delete.open) dlg.delete.close();
+      ctx.toast('cloud.delete.done');
+    } catch (err) {
+      const kind = toCloudError(err).kind;
+      if (kind === 'auth') cloud.status = 'expired';
+      if (dlg.delete.open) delErr.textContent = t(`cloud.delete.fail.${kind}`);
+      else ctx.toast(`cloud.delete.fail.${kind}`);
+    } finally {
+      deleting = false;
+      delYes.disabled = false;
+      delYes.textContent = t('cloud.delete.yes');
+      renderCloud(ctx);
+    }
+  });
+  delYes.addEventListener('click', () => {
+    if (deleting) return; // a second tap while deleting does nothing
+    delYes.disabled = true;
+    runDelete();
+  });
+
   // ---------- card buttons ----------
   const card = $('[data-slot="cloud-card"]');
   card.addEventListener('click', async (e) => {
@@ -393,6 +450,7 @@ export function setupCloud(ctx, { wireDialog }) {
     if (a === 'share') { shareForm.reset(); shareErr.textContent = ''; open(dlg.share, b); shareForm.email.focus(); }
     if (a === 'members') showMembers(b);
     if (a === 'upload') offerMigrate(true);
+    if (a === 'delete') openDelete(b);
     if (a === 'admin' && cloud.sync.profile?.role === 'admin' && cloud.status === 'approved') {
       try {
         const { openAdmin } = await import('./admin-view.js');
@@ -550,6 +608,7 @@ export function renderCloud(ctx) {
   show('share', signedIn && active?.linked && active.role === 'owner');
   show('members', signedIn && Boolean(active?.linked));
   show('upload', signedIn && !active?.linked && !cloud.sync.restorePending);
+  show('delete', signedIn && Boolean(active?.linked) && active.role === 'owner' && !cloud.sync.restorePending);
   show('admin', signedIn && cloud.sync.profile?.role === 'admin');
   show('password', configured && ['approved', 'pending'].includes(st));
   show('signout', configured && ['approved', 'pending', 'blocked', 'loading', 'expired'].includes(st));

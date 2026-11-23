@@ -71,5 +71,8 @@ export function createCloudApi(client) {
     unshare: (id, userId) => rpc('unshare_trip', { t: id, friend: userId }),
     leave: (id) => rpc('leave_trip', { t: id }),
     async people(id) { return (await rpc('trip_people', { t: id })) ?? []; },
+
+    // ---------- deleting a trip from the account (owner only; 0003_delete_trip.sql): 'deleted' | 'missing' ----------
+    deleteTrip: (id) => rpc('delete_trip', { t: id }),
   };
 }

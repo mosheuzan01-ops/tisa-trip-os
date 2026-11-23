@@ -1,0 +1,10 @@
+RLS local (full migration): 58 PASS, 8 FAIL, rows left after check: 0
+  FAIL D01 a member cannot delete the trip: function public.delete_trip(text) does not exist
+  FAIL D03 the admin cannot delete someone else's trip: function public.delete_trip(text) does not exist
+  FAIL D04 a pending user cannot delete a trip: function public.delete_trip(text) does not exist
+  FAIL D06 the owner deletes the trip: function public.delete_trip(text) does not exist
+  FAIL D07 deleting it again answers missing: function public.delete_trip(text) does not exist
+  FAIL D08 the trip, its records (shared and personal) and its members are gone
+  FAIL D10 anon cannot call delete_trip: function "public.delete_trip(text)" does not exist
+  FAIL N07 exactly 6 owner-rights functions are callable (share, unshare, leave, trip_people, admin_set_status, delete_trip)
+FAILED

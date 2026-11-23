@@ -214,8 +214,12 @@ export async function runSync({ api, sync: syncIn, state, nowIso }) {
     if (!entry.linked) continue;
     const st = byId.get(id);
     if (!st) {
+      // Gone from the account: the owner deleted it (1.1.2), or a friend's share was removed. The copy on this
+      // phone stays as it is, "on this device only". An owner's deleted trip is not offered for a move by itself.
+      const deleted = entry.role === 'owner';
       entry.linked = false; entry.lost = nowIso;
-      out.notices.push({ type: 'lost', tripId: id });
+      if (deleted) sync.declined = { ...(sync.declined ?? {}), [id]: true };
+      out.notices.push({ type: deleted ? 'deleted' : 'lost', tripId: id });
       continue;
     }
     entry.role = st.my_role === 'owner' ? 'owner' : 'member';
@@ -370,4 +374,26 @@ export function singleFlight(fn) {
     if (!running) running = Promise.resolve().then(fn).finally(() => { running = null; });
     return running;
   };
+}
+
+// ---------- deleting a trip from the account (1.1.2, owner only; supabase/migrations/0003_delete_trip.sql) ----------
+/** Ask the server to delete one trip of the account: the trip, its records and its members. The phone's own copy is
+ *  NOT touched (no state goes in here): the returned sync state marks it unlinked, "on this device only", and not to
+ *  be offered for a move again by itself. 'missing' (already gone, e.g. the answer of an earlier try was lost) counts
+ *  as done. Only the owner: a member is refused here without a call, and the server refuses anyone else too.
+ *  Throws a CloudError on failure; the sync state passed in is never changed. Returns { sync, result }. */
+export async function deleteTripFromAccount({ api, sync: syncIn, tripId, nowIso }) {
+  const entry = syncIn?.trips?.[tripId];
+  if (!syncIn?.userId) throw new CloudError('auth', 'not signed in');
+  if (!entry || entry.role !== 'owner') throw new CloudError('denied', 'only the owner deletes a trip');
+  const result = await api.deleteTrip(tripId);
+  if (result !== 'deleted' && result !== 'missing') throw new CloudError('bad', `unexpected answer: ${result}`);
+  const sync = clone(syncIn);
+  const e = sync.trips[tripId];
+  e.linked = false;
+  e.deletedAt = nowIso;
+  sync.declined = { ...(sync.declined ?? {}), [tripId]: true };
+  sync.cloudTrips = (sync.cloudTrips ?? []).filter((x) => x.id !== tripId);
+  if (sync.migration?.tripId === tripId) sync.migration = null;
+  return { sync, result };
 }

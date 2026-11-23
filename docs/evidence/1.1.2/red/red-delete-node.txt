@@ -1,0 +1,121 @@
+TAP version 13
+# Subtest: DL1: the owner deletes a trip: the trip, all its records and members go; the other trip and the phone stay as they were
+not ok 1 - DL1: the owner deletes a trip: the trip, all its records and members go; the other trip and the phone stay as they were
+  ---
+  duration_ms: 12.232352
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage14-delete.test.js:49:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    null !== 'deleted'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'deleted'
+  actual: ~
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage14-delete.test.js:62:10)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: DL2: deleting again after a lost answer is safe: "missing" counts as done
+not ok 2 - DL2: deleting again after a lost answer is safe: "missing" counts as done
+  ---
+  duration_ms: 1.761877
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage14-delete.test.js:78:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    null !== 'deleted'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'deleted'
+  actual: ~
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage14-delete.test.js:82:10)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: DL3: a member cannot delete the trip: the app refuses without calling, and the server refuses too
+not ok 3 - DL3: a member cannot delete the trip: the app refuses without calling, and the server refuses too
+  ---
+  duration_ms: 2.043213
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage14-delete.test.js:88:1'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected rejection.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    async TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage14-delete.test.js:100:3)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: DL4: a pending, a blocked and a signed-out user cannot delete; a stranger cannot delete someone else's trip
+not ok 4 - DL4: a pending, a blocked and a signed-out user cannot delete; a stranger cannot delete someone else's trip
+  ---
+  duration_ms: 1.580286
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage14-delete.test.js:107:1'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected rejection.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    async TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage14-delete.test.js:115:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: DL5: no network or a server error: nothing is deleted, the error kind is kept, the phone stays linked
+not ok 5 - DL5: no network or a server error: nothing is deleted, the error kind is kept, the phone stays linked
+  ---
+  duration_ms: 1.911366
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage14-delete.test.js:124:1'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected rejection.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    async TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage14-delete.test.js:130:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: DL6: the owner's other phone keeps its copy, unlinked, with a "deleted" notice; a friend's phone keeps its copy too
+not ok 6 - DL6: the owner's other phone keeps its copy, unlinked, with a "deleted" notice; a friend's phone keeps its copy too
+  ---
+  duration_ms: 4.327432
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage14-delete.test.js:137:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    true !== false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage14-delete.test.js:161:12)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 0
+# fail 6
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 86.103145

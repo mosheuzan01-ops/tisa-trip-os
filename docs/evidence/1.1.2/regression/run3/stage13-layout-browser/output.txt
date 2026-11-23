@@ -1,0 +1,13 @@
+PASS  W 390px light: no horizontal scroll and nothing sticks out, on all 14 screens
+PASS  W 390px light: tap targets 44px and text 14px on all screens
+PASS  W 768px light: no horizontal scroll and nothing sticks out, on all 14 screens
+PASS  W 1024px light: no horizontal scroll and nothing sticks out, on all 14 screens
+PASS  W 1440px light: no horizontal scroll and nothing sticks out, on all 14 screens
+PASS  W 390px dark: no horizontal scroll and nothing sticks out, on all 14 screens
+PASS  W 390px dark: tap targets 44px and text 14px on all screens
+PASS  W 768px dark: no horizontal scroll and nothing sticks out, on all 14 screens
+PASS  W 1024px dark: no horizontal scroll and nothing sticks out, on all 14 screens
+PASS  W 1440px dark: no horizontal scroll and nothing sticks out, on all 14 screens
+PASS  no JS errors
+PASS  no requests outside the app
+ALL PASS

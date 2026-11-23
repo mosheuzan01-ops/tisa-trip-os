@@ -925,16 +925,19 @@
             <legend data-i18n="cloud.trips.legend">הטיול שמוצג</legend>
             <div class="choices" data-slot="cloud-trip-list"></div>
           </fieldset>
+          <!-- 1.1.2: two groups. The shown trip's actions (just under the trip choice), then the account's own actions
+               after a thin line. Each row is filled edge to edge (main.css .settings-actions): no empty cell. -->
           <div class="settings-actions" data-slot="cloud-actions">
             <button class="btn btn-primary" type="button" data-cloud="signin" hidden><span data-i18n="cloud.signin">כניסה</span></button>
             <button class="btn btn-ghost" type="button" data-cloud="signup" hidden><span data-i18n="cloud.signup">הרשמה</span></button>
             <button class="btn btn-primary" type="button" data-cloud="share" hidden><svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-share"/></svg><span data-i18n="cloud.share">שיתוף עם חבר</span></button>
             <button class="btn btn-ghost" type="button" data-cloud="members" hidden><svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-list"/></svg><span data-i18n="cloud.members">חברי הטיול</span></button>
             <button class="btn btn-primary" type="button" data-cloud="upload" hidden><svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-upload"/></svg><span data-i18n="cloud.upload">העברה לחשבון</span></button>
-            <button class="btn btn-ghost" type="button" data-cloud="retry" hidden><span data-i18n="cloud.retry">בדיקה שוב</span></button>
-            <button class="btn btn-ghost" type="button" data-cloud="admin" hidden><svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-gear"/></svg><span data-i18n="cloud.admin">ניהול</span></button>
+            <button class="btn btn-ghost btn-danger" type="button" data-cloud="delete" hidden><svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-trash"/></svg><span data-i18n="cloud.delete">מחיקת טיול</span></button>
           </div>
-          <div class="settings-actions">
+          <div class="settings-actions cloud-account-actions" data-slot="cloud-account-actions">
+            <button class="btn btn-ghost" type="button" data-cloud="admin" hidden><svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-gear"/></svg><span data-i18n="cloud.admin">ניהול</span></button>
+            <button class="btn btn-ghost" type="button" data-cloud="retry" hidden><span data-i18n="cloud.retry">בדיקה שוב</span></button>
             <button class="btn btn-ghost" type="button" data-cloud="password" hidden><span data-i18n="cloud.password">שינוי סיסמה</span></button>
             <button class="btn btn-ghost" type="button" data-cloud="signout" hidden><span data-i18n="cloud.signout">התנתקות</span></button>
           </div>
@@ -1039,7 +1042,7 @@
             <li data-i18n="privacy.cloudWho">חברים שמשתפים איתם טיול רואים רק את החלק המשותף: מסלול, מקומות, פרטי טיסה, משתתפים והוצאות משותפות. התקציב, מחיר הטיסה, הרשימות, היומן והצ'ק-אין נשארים אישיים.</li>
             <li data-i18n="privacy.cloudAdmin">המנהל של האפליקציה יכול לראות את כל הנתונים בשרת, כדי לאשר משתמשים ולטפל בתקלות.</li>
             <li data-i18n="privacy.cloudPhotos">התמונות לא עולות לשרת. הן נשארות רק במכשיר.</li>
-            <li data-i18n="privacy.cloudDelete">למחיקת החשבון וכל הנתונים שלו מהשרת, פונים למנהל. הנתונים במכשיר נשארים עד שמוחקים אותם בעצמכם.</li>
+            <li data-i18n="privacy.cloudDelete">בעל טיול יכול למחוק אותו מהחשבון בהגדרות (&quot;מחיקת טיול&quot;). העותק במכשיר נשאר. למחיקת החשבון וכל הנתונים שלו מהשרת, פונים למנהל. הנתונים במכשיר נשארים עד שמוחקים אותם בעצמכם.</li>
             <li data-i18n="privacy.photos">גם התמונות נשמרות במכשיר, במאגר נפרד של הדפדפן (IndexedDB). הן לא נכנסות לגיבוי הרגיל, ויש להן קובץ ZIP משלהן.</li>
             <li data-i18n="privacy.host">האפליקציה נטענת מאתר ב-GitHub Pages, ועותק שלה נשמר במכשיר כדי לעבוד בלי אינטרנט. כמו בכל אתר, שרת האחסון רואה שהקבצים נטענו (למשל כתובת IP). הנתונים שלכם לא נשלחים אליו.</li>
             <li data-i18n="privacy.links">יוצאים החוצה רק בלחיצה שלכם: "פתיחה ב-Google Maps" שולחת ל-Google את המיקום או את הכתובת של המקום. גם חיוג, שיתוף וקישורים שהקלדתם נפתחים רק בלחיצה.</li>
@@ -1819,6 +1822,24 @@
           <p class="sheet-hint" id="dlg-cloud-confirm-text" data-slot="cloud-confirm-text"></p>
           <div class="sheet-actions">
             <button class="btn metal-btn btn-danger-solid" type="button" data-slot="cloud-confirm-yes"></button>
+            <button class="btn btn-ghost" type="button" data-close data-i18n="form.cancel">ביטול</button>
+          </div>
+        </div>
+      </dialog>
+
+      <!-- 1.1.2: deleting the shown trip from the account (owner only). Nothing is deleted before "yes"; the copy on
+           this phone stays. Cancel, Esc and a tap outside only close it. -->
+      <dialog class="sheet dmetal" id="dlg-cloud-delete" aria-labelledby="dlg-cloud-delete-title" aria-describedby="dlg-cloud-delete-what">
+        <div class="sheet-form">
+          <h2 id="dlg-cloud-delete-title" data-i18n="cloud.delete.title">מחיקת טיול</h2>
+          <p class="cloud-delete-name" data-slot="cloud-delete-name"></p>
+          <p id="dlg-cloud-delete-what" data-slot="cloud-delete-what"></p>
+          <p class="sheet-hint" data-i18n="cloud.delete.stays">העותק בטלפון הזה נשאר ומסומן "במכשיר בלבד".</p>
+          <p class="sheet-hint cloud-delete-final" data-i18n="cloud.delete.final">אי אפשר לבטל מחיקה מהחשבון.</p>
+          <p class="cloud-delete-ask" data-i18n="cloud.delete.ask">האם אתה בטוח שברצונך למחוק את הטיול הזה?</p>
+          <p class="form-error" role="alert" data-slot="cloud-delete-error"></p>
+          <div class="sheet-actions">
+            <button class="btn metal-btn btn-danger-solid" type="button" data-cloud="delete-yes" data-i18n="cloud.delete.yes">כן, למחוק את הטיול</button>
             <button class="btn btn-ghost" type="button" data-close data-i18n="form.cancel">ביטול</button>
           </div>
         </div>

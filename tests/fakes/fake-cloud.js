@@ -1,5 +1,6 @@
 // A FAKE Supabase backend for tests only: an in-memory copy of the rules in supabase/migrations/0001_stage14_init.sql
-// (statuses, membership, shared/personal scopes, owner-only trip facts, last-write-wins, no deletes).
+// (statuses, membership, shared/personal scopes, owner-only trip facts, last-write-wins, no deletes of records;
+// a whole trip only through delete_trip, 0003_delete_trip.sql).
 // Used by the Node tests (through a fake client) and by the browser tests (through page.route). It makes the app's
 // behaviour testable without any network. It proves NOTHING about a real project's security: that is what
 // supabase/tests/rls_check.sql (real project) and scripts/qa/stage14-rls-local.cjs (local PostgreSQL) are for.
@@ -135,6 +136,16 @@ export function createFakeCloud({ startMs = Date.parse('2026-11-23T10:00:00Z') }
         user_id: id, display_name: user(id)?.display_name ?? '', role,
         email: admin(uid) || owner(t, uid) || id === uid ? user(id)?.email ?? null : null,
       }));
+    },
+    delete_trip(uid, { t }) {
+      // 0003_delete_trip.sql: approved owner only; the trip's records and members go with it; 'missing' when gone
+      if (!approved(uid)) deny();
+      if (!trips.has(t)) return 'missing';
+      if (!owner(t, uid)) deny();
+      trips.delete(t);
+      members.delete(t);
+      for (const [k, r] of records) if (r.trip_id === t) records.delete(k);
+      return 'deleted';
     },
     admin_list_users(uid) {
       if (!admin(uid)) deny();

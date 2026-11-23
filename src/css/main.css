@@ -365,7 +365,12 @@ h2, .section-title { font-size: var(--text-h3); font-weight: 700; line-height: 1
 .settings-card p, .settings-card li { color: var(--muted); line-height: 1.55; }
 .settings-card .settings-meta { color: var(--ink); font-weight: 600; }
 .settings-card .sheet-form { gap: var(--space-3); padding: 0; }
-.settings-actions { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 132px), 1fr)); gap: var(--space-2); }
+/* A row of buttons in settings (1.1.2). Each line is filled edge to edge: buttons share the line equally, and a button
+   that wraps alone takes the whole line, so an odd count never leaves an empty cell (the auto-fit grid of 1.1.1 did).
+   One height per line (stretch). A row whose buttons are all hidden takes no space. */
+.settings-actions { display: flex; flex-wrap: wrap; align-items: stretch; gap: var(--space-2); }
+.settings-actions > * { flex: 1 1 132px; min-width: 0; }
+.settings-actions:not(:has(> :not([hidden]))) { display: none; }
 .settings-list { display: grid; gap: var(--space-2); margin: 0; padding-inline-start: var(--space-5); }
 .choice-group { border: 0; padding: 0; margin: 0; display: grid; gap: var(--space-3); }
 .choices { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-2); }
@@ -1159,7 +1164,12 @@ body::before {
 .cloud-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--muted); flex: none; }
 .cloud-pill[data-state="synced"] .cloud-dot { background: var(--accent); }
 .cloud-pill[data-state="offline"] .cloud-dot, .cloud-pill[data-state="expired"] .cloud-dot, .cloud-pill[data-state="blocked"] .cloud-dot { background: var(--danger); }
-.cloud-card .settings-actions + .settings-actions { margin-top: var(--space-2); }
+/* The account card (1.1.2): the shown trip's actions, then the account's own actions after a thin line. */
+.cloud-card .cloud-trips legend { font-size: var(--text-body); }
+.cloud-card .cloud-account-actions { padding-top: var(--space-3); border-top: 1px solid var(--line); }
+.cloud-delete-name { color: var(--on-dmetal); font-size: var(--text-h3); font-weight: 700; overflow-wrap: anywhere; }
+.cloud-delete-final, .cloud-delete-ask { color: var(--on-dmetal); font-weight: 600; }
+#dlg-cloud-delete .btn { white-space: normal; line-height: 1.25; text-align: center; }
 .cloud-trips .choices { grid-template-columns: repeat(auto-fit, minmax(min(100%, 140px), 1fr)); }
 .cloud-trips .choice { padding: var(--space-1) var(--space-3); }
 .cloud-restore { display: grid; gap: var(--space-2); }
@@ -1169,3 +1179,6 @@ body::before {
 .cloud-row .btn { margin-inline-start: auto; }
 .cloud-member { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); width: 100%; }
 @media (max-width: 420px) { .cloud-pill { padding: 0 var(--space-2); } }
+/* 1.1.2: on the narrowest phones (320 px) the top bar with the sync pill was 2 px wider than the screen. A 16 px side
+   gutter there, the same for the top bar and the content so they stay aligned. */
+@media (max-width: 340px) { .topbar, #main { padding-inline: var(--space-4); } }
