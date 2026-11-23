@@ -1,0 +1,5 @@
+not ok 11 - VER-14: version 1.1.1 in package.json, config and the service worker (the fix to moving a trip into the account)
+  expected: '1.1.1'
+  actual: '1.1.0'
+# pass 10
+# fail 1

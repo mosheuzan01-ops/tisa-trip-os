@@ -5,7 +5,8 @@
 // S14-1 no account and no session: nothing loads from the cloud, the app works as 1.0.x; signed in and no network:
 //       the app opens from the offline copy with the last data and says "offline"
 // S14-2 sign-up starts "pending": only the profile is read, nothing is sent; sign-out keeps the data; wrong password; reset
-// S14-6 first sign-in after approval: backup file first, then the trip moves once; a reload makes no duplicate
+// S14-6 first sign-in after approval: backup file first (step 1, nothing sent), then "move now" (step 2): a failure
+//       is shown in the dialog and keeps the trip on the device, a double tap moves once; a reload makes no duplicate
 // S14-4 airplane mode: an edit made offline waits, then syncs when the network is back; a second phone gets it once
 // S14-5 server down (500, 402 paused/restricted, no network): no local byte changes, the pill says offline, no error
 // S14-3 sharing in the UI: a friend sees the shared trip, not the owner's budget; dates are owner-only; removal unlinks
@@ -235,6 +236,28 @@ const shot = async (page, name) => { if (SHOTS) await page.screenshot({ path: pa
     const [download] = await Promise.all([pageA.waitForEvent('download'), pageA.click('[data-cloud="migrate-yes"]')]);
     backupPath = path.join(OUT, `backup-run.json`);
     await download.saveAs(backupPath);
+    // 1.1.1: the backup is step 1 only. On an iPhone it opens the share sheet, so nothing goes to the server until the
+    // user is back and taps "move now" (step 2). Wait for that button (UI state), then check nothing was sent.
+    const createCalls = () => sb.log.filter((x) => x.path.endsWith('/rpc/create_trip')).length;
+    await pageA.waitForSelector('#dlg-cloud-migrate[open] [data-cloud="migrate-upload"]:not([hidden])', { timeout: 5000 });
+    const stepTwoText = await pageA.textContent('[data-slot="cloud-migrate-status"]');
+    await shot(pageA, 'migrate-step2-390-light');
+    await pageA.setViewportSize({ width: 1440, height: 900 }); await shot(pageA, 'migrate-step2-1440-light'); await pageA.setViewportSize({ width: 390, height: 844 });
+    pass('S14-6d after the backup the dialog stays open on step 2, and nothing was sent to the server', createCalls() === 0 && fake.trips.size === 0 && /העברה לחשבון עכשיו/.test(stepTwoText), { stepTwoText, createCalls: createCalls() });
+    // no network at step 2: a visible failure in the dialog, the trip stays "on this device only", nothing changed
+    fake.fail = 'network';
+    await pageA.click('[data-cloud="migrate-upload"]');
+    await pageA.waitForSelector('[data-slot="cloud-migrate-status"][data-state="failed"]', { timeout: 10000 });
+    const failText = await pageA.textContent('[data-slot="cloud-migrate-status"]');
+    const deviceOnly = await pageA.evaluate(() => [...document.querySelectorAll('[data-slot="cloud-trip-list"] span')].some((s) => s.textContent.includes('במכשיר בלבד')));
+    await shot(pageA, 'migrate-failed-390-light');
+    fake.fail = null;
+    pass('S14-6e a failed move shows its reason in the dialog, keeps the trip on this device only and changes nothing', /לא נוצר/.test(failText) && deviceOnly && fake.trips.size === 0 && JSON.stringify(tripsOf(await data(pageA))) === JSON.stringify(tripsOf(original)), { failText, deviceOnly, cloudTrips: fake.trips.size });
+    // a double tap moves once
+    const before2 = createCalls();
+    await pageA.evaluate(() => { const b = document.querySelector('[data-cloud="migrate-upload"]'); b.click(); b.click(); });
+    await closed(pageA, '#dlg-cloud-migrate');
+    pass('S14-6f a double tap on "move now" sends one create_trip and makes one trip', createCalls() - before2 === 1 && fake.trips.size === 1, { calls: createCalls() - before2 });
     // Rule 6: wait for the real state (the records are in the cloud and the pill says so), not for a pill that was
     // already "synced" from the sign-in before the upload started (run 2 of the first final regression caught this).
     for (let i = 0; i < 150 && !(fake.records.size > 10 && fake.trips.size === 1); i += 1) await pageA.waitForTimeout(100);

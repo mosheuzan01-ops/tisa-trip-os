@@ -301,3 +301,56 @@ export function resendAll(syncIn) {
   sync.restorePending = false;
   return sync;
 }
+
+// ---------- moving a trip from this phone into the account (1.1.1: two steps) ----------
+// Step 1 is the backup file (on an iPhone it opens the share sheet). Step 2 starts only when the user comes back and
+// taps "move now". The state of the move is kept in sync.migration (latisa:sync:v1), so the screen can show it after
+// a reload: { tripId, step: 'ready' | 'done' | 'failed', backupAt, stage: 'create' | 'records', kind, at }.
+
+/** Step 1 is done: the backup file was handed to the phone. Returns a new sync state; the trips are not touched. */
+export function markBackup(syncIn, tripId, nowIso) {
+  const sync = clone(syncIn ?? emptySyncState());
+  sync.migration = { tripId, step: 'ready', backupAt: nowIso, stage: null, kind: null, at: nowIso };
+  return sync;
+}
+
+/** Step 2: create the trip in the account, then send all its records. The trip is linked only when both worked, so a
+ *  failure leaves it "on this device only" and a retry is safe ('exists', records sent again by key, no duplicate).
+ *  Never throws and never changes the phone's trip. Returns { sync, result: 'done' | 'taken' | 'failed', trip, notices }:
+ *  trip is a new trip object only when the cloud changed it (not expected on a first move), else null. */
+export async function migrateTrip({ api, sync: syncIn, trip, nowIso }) {
+  const sync = clone(syncIn ?? emptySyncState());
+  const prev = sync.migration?.tripId === trip.id ? sync.migration : null;
+  const fail = (stage, kind) => {
+    sync.migration = { tripId: trip.id, step: 'failed', backupAt: prev?.backupAt ?? null, stage, kind, at: nowIso };
+    return { sync, result: kind === 'taken' ? 'taken' : 'failed', trip: null, notices: [] };
+  };
+  const kindOf = (e) => (e instanceof CloudError ? e.kind : 'bad');
+  if (!sync.userId) return fail('create', 'auth');
+  let up;
+  try { up = await uploadTrip({ api, sync, trip, nowIso }); } catch (e) { return fail('create', kindOf(e)); }
+  if (up.result === 'taken') return fail('create', 'taken');
+  if (up.result !== 'created' && up.result !== 'exists') return fail('create', 'bad');
+  // The first move: everything on the phone is the newest version (a copy half sent by an earlier attempt loses).
+  const entry = up.sync.trips[trip.id];
+  for (const k of tripToRecords(trip).records.keys()) entry.dirtyAt[k] = nowIso;
+  entry.meta.shadow = null; // and so is its header (name, country, dates): it is sent, never taken from the cloud
+  let r;
+  try {
+    r = await syncTrip({ api, entry, trip, userId: sync.userId, serverTrip: { id: trip.id }, nowIso });
+  } catch (e) { return fail('records', kindOf(e)); }
+  sync.trips[trip.id] = r.entry;
+  delete sync.declined?.[trip.id];
+  keepCopies(sync, r.copies);
+  sync.migration = { tripId: trip.id, step: 'done', backupAt: prev?.backupAt ?? null, stage: null, kind: null, at: nowIso };
+  return { sync, result: 'done', trip: r.trip, notices: r.notices };
+}
+
+/** One run at a time: a second call while the first runs gets the same promise (a double tap moves once). */
+export function singleFlight(fn) {
+  let running = null;
+  return () => {
+    if (!running) running = Promise.resolve().then(fn).finally(() => { running = null; });
+    return running;
+  };
+}
