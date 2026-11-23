@@ -192,7 +192,10 @@ async function reachPlaceDialog(page) {
 
     // ---------- K9 (S12-7): airplane mode: after one online visit, offline the tips still open with their text ----------
     const o = await open(browser, { sw: true, route: 'money' });
-    await o.page.waitForFunction(async () => (await navigator.serviceWorker?.getRegistration())?.active?.state === 'activated');
+    // Sync predicate on purpose: waitForFunction does not await an async predicate (its Promise is truthy), so the old
+    // async check returned at once while the worker was still installing (same race as smart-bag L10 in the 1.1.0 regression).
+    // The controller is set by clients.claim() in sw.js activate, so this waits for a real, activated, controlling worker.
+    await o.page.waitForFunction(() => navigator.serviceWorker?.controller?.state === 'activated');
     await o.page.reload();
     await ready(o.page);
     await o.ctx.setOffline(true);

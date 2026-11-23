@@ -1,0 +1,7 @@
+{
+ "playwright": "1.63.0",
+ "chromium": "157.0.8103.78",
+ "asyncFalse": "resolved after 23ms",
+ "syncFalse": "timed out after 2007ms",
+ "asyncUndefinedReturns": "undefined"
+}

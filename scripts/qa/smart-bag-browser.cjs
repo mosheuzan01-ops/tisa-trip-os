@@ -180,7 +180,10 @@ async function open(browser, { viewport = MOBILE, theme = 'light', sw = false, r
 
     // ---------- L10 (S12-7): airplane mode: offline, the screen and its rules load from the cache ----------
     const o = await open(browser, { sw: true, route: 'smart-bag' });
-    await o.page.waitForFunction(async () => (await navigator.serviceWorker?.getRegistration())?.active?.state === 'activated');
+    // Sync predicate on purpose: waitForFunction does not await an async predicate (its Promise is truthy), so the old
+    // async check returned at once while the worker was still installing (L10 failed once in the 1.1.0 regression).
+    // The controller is set by clients.claim() in sw.js activate, so this waits for a real, activated, controlling worker.
+    await o.page.waitForFunction(() => navigator.serviceWorker?.controller?.state === 'activated');
     await o.page.reload();
     await ready(o.page);
     await o.ctx.setOffline(true);

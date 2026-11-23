@@ -1,0 +1,6 @@
+{"i":0,"MODE":"realwait","DELAY":1500,"waitedMs":1636,"stAfterWait":{"installing":null,"active":"activated"},"controllerBeforeOffline":true,"res":"PASS"}
+{"i":1,"MODE":"realwait","DELAY":1500,"waitedMs":1606,"stAfterWait":{"installing":null,"active":"activated"},"controllerBeforeOffline":true,"res":"PASS"}
+{"i":2,"MODE":"realwait","DELAY":1500,"waitedMs":1609,"stAfterWait":{"installing":null,"active":"activated"},"controllerBeforeOffline":true,"res":"PASS"}
+{"i":3,"MODE":"realwait","DELAY":1500,"waitedMs":1604,"stAfterWait":{"installing":null,"active":"activated"},"controllerBeforeOffline":true,"res":"PASS"}
+{"i":4,"MODE":"realwait","DELAY":1500,"waitedMs":1617,"stAfterWait":{"installing":null,"active":"activated"},"controllerBeforeOffline":true,"res":"PASS"}
+SUMMARY MODE=realwait DELAY=1500 n=5 fail=0

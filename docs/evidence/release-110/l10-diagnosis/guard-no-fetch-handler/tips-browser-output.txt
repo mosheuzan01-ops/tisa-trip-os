@@ -1,0 +1,18 @@
+PASS  K1 all 15 info buttons are on their screens: aria-label "הסבר על <פריט>", aria-haspopup=dialog, aria-controls, closed, at least 44x44
+PASS  K2 touch: the tap opens the sheet with the right title and text (aria-expanded=true); a tap outside closes it and focus is back on the button
+PASS  K3 keyboard: Enter opens, Esc closes, Space opens, Enter on "סגירה" closes; focus goes back to the same button each time
+PASS  K4 only one explanation at a time: a single shared modal sheet, and it is the only open dialog
+PASS  K5 inside the place sheet: the explanation opens on top; Esc closes only it, the place sheet stays, focus is on the button
+PASS  K6 checklist and itinerary rows: the info button opens only the explanation (no other action, same screen) and focus returns
+PASS  K7 no layout shift: the "מתוכנן" and "התחייבות עתידית" rows are as tall as "שולם" (no button); no horizontal scroll at 390px
+PASS  K8 light and dark, 390px and desktop: the explanation sits on the dark-metal sheet in the same light colour as every sheet title (contrast-checked in Stage 8)
+FAIL  ERROR the run stopped
+[
+  [
+    "ERROR the run stopped",
+    {
+      "result": "FAIL",
+      "message": "page.reload: net::ERR_INTERNET_DISCONNECTED"
+    }
+  ]
+]

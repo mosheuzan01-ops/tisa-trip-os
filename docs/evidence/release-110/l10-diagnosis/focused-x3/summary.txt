@@ -1,0 +1,6 @@
+run1 smart-bag-browser exit=0 12 PASS 0 FAIL
+run1 tips-browser exit=0 10 PASS 0 FAIL
+run2 smart-bag-browser exit=0 12 PASS 0 FAIL
+run2 tips-browser exit=0 10 PASS 0 FAIL
+run3 smart-bag-browser exit=0 12 PASS 0 FAIL
+run3 tips-browser exit=0 10 PASS 0 FAIL
