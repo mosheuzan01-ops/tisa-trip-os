@@ -1,0 +1,20 @@
+{
+  "hasCreateClient": true,
+  "afterCreate_localStorageKeys": [],
+  "signInError": null,
+  "signedInUser": "user-a@example.com",
+  "adapterKeys": [
+    "latisa:auth:v1"
+  ],
+  "passwordFoundAnywhere": false,
+  "adapterHoldsRefreshToken": true,
+  "localStorageKeys": [],
+  "sessionStorageKeys": [],
+  "adapterKeysAfterSignOut": []
+}
+requests: [
+  "GET http://local.test/",
+  "POST https://example.supabase.co/auth/v1/token?grant_type=password",
+  "POST https://example.supabase.co/auth/v1/logout?scope=local"
+]
+websockets: []

@@ -1,0 +1,40 @@
+TAP version 13
+# Subtest: V1: the vendored supabase-js file matches the pinned SHA-256 and size
+ok 1 - V1: the vendored supabase-js file matches the pinned SHA-256 and size
+  ---
+  duration_ms: 1.317714
+  type: 'test'
+  ...
+# Subtest: V2: exactly one library file, and it is the pinned version
+ok 2 - V2: exactly one library file, and it is the pinned version
+  ---
+  duration_ms: 3.06726
+  type: 'test'
+  ...
+# Subtest: V3: license notices travel with the file (MIT needs them)
+ok 3 - V3: license notices travel with the file (MIT needs them)
+  ---
+  duration_ms: 0.371037
+  type: 'test'
+  ...
+# Subtest: V4: CREDITS.md records the file, version, license and hash
+ok 4 - V4: CREDITS.md records the file, version, license and hash
+  ---
+  duration_ms: 0.502308
+  type: 'test'
+  ...
+# Subtest: V5 (step 1 scope): the app does not load the library yet, so 1.0.1 behaviour is unchanged
+ok 5 - V5 (step 1 scope): the app does not load the library yet, so 1.0.1 behaviour is unchanged
+  ---
+  duration_ms: 4.690728
+  type: 'test'
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 5
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 65.2121

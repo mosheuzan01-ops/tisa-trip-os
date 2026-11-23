@@ -1,0 +1,423 @@
+{
+  "format": "tisa-backup",
+  "schemaVersion": 8,
+  "exportedAt": "2026-12-11T03:00:00.000Z",
+  "data": {
+    "schemaVersion": 8,
+    "appVersion": "0.6.0",
+    "createdAt": "2026-12-01T10:00:00.000Z",
+    "updatedAt": "2026-12-11T03:00:00.000Z",
+    "settings": {
+      "language": "he",
+      "theme": null,
+      "lastBackupAt": "2026-12-10T10:00:00.000Z",
+      "assistantQuestionLimit": 50
+    },
+    "activeTripId": "t",
+    "trips": {
+      "t": {
+        "id": "t",
+        "countryCode": "TH",
+        "name": "תאילנד",
+        "startDate": "2026-12-05",
+        "endDate": "2027-01-03",
+        "destinations": [
+          {
+            "id": "d1",
+            "name": "בנגקוק",
+            "startDate": "2026-12-05",
+            "endDate": "2026-12-08",
+            "note": ""
+          },
+          {
+            "id": "d2",
+            "name": "צ'יאנג מאי",
+            "startDate": "2026-12-08",
+            "endDate": "2026-12-13",
+            "note": "שוק לילה ביום ראשון"
+          },
+          {
+            "id": "d3",
+            "name": "קו טאו",
+            "startDate": "2026-12-13",
+            "endDate": "2026-12-20",
+            "note": ""
+          }
+        ],
+        "budget": {
+          "currency": "ILS",
+          "totalMinor": 1527000,
+          "categoriesMinor": {
+            "food": 300000,
+            "lodging": 400000,
+            "flight": 450000,
+            "emergency": 250000
+          },
+          "profileId": "realistic",
+          "estimate": true,
+          "categoryNames": {},
+          "hidden": []
+        },
+        "rates": {},
+        "expenses": [
+          {
+            "amountMinor": 3000,
+            "currency": "ILS",
+            "rate": 1,
+            "method": "card",
+            "description": "פאד תאי",
+            "note": "",
+            "destinationId": null,
+            "id": "e1",
+            "baseMinor": 3000,
+            "category": "food",
+            "date": "2026-12-11",
+            "status": "paid"
+          },
+          {
+            "amountMinor": 12000,
+            "currency": "ILS",
+            "rate": 1,
+            "method": "card",
+            "description": "שוק",
+            "note": "",
+            "destinationId": null,
+            "id": "e2",
+            "baseMinor": 12000,
+            "category": "food",
+            "date": "2026-12-12",
+            "status": "planned"
+          },
+          {
+            "amountMinor": 250000,
+            "currency": "ILS",
+            "rate": 1,
+            "method": "card",
+            "description": "טיסה",
+            "note": "",
+            "destinationId": null,
+            "id": "e3",
+            "baseMinor": 250000,
+            "category": "flight",
+            "date": "2026-12-05",
+            "status": "committed",
+            "transferId": "t1"
+          }
+        ],
+        "people": [],
+        "repayments": [],
+        "transfers": [
+          {
+            "id": "t1",
+            "kind": "flight",
+            "from": "תל אביב",
+            "to": "בנגקוק",
+            "date": "2026-12-05",
+            "time": "",
+            "company": "",
+            "booking": "ABC123",
+            "priceMinor": 250000,
+            "currency": "ILS",
+            "link": "https://airline.example/manage",
+            "status": "booked",
+            "note": "",
+            "expenseId": "e3"
+          },
+          {
+            "id": "t2",
+            "kind": "bus",
+            "from": "בנגקוק",
+            "to": "צ'יאנג מאי",
+            "date": "2026-12-08",
+            "time": "13:30",
+            "company": "",
+            "booking": "",
+            "priceMinor": null,
+            "currency": "ILS",
+            "link": "",
+            "status": "planned",
+            "note": "",
+            "expenseId": null
+          }
+        ],
+        "checklist": [
+          {
+            "id": "c1",
+            "group": "documents",
+            "name": "דרכון",
+            "qty": 1,
+            "note": "",
+            "done": true,
+            "verify": {
+              "source": "",
+              "checkedAt": ""
+            }
+          },
+          {
+            "id": "c2",
+            "group": "clothing",
+            "name": "נעלי הליכה",
+            "qty": 1,
+            "note": "",
+            "done": false
+          }
+        ],
+        "tasks": [
+          {
+            "id": "k1",
+            "title": "להזמין טיסה לקו טאו",
+            "status": "open",
+            "due": "2026-12-10",
+            "note": ""
+          },
+          {
+            "id": "k2",
+            "title": "לכבס",
+            "status": "open",
+            "due": "2026-12-12",
+            "note": ""
+          }
+        ],
+        "events": [],
+        "info": {},
+        "assistant": {},
+        "journal": {
+          "2026-12-11": {
+            "note": "שוק צף בבוקר, ואחר כך מסאז'.",
+            "updatedAt": "2026-12-01T10:00:00.000Z"
+          }
+        },
+        "checkins": [
+          {
+            "id": "ci1",
+            "kind": "hotel",
+            "title": "מלון בקו טאו",
+            "transferId": null,
+            "stopId": "d3",
+            "date": "2026-12-13",
+            "time": "14:00",
+            "zone": "Asia/Bangkok",
+            "booking": "H-77",
+            "link": "",
+            "note": "",
+            "done": false
+          },
+          {
+            "id": "ci2",
+            "kind": "flight",
+            "title": "צ'ק-אין לטיסה הביתה",
+            "transferId": null,
+            "stopId": null,
+            "date": "2026-12-12",
+            "time": "",
+            "zone": "Asia/Bangkok",
+            "booking": "",
+            "link": "",
+            "note": "",
+            "done": false
+          }
+        ],
+        "luggage": {
+          "bags": [
+            {
+              "id": "b1",
+              "name": "מזוודה גדולה",
+              "limitGrams": 23000,
+              "items": [
+                {
+                  "id": "i1",
+                  "name": "בגדים",
+                  "grams": 22500
+                },
+                {
+                  "id": "i2",
+                  "name": "מטען",
+                  "grams": 800
+                }
+              ]
+            },
+            {
+              "id": "b2",
+              "name": "תיק גב",
+              "limitGrams": null,
+              "items": [
+                {
+                  "id": "i3",
+                  "name": "מחשב",
+                  "grams": 1350
+                }
+              ]
+            }
+          ]
+        },
+        "photos": [
+          {
+            "id": "dfee0ed7-2634-44b6-a144-f6307dbe658d",
+            "date": "2026-11-23",
+            "dateSource": "file",
+            "stopId": null,
+            "caption": "",
+            "featured": false,
+            "width": 1280,
+            "height": 960,
+            "bytes": 11711,
+            "addedAt": "2026-12-11T03:00:00.000Z"
+          },
+          {
+            "id": "s1",
+            "date": "2026-12-06",
+            "dateSource": "exif",
+            "stopId": null,
+            "caption": "",
+            "featured": true,
+            "width": 120,
+            "height": 90,
+            "bytes": 1390,
+            "addedAt": "2026-12-01T00:00:00Z"
+          },
+          {
+            "id": "s2",
+            "date": "2026-12-07",
+            "dateSource": "exif",
+            "stopId": null,
+            "caption": "",
+            "featured": true,
+            "width": 120,
+            "height": 90,
+            "bytes": 1390,
+            "addedAt": "2026-12-02T00:00:00Z"
+          },
+          {
+            "id": "s3",
+            "date": "2026-12-08",
+            "dateSource": "exif",
+            "stopId": null,
+            "caption": "",
+            "featured": true,
+            "width": 120,
+            "height": 90,
+            "bytes": 1390,
+            "addedAt": "2026-12-03T00:00:00Z"
+          },
+          {
+            "id": "s4",
+            "date": "2026-12-09",
+            "dateSource": "exif",
+            "stopId": null,
+            "caption": "",
+            "featured": true,
+            "width": 120,
+            "height": 90,
+            "bytes": 1390,
+            "addedAt": "2026-12-04T00:00:00Z"
+          },
+          {
+            "id": "s5",
+            "date": "2026-12-10",
+            "dateSource": "exif",
+            "stopId": null,
+            "caption": "",
+            "featured": true,
+            "width": 120,
+            "height": 90,
+            "bytes": 1390,
+            "addedAt": "2026-12-05T00:00:00Z"
+          },
+          {
+            "id": "s6",
+            "date": "2026-12-11",
+            "dateSource": "exif",
+            "stopId": null,
+            "caption": "",
+            "featured": true,
+            "width": 120,
+            "height": 90,
+            "bytes": 1390,
+            "addedAt": "2026-12-06T00:00:00Z"
+          },
+          {
+            "id": "s7",
+            "date": "2026-12-12",
+            "dateSource": "exif",
+            "stopId": null,
+            "caption": "",
+            "featured": true,
+            "width": 120,
+            "height": 90,
+            "bytes": 1390,
+            "addedAt": "2026-12-07T00:00:00Z"
+          },
+          {
+            "id": "s8",
+            "date": "2026-12-13",
+            "dateSource": "exif",
+            "stopId": null,
+            "caption": "",
+            "featured": true,
+            "width": 120,
+            "height": 90,
+            "bytes": 1390,
+            "addedAt": "2026-12-08T00:00:00Z"
+          },
+          {
+            "id": "s9",
+            "date": "2026-12-14",
+            "dateSource": "exif",
+            "stopId": null,
+            "caption": "",
+            "featured": true,
+            "width": 120,
+            "height": 90,
+            "bytes": 1390,
+            "addedAt": "2026-12-00T00:00:00Z"
+          },
+          {
+            "id": "s10",
+            "date": "2026-12-15",
+            "dateSource": "exif",
+            "stopId": null,
+            "caption": "",
+            "featured": true,
+            "width": 120,
+            "height": 90,
+            "bytes": 1390,
+            "addedAt": "2026-12-01T00:00:00Z"
+          },
+          {
+            "id": "s11",
+            "date": "2026-12-16",
+            "dateSource": "exif",
+            "stopId": null,
+            "caption": "",
+            "featured": true,
+            "width": 120,
+            "height": 90,
+            "bytes": 1390,
+            "addedAt": "2026-12-02T00:00:00Z"
+          },
+          {
+            "id": "s12",
+            "date": "2026-12-17",
+            "dateSource": "exif",
+            "stopId": null,
+            "caption": "",
+            "featured": true,
+            "width": 120,
+            "height": 90,
+            "bytes": 1390,
+            "addedAt": "2026-12-03T00:00:00Z"
+          }
+        ],
+        "archive": {
+          "budgets": [],
+          "routes": []
+        },
+        "templateOffer": null,
+        "places": [],
+        "smartBag": {
+          "activities": []
+        }
+      }
+    }
+  }
+}
