@@ -1,0 +1,12 @@
+PASS  J1 home: the emergency button is on the first screen; one tap opens info and emergency; the home tab stays lit
+PASS  J2 emergency: exactly the five verified numbers, each with a tel: link, a copy button, its source and check date; 1155 (not 1151)
+PASS  J3 the screen explains that calling needs a phone signal and is not guaranteed in airplane mode
+PASS  J4 every detail has a status; verified ones show a source; "not verified" ones show how to check and no value; insurance stays not verified
+PASS  J5 embassy address marked "given by the user"; no embassy emergency mobile; hospital list marked draft; Chiang Mai low; no Hua Hin
+PASS  J6 copy: the tourist police number is copied and a short message says so
+PASS  J7 maps: nothing opened before a tap; the Chabad map opens from its verified address; no map for the user-given embassy address or for Koh Tao
+PASS  J8 notes: insurance and hospital notes saved in trip.info.notes (part of the backup) and shown again after reload
+PASS  J9 390px and desktop, light and dark: no sideways scroll; every field and button has a name
+PASS  J10 airplane mode: the info files are cached; the screen opens offline; closed and opened again offline, numbers, addresses and medical details are all there
+PASS  no JS errors, no outside requests
+ALL PASS

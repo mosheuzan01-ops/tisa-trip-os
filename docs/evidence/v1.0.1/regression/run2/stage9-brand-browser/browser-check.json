@@ -1,0 +1,193 @@
+{
+  "L-1/L-3 mobile: title, LATISA word and icon in the top bar": {
+    "result": "PASS",
+    "title": "LATISA — Experimental — תאילנד",
+    "word": "LATISA",
+    "markOk": true,
+    "box": {
+      "x": 340,
+      "y": 23,
+      "width": 30,
+      "height": 30
+    },
+    "label": "LATISA, מסך הבית"
+  },
+  "M mobile: no sideways scroll": {
+    "result": "PASS"
+  },
+  "L-1/L-3 desktop: title, LATISA word and icon in the top bar": {
+    "result": "PASS",
+    "title": "LATISA — Experimental — תאילנד",
+    "word": "LATISA",
+    "markOk": true,
+    "box": {
+      "x": 1074,
+      "y": 31,
+      "width": 30,
+      "height": 30
+    },
+    "label": "LATISA, מסך הבית"
+  },
+  "M desktop: no sideways scroll": {
+    "result": "PASS"
+  },
+  "L-4 mobile light: About card is dark with the full dark logo, text AA": {
+    "result": "PASS",
+    "bg": "#0f2b34",
+    "deep": "#0f2b34",
+    "h2": "#eef5f4",
+    "p": "#a9c3c7",
+    "alt": "לוגו LATISA ו-Tripilot: טיסות, טיולים, ניהול תקציב בחופשה",
+    "src": "./assets/brand/latisa-logo-dark.png",
+    "inside": true,
+    "width": 310,
+    "ratios": [
+      13.425225,
+      7.995872
+    ]
+  },
+  "M mobile light: settings, no sideways scroll": {
+    "result": "PASS"
+  },
+  "L-4 mobile dark: About card is dark with the full dark logo, text AA": {
+    "result": "PASS",
+    "bg": "#0f2b34",
+    "deep": "#0f2b34",
+    "h2": "#eef5f4",
+    "p": "#a9c3c7",
+    "alt": "לוגו LATISA ו-Tripilot: טיסות, טיולים, ניהול תקציב בחופשה",
+    "src": "./assets/brand/latisa-logo-dark.png",
+    "inside": true,
+    "width": 310,
+    "ratios": [
+      13.425225,
+      7.995872
+    ]
+  },
+  "M mobile dark: settings, no sideways scroll": {
+    "result": "PASS"
+  },
+  "L-4 desktop light: About card is dark with the full dark logo, text AA": {
+    "result": "PASS",
+    "bg": "#0f2b34",
+    "deep": "#0f2b34",
+    "h2": "#eef5f4",
+    "p": "#a9c3c7",
+    "alt": "לוגו LATISA ו-Tripilot: טיסות, טיולים, ניהול תקציב בחופשה",
+    "src": "./assets/brand/latisa-logo-dark.png",
+    "inside": true,
+    "width": 420,
+    "ratios": [
+      13.425225,
+      7.995872
+    ]
+  },
+  "M desktop light: settings, no sideways scroll": {
+    "result": "PASS"
+  },
+  "L-4 desktop dark: About card is dark with the full dark logo, text AA": {
+    "result": "PASS",
+    "bg": "#0f2b34",
+    "deep": "#0f2b34",
+    "h2": "#eef5f4",
+    "p": "#a9c3c7",
+    "alt": "לוגו LATISA ו-Tripilot: טיסות, טיולים, ניהול תקציב בחופשה",
+    "src": "./assets/brand/latisa-logo-dark.png",
+    "inside": true,
+    "width": 420,
+    "ratios": [
+      13.425225,
+      7.995872
+    ]
+  },
+  "M desktop dark: settings, no sideways scroll": {
+    "result": "PASS"
+  },
+  "L-5 mobile: brand.html full logo, light on light and dark on dark, icons load": {
+    "result": "PASS",
+    "srcs": [
+      "light:./assets/brand/latisa-logo-light.png",
+      "dark:./assets/brand/latisa-logo-dark.png"
+    ],
+    "icons": [
+      true,
+      true,
+      true,
+      true
+    ]
+  },
+  "M mobile: brand.html no sideways scroll": {
+    "result": "PASS"
+  },
+  "L-5 desktop: brand.html full logo, light on light and dark on dark, icons load": {
+    "result": "PASS",
+    "srcs": [
+      "light:./assets/brand/latisa-logo-light.png",
+      "dark:./assets/brand/latisa-logo-dark.png"
+    ],
+    "icons": [
+      true,
+      true,
+      true,
+      true
+    ]
+  },
+  "M desktop: brand.html no sideways scroll": {
+    "result": "PASS"
+  },
+  "L-6 every favicon, touch and manifest icon loads as a square PNG": {
+    "result": "PASS",
+    "name": "LATISA, תאילנד",
+    "short": "LATISA",
+    "out": {
+      "./icons/favicon-32.png": {
+        "status": 200,
+        "type": "image/png",
+        "w": 32,
+        "h": 32
+      },
+      "./icons/icon-192.png": {
+        "status": 200,
+        "type": "image/png",
+        "w": 192,
+        "h": 192
+      },
+      "./icons/apple-touch-icon-180.png": {
+        "status": 200,
+        "type": "image/png",
+        "w": 180,
+        "h": 180
+      },
+      "./icons/icon-512.png": {
+        "status": 200,
+        "type": "image/png",
+        "w": 512,
+        "h": 512
+      },
+      "./icons/icon-maskable-512.png": {
+        "status": 200,
+        "type": "image/png",
+        "w": 512,
+        "h": 512
+      }
+    }
+  },
+  "O offline: brand files are cached, icon and logo show with no network": {
+    "result": "PASS",
+    "cached": {
+      "./assets/brand/latisa-mark.png": true,
+      "./assets/brand/latisa-logo-dark.png": true,
+      "./assets/brand/latisa-logo-light.png": true,
+      "./icons/favicon-32.png": true,
+      "./icons/icon-maskable-512.png": true,
+      "./icons/apple-touch-icon-180.png": true
+    },
+    "mark": true,
+    "logo": true,
+    "cache": "tisa-1.0.1"
+  },
+  "no JS errors": {
+    "result": "PASS",
+    "errors": []
+  }
+}

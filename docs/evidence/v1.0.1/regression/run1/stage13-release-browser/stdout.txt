@@ -1,0 +1,14 @@
+PASS  R9 speed on this computer (local server, no throttling; not PageSpeed), reduced motion reduce: LCP under 2500 ms, CLS under 0.1
+PASS  R9 speed on this computer (local server, no throttling; not PageSpeed), reduced motion no-preference: LCP under 2500 ms, CLS under 0.1
+PASS  R12 PWA: manifest (name, start_url, standalone, RTL, Hebrew), icons 192/512/maskable with their real sizes, apple-touch-icon, service worker in control
+PASS  R13 airplane mode: all 14 screens open, the photo shows, a new list item survives a reload, this version
+PASS  R14 JSON backup: export, reset, import: the trip comes back whole (places, info notes, smart suitcase, photo details, money, route)
+PASS  R16 (S13-2) backup reminder: not 1 minute before 7 days, shown at 7 days on the home screen, not on other screens, gone after the backup
+PASS  R19 new install: shared dates 20.12.2026-20.1.2027 and the route, the checklist, the category names at 0 ("—", no budget yet), no template card
+PASS  R20 the 20,000 template by hand: free 15,000, 5,000 set aside for the flight, 468 a day; after a 5,000 flight: free still 15,000, nothing set aside
+PASS  R21 every screen opened directly with saved data: layout shift (CLS) under 0.1
+PASS  R17 (S13-3) the version in settings = config = package.json = sw.js
+PASS  R18 (S13-4) privacy in settings: opens from the keyboard and says: on this device, photos in IndexedDB, no server, Google Maps only on tap, no passport or card numbers, clearing site data deletes, so back up; terms of use next to it
+PASS  no JS errors
+PASS  no requests outside the app
+ALL PASS
