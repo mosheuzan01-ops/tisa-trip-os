@@ -145,7 +145,7 @@ export function renderPlaces(ctx) {
     }
     return li;
   }));
-  if (focused) box.querySelector(`[data-action="${focused[0]}"][data-place-id="${focused[1]}"]`)?.focus();
+  if (focused) box.querySelector(`[data-action="${focused[0]}"][data-place-id="${CSS.escape(String(focused[1]))}"]`)?.focus();
 }
 
 /** Copy text: the clipboard API, or the older copy command where it is missing or refused. */
@@ -277,7 +277,7 @@ export function setupPlaces(ctx, { wireDialog, showFormErrors }) {
     if (errors.length) { showFormErrors(t, form, errors, 'placeErr'); return; }
     const next = makePlace(input, () => makeId(), new Date().toISOString(), editing);
     commit((list) => savePlace(list, next), 'place.saved');
-    opener = panel.querySelector(`[data-action="place-edit"][data-place-id="${next.id}"]`) ?? opener;
+    opener = panel.querySelector(`[data-action="place-edit"][data-place-id="${CSS.escape(String(next.id))}"]`) ?? opener;
     dlg.close();
   });
   // "My location" inside the form fills only the coordinates field; the user still saves.
@@ -311,7 +311,7 @@ export function setupPlaces(ctx, { wireDialog, showFormErrors }) {
     const p = editing;
     if (!p) return;
     dlg.close();
-    askDelete(p, panel.querySelector(`[data-action="place-edit"][data-place-id="${p.id}"]`));
+    askDelete(p, panel.querySelector(`[data-action="place-edit"][data-place-id="${CSS.escape(String(p.id))}"]`));
   });
 
   // ---------- Share: only the ticked fields; the phone's share sheet, else copy ----------

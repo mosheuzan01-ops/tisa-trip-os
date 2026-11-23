@@ -97,7 +97,7 @@ export function renderLuggage(ctx) {
     card.append(add);
     return card;
   }));
-  if (focused) box.querySelector(`[data-action="${focused[0]}"][data-id="${focused[1]}"]`)?.focus();
+  if (focused) box.querySelector(`[data-action="${focused[0]}"][data-id="${CSS.escape(String(focused[1]))}"]`)?.focus();
 }
 
 export function setupLuggage(ctx, { wireDialog, showFormErrors }) {
@@ -137,7 +137,7 @@ export function setupLuggage(ctx, { wireDialog, showFormErrors }) {
     if (errors.length) { showFormErrors(t, bForm, errors, 'bagErr'); return; }
     const next = makeBag(input, () => makeId(), editingBag);
     commit((lug) => saveBag(lug, next), 'lug.bag.saved');
-    opener = panel.querySelector(`[data-action="bag-edit"][data-id="${next.id}"]`) ?? opener;
+    opener = panel.querySelector(`[data-action="bag-edit"][data-id="${CSS.escape(String(next.id))}"]`) ?? opener;
     dlgBag.close();
   });
 
@@ -165,7 +165,7 @@ export function setupLuggage(ctx, { wireDialog, showFormErrors }) {
     if (errors.length) { showFormErrors(t, iForm, errors, 'lugItemErr'); return; }
     const next = makeLuggageItem(input, () => makeId(), editingItem);
     commit((lug) => saveItem(lug, next, input.bagId), 'lug.item.saved');
-    opener = panel.querySelector(`[data-action="luggage-item-edit"][data-id="${next.id}"]`) ?? opener;
+    opener = panel.querySelector(`[data-action="luggage-item-edit"][data-id="${CSS.escape(String(next.id))}"]`) ?? opener;
     dlgItem.close();
   });
 

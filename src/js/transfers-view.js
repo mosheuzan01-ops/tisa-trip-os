@@ -74,7 +74,7 @@ export function renderTransfers(ctx) {
     }
     return li;
   }));
-  if (focused) box.querySelector(`[data-action="${focused[0]}"][data-id="${focused[1]}"]`)?.focus();
+  if (focused) box.querySelector(`[data-action="${focused[0]}"][data-id="${CSS.escape(String(focused[1]))}"]`)?.focus();
 }
 
 export function setupTransfers(ctx, { wireDialog, showFormErrors }) {
@@ -136,7 +136,7 @@ export function setupTransfers(ctx, { wireDialog, showFormErrors }) {
       savedId = editing?.id ?? next.transfers[next.transfers.length - 1].id;
     }, { now: true });
     ctx.toast(!result?.ok ? 'form.saveFailed' : (input.price.trim() && input.ticket !== 'included' ? 'transfer.saved' : 'transfer.savedNoPrice'));
-    opener = $(`#panel-transfers [data-action="transfer-edit"][data-id="${savedId}"]`) ?? opener;
+    opener = $(`#panel-transfers [data-action="transfer-edit"][data-id="${CSS.escape(String(savedId))}"]`) ?? opener;
     dlg.close();
   });
 

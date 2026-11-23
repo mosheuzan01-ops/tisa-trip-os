@@ -118,7 +118,7 @@ export function renderCheckins(ctx) {
     }
     return li;
   }));
-  if (focused) box.querySelector(`[data-action="${focused[0]}"][data-id="${focused[1]}"]`)?.focus();
+  if (focused) box.querySelector(`[data-action="${focused[0]}"][data-id="${CSS.escape(String(focused[1]))}"]`)?.focus();
 
   renderHomeCheckin(ctx);
 }
@@ -203,7 +203,7 @@ export function setupCheckins(ctx, { wireDialog, showFormErrors }) {
       const i = trip.checkins.findIndex((x) => x?.id === next.id);
       if (i >= 0) trip.checkins[i] = next; else trip.checkins.push(next);
     }, 'checkin.saved');
-    opener = panel.querySelector(`[data-action="checkin-edit"][data-id="${next.id}"]`) ?? opener;
+    opener = panel.querySelector(`[data-action="checkin-edit"][data-id="${CSS.escape(String(next.id))}"]`) ?? opener;
     dlg.close();
   });
 

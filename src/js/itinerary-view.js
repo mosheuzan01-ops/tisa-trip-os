@@ -161,8 +161,8 @@ export function renderItinerary(ctx) {
     return li;
   }));
   if (focusKey) {
-    const again = list.querySelector(`[data-action="${focusKey[0]}"][data-id="${focusKey[1]}"]`);
-    (again && !again.disabled ? again : list.querySelector(`[data-id="${focusKey[1]}"] [data-action="stop-edit"]`))?.focus();
+    const again = list.querySelector(`[data-action="${focusKey[0]}"][data-id="${CSS.escape(String(focusKey[1]))}"]`);
+    (again && !again.disabled ? again : list.querySelector(`[data-id="${CSS.escape(String(focusKey[1]))}"] [data-action="stop-edit"]`))?.focus();
   }
 
   // Home "today" card: the stop of the day (or the next one), linked to this screen.
@@ -253,7 +253,7 @@ export function setupItinerary(ctx, { wireDialog, showFormErrors }) {
       const stop = { ...(old ?? {}), id, name: d.name, startDate: d.startDate, endDate: d.endDate, note: d.note };
       writeStops(trip, [...visibleStops(trip).filter((x) => x.id !== id), stop]);
     }, 'stop.saved');
-    opener = $(`[data-slot="stops"] [data-id="${id}"] [data-action="stop-edit"]`) ?? opener;
+    opener = $(`[data-slot="stops"] [data-id="${CSS.escape(String(id))}"] [data-action="stop-edit"]`) ?? opener;
     dlgStop.close();
   });
 
@@ -271,7 +271,7 @@ export function setupItinerary(ctx, { wireDialog, showFormErrors }) {
       const trip = s.trips[s.activeTripId];
       trip.destinations = trip.destinations.filter((x) => x?.id !== id);
     }, 'stop.deleted');
-    opener = (neighbour && $(`[data-slot="stops"] [data-id="${neighbour.id}"] [data-action="stop-edit"]`))
+    opener = (neighbour && $(`[data-slot="stops"] [data-id="${CSS.escape(String(neighbour.id))}"] [data-action="stop-edit"]`))
       ?? $('#panel-itinerary [data-action="stop-add"]:not([hidden])');
     dlgDelete.close();
   });

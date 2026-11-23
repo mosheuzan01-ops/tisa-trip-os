@@ -172,7 +172,7 @@ export function renderLists(ctx) {
     return li;
   }));
 
-  if (focused) panel.querySelector(`[data-action="${focused[0]}"][data-id="${focused[1]}"]`)?.focus();
+  if (focused) panel.querySelector(`[data-action="${focused[0]}"][data-id="${CSS.escape(String(focused[1]))}"]`)?.focus();
 }
 
 export function setupLists(ctx, { wireDialog, showFormErrors }) {
@@ -230,7 +230,7 @@ export function setupLists(ctx, { wireDialog, showFormErrors }) {
       const i = trip.checklist.findIndex((x) => x?.id === next.id);
       if (i >= 0) trip.checklist[i] = next; else trip.checklist.push(next);
     }, 'list.saved');
-    opener = $(`#panel-checklist [data-action="item-edit"][data-id="${next.id}"]`) ?? opener;
+    opener = $(`#panel-checklist [data-action="item-edit"][data-id="${CSS.escape(String(next.id))}"]`) ?? opener;
     dlgItem.close();
   });
 
@@ -266,7 +266,7 @@ export function setupLists(ctx, { wireDialog, showFormErrors }) {
       const i = trip.tasks.findIndex((x) => x?.id === next.id);
       if (i >= 0) trip.tasks[i] = next; else trip.tasks.push(next);
     }, 'task.saved');
-    opener = $(`#panel-checklist [data-action="task-edit"][data-id="${next.id}"]`)?.offsetParent ? $(`#panel-checklist [data-action="task-edit"][data-id="${next.id}"]`) : opener;
+    opener = $(`#panel-checklist [data-action="task-edit"][data-id="${CSS.escape(String(next.id))}"]`)?.offsetParent ? $(`#panel-checklist [data-action="task-edit"][data-id="${CSS.escape(String(next.id))}"]`) : opener;
     dlgTask.close();
   });
   ctx.openNewTask = (from) => openTask(null, from);

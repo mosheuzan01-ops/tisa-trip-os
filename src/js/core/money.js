@@ -14,9 +14,21 @@ export const DESCRIPTION_MAX = 80;
 export const NOTE_MAX = 140;
 const MAX_MINOR = 1e12;
 
-/** "1,234.56" -> 123456. NaN for anything that is not a positive amount with at most two decimals. */
+/**
+ * "1,234.56" -> 123456; "12,50" -> 1250. NaN for anything that is not a positive amount with at most two decimals.
+ * A comma is a thousands separator only between groups of three digits ("1,234", "12,500.50"). A single comma with one
+ * or two digits after it and no dot is a decimal comma ("12,50", "1,5"), as on phones whose number pad shows a comma
+ * (the luggage weight reads it the same way). Any other comma pattern is refused, never guessed: before this, "12,50"
+ * was silently saved as 1,250.
+ */
 export function parseMoney(text) {
-  const clean = String(text ?? '').replace(/[\s,]/g, '');
+  const s = String(text ?? '').replace(/\s/g, '');
+  let clean = s;
+  if (s.includes(',')) {
+    if (/^\d{1,3}(,\d{3})+(\.\d{1,2})?$/.test(s)) clean = s.replace(/,/g, '');
+    else if (/^\d+,\d{1,2}$/.test(s)) clean = s.replace(',', '.');
+    else return NaN;
+  }
   const m = /^(\d+)(?:\.(\d{1,2}))?$/.exec(clean);
   if (!m) return NaN;
   const minor = Number(m[1]) * 100 + Number((m[2] ?? '').padEnd(2, '0'));

@@ -1,0 +1,10 @@
+not ok 1 - RF-1: wireDialog closes a sheet only when the tap lands outside the sheet box (not on its grab-handle strip)
+not ok 2 - RF-2: parseMoney reads a decimal comma (12,50) as agorot, not as 1,250 shekels
+ok 3 - RF-2: parseMoney keeps thousands commas (groups of three) exactly as before
+not ok 4 - RF-2: parseMoney refuses comma patterns that are neither (no silent guess)
+not ok 5 - RF-2: money and luggage weights agree on the decimal comma
+not ok 6 - RF-3: every selector built from a record id escapes it with CSS.escape
+not ok 7 - RF-4: a malformed address gets 400 and the local server keeps running
+not ok 8 - RF-5: the local server never serves a file from a sibling folder that shares its name prefix
+# pass 1
+# fail 7

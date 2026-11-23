@@ -375,7 +375,14 @@ function showFormErrors(t, form, errors, prefix = 'err') {
 }
 
 function wireDialog(dlg, onClose) {
-  dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); }); // tap outside the sheet
+  // Tap outside the sheet closes it. The <dialog> itself is also the target of a tap on its own top strip (the grab
+  // handle, .sheet::before) and padding, so the tap must land outside the sheet's box too, or what was typed is lost.
+  dlg.addEventListener('click', (e) => {
+    if (e.target !== dlg) return;
+    const r = dlg.getBoundingClientRect();
+    const inside = e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom;
+    if (!inside) dlg.close();
+  });
   for (const b of dlg.querySelectorAll('[data-close]')) b.addEventListener('click', () => dlg.close());
   dlg.addEventListener('close', onClose);
 }

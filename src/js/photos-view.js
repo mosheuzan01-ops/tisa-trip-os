@@ -105,7 +105,7 @@ export function renderPhotos(ctx) {
   if (g.unassigned.length) sections.push(group('unassigned', t('photo.unassigned'), '', g.unassigned, t('photo.unassignedText')));
   box.replaceChildren(...sections);
   fillThumbs(ctx, box);
-  if (focusId) box.querySelector(`[data-photo-id="${focusId}"]`)?.focus();
+  if (focusId) box.querySelector(`[data-photo-id="${CSS.escape(String(focusId))}"]`)?.focus();
   if (ctx.route === 'photos') renderStorageWarn(ctx);
 }
 
@@ -189,7 +189,7 @@ export function setupPhotos(ctx, { wireDialog, showFormErrors }) {
   let current = null;
   let opener = null;
   const restore = () => {
-    const btn = document.querySelector(`#${opener?.closest('.panel')?.id ?? 'panel-photos'} [data-photo-id="${current}"]`);
+    const btn = document.querySelector(`#${opener?.closest('.panel')?.id ?? 'panel-photos'} [data-photo-id="${CSS.escape(String(current))}"]`);
     (btn ?? (opener?.isConnected ? opener : null) ?? $('[data-action="photo-add"]'))?.focus();
   };
   wireDialog(dlg, () => { if (!dlgDel.open) restore(); big.removeAttribute('src'); });
