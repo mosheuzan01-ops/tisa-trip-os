@@ -1,0 +1,12 @@
+commit 9433ce9
+npm-test exit=0 # pass 529 # fail 0 
+rls-local exit=0 RLS local (full migration): 66 PASS, 0 FAIL, rows left after check: 0
+stage14-delete-browser exit=0 PASS=9 FAIL=0
+stage14-account-layout-browser exit=0 PASS=6 FAIL=0
+stage14-browser exit=0 PASS=37 FAIL=0
+stage13-upgrade-browser exit=0 PASS=9 FAIL=0
+stage7-close-browser exit=0 PASS=6 FAIL=0
+contrast-browser exit=0 PASS=3 FAIL=0
+a11y-names-browser exit=0 PASS=0 FAIL=0
+stage13-layout-browser exit=0 PASS=12 FAIL=0
+stage13-keyboard-browser exit=0 PASS=4 FAIL=0
