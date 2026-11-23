@@ -1,0 +1,9 @@
+PASS  V1 1.0.0 (from git) shows the rich sample built by its own code
+PASS  V2 the update banner; no reload before the tap
+PASS  V3 after the tap: this version
+PASS  V4 the saved data is exactly the same (trips and settings); no "anchor" was added and nothing was split again
+PASS  V5 every money figure on the money screen and the home card is the same as in 1.0.0
+PASS  V6 the photo file is still in IndexedDB
+PASS  no JS errors
+PASS  no requests outside the app
+ALL PASS

@@ -1,0 +1,156 @@
+{
+  "G1 itinerary -> saved places; the itinerary tab stays lit; empty state; no location asked and no map opened on load": {
+    "result": "PASS",
+    "tabLit": "true"
+  },
+  "G2 add: name, category, status, exact coordinates, address, stop, planned day and note saved as typed; visit date empty": {
+    "result": "PASS",
+    "place": {
+      "id": "64b2b653-1108-429d-82e4-0adf8156a317",
+      "name": "שוק לילה לדוגמה",
+      "category": "market",
+      "status": "want",
+      "lat": "13.75630",
+      "lng": "100.50180",
+      "address": "רחוב לדוגמה 1",
+      "note": "לבוא בערב",
+      "stopId": "6bedffff-3471-49f9-9090-696c1efac7be",
+      "plannedDate": "2030-12-22",
+      "visitedDate": null,
+      "photoIds": [],
+      "createdAt": "2030-11-01T03:00:00.000Z",
+      "updatedAt": "2030-11-01T03:00:00.000Z"
+    },
+    "card": "שוק לילה לדוגמה\n\nרוצה לבקר\nשוק\n\nיעד: בנגקוק\n\nמתוכנן: יום 3, 22 בדצמבר\n\nרחוב לדוגמה 1\n\n13.75630, 100.50180\n\nלבוא בערב\n\nפתיחה ב-Google Maps"
+  },
+  "G2b adding a place with a planned day changes no dates, stops, expenses or budget": {
+    "result": "PASS"
+  },
+  "G3 empty name and bad coordinates are refused with messages; nothing saved": {
+    "result": "PASS",
+    "err3": "צריך שם למקום. הקואורדינטות לא תקינות. כותבים רוחב ואורך, למשל 13.75, 100.50.",
+    "invalid3": [
+      "name",
+      "coords"
+    ]
+  },
+  "G4 edit to \"visited\": visit date stays empty and the planned day stays; a typed visit date is kept apart": {
+    "result": "PASS",
+    "p4": [
+      "visited",
+      null,
+      "2030-12-22"
+    ],
+    "p4b": [
+      "loved",
+      "2030-12-23",
+      "2030-12-22"
+    ]
+  },
+  "G5 views \"want\" and \"visited\" (loved counts as visited), filters by category, stop and status, text search, \"no results\"": {
+    "result": "PASS",
+    "vWant": [
+      "מקדש לדוגמה"
+    ],
+    "vVisited": [
+      "שוק לילה לדוגמה",
+      "מסעדה לדוגמה"
+    ],
+    "fCat": [
+      "מקדש לדוגמה"
+    ],
+    "fStop": [
+      "שוק לילה לדוגמה"
+    ],
+    "fStatus": [
+      "שוק לילה לדוגמה"
+    ],
+    "fQ": [
+      "מסעדה לדוגמה"
+    ],
+    "counts": "הכול 3\nרוצה לבקר 1\nביקרתי 2"
+  },
+  "G6 390px: no sideways scroll on the places screen": {
+    "result": "PASS"
+  },
+  "G7 Google Maps: only the place with coordinates has the button; one tap opens one link built from its coordinates; no outside request": {
+    "result": "PASS",
+    "mapButtons": 1,
+    "opened": [
+      {
+        "url": "https://www.google.com/maps/search/?api=1&query=13.75630%2C100.50180",
+        "target": "_blank",
+        "features": "noopener"
+      }
+    ],
+    "outside": []
+  },
+  "G8 delete asks first: \"cancel\" keeps it, \"yes\" removes only that place": {
+    "result": "PASS",
+    "afterCancel": 3,
+    "afterYes": [
+      "שוק לילה לדוגמה",
+      "מסעדה לדוגמה"
+    ]
+  },
+  "G9 reload: the places are kept": {
+    "result": "PASS"
+  },
+  "G10 location allowed: no reading on load; one reading per tap with a time limit; coordinates and accuracy shown; nothing saved until \"save\"; map from the reading": {
+    "result": "PASS",
+    "hereText": "המיקום שלך: ⁦13.756300, 100.501800⁩. דיוק של כ-12 מ׳.",
+    "geoOpts": {
+      "enableHighAccuracy": true,
+      "timeout": 15000,
+      "maximumAge": 60000
+    },
+    "coordsField": "13.756300, 100.501800",
+    "opened10": [
+      {
+        "url": "https://www.google.com/maps/search/?api=1&query=13.756300%2C100.501800",
+        "target": "_blank",
+        "features": "noopener"
+      }
+    ]
+  },
+  "G10b \"my location\" in the form fills the field and says it is not saved yet; cancel saves nothing": {
+    "result": "PASS",
+    "hint": "הקואורדינטות מולאו (דיוק של כ-12 מ׳). עוד לא נשמר: לוחצים \"שמירה\"."
+  },
+  "G11 permission refused: a calm message with how to allow it and the typing option; no save button; nothing saved": {
+    "result": "PASS",
+    "deniedText": "אין הרשאת מיקום. אפשר לאשר בהגדרות הטלפון: פרטיות, ואז שירותי מיקום, ולבחור את Safari או את האפליקציה. אפשר גם להקליד קואורדינטות."
+  },
+  "G12 no signal / airplane mode, timeout and no support each get their own calm message; offline a place can still be added by hand": {
+    "result": "PASS",
+    "unavailable": "לא התקבל מיקום. במצב טיסה או בלי קליטה ה-GPS לא תמיד זמין. אפשר לנסות שוב בשטח פתוח, או להקליד קואורדינטות.",
+    "offlineSaved": 1,
+    "timeout": "המיקום לא התקבל בזמן. אפשר לנסות שוב.",
+    "unsupported": "הדפדפן הזה לא נותן מיקום. אפשר להקליד קואורדינטות."
+  },
+  "G13 v5 sample data: schema 7 or later (Stage 12: 8), places empty, every old list kept exactly, the old text kept once": {
+    "result": "PASS",
+    "schema": 8
+  },
+  "G14 desktop: no sideways scroll; every field has a name": {
+    "result": "PASS",
+    "unnamed": []
+  },
+  "G14b 390px: the dialog has no sideways scroll": {
+    "result": "PASS"
+  },
+  "G15 airplane mode (service worker): places files cached; the screen opens offline and a place is saved; the map button is still there (it needs the network only when tapped)": {
+    "result": "PASS",
+    "cached": {
+      "places-view.js": true,
+      "core/places.js": true,
+      "core/geo.js": true
+    },
+    "version": "1.1.0"
+  },
+  "no JS errors, no outside requests": {
+    "result": "PASS",
+    "errors": [],
+    "outside": []
+  }
+}

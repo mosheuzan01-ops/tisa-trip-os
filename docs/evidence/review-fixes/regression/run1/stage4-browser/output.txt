@@ -1,0 +1,11 @@
+PASS  S4-7
+PASS  S4-3
+PASS  S4-1
+PASS  S4-6
+PASS  S4-4
+PASS  S4-8
+PASS  S4-11 (layout)
+PASS  S4-9
+PASS  S4-5
+PASS  S4-10
+PASS  S4-11 (no JS errors, no outside requests)

@@ -1,0 +1,11 @@
+PASS  T1 fresh install: no budget of its own (template categories at 0, "—"), no template card; the shared dates and their route
+PASS  T2 390px: no sideways scroll on the money screen
+PASS  T3 dates on a new trip: the suggested route is built at once, from the day after departure to the return date, and kept after a reload
+PASS  T4 390px: no sideways scroll on the itinerary
+PASS  T5 template mode shows the new stops and says the old route goes to the archive; cancel changes nothing
+PASS  T6 yes: new route ends on the new return date; the previous route is in the archive, unchanged; budget and checklist unchanged
+PASS  T7 old data: the itinerary card opens the template preview (nothing saved before yes); after yes the old stops are archived, expenses and budget unchanged
+PASS  T8 "not now": only the answer is saved; the card stays hidden after a reload
+FAIL  run
+PASS  no JS errors
+FAIL 1
