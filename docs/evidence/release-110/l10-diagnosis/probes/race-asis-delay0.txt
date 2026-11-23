@@ -1,0 +1,6 @@
+{"i":0,"MODE":"asis","DELAY":0,"waitedMs":8,"stAfterWait":{"installing":"installing","active":null},"controllerBeforeOffline":true,"res":"PASS"}
+{"i":1,"MODE":"asis","DELAY":0,"waitedMs":11,"stAfterWait":{"installing":"installing","active":null},"controllerBeforeOffline":true,"res":"PASS"}
+{"i":2,"MODE":"asis","DELAY":0,"waitedMs":7,"stAfterWait":{"installing":"installing","active":null},"controllerBeforeOffline":false,"res":"FAIL page.reload: net::ERR_INTERNET_DISCONNECTED"}
+{"i":3,"MODE":"asis","DELAY":0,"waitedMs":10,"stAfterWait":{"installing":"installing","active":null},"controllerBeforeOffline":true,"res":"PASS"}
+{"i":4,"MODE":"asis","DELAY":0,"waitedMs":7,"stAfterWait":{"installing":"installing","active":null},"controllerBeforeOffline":true,"res":"PASS"}
+SUMMARY MODE=asis DELAY=0 n=5 fail=1

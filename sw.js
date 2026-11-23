@@ -1,7 +1,8 @@
 // Service worker: keeps a full copy of the app on the device so it opens and works with no connection.
-// Data lives in localStorage and is never touched here. A new VERSION means a new cache; the new worker
+// Data lives in localStorage and is never touched here. Stage 14: requests to Supabase (another origin) are never
+// handled or cached here, so no answer or token from the server is ever stored by the worker. A new VERSION means a new cache; the new worker
 // waits until the user taps "Update" in the app (message SKIP_WAITING), then old caches are deleted.
-const VERSION = '1.0.1';
+const VERSION = '1.1.0';
 const CACHE = `tisa-${VERSION}`;
 const PRECACHE = [
   './',
@@ -27,6 +28,8 @@ const PRECACHE = [
   './src/js/info-view.js',
   './src/js/tip.js',
   './src/js/smart-bag-view.js',
+  './src/js/cloud-view.js',
+  './src/js/admin-view.js',
   './src/js/theme-boot.js',
   './src/js/core/autosave.js',
   './src/js/core/backup.js',
@@ -64,6 +67,9 @@ const PRECACHE = [
   './src/js/core/schema.js',
   './src/js/core/storage.js',
   './src/js/core/store.js',
+  './src/js/core/cloud-api.js',
+  './src/js/core/sync-map.js',
+  './src/js/core/sync-engine.js',
   './src/js/core/trip.js',
   './locales/en.json',
   './locales/he.json',
@@ -72,6 +78,7 @@ const PRECACHE = [
   './data/info/th.json',
   './data/packing/th.json',
   './data/packs/th.js',
+  './vendor/supabase/supabase-js-2.119.2.umd.js',
   './assets/icons.svg',
   './assets/brand/latisa-mark.png',
   './assets/brand/latisa-logo-dark.png',

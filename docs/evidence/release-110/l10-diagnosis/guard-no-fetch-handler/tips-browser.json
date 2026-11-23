@@ -1,0 +1,215 @@
+{
+  "K1 all 15 info buttons are on their screens: aria-label \"הסבר על <פריט>\", aria-haspopup=dialog, aria-controls, closed, at least 44x44": {
+    "result": "PASS",
+    "bad": [],
+    "seen": {
+      "freeBefore": {
+        "label": "הסבר על פנוי לפני התכנון",
+        "popup": "dialog",
+        "controls": "dlg-tip",
+        "expanded": "false",
+        "w": 44,
+        "h": 44
+      },
+      "freeAfter": {
+        "label": "הסבר על פנוי אחרי התכנון",
+        "popup": "dialog",
+        "controls": "dlg-tip",
+        "expanded": "false",
+        "w": 44,
+        "h": 44
+      },
+      "planned": {
+        "label": "הסבר על מתוכנן",
+        "popup": "dialog",
+        "controls": "dlg-tip",
+        "expanded": "false",
+        "w": 44,
+        "h": 44
+      },
+      "committed": {
+        "label": "הסבר על התחייבות עתידית",
+        "popup": "dialog",
+        "controls": "dlg-tip",
+        "expanded": "false",
+        "w": 44,
+        "h": 44
+      },
+      "today": {
+        "label": "הסבר על פנוי היום",
+        "popup": "dialog",
+        "controls": "dlg-tip",
+        "expanded": "false",
+        "w": 44,
+        "h": 44
+      },
+      "base": {
+        "label": "הסבר על בסיס יומי",
+        "popup": "dialog",
+        "controls": "dlg-tip",
+        "expanded": "false",
+        "w": 44,
+        "h": 44
+      },
+      "emergency": {
+        "label": "הסבר על קרן חירום",
+        "popup": "dialog",
+        "controls": "dlg-tip",
+        "expanded": "false",
+        "w": 44,
+        "h": 44
+      },
+      "rates": {
+        "label": "הסבר על שערים",
+        "popup": "dialog",
+        "controls": "dlg-tip",
+        "expanded": "false",
+        "w": 44,
+        "h": 44
+      },
+      "backup": {
+        "label": "הסבר על גיבוי ושחזור",
+        "popup": "dialog",
+        "controls": "dlg-tip",
+        "expanded": "false",
+        "w": 44,
+        "h": 44
+      },
+      "photoBackup": {
+        "label": "הסבר על גיבוי תמונות",
+        "popup": "dialog",
+        "controls": "dlg-tip",
+        "expanded": "false",
+        "w": 44,
+        "h": 44
+      },
+      "unverified": {
+        "label": "הסבר על טרם אומת",
+        "popup": "dialog",
+        "controls": "dlg-tip",
+        "expanded": "false",
+        "w": 44,
+        "h": 44
+      },
+      "userProvided": {
+        "label": "הסבר על נמסר על ידי המשתמש",
+        "popup": "dialog",
+        "controls": "dlg-tip",
+        "expanded": "false",
+        "w": 44,
+        "h": 44
+      },
+      "verify": {
+        "label": "הסבר על לבדוק",
+        "popup": "dialog",
+        "controls": "dlg-tip",
+        "expanded": "false",
+        "w": 44,
+        "h": 44
+      },
+      "flex": {
+        "label": "הסבר על יעד גמיש",
+        "popup": "dialog",
+        "controls": "dlg-tip",
+        "expanded": "false",
+        "w": 44,
+        "h": 44
+      },
+      "placeDates": {
+        "label": "הסבר על יום מתוכנן ותאריך ביקור",
+        "popup": "dialog",
+        "controls": "dlg-tip",
+        "expanded": "false",
+        "w": 44,
+        "h": 44
+      }
+    }
+  },
+  "K2 touch: the tap opens the sheet with the right title and text (aria-expanded=true); a tap outside closes it and focus is back on the button": {
+    "result": "PASS",
+    "shown": {
+      "title": "התחייבות עתידית",
+      "text": "כסף שכבר התחייבתם אליו ויצא בהמשך, למשל יתרה למלון. הוא יורד מ\"פנוי אחרי התכנון\" עוד לפני התשלום.",
+      "exp": "true",
+      "focus": true
+    },
+    "back": {
+      "focus": "committed",
+      "exp": "false"
+    }
+  },
+  "K3 keyboard: Enter opens, Esc closes, Space opens, Enter on \"סגירה\" closes; focus goes back to the same button each time": {
+    "result": "PASS",
+    "t1": "פנוי לפני התכנון",
+    "f1": "freeBefore",
+    "f2": "freeBefore"
+  },
+  "K4 only one explanation at a time: a single shared modal sheet, and it is the only open dialog": {
+    "result": "PASS",
+    "sheets": 1,
+    "open": 1,
+    "modal": true
+  },
+  "K5 inside the place sheet: the explanation opens on top; Esc closes only it, the place sheet stays, focus is on the button": {
+    "result": "PASS",
+    "both": [
+      "dlg-place",
+      "dlg-tip"
+    ],
+    "after": {
+      "place": true,
+      "focus": "placeDates"
+    }
+  },
+  "K6 checklist and itinerary rows: the info button opens only the explanation (no other action, same screen) and focus returns": {
+    "result": "PASS",
+    "fv": "verify",
+    "ff": {
+      "tip": "flex",
+      "hash": "#/itinerary"
+    },
+    "route": "#/itinerary"
+  },
+  "K7 no layout shift: the \"מתוכנן\" and \"התחייבות עתידית\" rows are as tall as \"שולם\" (no button); no horizontal scroll at 390px": {
+    "result": "PASS",
+    "rows": {
+      "paid": 26,
+      "planned": 26,
+      "committed": 26
+    },
+    "hs": false
+  },
+  "K8 light and dark, 390px and desktop: the explanation sits on the dark-metal sheet in the same light colour as every sheet title (contrast-checked in Stage 8)": {
+    "result": "PASS",
+    "contrasts": {
+      "light-mobile": {
+        "text": "rgb(255, 248, 236)",
+        "title": "rgb(255, 248, 236)",
+        "ref": "rgb(255, 248, 236)",
+        "gradient": true
+      },
+      "light-desktop": {
+        "text": "rgb(255, 248, 236)",
+        "title": "rgb(255, 248, 236)",
+        "ref": "rgb(255, 248, 236)",
+        "gradient": true
+      },
+      "dark-mobile": {
+        "text": "rgb(255, 248, 236)",
+        "title": "rgb(255, 248, 236)",
+        "ref": "rgb(255, 248, 236)",
+        "gradient": true
+      },
+      "dark-desktop": {
+        "text": "rgb(255, 248, 236)",
+        "title": "rgb(255, 248, 236)",
+        "ref": "rgb(255, 248, 236)",
+        "gradient": true
+      }
+    }
+  },
+  "ERROR the run stopped": {
+    "result": "FAIL",
+    "message": "page.reload: net::ERR_INTERNET_DISCONNECTED"
+  }
+}

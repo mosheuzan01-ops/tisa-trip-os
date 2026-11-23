@@ -1,0 +1,12 @@
+PASS  A1 the real server: e-mail sign-in on, phone off, sign-up open, no e-mail confirmation (mailer_autoconfirm)
+PASS  A2 after a reload the saved session is used: synced again, no password sent, the sign-in button hidden
+PASS  A3 an expired session is refreshed by the server: new access and refresh tokens, synced, local data unchanged
+PASS  A4 the server refuses a 7-character password (minimum 8 is set on the server)
+PASS  A6 signing out on another phone ends only that phone's session: this phone still refreshes and syncs
+PASS  A7 when the server ends the session, the phone shows "the connection ended, sign in again", keeps every local byte, and a new sign-in works
+PASS  A5 sign out on this phone: the server ends the session (logout 204, the old refresh token is refused), the session leaves the phone, the trip stays
+PASS  A8 manual reset (the documented SQL command) then "change password" in the app: the old password is refused, the temporary one works, the new one replaces it
+PASS  A9 sign-up in the app: bad address and short password stop in the phone; a good form sends one request to the project's /auth/v1/signup with the publishable key, the name and phone, PKCE and the site as the return address
+PASS  only this site and the project were contacted
+PASS  no JS errors
+ALL PASS

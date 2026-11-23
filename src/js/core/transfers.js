@@ -17,6 +17,19 @@ const normFlightNo = (v) => txt(v).toUpperCase().replace(/\s+/g, ' ');
 
 const txt = (v) => String(v ?? '').trim();
 
+/**
+ * QA 1.1.0 (QP-1): a booking link as it may be shown. The same rule as the forms (http or https, no spaces, up to 300
+ * characters), checked again where it is shown, since a link also arrives from a backup, a file or a shared trip.
+ * Returns the link unchanged, or null. Used by the transfer and check-in lists.
+ */
+export function safeLink(value) {
+  if (typeof value !== 'string' || value.length > MAX.link || !/^https?:\/\/\S+$/i.test(value)) return null;
+  try {
+    const u = new URL(value);
+    return (u.protocol === 'http:' || u.protocol === 'https:') && u.hostname ? value : null;
+  } catch { return null; }
+}
+
 export function validateTransfer(input = {}, currencies = []) {
   const errors = [];
   if (!KINDS.includes(input.kind)) errors.push('kind.invalid');

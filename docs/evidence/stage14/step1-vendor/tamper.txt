@@ -1,0 +1,60 @@
+TAP version 13
+# Subtest: V1: the vendored supabase-js file matches the pinned SHA-256 and size
+not ok 1 - V1: the vendored supabase-js file matches the pinned SHA-256 and size
+  ---
+  duration_ms: 2.137829
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage14-vendor.test.js:21:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    content changed
+    + actual - expected
+    
+    + 'cfad1adb1cc9e975f1d164bf85daa9b6332d1425a1e8a76e5b4915baa1870379'
+    - '8816af04d9915dbba1882d6f84f0b402dc40268063a63d9c66d24f52f371c263'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: '8816af04d9915dbba1882d6f84f0b402dc40268063a63d9c66d24f52f371c263'
+  actual: 'cfad1adb1cc9e975f1d164bf85daa9b6332d1425a1e8a76e5b4915baa1870379'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage14-vendor.test.js:25:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.start (node:internal/test_runner/test:944:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+  ...
+# Subtest: V2: exactly one library file, and it is the pinned version
+ok 2 - V2: exactly one library file, and it is the pinned version
+  ---
+  duration_ms: 1.381614
+  type: 'test'
+  ...
+# Subtest: V3: license notices travel with the file (MIT needs them)
+ok 3 - V3: license notices travel with the file (MIT needs them)
+  ---
+  duration_ms: 0.326049
+  type: 'test'
+  ...
+# Subtest: V4: CREDITS.md records the file, version, license and hash
+ok 4 - V4: CREDITS.md records the file, version, license and hash
+  ---
+  duration_ms: 0.197853
+  type: 'test'
+  ...
+# Subtest: V5 (step 1 scope): the app does not load the library yet, so 1.0.1 behaviour is unchanged
+ok 5 - V5 (step 1 scope): the app does not load the library yet, so 1.0.1 behaviour is unchanged
+  ---
+  duration_ms: 4.531376
+  type: 'test'
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 4
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 64.870972

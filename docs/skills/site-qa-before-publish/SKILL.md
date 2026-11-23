@@ -117,6 +117,7 @@ For a multi-page site, run it on every HTML file.
 If the project keeps a list of known false positives (for example in its GOALS file or QA evidence), report those items as KNOWN with the reason, and do not count them as FAIL. Anything not on the list is still FAIL. Adding an item to the list needs the user's approval.
 
 ## Step 4: Report (one screenful)
+Before the final report, list the evidence for the exact HEAD commit. If the last ×3 regression ran on an earlier commit, say so.
 ```
 QA: <site name>  |  FAIL: x  WARN: y  KNOWN: k  NOT CHECKED: z
 Must fix before publishing:

@@ -303,7 +303,7 @@ export function renderMoney(ctx) {
     li.append(actions);
     return li;
   }));
-  if (focused) box.querySelector(`[data-action="${focused[0]}"][data-id="${focused[1]}"]`)?.focus();
+  if (focused) box.querySelector(`[data-action="${focused[0]}"][data-id="${CSS.escape(String(focused[1]))}"]`)?.focus();
 
   // Rates
   $('[data-slot="rates-badge"]').textContent = t(m.rates.planning ? 'money.rates.planning' : 'money.rates.custom');
@@ -332,7 +332,7 @@ export function renderMoney(ctx) {
     li.append(el('span', 'person-name', p.name), b);
     return li;
   }));
-  if (focusedPerson) peopleBox.querySelector(`[data-id="${focusedPerson}"]`)?.focus();
+  if (focusedPerson) peopleBox.querySelector(`[data-id="${CSS.escape(String(focusedPerson))}"]`)?.focus();
   const settleBox = $('[data-slot="settle"]');
   $('[data-slot="split-sub"]').textContent = people.length ? interpolate(t('split.sub'), { n: people.length }) : '';
   const names = new Map(people.map((p) => [p.id, p.name]));
@@ -553,7 +553,7 @@ export function setupMoney(ctx, { wireDialog, showFormErrors }) {
   const splitValues = () => {
     const out = {};
     for (const box of form.querySelectorAll('input[name="sharedBy"]:checked')) {
-      const raw = form.querySelector(`[data-person="${box.value}"]`).value.trim();
+      const raw = form.querySelector(`[data-person="${CSS.escape(String(box.value))}"]`).value.trim();
       out[box.value] = form.splitMode.value === 'equal' ? 1 : (raw === '' || /^0+(\.0+)?$/.test(raw) ? 0 : parseMoney(raw));
     }
     return out;
@@ -563,7 +563,7 @@ export function setupMoney(ctx, { wireDialog, showFormErrors }) {
     form.querySelector('[data-slot="exp-split"]').dataset.mode = mode;
     for (const input of form.querySelectorAll('.split-value')) {
       input.hidden = mode === 'equal';
-      input.disabled = !form.querySelector(`input[name="sharedBy"][value="${input.dataset.person}"]`).checked;
+      input.disabled = !form.querySelector(`input[name="sharedBy"][value="${CSS.escape(String(input.dataset.person))}"]`).checked;
     }
     const sum = Object.values(splitValues()).reduce((a, v) => a + (Number.isInteger(v) ? v : 0), 0);
     const amount = parseMoney(form.amount.value);
@@ -594,7 +594,7 @@ export function setupMoney(ctx, { wireDialog, showFormErrors }) {
       const i = trip.expenses.findIndex((x) => x?.id === next.id);
       if (i >= 0) trip.expenses[i] = next; else trip.expenses.push(next);
     }, 'exp.saved');
-    opener = $(`[data-slot="exp-list"] [data-id="${next.id}"] [data-action="expense-edit"]`) ?? opener;
+    opener = $(`[data-slot="exp-list"] [data-id="${CSS.escape(String(next.id))}"] [data-action="expense-edit"]`) ?? opener;
     dlg.close();
   });
 

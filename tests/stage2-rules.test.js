@@ -3,7 +3,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { existsSync } from 'node:fs';
 import { join } from 'node:path';
-import { ROOT, readText, readJson, listFiles, stripShareImage } from './helpers.js';
+import { ROOT, readText, readJson, listFiles, stripApproved } from './helpers.js';
 import { TH } from '../data/packs/th.js';
 import { daysBetween, isIsoDate } from '../src/js/core/trip.js';
 // Stage 9 (owner, 2026-11-21): the old route, dates and profiles moved to TH.archive (kept, not the default).
@@ -122,6 +122,6 @@ test('B18: manifest is valid for install under a sub-path', () => {
 
 test('B19: no Google Fonts or other outside hosts anywhere the app loads', () => {
   for (const file of ['index.html', 'sw.js', 'manifest.webmanifest', ...listFiles('src', ['.js', '.css'])]) {
-    assert.doesNotMatch(stripShareImage(readText(file)), /fonts\.googleapis|fonts\.gstatic|https?:\/\//, file);
+    assert.doesNotMatch(stripApproved(readText(file)), /fonts\.googleapis|fonts\.gstatic|https?:\/\//, file);
   }
 });

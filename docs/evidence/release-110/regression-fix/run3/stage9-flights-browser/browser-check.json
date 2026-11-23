@@ -1,0 +1,113 @@
+{
+  "F flight fields show for a flight only": {
+    "result": "PASS"
+  },
+  "F-3 round trip: one flight expense for the ticket price": {
+    "result": "PASS",
+    "outExp": [
+      {
+        "id": "e19006eb-8842-4698-a99c-67d7a470e9ca",
+        "amountMinor": 300000,
+        "currency": "ILS",
+        "rate": 1,
+        "baseMinor": 300000,
+        "category": "flight",
+        "date": "2030-03-01",
+        "destinationId": null,
+        "description": "עיר א ⇄ עיר ב",
+        "method": "card",
+        "status": "paid",
+        "note": "",
+        "transferId": "0108b92b-8ab7-41bc-8579-90e003b319c6"
+      }
+    ]
+  },
+  "F-4 seat payment kept on the flight, not in the budget": {
+    "result": "PASS"
+  },
+  "F card shows number, round trip, seat and \"not in the budget\"": {
+    "result": "PASS",
+    "card": "טיסה\nעיר א – עיר ב\nשולם\n\n1 במרץ\nשעה: עוד לא הוזנה\nטיסה\nZZ 101\n‏3,000 ‏₪\nהלוך ושוב\n\nמושב: 1A\nתשלום על מושב: ‏90 ‏₪ (לא בתקציב)"
+  },
+  "F-3 return leg: a price is refused; without one it saves and the budget is unchanged": {
+    "result": "PASS",
+    "err": "בטיסת חזור שכלולה בכרטיס הלוך ושוב משאירים את המחיר ריק."
+  },
+  "F-1 a bad flight number is refused with a message": {
+    "result": "PASS"
+  },
+  "I import: the dialog counts 1 new, 1 already here, 1 invalid; nothing saved before yes": {
+    "result": "PASS",
+    "summary": "חדשות שייכנסו: 1. כבר קיימות (אותו מספר ותאריך) ולא ישתנו: 1. לא תקינות ולא ייכנסו: 1."
+  },
+  "I-3 the duplicate kept its own price, status, note and expense": {
+    "result": "PASS"
+  },
+  "I-2 the new return leg came in with its seat; the budget did not change": {
+    "result": "PASS",
+    "toast1": "טיסות שיובאו: 1."
+  },
+  "I-6 the rest of the trip is untouched": {
+    "result": "PASS"
+  },
+  "I-4 the same file twice: 0 new, import disabled, no change": {
+    "result": "PASS",
+    "summary2": "חדשות שייכנסו: 0. כבר קיימות (אותו מספר ותאריך) ולא ישתנו: 2. לא תקינות ולא ייכנסו: 1."
+  },
+  "I-1 a file of another format: a message and no change": {
+    "result": "PASS",
+    "badMsg": "זה לא קובץ טיסות (latisa-flights)."
+  },
+  "I the \"import flights\" button opens the file picker": {
+    "result": "PASS"
+  },
+  "M transfers screen: no horizontal scroll at 390px": {
+    "result": "PASS"
+  },
+  "F-3 the money screen lists the round trip once": {
+    "result": "PASS"
+  },
+  "C-1 flight items added in their groups; own items and ticks unchanged": {
+    "result": "PASS",
+    "groups": [
+      "מסמכים",
+      "כסף ותשלום",
+      "תקשורת",
+      "הכנות דיגיטליות, 2–3 ימים לפני הטיסה",
+      "ביום הטיסה",
+      "תיק יד",
+      "נוחות ושינה במטוס",
+      "אוכל ושתייה לטיסה",
+      "היגיינה ובריאות בטיסה",
+      "מזוודה לבטן המטוס",
+      "בריאות ותרופות",
+      "ביגוד",
+      "מטענים ומתאמים",
+      "אחרי הנחיתה בבנגקוק"
+    ],
+    "lText": "60 פריטים מהרשימה המובנית חסרים אצלכם. פריטים קיימים והסימונים שלהם לא משתנים, ושום פריט לא יסומן כבוצע."
+  },
+  "C-3 nothing more to add: the button is gone, a reload adds nothing and keeps the tick": {
+    "result": "PASS",
+    "btnGone": true
+  },
+  "M lists screen: no horizontal scroll at 390px": {
+    "result": "PASS"
+  },
+  "B backup and restore keep flight number, ticket, seat and the single expense": {
+    "result": "PASS"
+  },
+  "D desktop: import works and the screen has no horizontal scroll": {
+    "result": "PASS"
+  },
+  "O offline: flights.js is cached; import and flight items work with no network": {
+    "result": "PASS",
+    "cached": true,
+    "transfers": 2,
+    "items": 61
+  },
+  "no JS errors": {
+    "result": "PASS",
+    "errors": []
+  }
+}

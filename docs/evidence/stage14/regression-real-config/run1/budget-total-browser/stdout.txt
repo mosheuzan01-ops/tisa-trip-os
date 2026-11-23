@@ -1,0 +1,13 @@
+PASS  T1 new install: one total field on the money screen, "details" closed, no budget yet; home "set the budget" opens the single shekel field (no currency menu)
+PASS  T2 "15,000" saved as the anchor: free 15,000 with nothing else entered; $4,054 and ฿150,000 shown small; categories untouched
+PASS  T3 details: "left to split 15,000"; the suggestion is marked as a suggestion (not an expense), flight 3,750, the "already paid flight" hint; nothing saved, free still 15,000
+PASS  T4 approving saves the split (flight 3,750 ... misc 750) and keeps the total 15,000; free 11,250 with 3,750 set aside for the flight; nothing left to split
+PASS  T5 food 5,000 and emergency 1,000: total still 15,000, other categories unchanged, "over 3,375"; the emergency fund is inside the total (free 10,250, 1,000 held)
+PASS  T6 after a reload: the same numbers; "details" closed by default
+PASS  T7 home: the field shows 15,000 with $ and ฿ below; 16,000 changes the total only, the categories stay
+PASS  T8 "15000.5" is refused with a message; nothing changes
+PASS  T9 existing data: free 15,000 and total 20,000 as in 1.0.0, emergency apart, the field shows 20,000; nothing written (no anchor)
+PASS  T10 390 and 1440, light and dark: no horizontal scroll with "details" open
+PASS  no JS errors
+PASS  no requests outside the app
+ALL PASS

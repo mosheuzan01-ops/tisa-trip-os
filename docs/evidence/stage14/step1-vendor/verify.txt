@@ -1,0 +1,44 @@
+# Verification of @supabase/supabase-js@2.119.2 (run 2026-11-23T02:24:28Z)
+
+## 1. tarball vs registry
+tarball: supabase-supabase-js-2.119.2.tgz
+local sha1:   c67eb4c1053a3327936ef6c0ce8d2b85984f2e95
+registry sha1 (dist.shasum): c67eb4c1053a3327936ef6c0ce8d2b85984f2e95
+local sha512: sha512-4HvF4G2DwdqjmwPBpz9RHnXWfdK0wSkw4yBhxe64CdeF8gdxsTF9WZuHFuNWtQnHllq71ZDyAghr4Q8nC0m/NA==
+registry (dist.integrity):  sha512-4HvF4G2DwdqjmwPBpz9RHnXWfdK0wSkw4yBhxe64CdeF8gdxsTF9WZuHFuNWtQnHllq71ZDyAghr4Q8nC0m/NA==
+
+## 2. npm registry signature (ECDSA, npm public keys from registry.npmjs.org/-/npm/v1/keys)
+registry signature keyid=SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U expires=null valid=true
+
+## 3. provenance attestations (registry.npmjs.org/-/npm/v1/attestations/@supabase%2fsupabase-js@2.119.2)
+tarball sha512 hex: e07bc5e06d83c1daa39b03c1a73f511e75d67dd2b4c12930e32061c5eeb809d785f20771b1317d599b8716e356b509c7965abbd590f202086be10f270b49bf34
+- https://github.com/npm/attestation/tree/main/specs/publish/v0.1
+  subject sha512: e07bc5e06d83c1daa39b03c1a73f511e75d67dd2b4c12930e32061c5eeb809d785f20771b1317d599b8716e356b509c7965abbd590f202086be10f270b49bf34
+- https://slsa.dev/provenance/v1
+  subject sha512: e07bc5e06d83c1daa39b03c1a73f511e75d67dd2b4c12930e32061c5eeb809d785f20771b1317d599b8716e356b509c7965abbd590f202086be10f270b49bf34
+  workflow: {"ref": "refs/heads/master", "repository": "https://github.com/supabase/supabase-js", "path": ".github/workflows/publish.yml"}
+  builder: https://github.com/actions/runner/github-hosted
+  source commit: 02d2e8f12079955a28901d95e8513846d01a3c3e
+NOTE: Sigstore certificate chain and transparency-log inclusion were NOT verified cryptographically (needs cosign or npm audit signatures).
+
+## 4. file in repo vs file in tarball
+tarball package/dist/umd/supabase.js: 8816af04d9915dbba1882d6f84f0b402dc40268063a63d9c66d24f52f371c263
+repo vendor/supabase/supabase-js-2.119.2.umd.js: 8816af04d9915dbba1882d6f84f0b402dc40268063a63d9c66d24f52f371c263  bytes=221417
+cmp: identical
+LICENSE: identical to tarball LICENSE
+
+## 5. static scan of the file
+absolute URLs in file:
+      1 http://localhost:9999
+      1 https://developer.mozilla.org/en-US/docs/Web/API/LockManager/request
+      1 https://github.com/orgs/supabase/discussions/45715
+      1 https://github.com/supabase/supabase-js/blob/master/packages/core/auth-js/migrations/lockless-coordination.md
+      1 https://github.com/supabase/supabase-js/blob/master/packages/core/realtime-js/migrations/httpsend-server-version.md
+  eval(                    0
+  new Function             0
+  import(                  0
+  importScripts            0
+  sendBeacon               0
+  document.cookie          0
+  createElement("script")  0
+tracing default: kn={enabled:!1

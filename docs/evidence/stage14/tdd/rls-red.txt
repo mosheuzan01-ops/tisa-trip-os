@@ -1,0 +1,26 @@
+RLS local (RED: migration without its security section): 29 PASS, 24 FAIL, rows left after check: 0
+  FAIL P01 pending sees only own profile
+  FAIL P04 pending cannot approve itself
+  FAIL P05 pending cannot make itself admin
+  FAIL A04 sharing with a pending user is refused
+  FAIL B01 stranger sees no trips (direct table read)
+  FAIL B02 stranger sees no records (direct table read)
+  FAIL B03 stranger pulls nothing
+  FAIL B05 stranger cannot write into the trip
+  FAIL B09 cannot create a trip in someone else's name
+  FAIL B11 nobody deletes records directly
+  FAIL S03 member gets the shared record only, not the owner's budget
+  FAIL S06 member cannot write the owner's personal records
+  FAIL S08 member cannot change dates by direct update
+  FAIL S09 an older edit does not overwrite a newer one
+  FAIL S12 trip dates unchanged after member attempts
+  FAIL M07 no role change from the app, even for an admin
+  FAIL X01 blocked member loses the trip at once
+  FAIL X02 blocked member pulls nothing
+  FAIL X03 blocked member cannot write
+  FAIL U03 settings of others are not visible
+  FAIL N01 anon has no table access
+  FAIL N02 anon cannot call the functions
+  FAIL N03 no delete privilege on records
+  FAIL N04 role and status cannot be updated by API users
+FAILED

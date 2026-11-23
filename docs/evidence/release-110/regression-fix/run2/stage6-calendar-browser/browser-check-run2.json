@@ -1,0 +1,123 @@
+{
+  "CB-1 open and back mobile": {
+    "result": "PASS",
+    "url": "#/calendar",
+    "lit": "itinerary",
+    "back": "#/itinerary",
+    "tabsBefore": 4,
+    "tabsAfter": 4
+  },
+  "CB-2 days and today mobile": {
+    "result": "PASS",
+    "days": 30,
+    "todayCls": "surface cal-day is-today",
+    "todayCurrent": "date",
+    "inView": true
+  },
+  "CB-3 travel day and transfers mobile": {
+    "result": "PASS",
+    "travel": "יום 4\nיום שלישי, 8 בדצמבר\n\nבנגקוק\nעזיבה\nצ'יאנג מאי\nהגעה\n\nבנגקוק – צ'יאנג מאי\nשעה: עוד לא הוזנה\n\nצ'יאנג מאי – צ'יאנג ראי\n13:30\n\nאין תכנון ליום זה\n\nהערה ליום\nתמונה ליום הזה"
+  },
+  "CB-4 tasks mobile": {
+    "result": "PASS",
+    "overdue": 1,
+    "doneTask": 1
+  },
+  "CB-5 planned per day mobile": {
+    "result": "PASS",
+    "planned6": "מתוכנן ליום: ‏2,620 ‏₪",
+    "planned7": "אין תכנון ליום זה",
+    "noExpenseList": true
+  },
+  "CB-6 a day with nothing mobile": {
+    "result": "PASS",
+    "empty": "יום 16\nיום ראשון, 20 בדצמבר\n\nאין תחנה ליום הזה\n\nאין תכנון ליום זה\n\nהערה ליום\nתמונה ליום הזה"
+  },
+  "CB-7 layout mobile": {
+    "result": "PASS",
+    "hscroll": false,
+    "dir": "rtl",
+    "small": [],
+    "tiny": [],
+    "clipped": []
+  },
+  "CB-8 no dates mobile": {
+    "result": "PASS",
+    "emptyShown": true,
+    "days": 0,
+    "text": "עוד אין תאריכי טיול\n\nקובעים תאריכים במסך המסלול, והימים יופיעו כאן.\n\nלמסך המסלול",
+    "to": "#/itinerary"
+  },
+  "CB-1 open and back desktop": {
+    "result": "PASS",
+    "url": "#/calendar",
+    "lit": "itinerary",
+    "back": "#/itinerary",
+    "tabsBefore": 4,
+    "tabsAfter": 4
+  },
+  "CB-2 days and today desktop": {
+    "result": "PASS",
+    "days": 30,
+    "todayCls": "surface cal-day is-today",
+    "todayCurrent": "date",
+    "inView": true
+  },
+  "CB-3 travel day and transfers desktop": {
+    "result": "PASS",
+    "travel": "יום 4\nיום שלישי, 8 בדצמבר\n\nבנגקוק\nעזיבה\nצ'יאנג מאי\nהגעה\n\nבנגקוק – צ'יאנג מאי\nשעה: עוד לא הוזנה\n\nצ'יאנג מאי – צ'יאנג ראי\n13:30\n\nאין תכנון ליום זה\n\nהערה ליום\nתמונה ליום הזה"
+  },
+  "CB-4 tasks desktop": {
+    "result": "PASS",
+    "overdue": 1,
+    "doneTask": 1
+  },
+  "CB-5 planned per day desktop": {
+    "result": "PASS",
+    "planned6": "מתוכנן ליום: ‏2,620 ‏₪",
+    "planned7": "אין תכנון ליום זה",
+    "noExpenseList": true
+  },
+  "CB-6 a day with nothing desktop": {
+    "result": "PASS",
+    "empty": "יום 16\nיום ראשון, 20 בדצמבר\n\nאין תחנה ליום הזה\n\nאין תכנון ליום זה\n\nהערה ליום\nתמונה ליום הזה"
+  },
+  "CB-7 layout desktop": {
+    "result": "PASS",
+    "hscroll": false,
+    "dir": "rtl",
+    "small": [],
+    "tiny": [],
+    "clipped": []
+  },
+  "CB-8 no dates desktop": {
+    "result": "PASS",
+    "emptyShown": true,
+    "days": 0,
+    "text": "עוד אין תאריכי טיול\n\nקובעים תאריכים במסך המסלול, והימים יופיעו כאן.\n\nלמסך המסלול",
+    "to": "#/itinerary"
+  },
+  "CB-9 today by the Bangkok calendar": {
+    "result": "PASS",
+    "cls": "surface cal-day is-today",
+    "old": "surface cal-day"
+  },
+  "CB-10 offline": {
+    "result": "PASS",
+    "cached": {
+      "keys": [
+        "tisa-1.1.0"
+      ],
+      "files": [
+        "/src/js/calendar-view.js",
+        "/src/js/core/calendar.js"
+      ]
+    },
+    "offlineDays": 30
+  },
+  "no JS errors, no outside requests": {
+    "result": "PASS",
+    "errors": [],
+    "external": []
+  }
+}

@@ -1148,3 +1148,24 @@ body::before {
 .sbag-item-note { color: var(--muted); }
 .sbag-add { justify-self: start; }
 /* end Stage 12 PR 2 */
+
+/* ---------- Stage 14: account, sync and "my trips" (existing tokens only; rule 14: own class names) ---------- */
+.cloud-pill {
+  display: inline-flex; align-items: center; gap: var(--space-1); min-height: var(--tap); padding: 0 var(--space-3);
+  border-radius: var(--radius-pill); border: 1px solid var(--line); background: var(--surface);
+  color: var(--ink); font-size: var(--text-caption); text-decoration: none; white-space: nowrap;
+}
+.cloud-pill[hidden] { display: none; }
+.cloud-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--muted); flex: none; }
+.cloud-pill[data-state="synced"] .cloud-dot { background: var(--accent); }
+.cloud-pill[data-state="offline"] .cloud-dot, .cloud-pill[data-state="expired"] .cloud-dot, .cloud-pill[data-state="blocked"] .cloud-dot { background: var(--danger); }
+.cloud-card .settings-actions + .settings-actions { margin-top: var(--space-2); }
+.cloud-trips .choices { grid-template-columns: repeat(auto-fit, minmax(min(100%, 140px), 1fr)); }
+.cloud-trips .choice { padding: var(--space-1) var(--space-3); }
+.cloud-restore { display: grid; gap: var(--space-2); }
+.cloud-list { display: grid; gap: var(--space-2); margin: 0; padding: 0; list-style: none; }
+.cloud-row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-1) var(--space-3); padding: var(--space-2) 0; border-bottom: 1px solid var(--line); }
+.cloud-row-who { font-weight: 600; min-width: 0; overflow-wrap: anywhere; }
+.cloud-row .btn { margin-inline-start: auto; }
+.cloud-member { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); width: 100%; }
+@media (max-width: 420px) { .cloud-pill { padding: 0 var(--space-2); } }

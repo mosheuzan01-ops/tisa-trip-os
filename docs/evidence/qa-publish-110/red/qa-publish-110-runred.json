@@ -1,0 +1,82 @@
+{
+  "QP-1a only http(s) links are shown (transfers and check-ins)": {
+    "result": "FAIL",
+    "links": [
+      "https://example.com/booking",
+      "javascript:alert(1)",
+      "data:text/html,x",
+      "intent://x#Intent;end",
+      "https://example.com/booking",
+      "javascript:alert(1)",
+      "data:text/html,x",
+      "intent://x#Intent;end"
+    ]
+  },
+  "QP-1b the rows with a refused link are still shown": {
+    "result": "PASS",
+    "rows": 8
+  },
+  "QP-1c the stored data is not changed (nothing deleted or rewritten)": {
+    "result": "PASS",
+    "kept": 3
+  },
+  "QP-K1 exactly one visible h1 on every screen at every width": {
+    "result": "PASS",
+    "screens": 56,
+    "bad": {}
+  },
+  "QP-K3 every visible field on every screen has an accessible name": {
+    "result": "FAIL",
+    "bad": {
+      "photos 360": [
+        "photo-file"
+      ],
+      "settings 360": [
+        "import-file",
+        "photos-import-file"
+      ],
+      "photos 390": [
+        "photo-file"
+      ],
+      "settings 390": [
+        "import-file",
+        "photos-import-file"
+      ],
+      "photos 768": [
+        "photo-file"
+      ],
+      "settings 768": [
+        "import-file",
+        "photos-import-file"
+      ],
+      "photos 1280": [
+        "photo-file"
+      ],
+      "settings 1280": [
+        "import-file",
+        "photos-import-file"
+      ]
+    }
+  },
+  "QP-M no sideways scroll on any screen at 360/390/768/1280": {
+    "result": "PASS",
+    "bad": {}
+  },
+  "QP-K2 #/settings and #/home are routes that open their screen": {
+    "result": "PASS",
+    "toSettings": "#/settings",
+    "toHome": "#/home"
+  },
+  "QP-K4 reduced motion: the sheet opens with no animation": {
+    "result": "PASS",
+    "animations": 0
+  },
+  "QP-E no page errors": {
+    "result": "PASS",
+    "errors": []
+  },
+  "QP-N no request leaves the app": {
+    "result": "PASS",
+    "outside": []
+  }
+}

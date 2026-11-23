@@ -1,0 +1,19 @@
+PASS  CB-1 open and back mobile
+PASS  CB-2 days and today mobile
+PASS  CB-3 travel day and transfers mobile
+PASS  CB-4 tasks mobile
+PASS  CB-5 planned per day mobile
+PASS  CB-6 a day with nothing mobile
+PASS  CB-7 layout mobile
+PASS  CB-8 no dates mobile
+PASS  CB-1 open and back desktop
+PASS  CB-2 days and today desktop
+PASS  CB-3 travel day and transfers desktop
+PASS  CB-4 tasks desktop
+PASS  CB-5 planned per day desktop
+PASS  CB-6 a day with nothing desktop
+PASS  CB-7 layout desktop
+PASS  CB-8 no dates desktop
+PASS  CB-9 today by the Bangkok calendar
+PASS  CB-10 offline
+PASS  no JS errors, no outside requests

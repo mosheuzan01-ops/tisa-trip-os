@@ -1,0 +1,7 @@
+PASS  S7-10 cache has every Stage 7 file
+PASS  S7-10 offline: app opens with the new version
+PASS  S7-10 offline: photos screen
+PASS  S7-10 offline: a photo can be added
+PASS  S7-10 offline: summary screen
+PASS  no JS errors
+ALL PASS

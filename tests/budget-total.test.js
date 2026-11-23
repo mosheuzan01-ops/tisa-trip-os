@@ -165,10 +165,12 @@ test('BT-12 daily base on an anchored budget: the total less the flight and the 
   assert.equal(dailyBase(legacyTemplate(), dates), Math.floor(ILS(15000) / 32), 'old data: as in 1.0.0');
 });
 
-test('BT-13 1.0.1 in every place the version is set (docs/FREEZE.md: a fix reaches phones only with a new version)', async () => {
+test('BT-13 1.0.1 or later, the same in every place the version is set (docs/FREEZE.md: a fix reaches phones only with a new version)', async () => {
+  // Stage 14 moved the version on to 1.1.0 (tests/stage14-rules.test.js VER-14); this keeps the 1.0.1 floor.
   const { readFileSync } = await import('node:fs');
   const read = (p) => readFileSync(new URL(`../${p}`, import.meta.url), 'utf8');
-  assert.equal(JSON.parse(read('config/app.config.json')).appVersion, '1.0.1');
-  assert.equal(JSON.parse(read('package.json')).version, '1.0.1');
-  assert.equal(/const VERSION = '([^']+)'/.exec(read('sw.js'))[1], '1.0.1');
+  const versions = [JSON.parse(read('config/app.config.json')).appVersion, JSON.parse(read('package.json')).version, /const VERSION = '([^']+)'/.exec(read('sw.js'))[1]];
+  assert.equal(new Set(versions).size, 1, `one version everywhere: ${versions}`);
+  const [maj, min, pat] = versions[0].split('.').map(Number);
+  assert.ok(maj > 1 || (maj === 1 && (min > 0 || pat >= 1)), `${versions[0]} is at least 1.0.1`);
 });

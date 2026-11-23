@@ -1,0 +1,48 @@
+// Loads the UMD file from disk into a blank page. Every network request is intercepted: the fake auth endpoint
+// answers locally, everything else is aborted and recorded. Sample data only.
+const { chromium } = require('playwright');
+const path = process.argv[2];
+const b64 = (o) => Buffer.from(JSON.stringify(o)).toString('base64url');
+const now = Math.floor(Date.now() / 1000);
+const jwt = `${b64({ alg: 'HS256', typ: 'JWT' })}.${b64({ sub: '00000000-0000-0000-0000-000000000001', role: 'authenticated', aud: 'authenticated', exp: now + 3600, iat: now, email: 'user-a@example.com' })}.c2ln`;
+(async () => {
+  const browser = await chromium.launch();
+  const page = await browser.newPage();
+  const requests = []; const sockets = []; page.on('websocket', (w) => sockets.push(w.url()));
+  await page.route('**/*', async (route) => {
+    const r = route.request();
+    requests.push(`${r.method()} ${r.url()}`);
+    if (r.url() === 'http://local.test/') return route.fulfill({ status: 200, contentType: 'text/html', body: '<!doctype html><title>t</title>' });
+    if (r.url().startsWith('https://example.supabase.co/auth/v1/token')) {
+      return route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ access_token: jwt, token_type: 'bearer', expires_in: 3600, expires_at: now + 3600, refresh_token: 'refresh-sample', user: { id: '00000000-0000-0000-0000-000000000001', email: 'user-a@example.com', aud: 'authenticated', role: 'authenticated' } }) });
+    }
+    return route.abort();
+  });
+  await page.goto('http://local.test/');
+  await page.addScriptTag({ path });
+  const out = await page.evaluate(async () => {
+    const res = {};
+    res.hasCreateClient = typeof window.supabase?.createClient === 'function';
+    const store = new Map();
+    const adapter = { getItem: (k) => store.get(k) ?? null, setItem: (k, v) => { store.set(k, v); }, removeItem: (k) => { store.delete(k); } };
+    const client = window.supabase.createClient('https://example.supabase.co', 'sb_publishable_sample', {
+      auth: { storage: adapter, storageKey: 'latisa:auth:v1', flowType: 'pkce', persistSession: true, autoRefreshToken: false, detectSessionInUrl: false },
+    });
+    res.afterCreate_localStorageKeys = Object.keys(localStorage);
+    const { data, error } = await client.auth.signInWithPassword({ email: 'user-a@example.com', password: 'Sample-Passw0rd!' });
+    res.signInError = error?.message ?? null;
+    res.signedInUser = data?.user?.email ?? null;
+    res.adapterKeys = [...store.keys()];
+    const all = [...store.values()].join(' ') + JSON.stringify(localStorage) + JSON.stringify(sessionStorage);
+    res.passwordFoundAnywhere = all.includes('Sample-Passw0rd!');
+    res.adapterHoldsRefreshToken = [...store.values()].join(' ').includes('refresh-sample');
+    res.localStorageKeys = Object.keys(localStorage);
+    res.sessionStorageKeys = Object.keys(sessionStorage);
+    await client.auth.signOut({ scope: 'local' });
+    res.adapterKeysAfterSignOut = [...store.keys()];
+    return res;
+  });
+  console.log(JSON.stringify(out, null, 2));
+  console.log('requests:', JSON.stringify(requests, null, 2)); console.log('websockets:', JSON.stringify(sockets));
+  await browser.close();
+})().catch((e) => { console.error(e); process.exit(1); });

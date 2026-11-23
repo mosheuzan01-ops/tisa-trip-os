@@ -1,0 +1,8 @@
+r1 exit=0 |   kb dlg-cloud-share: ok   kb dlg-cloud-members: ok   kb dlg-cloud-confirm: ok   kb dlg-cloud-migrate: ok   kb dlg-cloud-admin: ok  | 
+r2 exit=0 |   kb dlg-cloud-share: ok   kb dlg-cloud-members: ok   kb dlg-cloud-confirm: ok   kb dlg-cloud-migrate: ok   kb dlg-cloud-admin: ok  | 
+r3 exit=0 |   kb dlg-cloud-share: ok   kb dlg-cloud-members: ok   kb dlg-cloud-confirm: ok   kb dlg-cloud-migrate: ok   kb dlg-cloud-admin: ok  | 
+r4 exit=0 |   kb dlg-cloud-share: ok   kb dlg-cloud-members: ok   kb dlg-cloud-confirm: ok   kb dlg-cloud-migrate: ok   kb dlg-cloud-admin: ok  | 
+r5 exit=0 |   kb dlg-cloud-share: ok   kb dlg-cloud-members: ok   kb dlg-cloud-confirm: ok   kb dlg-cloud-migrate: ok   kb dlg-cloud-admin: ok  | 
+r6 exit=0 |   kb dlg-cloud-share: ok   kb dlg-cloud-members: ok   kb dlg-cloud-confirm: ok   kb dlg-cloud-migrate: ok   kb dlg-cloud-admin: ok  | 
+
+[exited with code 0]

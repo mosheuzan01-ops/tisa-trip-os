@@ -1,0 +1,38 @@
+{
+  "run": "1",
+  "red": true,
+  "postgres": "16",
+  "steps": {
+    "stub.sql": "ok",
+    "migration.sql": "ok"
+  },
+  "pass": 29,
+  "fail": 24,
+  "failures": [
+    "P01 pending sees only own profile",
+    "P04 pending cannot approve itself",
+    "P05 pending cannot make itself admin",
+    "A04 sharing with a pending user is refused",
+    "B01 stranger sees no trips (direct table read)",
+    "B02 stranger sees no records (direct table read)",
+    "B03 stranger pulls nothing",
+    "B05 stranger cannot write into the trip",
+    "B09 cannot create a trip in someone else's name",
+    "B11 nobody deletes records directly",
+    "S03 member gets the shared record only, not the owner's budget",
+    "S06 member cannot write the owner's personal records",
+    "S08 member cannot change dates by direct update",
+    "S09 an older edit does not overwrite a newer one",
+    "S12 trip dates unchanged after member attempts",
+    "M07 no role change from the app, even for an admin",
+    "X01 blocked member loses the trip at once",
+    "X02 blocked member pulls nothing",
+    "X03 blocked member cannot write",
+    "U03 settings of others are not visible",
+    "N01 anon has no table access",
+    "N02 anon cannot call the functions",
+    "N03 no delete privilege on records",
+    "N04 role and status cannot be updated by API users"
+  ],
+  "rowsLeftAfterCheck": 0
+}

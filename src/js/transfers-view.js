@@ -2,7 +2,7 @@
 // (core/transfers.js), and each stop on the itinerary lists the transfers on its days. All copy from locales.
 import { interpolate } from './core/i18n.js';
 import {
-  KINDS, TRANSFER_STATUSES, TICKETS, validateTransfer, saveTransfer, removeTransfer, sortTransfers,
+  KINDS, TRANSFER_STATUSES, TICKETS, validateTransfer, saveTransfer, removeTransfer, sortTransfers, safeLink,
 } from './core/transfers.js';
 import { parseFlightsFile, importFlights } from './core/flights.js';
 import { currenciesFor } from './core/money.js';
@@ -65,16 +65,17 @@ export function renderTransfers(ctx) {
       li.append(seat);
     }
     if (x.note) li.append(el('p', 'item-note', x.note));
-    if (x.link) {
+    const href = safeLink(x.link); // QP-1: also from a backup, a file or a shared trip, so checked again here
+    if (href) {
       const a = el('a', 'transfer-link', t('transfer.openLink'));
-      a.href = x.link; // typed by the user; validated as http(s) only
+      a.href = href;
       a.target = '_blank';
       a.rel = 'noopener noreferrer';
       li.append(a);
     }
     return li;
   }));
-  if (focused) box.querySelector(`[data-action="${focused[0]}"][data-id="${focused[1]}"]`)?.focus();
+  if (focused) box.querySelector(`[data-action="${focused[0]}"][data-id="${CSS.escape(String(focused[1]))}"]`)?.focus();
 }
 
 export function setupTransfers(ctx, { wireDialog, showFormErrors }) {
@@ -136,7 +137,7 @@ export function setupTransfers(ctx, { wireDialog, showFormErrors }) {
       savedId = editing?.id ?? next.transfers[next.transfers.length - 1].id;
     }, { now: true });
     ctx.toast(!result?.ok ? 'form.saveFailed' : (input.price.trim() && input.ticket !== 'included' ? 'transfer.saved' : 'transfer.savedNoPrice'));
-    opener = $(`#panel-transfers [data-action="transfer-edit"][data-id="${savedId}"]`) ?? opener;
+    opener = $(`#panel-transfers [data-action="transfer-edit"][data-id="${CSS.escape(String(savedId))}"]`) ?? opener;
     dlg.close();
   });
 

@@ -1,0 +1,127 @@
+colgrant:profiles.display_name:authenticated	1
+colgrant:profiles.phone:authenticated	1
+colgrant:trip_records.data:authenticated	1
+colgrant:trip_records.deleted:authenticated	1
+colgrant:trip_records.edited_at:authenticated	1
+colgrant:trip_records.kind:authenticated	1
+colgrant:trip_records.rec_id:authenticated	1
+colgrant:trip_records.scope:authenticated	1
+colgrant:trip_records.server_at:authenticated	1
+colgrant:trip_records.trip_id:authenticated	1
+colgrant:trip_records.updated_by:authenticated	1
+colgrant:trips.country_code:authenticated	1
+colgrant:trips.end_date:authenticated	1
+colgrant:trips.name:authenticated	1
+colgrant:trips.start_date:authenticated	1
+colgrant:user_settings.data:authenticated	1
+colgrant:user_settings.edited_at:authenticated	1
+colgrant:user_settings.server_at:authenticated	1
+colgrant:user_settings.user_id:authenticated	1
+con:profiles.profiles_display_name_check	aa7d63ba602c7fdae11a6cfa8cb1d701
+con:profiles.profiles_id_fkey	0061c9fb3a9abcf2edbcd4a42467a9c3
+con:profiles.profiles_phone_check	4e50d44f10728648b0ae8b03d48fc1ab
+con:profiles.profiles_pkey	4c6419b3704337bbfe50f018842a9ad3
+con:profiles.profiles_role_check	abef0a2c4476fb05e68bd9a7a260e478
+con:profiles.profiles_status_check	9aa620be7717c5541402e99f3bb2e2bb
+con:trip_members.trip_members_added_by_fkey	bd7d4472f992049a417cd9715a6a46f6
+con:trip_members.trip_members_pkey	e12c709444c81c54e36fa9c755d8a8d5
+con:trip_members.trip_members_role_check	b3ff12e2beed0cf63ce7c4d1264d9c22
+con:trip_members.trip_members_trip_id_fkey	e250551c45078434b70006e6a94a4d9e
+con:trip_members.trip_members_user_id_fkey	f52ea365e97de6e8cafd675b03a940e4
+con:trip_records.trip_records_data_check	61727f16e939daf2cd2237783437b360
+con:trip_records.trip_records_kind_check	ba4ef09943d2e603d3dc2565217c2fb9
+con:trip_records.trip_records_pkey	5d9e512c1fe6c1a9269aea3fda395c83
+con:trip_records.trip_records_rec_id_check	8c7f531c080c0014352c80848f1c42e6
+con:trip_records.trip_records_scope_check	53ab27001daee28fd65e3b35f94fdeee
+con:trip_records.trip_records_trip_id_fkey	e250551c45078434b70006e6a94a4d9e
+con:trip_records.trip_records_updated_by_fkey	290cd6ec3730991a0bd96682fbf67132
+con:trips.trips_check	d0b4950cd47386600be5d03b1ec6b744
+con:trips.trips_country_code_check	e875cb2713aa846256f33a1964bbfd79
+con:trips.trips_id_check	c2a49858aa0e38d438caf622427760fc
+con:trips.trips_name_check	57e796a3937ace161f0146fbdca5f1bf
+con:trips.trips_owner_id_fkey	ace83fb10286383cd6e80417859b44a6
+con:trips.trips_pkey	4c6419b3704337bbfe50f018842a9ad3
+con:user_settings.user_settings_data_check	1997e106e666b14d00f8e57798171b77
+con:user_settings.user_settings_pkey	0a0db78b5fb70bf8475b3bd434e6842b
+con:user_settings.user_settings_user_id_fkey	f52ea365e97de6e8cafd675b03a940e4
+fn:private.is_admin()	7fa447c285c3049ee5e10b50e446c7d2
+fn:private.is_approved()	1e11eb23bfa477fe16ed9bb8b1986423
+fn:private.is_trip_member(t text)	0f31c2447a76635baa74be96d020e434
+fn:private.is_trip_owner(t text)	007ee4e95babf9948e52e720dbe03f75
+fn:public.add_owner_member()	abcd0eefc6b7f621f5790ed10a288571
+fn:public.admin_list_trips()	c131c191d30670a5ca8f47b9ea4d4c27
+fn:public.admin_list_users()	006f2bf2db25e4c880871536ef59dadd
+fn:public.admin_set_status(target uuid, new_status text)	6bf5f08c924be5c36dcab9630c8a5b9a
+fn:public.create_trip(t text, p_name text, p_cc text, p_start date, p_end date)	acf580d7590614cae7116ad44b3ada58
+fn:public.get_settings()	ba42261294189a1e0a302a1fb4397be6
+fn:public.handle_new_user()	6344ec7e31769ff46085083cd1b48028
+fn:public.leave_trip(t text)	0e6914f0b07e4920b226211a62afd049
+fn:public.my_profile()	3ba21648ed5ac612670d8196ef53a7ee
+fn:public.my_trips()	74ef1b2c12b8e4c7c991387f96c805c6
+fn:public.pull_records(t text, since timestamp with time zone)	6636e051b6ad3eef1394698aabba1cfc
+fn:public.push_records(rows jsonb)	7574e36819d55e602ba0d77b47f18aae
+fn:public.save_settings(p_data jsonb, p_edited timestamp with time zone)	731229406d493a858965836ec1bfdd9f
+fn:public.share_trip(t text, friend_email text)	cc699c2d5efc546ff80af657a6199c13
+fn:public.stamp_record()	d351cc03493cbcf192414508af2e5185
+fn:public.stamp_settings()	7ce36723d8376507be2193250a923b5a
+fn:public.touch_updated_at()	b181133ed99a3efed7c0f7ef7e8fc87b
+fn:public.trip_people(t text)	08e0c4d91481a30e2db2b51429c565c6
+fn:public.unshare_trip(t text, friend uuid)	2119fd40a3b6d99ed8e770bee1ff0c49
+fn:public.update_my_profile(p_name text, p_phone text)	7558a5125d21e5faa30fb5ca251b3dee
+fn:public.update_trip(t text, p_name text, p_cc text, p_start date, p_end date)	c761ae635677a6522e388987253122a6
+fngrant:private.is_admin:authenticated	1
+fngrant:private.is_approved:authenticated	1
+fngrant:private.is_trip_member:authenticated	1
+fngrant:private.is_trip_owner:authenticated	1
+fngrant:public.admin_list_trips:authenticated	1
+fngrant:public.admin_list_users:authenticated	1
+fngrant:public.admin_set_status:authenticated	1
+fngrant:public.create_trip:authenticated	1
+fngrant:public.get_settings:authenticated	1
+fngrant:public.leave_trip:authenticated	1
+fngrant:public.my_profile:authenticated	1
+fngrant:public.my_trips:authenticated	1
+fngrant:public.pull_records:authenticated	1
+fngrant:public.push_records:authenticated	1
+fngrant:public.save_settings:authenticated	1
+fngrant:public.share_trip:authenticated	1
+fngrant:public.trip_people:authenticated	1
+fngrant:public.unshare_trip:authenticated	1
+fngrant:public.update_my_profile:authenticated	1
+fngrant:public.update_trip:authenticated	1
+grant:profiles:authenticated:SELECT	1
+grant:trip_members:authenticated:SELECT	1
+grant:trip_records:authenticated:INSERT	1
+grant:trip_records:authenticated:SELECT	1
+grant:trip_records:authenticated:UPDATE	1
+grant:trips:authenticated:INSERT	1
+grant:trips:authenticated:SELECT	1
+grant:user_settings:authenticated:INSERT	1
+grant:user_settings:authenticated:SELECT	1
+grant:user_settings:authenticated:UPDATE	1
+idx:profiles_pkey	b7142bbffc23de763c1bd9f00489ec05
+idx:trip_members_added_by_idx	34858fb82faceb2308d665f613eee70c
+idx:trip_members_pkey	caf2b8b280f9fea6650e9c2ad1539504
+idx:trip_members_user_idx	eddec630450032b6f7bfa47bd10adb98
+idx:trip_records_pkey	40c5a28e62f0a41e6c5b8f9d47628f3f
+idx:trip_records_pull_idx	725d70ffd8b716120acb76516075b73e
+idx:trip_records_updated_by_idx	c071a130f8e9cefcd1b73de6a10151e0
+idx:trips_owner_idx	6f2e69fe107334dc70c837bcaa2dff50
+idx:trips_pkey	0eca6ee7b6b07008d8946194806d9ddb
+idx:user_settings_pkey	91a61f02a0fceb072daf4762e2999539
+pol:profiles.profiles_select	6ad5c01bfdce96e26dc7220f02d5efee
+pol:profiles.profiles_update_self	526d3f1bc0ca9b65d0f43c852c0e55ee
+pol:trip_members.members_select	57195cc46a47cc74d197e739a8ac829e
+pol:trip_records.records_insert	0ac5ebc77e0ab99933e490657bc4d374
+pol:trip_records.records_select	90e0a836f6daf4331f4f1bb80ea62069
+pol:trip_records.records_update	a598ff21bd9eb848df5898a894ee6c29
+pol:trips.trips_insert	532a1e80e29cd171f55edfcea47505d1
+pol:trips.trips_select	1b49715b770b2f59c53ff1c63238042b
+pol:trips.trips_update	82e4b5eb148dea2ce66f809bc4f3e3c0
+pol:user_settings.settings_all	0222ecbddc670c18f6e96d171253b1b8
+rls:profiles	true
+rls:trip_members	true
+rls:trip_records	true
+rls:trips	true
+rls:user_settings	true
+trg:auth.users.on_auth_user_created	786e53a33077b3a68f1ec248e238d18a

@@ -1,0 +1,48 @@
+{
+  "RF-1a tap on the sheet top strip keeps it open with the typed amount": {
+    "result": "FAIL",
+    "strip": 17,
+    "afterStrip": false,
+    "kept": "123"
+  },
+  "RF-1b tap on the backdrop still closes the sheet": {
+    "result": "PASS",
+    "sheetTop": 12,
+    "tapY": 6
+  },
+  "RF-1c Escape still closes the sheet": {
+    "result": "PASS"
+  },
+  "RF-1d focus returns to the button that opened the sheet": {
+    "result": "PASS",
+    "focusBack": "expense-add"
+  },
+  "RF-2 an expense typed as 12,50 is saved as 1250 agorot (12.50 shekels)": {
+    "result": "FAIL",
+    "amountMinor": 125000
+  },
+  "RF-3a the imported place is listed": {
+    "result": "PASS"
+  },
+  "RF-3b editing the imported place saves and closes the sheet": {
+    "result": "FAIL",
+    "closed": false,
+    "note": "הערת דוגמה"
+  },
+  "RF-3c deleting the imported place from its edit sheet asks first, then removes it": {
+    "result": "FAIL",
+    "askOpen": false,
+    "gone": false
+  },
+  "RF-E no page errors": {
+    "result": "FAIL",
+    "errors": [
+      "pageerror: Failed to execute 'querySelector' on 'Element': '[data-action=\"place-edit\"][data-place-id=\"friend\"1\"]' is not a valid selector.",
+      "pageerror: Failed to execute 'querySelector' on 'Element': '[data-action=\"place-edit\"][data-place-id=\"friend\"1\"]' is not a valid selector."
+    ]
+  },
+  "RF-N no request leaves the app": {
+    "result": "PASS",
+    "outside": []
+  }
+}

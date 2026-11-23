@@ -139,8 +139,11 @@ test('P-10: the map link is built from the coordinates only; a place without coo
 
 test('P-11 (rule 5): the maps address lives once, in config; no app file has it or any other outside address', () => {
   assert.equal(readJson('config/app.config.json').mapsSearchUrl, BASE);
+  // Stage 14 (rule 5, third approved exception): one Supabase project address in cloud.url, nothing else.
+  const cloudUrl = readJson('config/app.config.json').cloud?.url || null;
+  if (cloudUrl) assert.match(cloudUrl, /^https:\/\/[a-z0-9]{20}\.supabase\.co$/);
   const urls = readText('config/app.config.json').match(/https?:\/\/[^"]+/g) ?? [];
-  assert.deepEqual(urls, [BASE]);
+  assert.deepEqual(urls, cloudUrl ? [BASE, cloudUrl] : [BASE]);
   for (const f of listFiles('src', ['.js'])) assert.doesNotMatch(readText(f), /google\.|maps\.app/i, f);
   assert.match(readText('docs/RULES.md'), /mapsSearchUrl/);
 });

@@ -29,6 +29,7 @@ import { renderInfo, setupInfo } from './info-view.js';
 import { setupTips } from './tip.js';
 import { renderSmartBag, setupSmartBag } from './smart-bag-view.js';
 import { validateInfo } from './core/info.js';
+import { setupCloud, renderCloud } from './cloud-view.js';
 
 const $ = (sel, root = document) => root.querySelector(sel);
 const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
@@ -105,16 +106,19 @@ async function boot() {
   const ctx = {
     t, locale, fmtLocale, country, config, storage, pack, info, packing,
     state: loaded.state, status: loaded.status, lastSave: null, route: 'home', waitingWorker: null,
+    storageKey: `${prefix}v1`, rev: 0, // Stage 14: the sync checks rev to never overwrite an edit made while it ran
   };
   ctx.trip = () => ctx.state.trips[ctx.state.activeTripId];
 
   const autosave = createAutosave((state) => {
     ctx.lastSave = storage.save(state);
     renderBanners(ctx);
+    if (ctx.lastSave?.ok) ctx.afterSave?.(); // Stage 14: note what changed for the sync (no-op without an account)
   });
   ctx.autosave = autosave;
   /** Change the data, redraw, and save after a short pause (or right away with { now: true }). */
   ctx.change = (fn, { now = false } = {}) => {
+    ctx.rev += 1;
     fn(ctx.state);
     ctx.render();
     autosave.schedule(ctx.state);
@@ -140,6 +144,7 @@ async function boot() {
     renderPhotoBackup(ctx);
     renderAssistant(ctx);
     renderBanners(ctx);
+    renderCloud(ctx);
   };
   addEventListener('pagehide', () => autosave.flush());
   document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') autosave.flush(); });
@@ -158,6 +163,8 @@ async function boot() {
   setupRouter(ctx);
   setupSheets(ctx);
   setupSettings(ctx);
+  ctx.downloadBackup = () => downloadBackup(ctx);
+  setupCloud(ctx, { wireDialog });
   setupItinerary(ctx, { wireDialog, showFormErrors });
   setupMoney(ctx, { wireDialog, showFormErrors });
   setupLists(ctx, { wireDialog, showFormErrors });
@@ -368,7 +375,14 @@ function showFormErrors(t, form, errors, prefix = 'err') {
 }
 
 function wireDialog(dlg, onClose) {
-  dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); }); // tap outside the sheet
+  // Tap outside the sheet closes it. The <dialog> itself is also the target of a tap on its own top strip (the grab
+  // handle, .sheet::before) and padding, so the tap must land outside the sheet's box too, or what was typed is lost.
+  dlg.addEventListener('click', (e) => {
+    if (e.target !== dlg) return;
+    const r = dlg.getBoundingClientRect();
+    const inside = e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom;
+    if (!inside) dlg.close();
+  });
   for (const b of dlg.querySelectorAll('[data-close]')) b.addEventListener('click', () => dlg.close());
   dlg.addEventListener('close', onClose);
 }
@@ -383,6 +397,7 @@ function setupSheets(ctx) {
   let opener = null;
 
   function open(name, from) {
+    if (name === 'dates' && ctx.datesLocked?.()) { ctx.toast('cloud.datesOwnerOnly'); return; } // Stage 14: shared trip, owner only
     opener = from ?? document.activeElement;
     const dlg = sheets[name];
     const form = dlg.querySelector('form');
@@ -444,6 +459,7 @@ function setupSheets(ctx) {
   for (const b of $$('[data-clear]')) {
     b.addEventListener('click', () => {
       const part = b.dataset.clear;
+      if (part === 'dates' && ctx.datesLocked?.()) { ctx.toast('cloud.datesOwnerOnly'); return; }
       commit((s) => {
         const trip = s.trips[s.activeTripId];
         if (part === 'dates') { trip.startDate = null; trip.endDate = null; }
@@ -655,6 +671,7 @@ function setupSettings(ctx) {
   const datesForm = $('[data-form="settings-dates"]');
   datesForm.addEventListener('submit', (e) => {
     e.preventDefault();
+    if (ctx.datesLocked?.()) { ctx.toast('cloud.datesOwnerOnly'); renderSettings(ctx); return; } // Stage 14: only the trip owner
     const dates = { start: datesForm.start.value, end: datesForm.end.value };
     const errors = validateDates(dates);
     if (errors.length) { showFormErrors(t, datesForm, errors); return; }
@@ -713,6 +730,7 @@ function setupSettings(ctx) {
     ctx.state = pending.state;
     ctx.status = 'ok';
     ctx.lastSave = ctx.storage.replace(ctx.state);
+    ctx.afterImport?.(); // Stage 14: a restore while signed in waits for "this phone only" or "the cloud too"
     dlgImport.close();
     ctx.render();
     ctx.toast(ctx.lastSave.ok ? 'import.done' : 'form.saveFailed');

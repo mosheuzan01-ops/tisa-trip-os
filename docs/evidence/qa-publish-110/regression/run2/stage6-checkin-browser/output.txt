@@ -1,0 +1,20 @@
+PASS  CI-1 flight by hand mobile
+PASS  CI-2 hotel with time, shown in the other zone mobile
+PASS  CI-3 time difference in winter mobile
+PASS  CI-4 edit and delete with a yes mobile
+PASS  CI-5 flight deleted, check-in kept mobile
+PASS  CI-9 layout mobile
+PASS  CI-6 reminder in the app mobile
+PASS  CI-7 overdue mobile
+PASS  CI-1 flight by hand desktop
+PASS  CI-2 hotel with time, shown in the other zone desktop
+PASS  CI-3 time difference in winter desktop
+PASS  CI-4 edit and delete with a yes desktop
+PASS  CI-5 flight deleted, check-in kept desktop
+PASS  CI-9 layout desktop
+PASS  CI-6 reminder in the app desktop
+PASS  CI-7 overdue desktop
+PASS  CI-8 summer difference
+PASS  CI-10 backup and offline
+PASS  CI-11 no system notifications
+PASS  no JS errors, no outside requests

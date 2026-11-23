@@ -5,7 +5,7 @@
 import { createServer } from 'node:http';
 import { networkInterfaces } from 'node:os';
 import { readFile } from 'node:fs/promises';
-import { extname, join, normalize, resolve } from 'node:path';
+import { extname, isAbsolute, join, normalize, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = resolve(fileURLToPath(new URL('..', import.meta.url)));
@@ -27,10 +27,17 @@ const TYPES = {
 };
 
 const server = createServer(async (req, res) => {
-  const urlPath = decodeURIComponent(new URL(req.url, 'http://x').pathname);
+  // A malformed address (e.g. "/%E0%A4%A") is refused; it used to throw here and stop the whole server.
+  let urlPath;
+  try { urlPath = decodeURIComponent(new URL(req.url, 'http://x').pathname); } catch {
+    res.writeHead(400).end('Bad request');
+    return;
+  }
   const filePath = normalize(join(ROOT, urlPath === '/' ? 'index.html' : urlPath));
-  // Block path traversal and hidden files such as .env or .git.
-  if (!filePath.startsWith(ROOT) || /[\\/]\./.test(filePath.slice(ROOT.length))) {
+  // Block path traversal and hidden files such as .env or .git. The check is by path, not by text: "/..%2Fname-x"
+  // decodes to a sibling folder whose name merely starts with this one's (e.g. tisa-trip-os-old), which startsWith let through.
+  const rel = relative(ROOT, filePath);
+  if (rel === '' || rel.startsWith('..') || isAbsolute(rel) || /(^|[\\/])\./.test(rel)) {
     res.writeHead(403).end('Forbidden');
     return;
   }

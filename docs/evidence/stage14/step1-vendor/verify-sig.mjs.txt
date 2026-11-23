@@ -1,0 +1,13 @@
+import { readFileSync } from 'node:fs';
+import { createVerify, createPublicKey } from 'node:crypto';
+const [keysF, manF] = process.argv.slice(2);
+const keys = JSON.parse(readFileSync(keysF, 'utf8')).keys;
+const m = JSON.parse(readFileSync(manF, 'utf8'));
+const msg = `${m.name}@${m.version}:${m.dist.integrity}`;
+for (const s of m.dist.signatures ?? []) {
+  const k = keys.find((x) => x.keyid === s.keyid);
+  if (!k) { console.log('no key for', s.keyid); continue; }
+  const pub = createPublicKey({ key: Buffer.from(k.key, 'base64'), format: 'der', type: 'spki' });
+  const ok = createVerify('SHA256').update(msg).end().verify(pub, Buffer.from(s.sig, 'base64'));
+  console.log(`registry signature keyid=${s.keyid} expires=${k.expires} valid=${ok}`);
+}

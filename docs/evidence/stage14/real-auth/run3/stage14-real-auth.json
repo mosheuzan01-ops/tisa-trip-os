@@ -1,0 +1,101 @@
+{
+  "project": "https://picrnywobwgvtavozrvn.supabase.co",
+  "results": {
+    "A1 the real server: e-mail sign-in on, phone off, sign-up open, no e-mail confirmation (mailer_autoconfirm)": {
+      "result": "PASS",
+      "email": true,
+      "phone": false,
+      "disable_signup": false,
+      "mailer_autoconfirm": true
+    },
+    "A2 after a reload the saved session is used: synced again, no password sent, the sign-in button hidden": {
+      "result": "PASS",
+      "err0": ""
+    },
+    "A3 an expired session is refreshed by the server: new access and refresh tokens, synced, local data unchanged": {
+      "result": "PASS",
+      "refreshCalls": [
+        200
+      ]
+    },
+    "A4 the server refuses a 7-character password (minimum 8 is set on the server)": {
+      "result": "PASS",
+      "status": 422,
+      "error_code": "weak_password",
+      "msg": "Password should be at least 8 characters."
+    },
+    "A6 signing out on another phone ends only that phone's session: this phone still refreshes and syncs": {
+      "result": "PASS"
+    },
+    "A7 when the server ends the session, the phone shows \"the connection ended, sign in again\", keeps every local byte, and a new sign-in works": {
+      "result": "PASS",
+      "logoutStatus": 204,
+      "text": "החיבור לחשבון הסתיים. היכנסו שוב כדי לסנכרן. הנתונים במכשיר לא נפגעו."
+    },
+    "A5 sign out on this phone: the server ends the session (logout 204, the old refresh token is refused), the session leaves the phone, the trip stays": {
+      "result": "PASS",
+      "logout": 204,
+      "stored": [],
+      "refreshWithOldRefreshToken": 400,
+      "authUserWithOldAccessToken": 403,
+      "rpcWithOldAccessToken": 200,
+      "note": "An access token is a signed JWT: the database accepts it until it expires (at most 1 hour, the project default). The refresh token and the session are gone at once."
+    },
+    "A8 manual reset (the documented SQL command) then \"change password\" in the app: the old password is refused, the temporary one works, the new one replaces it": {
+      "result": "PASS",
+      "old": "המייל או הסיסמה לא נכונים.",
+      "tempAgain": "המייל או הסיסמה לא נכונים.",
+      "onlyPass": [
+        "pass"
+      ]
+    },
+    "A9 sign-up in the app: bad address and short password stop in the phone; a good form sends one request to the project's /auth/v1/signup with the publishable key, the name and phone, PKCE and the site as the return address": {
+      "result": "PASS",
+      "fields": [
+        "email",
+        "pass",
+        "name",
+        "phone"
+      ],
+      "bodyKeys": [
+        "code_challenge",
+        "code_challenge_method",
+        "data",
+        "email",
+        "gotrue_meta_security",
+        "password"
+      ],
+      "redirect_to": "http://127.0.0.1:8197/",
+      "badMail": "צריך כתובת מייל תקינה.",
+      "short": "הסיסמה צריכה 8 תווים לפחות.",
+      "stopped": "אין חיבור לשרת כרגע. הנתונים נשמרים במכשיר, ונסנכרן כשיחזור החיבור."
+    },
+    "only this site and the project were contacted": {
+      "result": "PASS",
+      "outside": []
+    },
+    "no JS errors": {
+      "result": "PASS",
+      "errors": []
+    }
+  },
+  "info": {
+    "afterSignOut": {
+      "refreshWithOldRefreshToken": 400,
+      "authUserWithOldAccessToken": 403,
+      "rpcWithOldAccessToken": 200,
+      "note": "An access token is a signed JWT: the database accepts it until it expires (at most 1 hour, the project default). The refresh token and the session are gone at once."
+    }
+  },
+  "authCalls": {
+    "GET /auth/v1/settings 200": 1,
+    "POST /auth/v1/token?password 200": 6,
+    "POST /auth/v1/token?refresh_token 200": 2,
+    "PUT /auth/v1/user 422": 1,
+    "POST /auth/v1/logout 204": 4,
+    "POST /auth/v1/token?refresh_token 400": 2,
+    "GET /auth/v1/user 403": 1,
+    "POST /auth/v1/token?password 400": 2,
+    "PUT /auth/v1/user 200": 1
+  }
+}

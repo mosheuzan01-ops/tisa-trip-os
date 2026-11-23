@@ -1,0 +1,2 @@
+slow proxy on 8172 -> 9172, delay 1500ms on /vendor/supabase/
+delayed requests: 1

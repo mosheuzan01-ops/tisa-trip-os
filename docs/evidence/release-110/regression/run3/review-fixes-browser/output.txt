@@ -1,0 +1,11 @@
+PASS RF-1a tap on the sheet top strip keeps it open with the typed amount
+PASS RF-1b tap on the backdrop still closes the sheet
+PASS RF-1c Escape still closes the sheet
+PASS RF-1d focus returns to the button that opened the sheet
+PASS RF-2 an expense typed as 12,50 is saved as 1250 agorot (12.50 shekels)
+PASS RF-3a the imported place is listed
+PASS RF-3b editing the imported place saves and closes the sheet
+PASS RF-3c deleting the imported place from its edit sheet asks first, then removes it
+PASS RF-E no page errors
+PASS RF-N no request leaves the app
+ALL PASS

@@ -113,6 +113,50 @@ export function createStorage({ backend, key, legacy = {}, corruptPrefix = 'tisa
   };
 }
 
+// ---------- Stage 14: two NEW keys under the "latisa:" prefix (owner, 2026-11-23). tisa:* keys never change. ----------
+export const SYNC_KEY = 'latisa:sync:v1';
+export const AUTH_KEY = 'latisa:auth:v1';
+export const CLOUD_COPY_KEY = 'latisa:premigration:v1';
+
+/** One small JSON value under one key (the sync state). Never throws; a failed write reports false. */
+export function createKv({ backend, key }) {
+  return {
+    read() {
+      try { const raw = backend?.getItem(key); return raw ? JSON.parse(raw) : null; } catch { return null; }
+    },
+    write(value) {
+      try { if (!backend) return false; backend.setItem(key, JSON.stringify(value)); return true; } catch { return false; }
+    },
+  };
+}
+
+/** The storage the Supabase client gets for its sign-in session. Only keys under latisa:auth: are read or written,
+ *  so the client can never touch tisa:* data. Passwords are never stored (the client sends them once, over HTTPS). */
+export function authStorage(backend, prefix = 'latisa:auth:') {
+  const ok = (k) => typeof k === 'string' && k.startsWith(prefix);
+  return {
+    getItem(k) { if (!ok(k)) return null; try { return backend?.getItem(k) ?? null; } catch { return null; } },
+    setItem(k, v) { if (!ok(k)) return; try { backend?.setItem(k, v); } catch { /* full or blocked: the session lives in memory */ } },
+    removeItem(k) { if (!ok(k)) return; try { backend?.removeItem(k); } catch { /* blocked */ } },
+  };
+}
+
+/** Before the first upload to the cloud: keep the exact text of the data key once (never overwritten). */
+export function keepCloudCopy(backend, dataKey, copyKey = CLOUD_COPY_KEY) {
+  try {
+    if (!backend || backend.getItem(copyKey) !== null) return false;
+    const raw = backend.getItem(dataKey);
+    if (raw === null) return false;
+    backend.setItem(copyKey, raw);
+    return true;
+  } catch { return false; }
+}
+
+/** True when a sign-in session was saved on this device (read without loading the Supabase library). */
+export function hasSavedSession(backend, key = AUTH_KEY) {
+  try { return Boolean(backend?.getItem(key)); } catch { return false; }
+}
+
 /** The browser's localStorage, or null when even touching it throws (some private modes, blocked site data). */
 export function browserBackend() {
   try {

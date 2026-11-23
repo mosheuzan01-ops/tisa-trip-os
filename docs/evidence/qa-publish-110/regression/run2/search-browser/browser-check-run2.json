@@ -1,0 +1,206 @@
+{
+  "S51-4 money (mobile)": {
+    "result": "PASS",
+    "all": 11,
+    "bkk": [
+      "מלון בבנגקוק",
+      "פאד תאי"
+    ],
+    "bkkSummary": "2 הוצאות מוצגות, סה\"כ ‏1,280 ‏₪. הסיכום למעלה לא משתנה.",
+    "hotel": [
+      "מלון בבנגקוק",
+      "מלון בצ׳יאנג מאי",
+      "קפה"
+    ],
+    "hotelSummary": "3 הוצאות מוצגות, סה\"כ ‏2,195 ‏₪. הסיכום למעלה לא משתנה.",
+    "byMethod": 11,
+    "empty": "אין תוצאות",
+    "cleared": {
+      "count": 11,
+      "value": "",
+      "summaryHidden": true
+    }
+  },
+  "S51-5 totals unchanged (mobile)": {
+    "result": "PASS",
+    "t0": {
+      "after": "‏8,675 ‏₪",
+      "before": "פנוי לפני התכנון: ‏8,675 ‏₪"
+    },
+    "t1": {
+      "after": "‏8,675 ‏₪",
+      "before": "פנוי לפני התכנון: ‏8,675 ‏₪"
+    }
+  },
+  "S51-6 money sticky (mobile)": {
+    "result": "PASS",
+    "moneySticky": {
+      "scrollY": 3270,
+      "barTop": 0,
+      "barBottom": 142,
+      "inView": true,
+      "heroCovered": false,
+      "navCovered": false,
+      "value": "מ",
+      "hscroll": false,
+      "foldsOpen": 0,
+      "listVisibleUnderBar": true
+    },
+    "stuckFilter": 2,
+    "atTop": {
+      "heroAboveBar": true
+    }
+  },
+  "S51-4 lists (mobile)": {
+    "result": "PASS",
+    "li": {
+      "items": [
+        "כתובת הלינה הראשונה בבנגקוק באנגלית",
+        "מפות אופליין לבנגקוק וליעדים במסלול",
+        "כבל טעינה ומטען נייד"
+      ],
+      "tasks": [
+        "לאשר מלון בבנגקוק"
+      ],
+      "summary": "מוצגים: 3 פריטים, משימה אחת."
+    },
+    "lh": {
+      "items": 0,
+      "tasks": [
+        "לאשר מלון בבנגקוק"
+      ]
+    },
+    "esim": [
+      "eSIM או כרטיס SIM",
+      "הפעלת eSIM או SIM, אם נרכש"
+    ],
+    "lEmpty": {
+      "text": "אין תוצאות",
+      "visible": true
+    },
+    "bars0": "0 מתוך 25 (0%)",
+    "bars1": "0 מתוך 25 (0%)",
+    "lCleared": {
+      "items": 61,
+      "tasks": 8,
+      "noResultsHidden": true
+    }
+  },
+  "S51-6 lists sticky (mobile)": {
+    "result": "PASS",
+    "listsSticky": {
+      "scrollY": 4703,
+      "barTop": 0,
+      "inView": true,
+      "progressCovered": false,
+      "value": "ה",
+      "toggle": true,
+      "toggleInBar": true,
+      "hscroll": false
+    }
+  },
+  "S51-4 money (desktop)": {
+    "result": "PASS",
+    "all": 11,
+    "bkk": [
+      "מלון בבנגקוק",
+      "פאד תאי"
+    ],
+    "bkkSummary": "2 הוצאות מוצגות, סה\"כ ‏1,280 ‏₪. הסיכום למעלה לא משתנה.",
+    "hotel": [
+      "מלון בבנגקוק",
+      "מלון בצ׳יאנג מאי",
+      "קפה"
+    ],
+    "hotelSummary": "3 הוצאות מוצגות, סה\"כ ‏2,195 ‏₪. הסיכום למעלה לא משתנה.",
+    "byMethod": 11,
+    "empty": "אין תוצאות",
+    "cleared": {
+      "count": 11,
+      "value": "",
+      "summaryHidden": true
+    }
+  },
+  "S51-5 totals unchanged (desktop)": {
+    "result": "PASS",
+    "t0": {
+      "after": "‏8,675 ‏₪",
+      "before": "פנוי לפני התכנון: ‏8,675 ‏₪"
+    },
+    "t1": {
+      "after": "‏8,675 ‏₪",
+      "before": "פנוי לפני התכנון: ‏8,675 ‏₪"
+    }
+  },
+  "S51-6 money sticky (desktop)": {
+    "result": "PASS",
+    "moneySticky": {
+      "scrollY": 2855,
+      "barTop": 0,
+      "barBottom": 142,
+      "inView": true,
+      "heroCovered": false,
+      "navCovered": false,
+      "value": "מ",
+      "hscroll": false,
+      "foldsOpen": 0,
+      "listVisibleUnderBar": true
+    },
+    "stuckFilter": 2,
+    "atTop": {
+      "heroAboveBar": true
+    }
+  },
+  "S51-4 lists (desktop)": {
+    "result": "PASS",
+    "li": {
+      "items": [
+        "כתובת הלינה הראשונה בבנגקוק באנגלית",
+        "מפות אופליין לבנגקוק וליעדים במסלול",
+        "כבל טעינה ומטען נייד"
+      ],
+      "tasks": [
+        "לאשר מלון בבנגקוק"
+      ],
+      "summary": "מוצגים: 3 פריטים, משימה אחת."
+    },
+    "lh": {
+      "items": 0,
+      "tasks": [
+        "לאשר מלון בבנגקוק"
+      ]
+    },
+    "esim": [
+      "eSIM או כרטיס SIM",
+      "הפעלת eSIM או SIM, אם נרכש"
+    ],
+    "lEmpty": {
+      "text": "אין תוצאות",
+      "visible": true
+    },
+    "bars0": "0 מתוך 25 (0%)",
+    "bars1": "0 מתוך 25 (0%)",
+    "lCleared": {
+      "items": 61,
+      "tasks": 8,
+      "noResultsHidden": true
+    }
+  },
+  "S51-6 lists sticky (desktop)": {
+    "result": "PASS",
+    "listsSticky": {
+      "scrollY": 4137,
+      "barTop": 0,
+      "inView": true,
+      "progressCovered": false,
+      "value": "ה",
+      "toggle": true,
+      "toggleInBar": true,
+      "hscroll": false
+    }
+  },
+  "no JS errors": {
+    "result": "PASS",
+    "errors": []
+  }
+}

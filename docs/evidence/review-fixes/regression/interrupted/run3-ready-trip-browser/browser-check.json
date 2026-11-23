@@ -1,0 +1,57 @@
+{
+  "T1 fresh install: no budget of its own (template categories at 0, \"—\"), no template card; the shared dates and their route": {
+    "result": "PASS",
+    "profile": null,
+    "total": 0,
+    "free": "—",
+    "dates": [
+      "2026-12-20",
+      "2027-01-20"
+    ],
+    "stops": 7
+  },
+  "T2 390px: no sideways scroll on the money screen": {
+    "result": "PASS"
+  },
+  "T3 dates on a new trip: the suggested route is built at once, from the day after departure to the return date, and kept after a reload": {
+    "result": "PASS",
+    "stops": [
+      "בנגקוק 2030-12-21–2030-12-24",
+      "קו טאו 2030-12-24–2030-12-28",
+      "קו סמוי 2030-12-28–2031-01-03",
+      "פוקט 2031-01-03–2031-01-08",
+      "קו פי פי 2031-01-08–2031-01-13",
+      "קו לנטה 2031-01-13–2031-01-18",
+      "בנגקוק 2031-01-18–2031-01-20"
+    ],
+    "stopCards": 7
+  },
+  "T4 390px: no sideways scroll on the itinerary": {
+    "result": "PASS"
+  },
+  "T5 template mode shows the new stops and says the old route goes to the archive; cancel changes nothing": {
+    "result": "PASS",
+    "previewText": "המסלול החדש (הצעה, לא הוזמן)\nבנגקוק\n21 בדצמ׳ – 24 בדצמ׳\nקו סמוי\n24 בדצמ׳ – 1 בינו׳\nקו טאו\n1 בינו׳ – 6 בינו׳\nפוקט\n6 בינו׳ – 12 בינו׳\nקו פי פי\n12 בינו׳ – 18 בינו׳\nקו לנטה\n18 בינו׳ – 23 בינו׳\nבנגקוק\n23 בינו׳ – 25 בינו׳\n\nהמסלול הנוכחי יישמר בארכיון. הוצאות, טיסות, צ'ק-אין ותמונות לא משתנים."
+  },
+  "T6 yes: new route ends on the new return date; the previous route is in the archive, unchanged; budget and checklist unchanged": {
+    "result": "PASS",
+    "archived": 1
+  },
+  "T7 old data: the itinerary card opens the template preview (nothing saved before yes); after yes the old stops are archived, expenses and budget unchanged": {
+    "result": "PASS",
+    "card": true,
+    "preset": true,
+    "untouched": true
+  },
+  "T8 \"not now\": only the answer is saved; the card stays hidden after a reload": {
+    "result": "PASS"
+  },
+  "run": {
+    "result": "FAIL",
+    "error": "page.screenshot: Target page, context or browser has been closed\nBrowser logs:\n\n<launching> /opt/pw-browsers/chromium_headless_shell-1243/chrome-headless-shell-linux64/chrome-headless-shell --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,Translate,AutoDeElevate,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/tmp/playwright_chromiumdev_profile-69r4LN --remote-debugging-pipe --no-startup-window\n<launched> pid=25023\n[pid=25023][err] [1123/154044.201097:ERROR:dbus/bus.cc:406] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory\n[pid=25023][err] [1123/154044.201222:ERROR:dbus/bus.cc:406] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are \"tcp\" and on UNIX \"unix\")\n[pid=25023][err] [1123/154044.201658:ERROR:dbus/bus.cc:406] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory\n[pid=25023][err] [1123/154044.201686:ERROR:dbus/bus.cc:406] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory\n[pid=25023][err] [1123/154044.202424:ERROR:dbus/bus.cc:406] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are \"tcp\" and on UNIX \"unix\")\n[pid=25023][err] [1123/154044.202783:WARNING:dbus/object_proxy.cc:439] Failed to connect to NameOwnerChanged signal for object: /org/freedesktop/portal/desktop\n[pid=25023][err] [1123/154044.202804:ERROR:dbus/bus.cc:406] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are \"tcp\" and on UNIX \"unix\")\n[pid=25023][err] [1123/154044.202812:ERROR:dbus/bus.cc:406] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are \"tcp\" and on UNIX \"unix\")\n[pid=25023][err] [1123/154044.210922:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: \n[pid=25023][err] [1123/154044.210975:WARNING:device/bluetooth/dbus/bluez_dbus_manager.cc:209] Floss manager service not available, cannot set Floss enable/disable.\n[pid=25023][err] [1123/154044.211733:ERROR:dbus/bus.cc:406] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are \"tcp\" and on UNIX \"unix\")\n[pid=25023][err] [1123/154044.214554:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: \n[pid=25023][err] [1123/154044.233235:WARNING:media/gpu/vaapi/vaapi_wrapper.cc:1652] drmGetDevices2() has not found any devices\n[pid=25023][err] [1123/154044.235709:WARNING:sandbox/policy/linux/sandbox_linux.cc:405] InitializeSandbox() called with multiple threads in process gpu-process.\n[pid=25023][err] [1123/154044.466575:INFO:CONSOLE:3] \"Service Worker registration blocked by Playwright\", source:  (3)\n[pid=25023][err] [1123/154044.529203:INFO:CONSOLE:811] \"[TISA] offline mode unavailable: Cannot read properties of undefined (reading 'waiting')\", source: http://127.0.0.1:8132/src/js/app.js (811)\n[pid=25023][err] [1123/154044.713585:INFO:CONSOLE:2] \"Uncaught SecurityError: Failed to read the 'sessionStorage' property from 'Window': Access is denied for this document.\", source:  (2)\n[pid=25023][err] [1123/154044.883496:INFO:CONSOLE:3] \"Service Worker registration blocked by Playwright\", source:  (3)\n[pid=25023][err] [1123/154044.906678:INFO:CONSOLE:811] \"[TISA] offline mode unavailable: Cannot read properties of undefined (reading 'waiting')\", source: http://127.0.0.1:8132/src/js/app.js (811)\n[pid=25023][err] [1123/154045.248602:INFO:CONSOLE:3] \"Service Worker registration blocked by Playwright\", source:  (3)\n[pid=25023][err] [1123/154045.291163:INFO:CONSOLE:811] \"[TISA] offline mode unavailable: Cannot read properties of undefined (reading 'waiting')\", source: http://127.0.0.1:8132/src/js/app.js (811)\n[pid=25023][err] [1123/154045.916499:INFO:CONSOLE:2] \"Uncaught SecurityError: Failed to read the 'sessionStorage' property from 'Window': Access is denied for this document.\", source:  (2)\n[pid=25023][err] [1123/154046.106285:INFO:CONSOLE:3] \"Service Worker registration blocked by Playwright\", source:  (3)\n[pid=25023][err] [1123/154046.158122:INFO:CONSOLE:811] \"[TISA] offline mode unavailable: Cannot read properties of undefined (reading 'waiting')\", source: http://127.0.0.1:8132/src/js/app.js (811)\n[pid=25023][err] [1123/154046.509907:INFO:CONSOLE:2] \"Uncaught SecurityError: Failed to read the 'sessionStorage' property from 'Window': Access is denied for this document.\", source:  (2)\n[pid=25023][err] [1123/154046.672383:INFO:CONSOLE:3] \"Service Worker registration blocked by Playwright\", source:  (3)\n[pid=25023][err] [1123/154046.716161:INFO:CONSOLE:811] \"[TISA] offline mode unavailable: Cannot read properties of undefined (reading 'waiting')\", source: http://127.0.0.1:8132/src/js/app.js (811)\n[pid=25023][err] [1123/154046.963684:INFO:CONSOLE:3] \"Service Worker registration blocked by Playwright\", source:  (3)\n[pid=25023][err] [1123/154046.988525:INFO:CONSOLE:811] \"[TISA] offline mode unavailable: Cannot read properties of undefined (reading 'waiting')\", source: http://127.0.0.1:8132/src/js/app.js (811)\n[pid=25023][err] [1123/154047.242000:INFO:CONSOLE:3] \"Service Worker registration blocked by Playwright\", source:  (3)\n[pid=25023][err] [1123/154047.289631:INFO:CONSOLE:811] \"[TISA] offline mode unavailable: Cannot read properties of undefined (reading 'waiting')\", source: http://127.0.0.1:8132/src/js/app.js (811)\n[pid=25023] <gracefully close start>\n[pid=25023][err] [1123/154047.744455:ERROR:content/common/zygote/zygote_communication_linux.cc:313] Failed to send GetTerminationStatus message to zygote\n[pid=25023][err] [1123/154047.744469:WARNING:content/common/zygote/zygote_communication_linux.cc:325] Socket closed prematurely.\n[pid=25023][err] [1123/154047.747598:ERROR:content/common/zygote/zygote_communication_linux.cc:313] Failed to send GetTerminationStatus message to zygote\n[pid=25023][err] [1123/154047.747616:WARNING:content/common/zygote/zygote_communication_linux.cc:325] Socket closed prematurely.\nCall log:\n\u001b[2m  - taking page screenshot\u001b[22m\n\u001b[2m  - waiting for fonts to load...\u001b[22m\n\u001b[2m  - fonts loaded\u001b[22m\n\n    at /home/user/tisa-trip-os/scripts/qa/ready-trip-browser.cjs:187:20"
+  },
+  "no JS errors": {
+    "result": "PASS",
+    "errors": []
+  }
+}

@@ -147,12 +147,14 @@ async function shots(browser, label) {
       });
       const allOk = Object.values(res.out).every((x) => x.status === 200 && /image\/png/.test(x.type) && x.w === x.h);
       pass('L-6 every favicon, touch and manifest icon loads as a square PNG', allOk && /^LATISA/.test(res.name) && res.short === 'LATISA' && Object.keys(res.out).length === 5, res);
-      // Render the home-screen icons through the real masks for the evidence sheet.
-      await page.setContent(`<body style="margin:0;background:#fff;display:flex;gap:24px;padding:24px;font:14px sans-serif">
+      // Render the home-screen icons through the real masks for the evidence sheet. On a page of its own: the app's
+      // page has a Content-Security-Policy (stage 14) that rightly refuses the sheet's inline styles.
+      const sheet = await ctx.newPage();
+      await sheet.setContent(`<body style="margin:0;background:#fff;display:flex;gap:24px;padding:24px;font:14px sans-serif">
         ${[['icons/icon-maskable-512.png', '50%', 'maskable: circle'], ['icons/icon-maskable-512.png', '22%', 'maskable: rounded square'], ['icons/icon-maskable-512.png', '0', 'maskable: full square'], ['icons/apple-touch-icon-180.png', '22.37%', 'iOS 180'], ['icons/icon-512.png', '0', 'icon 512 (any)'], ['icons/favicon-32.png', '0', 'favicon 32']]
           .map(([s, r, t]) => `<figure style="margin:0;text-align:center"><img src="${BASE}${s}" style="width:160px;height:160px;border-radius:${r};image-rendering:${s.includes('32') ? 'pixelated' : 'auto'}"><figcaption>${t}</figcaption></figure>`).join('')}</body>`);
-      await page.waitForFunction(() => [...document.images].every((i) => i.complete && i.naturalWidth > 0));
-      if (SHOTS) await page.screenshot({ path: `${OUT}/after-icon-masks.png`, fullPage: true });
+      await sheet.waitForFunction(() => [...document.images].every((i) => i.complete && i.naturalWidth > 0));
+      if (SHOTS) await sheet.screenshot({ path: `${OUT}/after-icon-masks.png`, fullPage: true });
       await ctx.close();
     }
 
