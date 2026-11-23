@@ -27,7 +27,7 @@
 | FAIL ‏inputs without label: 83 | KNOWN (כלל 7, חריגת שלב 14, ‏GOALS_1.0.1) | שדות עטופים ב-`<label>`, ו-5 שדות קובץ מוסתרים | QP-K3: לכל שדה נראה בכל מסך יש שם נגיש. ‏`a11y-names-browser` ו-`stage14-browser` › A11Y עברו |
 | WARN ‏width/height ×2 | KNOWN (‏GOALS_STAGE13 ‏W2) | `photo-big`, ‏`slides-img` בתוך חלונות | — |
 | WARN ‏reduced-motion | KNOWN (כלל 7) | מטופל ב-`src/css/main.css` | QP-K4: עם reduced motion החלון נפתח בלי אנימציה |
-| WARN ‏lazy ×2 | לא בעיה אמיתית | אותן 2 תמונות. אין להן `src` ב-HTML. הן מקבלות `blob:` מ-IndexedDB רק כשהחלון נפתח, ולכן אין טעינה מהרשת שאפשר לדחות. דווח כ-WARN ב-GOALS_STAGE13 (שורה 7), בלי החלטה. להוספה לרשימת ה-KNOWN צריך אישור | — |
+| WARN ‏lazy ×2 | KNOWN (כלל 7, אושר ב-2026-11-23) | אותן 2 תמונות (`photo-big`, ‏`slides-img`). אין להן `src` ב-HTML. הן מקבלות `blob:` מ-IndexedDB רק כשהחלון נפתח, ולכן אין טעינה מהרשת שאפשר לדחות. רק שתיהן: כל תמונה אחרת בלי lazy נשארת WARN | QP-3 נכשל אם תמונה נוספת בלי lazy, או אם לאחת מהשתיים נוסף `src` |
 | WARN שדות עטופים ב-label (חדש בסורק) | שייך ל-KNOWN של השדות | הסורק לא רואה עטיפה | QP-K3 |
 
 **brand.html:** ‏FAIL 0, ו-WARN 2: ‏lazy ×7 (KNOWN, ‏GOALS_STAGE13 ‏W3) ו-reduced-motion (KNOWN).
@@ -65,3 +65,10 @@
 - **האתר החי ו-PageSpeed:** 1.1.0 לא פורסמה (main על 1.0.1).
 - **הרשמה אמיתית, "שכחתי סיסמה" במייל, השהיית הפרויקט:** דורשים מייל אמיתי או פעולה בלוח של Supabase.
 - **בדיקות מול הפרויקט האמיתי** (`stage14-real-*`): לא הורצו כאן, כי הן יוצרות משתמשי בדיקה בשרת. לא היה שינוי בקוד הכניסה.
+
+## הוספת שתי אזהרות lazy ל-KNOWN (2026-11-23, באישור בעל המוצר)
+- **מה נוסף:** רק `photo-big` ו-`slides-img` (כלל 7 ב-`docs/RULES.md`). אזהרות lazy אחרות לא מושתקות.
+- **השמירה:** `tests/qa-publish-110.test.js` › QP-3 נכשל אם מופיעה תמונה נוספת בלי lazy, אם לאחת מהשתיים נוסף `src` ב-HTML, או אם הכלל יוסר מ-RULES.
+- **red:** `known-lazy/red.txt` (assertion: RULES עוד לא מזכיר אותן).
+- **בדיקה ממוקדת ×3:** `known-lazy/run1..3.txt` (‏`tests/qa-publish-110.test.js`), ו-`known-lazy/qa-scan-index.txt` (הסורק לא השתנה, ‏WARN 4 כמו קודם).
+- **brand.html:** ה-WARN על lazy שם (W3 ב-GOALS_STAGE13) לא שייך להחלטה הזו.

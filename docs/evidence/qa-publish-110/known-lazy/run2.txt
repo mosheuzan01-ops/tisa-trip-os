@@ -1,0 +1,46 @@
+TAP version 13
+# Subtest: QP-1a safeLink keeps http and https links as they are
+ok 1 - QP-1a safeLink keeps http and https links as they are
+  ---
+  duration_ms: 0.813306
+  type: 'test'
+  ...
+# Subtest: QP-1b safeLink refuses every other scheme and every malformed value
+ok 2 - QP-1b safeLink refuses every other scheme and every malformed value
+  ---
+  duration_ms: 0.190162
+  type: 'test'
+  ...
+# Subtest: QP-1c the transfer and check-in lists show a link only through safeLink
+ok 3 - QP-1c the transfer and check-in lists show a link only through safeLink
+  ---
+  duration_ms: 0.515486
+  type: 'test'
+  ...
+# Subtest: QP-1d the form rules did not change: what the form accepts, safeLink shows
+ok 4 - QP-1d the form rules did not change: what the form accepts, safeLink shows
+  ---
+  duration_ms: 1.062991
+  type: 'test'
+  ...
+# Subtest: QP-2 CSV neutralises a cell that starts with a tab or a carriage return
+ok 5 - QP-2 CSV neutralises a cell that starts with a tab or a carriage return
+  ---
+  duration_ms: 0.291347
+  type: 'test'
+  ...
+# Subtest: QP-3 only photo-big and slides-img may skip loading=lazy, and only while they have no src in the HTML
+ok 6 - QP-3 only photo-big and slides-img may skip loading=lazy, and only while they have no src in the HTML
+  ---
+  duration_ms: 1.608807
+  type: 'test'
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 61.170918

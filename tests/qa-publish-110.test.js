@@ -52,3 +52,18 @@ test('QP-2 CSV neutralises a cell that starts with a tab or a carriage return', 
   assert.equal(body([['-12.50']]), '-12.50\r\n', 'a negative number stays a number');
   assert.equal(body([['פאד תאי']]), 'פאד תאי\r\n');
 });
+
+// QP-3 (owner approval, 2026-11-23): the scanner's "no loading=lazy" WARN is KNOWN for exactly two images, photo-big and
+// slides-img. They have no src in the HTML; the app gives them a blob: URL from IndexedDB only when their sheet opens,
+// so there is nothing to load from the network and nothing to defer. Any other image without lazy is still a WARN.
+test('QP-3 only photo-big and slides-img may skip loading=lazy, and only while they have no src in the HTML', () => {
+  const html = read('index.html');
+  const imgs = [...html.matchAll(/<img\b[^>]*>/g)].map((m) => m[0]);
+  const attr = (tag, name) => tag.match(new RegExp(`\\s${name}="([^"]*)"`))?.[1];
+  const noLazy = imgs.slice(2).filter((tag) => attr(tag, 'loading') !== 'lazy'); // the scanner skips the first two images
+  assert.deepEqual(noLazy.map((tag) => attr(tag, 'class')).sort(), ['photo-big', 'slides-img'], 'no other image without lazy');
+  for (const tag of noLazy) assert.equal(attr(tag, 'src'), undefined, `${attr(tag, 'class')}: no src in the HTML (blob: at run time only)`);
+  const rules = read('docs/RULES.md');
+  assert.match(rules, /lazy[^\n]*`photo-big`[^\n]*`slides-img`/, 'RULES.md rule 7 names exactly these two images');
+  assert.match(rules, /lazy[^\n]*(כל תמונה אחרת|אחרת)[^\n]*WARN/, 'RULES.md says any other image without lazy stays WARN');
+});
