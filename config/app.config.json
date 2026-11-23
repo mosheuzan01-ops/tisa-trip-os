@@ -18,6 +18,10 @@
     "he": "ישראל",
     "en": "Israel"
   },
-  "appVersion": "1.0.1",
-  "mapsSearchUrl": "https://www.google.com/maps/search/?api=1&query="
+  "appVersion": "1.1.0",
+  "mapsSearchUrl": "https://www.google.com/maps/search/?api=1&query=",
+  "cloud": {
+    "url": "",
+    "publishableKey": ""
+  }
 }

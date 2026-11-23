@@ -7,7 +7,7 @@ import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
-import { ROOT, readText, listFiles } from './helpers.js';
+import { ROOT, readText } from './helpers.js';
 
 const PIN = {
   version: '2.119.2',
@@ -51,9 +51,5 @@ test('V4: CREDITS.md records the file, version, license and hash', () => {
   }
 });
 
-test('V5 (step 1 scope): the app does not load the library yet, so 1.0.1 behaviour is unchanged', () => {
-  // Step B (sign-in) replaces this check with: loaded only after sign-in, and listed in the service worker cache.
-  for (const file of ['index.html', 'sw.js', 'manifest.webmanifest', ...listFiles('src', ['.js', '.css', '.html'])]) {
-    assert.doesNotMatch(readText(file), /vendor\/|supabase/i, `${file} references the library`);
-  }
-});
+// V5 moved to tests/stage14-rules.test.js when the app started to use the library (stage 14, step B): loaded only
+// when needed, only from this site, with this same hash as subresource integrity.

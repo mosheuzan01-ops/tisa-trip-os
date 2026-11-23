@@ -297,7 +297,7 @@ export function setupItinerary(ctx, { wireDialog, showFormErrors }) {
     }
     if (action === 'seed-open') openSeed(btn);
     if (action === 'seed-archive-open') openSeed(btn, 'archive');
-    if (action === 'replan-open') openReplan(btn);
+    if (action === 'replan-open') { if (ctx.datesLocked?.()) { ctx.toast('cloud.datesOwnerOnly'); return; } openReplan(btn); } // Stage 14: owner only
     if (action === 'itin-template-open') openReplan(btn, null, null, 'template');
     if (action === 'itin-template-decline') {
       commit((s) => declineTemplate(s.trips[s.activeTripId]), 'tpl.declined');

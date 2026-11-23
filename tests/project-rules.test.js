@@ -3,7 +3,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { existsSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
-import { ROOT, readText, readJson, listFiles, stripShareImage } from './helpers.js';
+import { ROOT, readText, readJson, listFiles, stripApproved } from './helpers.js';
 import { validateCountry } from '../src/js/core/country.js';
 
 const appFiles = ['index.html', ...listFiles('src', ['.js', '.css'])];
@@ -22,7 +22,7 @@ test('G8: page is Hebrew and RTL', () => {
 
 test('G9: no external URLs (no CDN) in app code', () => {
   for (const file of appFiles) {
-    assert.doesNotMatch(stripShareImage(readText(file)), /https?:\/\//, `${file} references an external URL`);
+    assert.doesNotMatch(stripApproved(readText(file)), /https?:\/\//, `${file} references an external URL`);
   }
 });
 
@@ -49,8 +49,13 @@ test('G12: settings and locales are complete', () => {
 });
 
 test('G14 + G15: no secrets, cookies or analytics', () => {
+  // Stage 14 (owner, 2026-11-23): sign-in with email and password (Supabase Auth) is approved, so the words
+  // "password" and "token" may appear only in the sign-in files below. Everything else stays banned everywhere, and
+  // real secrets (service_role, sb_secret_, database passwords) are searched for in tests/stage14-rules.test.js (S14-8).
+  const SIGN_IN_FILES = ['index.html', 'src/js/cloud-view.js', 'src/js/core/cloud-api.js', 'src/js/core/storage.js'];
   const banned = /api[_-]?key|\bsecret\b|password|\btoken\b|document\.cookie|gtag|analytics|sendBeacon/i;
-  for (const file of appFiles) assert.doesNotMatch(readText(file), banned, file);
+  const bannedInSignIn = /api[_-]?key|\bsecret\b|document\.cookie|gtag|analytics|sendBeacon/i;
+  for (const file of appFiles) assert.doesNotMatch(readText(file), SIGN_IN_FILES.includes(file) ? bannedInSignIn : banned, file);
 });
 
 test('G16: no prices or dates in data (Stage 0 must not invent them)', () => {

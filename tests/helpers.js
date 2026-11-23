@@ -27,6 +27,14 @@ export const PAGES_ORIGIN = 'https://mosheuzan01-ops.github.io/tisa-trip-os/';
 export const stripShareImage = (text) =>
   text.replace(/<meta property="og:image" content="https:\/\/mosheuzan01-ops\.github\.io\/tisa-trip-os\/[^"]*">/g, '');
 
+/** Stage 14 (owner, 2026-11-23; rule 5, third approved exception): the one Content-Security-Policy tag, whose only
+ *  outside host is Supabase (https://*.supabase.co, for data; nothing is loaded from it). Exact text only: any other
+ *  outside address, or a changed policy, still fails G9, B19 and S2. tests/stage14-rules.test.js checks the policy. */
+export const CSP_META = `<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data: blob:; media-src 'self' blob:; font-src 'self'; connect-src 'self' https://*.supabase.co; worker-src 'self'; manifest-src 'self'; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'">`;
+export const stripCsp = (text) => text.split(CSP_META).join('');
+/** Both approved exceptions in HTML: the share image (rule 5) and the CSP tag (stage 14). */
+export const stripApproved = (text) => stripCsp(stripShareImage(text));
+
 /** Stage 9 (schema 6) adds two empty fields to every budget. Older migration tests compare the rest unchanged;
  *  tests/stage9-data.test.js checks the two new fields themselves. */
 export const preV6 = (budget) => {
