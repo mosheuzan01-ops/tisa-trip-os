@@ -187,6 +187,9 @@ const shot = async (page, name) => { if (SHOTS) await page.screenshot({ path: pa
     const [download] = await Promise.all([pageA.waitForEvent('download'), pageA.click('[data-cloud="migrate-yes"]')]);
     backupPath = path.join(OUT, `backup-run.json`);
     await download.saveAs(backupPath);
+    // Rule 6: wait for the real state (the records are in the cloud and the pill says so), not for a pill that was
+    // already "synced" from the sign-in before the upload started (run 2 of the first final regression caught this).
+    for (let i = 0; i < 150 && !(fake.records.size > 10 && fake.trips.size === 1); i += 1) await pageA.waitForTimeout(100);
     await waitPill(pageA, 'מסונכרן');
     const count1 = fake.records.size;
     const copy = await pageA.evaluate(() => localStorage.getItem('latisa:premigration:v1'));
