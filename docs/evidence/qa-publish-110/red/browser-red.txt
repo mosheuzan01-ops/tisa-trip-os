@@ -1,0 +1,11 @@
+FAIL QP-1a only http(s) links are shown (transfers and check-ins)
+PASS QP-1b the rows with a refused link are still shown
+PASS QP-1c the stored data is not changed (nothing deleted or rewritten)
+PASS QP-K1 exactly one visible h1 on every screen at every width
+FAIL QP-K3 every visible field on every screen has an accessible name
+PASS QP-M no sideways scroll on any screen at 360/390/768/1280
+PASS QP-K2 #/settings and #/home are routes that open their screen
+PASS QP-K4 reduced motion: the sheet opens with no animation
+PASS QP-E no page errors
+PASS QP-N no request leaves the app
+FAIL 2

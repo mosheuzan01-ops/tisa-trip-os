@@ -2,7 +2,7 @@
 // (core/transfers.js), and each stop on the itinerary lists the transfers on its days. All copy from locales.
 import { interpolate } from './core/i18n.js';
 import {
-  KINDS, TRANSFER_STATUSES, TICKETS, validateTransfer, saveTransfer, removeTransfer, sortTransfers,
+  KINDS, TRANSFER_STATUSES, TICKETS, validateTransfer, saveTransfer, removeTransfer, sortTransfers, safeLink,
 } from './core/transfers.js';
 import { parseFlightsFile, importFlights } from './core/flights.js';
 import { currenciesFor } from './core/money.js';
@@ -65,9 +65,10 @@ export function renderTransfers(ctx) {
       li.append(seat);
     }
     if (x.note) li.append(el('p', 'item-note', x.note));
-    if (x.link) {
+    const href = safeLink(x.link); // QP-1: also from a backup, a file or a shared trip, so checked again here
+    if (href) {
       const a = el('a', 'transfer-link', t('transfer.openLink'));
-      a.href = x.link; // typed by the user; validated as http(s) only
+      a.href = href;
       a.target = '_blank';
       a.rel = 'noopener noreferrer';
       li.append(a);

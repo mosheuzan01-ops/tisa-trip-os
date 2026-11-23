@@ -1,0 +1,360 @@
+TAP version 13
+# Subtest: QP-1a safeLink keeps http and https links as they are
+not ok 1 - QP-1a safeLink keeps http and https links as they are
+  ---
+  duration_ms: 1.391585
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/qa-publish-110.test.js:15:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    safeLink is exported from core/transfers.js
+    + actual - expected
+    
+    + 'undefined'
+    - 'function'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'function'
+  actual: 'undefined'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/qa-publish-110.test.js:16:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.start (node:internal/test_runner/test:944:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+  ...
+# Subtest: QP-1b safeLink refuses every other scheme and every malformed value
+not ok 2 - QP-1b safeLink refuses every other scheme and every malformed value
+  ---
+  duration_ms: 0.324464
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/qa-publish-110.test.js:22:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'undefined'
+    - 'function'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'function'
+  actual: 'undefined'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/qa-publish-110.test.js:23:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: QP-1c the transfer and check-in lists show a link only through safeLink
+not ok 3 - QP-1c the transfer and check-in lists show a link only through safeLink
+  ---
+  duration_ms: 0.501566
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/qa-publish-110.test.js:31:1'
+  failureType: 'testCodeFailure'
+  error: 'src/js/transfers-view.js: no raw stored link in href'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    // 0.5.3 flights and transfers screen: everything entered by hand. A price keeps one linked expense in step
+    // (core/transfers.js), and each stop on the itinerary lists the transfers on its days. All copy from locales.
+    import { interpolate } from './core/i18n.js';
+    import {
+      KINDS, TRANSFER_STATUSES, TICKETS, validateTransfer, saveTransfer, removeTransfer, sortTransfers,
+    } from './core/transfers.js';
+    import { parseFlightsFile, importFlights } from './core/flights.js';
+    import { currenciesFor } from './core/money.js';
+    import { formatDate } from './core/itinerary.js';
+    import { moneyState, formatMinor } from './money-view.js';
+    import { makeId } from './core/ids.js';
+    
+    const $ = (sel, root = document) => root.querySelector(sel);
+    const ICONS = './assets/icons.svg#';
+    const el = (tag, className, text) => {
+      const node = document.createElement(tag);
+      if (className) node.className = className;
+      if (text !== undefined) node.textContent = text;
+      return node;
+    };
+    
+    const cleanTransfers = (list) => (Array.isArray(list) ? list.filter((x) => x && typeof x.id === 'string' && KINDS.includes(x.kind)) : []);
+    export const routeText = (t, x) => interpolate(t('transfer.route'), { from: x.from, to: x.to });
+    
+    export function renderTransfers(ctx) {
+      const panel = $('#panel-transfers');
+      if (!panel) return;
+      const { t, fmtLocale } = ctx;
+      const list = sortTransfers(cleanTransfers(ctx.trip().transfers));
+      $('[data-slot="transfers-empty"]').hidden = list.length > 0;
+      const box = $('[data-slot="transfer-list"]');
+      const focused = box.contains(document.activeElement) ? [document.activeElement.dataset.action, document.activeElement.dataset.id] : null;
+      box.replaceChildren(...list.map((x) => {
+        const li = el('li', `transfer surface is-${x.status}`);
+        li.dataset.id = x.id;
+        const top = el('div', 'item-top');
+        const kind = el('span', 'transfer-kind');
+        kind.innerHTML = `<svg class="icon" aria-hidden="true"><use href="${ICONS}${x.kind === 'flight' ? 'i-plane' : 'i-route'}"/></svg>`;
+        kind.append(el('span', 'sr-only', t(`transfer.kind.${x.kind}`)));
+        top.append(kind, el('span', 'transfer-route', routeText(t, x)), el('span', `badge transfer-status`, t(`transfer.status.${x.status}`)));
+        const actions = el('div', 'stop-actions row-actions');
+        for (const [icon, label, action] of [['i-edit', 'transfer.editLabel', 'transfer-edit'], ['i-trash', 'transfer.deleteLabel', 'transfer-delete']]) {
+          const b = el('button', 'icon-btn stop-btn');
+          b.type = 'button';
+          b.dataset.action = action;
+          b.dataset.id = x.id;
+          b.setAttribute('aria-label', interpolate(t(label), { route: routeText(t, x) }));
+          b.innerHTML = `<svg class="icon" aria-hidden="true"><use href="${ICONS}${icon}"/></svg>`;
+          actions.append(b);
+        }
+        top.append(actions);
+        const meta = el('p', 'exp-meta');
+        meta.append(el('span', '', formatDate(x.date, fmtLocale)), el('span', x.time ? 'ltr' : 'muted', x.time || t('transfer.timeNone')), el('span', '', t(`transfer.kind.${x.kind}`)));
+        if (x.flightNo) meta.append(el('span', 'ltr transfer-flightno', x.flightNo));
+        if (x.company) meta.append(el('span', '', x.company));
+        if (x.booking) meta.append(el('span', '', interpolate(t('transfer.bookingShort'), { booking: x.booking })));
+        if (Number.isInteger(x.priceMinor)) meta.append(el('span', 'ltr transfer-price', formatMinor(x.priceMinor, x.currency, fmtLocale)));
+        if (x.kind === 'flight' && (x.ticket === 'roundtrip' || x.ticket === 'included')) meta.append(el('span', 'badge transfer-ticket', t(`transfer.ticketShort.${x.ticket}`)));
+        li.append(top, meta);
+        // Stage 9 PR 2: seat details stay on the flight; the seat payment is shown as not in the budget.
+        if (x.kind === 'flight' && (x.seat || Number.isInteger(x.seatPriceMinor))) {
+          const seat = el('p', 'exp-meta transfer-seat');
+          if (x.seat) seat.append(el('span', '', interpolate(t('transfer.seatShort'), { seat: x.seat })));
+          if (Number.isInteger(x.seatPriceMinor)) seat.append(el('span', '', interpolate(t('transfer.seatPriceShort'), { price: formatMinor(x.seatPriceMinor, x.currency, fmtLocale) })));
+          li.append(seat);
+        }
+        if (x.note) li.append(el('p', 'item-note', x.note));
+        if (x.link) {
+          const a = el('a', 'transfer-link', t('transfer.openLink'));
+          a.href = x.link; // typed by the user; validated as http(s) only
+          a.target = '_blank';
+          a.rel = 'noopener noreferrer';
+          li.append(a);
+        }
+        return li;
+      }));
+      if (focused) box.querySelector(`[data-action="${focused[0]}"][data-id="${CSS.escape(String(focused[1]))}"]`)?.focus();
+    }
+    
+    export function setupTransfers(ctx, { wireDialog, showFormErrors }) {
+      const panel = $('#panel-transfers');
+      if (!panel) return;
+      const { t } = ctx;
+      let opener = null;
+      const restore = () => { (opener?.isConnected ? opener : panel.querySelector('[data-action="transfer-add"]')).focus(); };
+      const option = (value, label) => Object.assign(document.createElement('option'), { value, textContent: label });
+      const list = () => cleanTransfers(ctx.trip().transfers);
+    
+      const dlg = $('#dlg-transfer');
+      const form = $('[data-form="transfer"]');
+      let editing = null;
+      wireDialog(dlg, restore);
+      const FIELDS = ['kind', 'from', 'to', 'date', 'time', 'flightNo', 'ticket', 'seat', 'company', 'booking', 'currency', 'link', 'status', 'note'];
+      const showFlight = () => { $('[data-slot="transfer-flight"]').hidden = form.kind.value !== 'flight'; };
+      form.kind.addEventListener('change', showFlight);
+      function open(x, from) {
+        opener = from;
+        editing = x;
+        form.reset();
+        showFormErrors(t, form, [], 'transferErr');
+        $('[data-slot="transfer-title"]').textContent = t(x ? 'transfer.editTitle' : 'transfer.addTitle');
+        $('[data-slot="transfer-kind"]').replaceChildren(...KINDS.map((k) => option(k, t(`transfer.kind.${k}`))));
+        $('[data-slot="transfer-status"]').replaceChildren(...Object.keys(TRANSFER_STATUSES).map((k) => option(k, t(`transfer.status.${k}`))));
+        $('[data-slot="transfer-ticket"]').replaceChildren(...TICKETS.map((k) => option(k, t(`transfer.ticket.${k}`))));
+        const currencies = currenciesFor(moneyState(ctx).rates);
+        $('[data-slot="transfer-currency"]').replaceChildren(...currencies.map((c) => option(c, c)));
+        if (x) {
+          for (const k of FIELDS) form[k].value = x[k] ?? '';
+          if (!form.ticket.value) form.ticket.value = 'oneway'; // records from before Stage 9 have no ticket
+          const asText = (m) => (Number.isInteger(m) ? (m / 100).toFixed(m % 100 ? 2 : 0) : '');
+          form.price.value = asText(x.priceMinor);
+          form.seatPrice.value = asText(x.seatPriceMinor);
+        } else {
+          form.kind.value = 'flight';
+          form.status.value = 'planned';
+          form.ticket.value = 'oneway';
+          form.currency.value = currencies[0];
+        }
+        showFlight();
+        dlg.showModal();
+        form.from.focus();
+      }
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const m = moneyState(ctx);
+        const input = Object.fromEntries([...FIELDS, 'price', 'seatPrice'].map((k) => [k, form[k].value]));
+        if (input.kind !== 'flight') Object.assign(input, { flightNo: '', ticket: 'oneway', seat: '', seatPrice: '' }); // hidden fields never block a bus
+        const errors = validateTransfer(input, currenciesFor(m.rates));
+        if (errors.length) { showFormErrors(t, form, errors, 'transferErr'); return; }
+        let savedId = null;
+        const result = ctx.change((st) => {
+          const trip = st.trips[st.activeTripId];
+          const next = saveTransfer(trip, input, editing, m.rates, () => makeId());
+          trip.transfers = next.transfers;
+          trip.expenses = next.expenses;
+          savedId = editing?.id ?? next.transfers[next.transfers.length - 1].id;
+        }, { now: true });
+        ctx.toast(!result?.ok ? 'form.saveFailed' : (input.price.trim() && input.ticket !== 'included' ? 'transfer.saved' : 'transfer.savedNoPrice'));
+        opener = $(`#panel-transfers [data-action="transfer-edit"][data-id="${CSS.escape(String(savedId))}"]`) ?? opener;
+        dlg.close();
+      });
+    
+      const dlgDel = $('#dlg-transfer-delete');
+      let deleting = null;
+      wireDialog(dlgDel, () => { deleting = null; restore(); });
+      $('[data-action="transfer-delete-confirm"]').addEventListener('click', () => {
+        const id = deleting;
+        if (!id) return;
+        const withExpense = dlgDel.querySelector('[name="withExpense"]').checked;
+        const result = ctx.change((st) => {
+          const trip = st.trips[st.activeTripId];
+          const next = removeTransfer(trip, id, withExpense);
+          trip.transfers = next.transfers;
+          trip.expenses = next.expenses;
+          trip.checkins = next.checkins; // 6.0d: a linked check-in stays, unlinked
+        }, { now: true });
+        ctx.toast(result?.ok ? 'transfer.deleted' : 'form.saveFailed');
+        opener = panel.querySelector('[data-action="transfer-edit"]') ?? panel.querySelector('[data-action="transfer-add"]');
+        dlgDel.close();
+      });
+    
+      // ---------- Stage 9 PR 2: import a latisa-flights file, after a yes ----------
+      const fileInput = $('#flights-import-file');
+      const importError = $('[data-slot="flights-import-error"]');
+      const dlgImport = $('#dlg-flights-import');
+      const importYes = $('[data-action="flights-import-confirm"]');
+      let pendingFlights = null;
+      wireDialog(dlgImport, () => { pendingFlights = null; fileInput.value = ''; restore(); });
+      const importOpts = (m) => ({ rates: m.rates, currencies: currenciesFor(m.rates), makeId: () => makeId() });
+      fileInput.addEventListener('change', async () => {
+        const file = fileInput.files?.[0];
+        if (!file) return;
+        let text;
+        try { text = await file.text(); } catch { importError.textContent = t('flights.import.err.read'); fileInput.value = ''; return; }
+        const parsed = parseFlightsFile(text);
+        if (!parsed.ok) { importError.textContent = t(`flights.import.err.${parsed.error}`); fileInput.value = ''; return; }
+        const preview = importFlights(ctx.trip(), parsed.flights, importOpts(moneyState(ctx))); // a dry run: nothing is saved
+        pendingFlights = parsed.flights;
+        $('[data-slot="flights-import-text"]').textContent = interpolate(t('flights.import.text'), { added: preview.added, dup: preview.duplicates.length, bad: preview.invalid.length });
+        importYes.disabled = preview.added === 0;
+        dlgImport.showModal();
+        (preview.added ? importYes : dlgImport.querySelector('[data-close]')).focus();
+      });
+      importYes.addEventListener('click', () => {
+        const flights = pendingFlights;
+        if (!flights) return;
+        pendingFlights = null; // a double tap imports once
+        const m = moneyState(ctx);
+        let added = 0;
+        const result = ctx.change((st) => {
+          const trip = st.trips[st.activeTripId];
+          const r = importFlights(trip, flights, importOpts(m)); // against the saved trip, so a duplicate is never added
+          trip.transfers = r.trip.transfers;
+          trip.expenses = r.trip.expenses;
+          added = r.added;
+        }, { now: true });
+        dlgImport.close();
+        if (!result?.ok) { ctx.toast('form.saveFailed'); return; }
+        if (added) ctx.toast('flights.import.done', { n: added }); else ctx.toast('flights.import.nothing');
+      });
+    
+      panel.addEventListener('click', (e) => {
+        const btn = e.target.closest('button[data-action]');
+        if (!btn) return;
+        const { action, id } = btn.dataset;
+        if (action === 'flights-import') { opener = btn; importError.textContent = ''; fileInput.click(); }
+        if (action === 'transfer-add') open(null, btn);
+        if (action === 'transfer-edit') open(list().find((x) => x.id === id), btn);
+        if (action === 'transfer-delete') {
+          const x = list().find((y) => y.id === id);
+          opener = btn;
+          deleting = id;
+          $('[data-slot="transfer-delete-text"]').textContent = interpolate(t('transfer.delete.text'), { route: routeText(t, x) });
+          const box = dlgDel.querySelector('[name="withExpense"]');
+          box.checked = true;
+          $('[data-slot="transfer-delete-expense"]').hidden = !x?.expenseId;
+          dlgDel.showModal();
+          dlgDel.querySelector('[data-close]').focus();
+        }
+      });
+    }
+    
+  operator: 'doesNotMatch'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/qa-publish-110.test.js:34:12)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: QP-1d the form rules did not change: what the form accepts, safeLink shows
+not ok 4 - QP-1d the form rules did not change: what the form accepts, safeLink shows
+  ---
+  duration_ms: 0.985707
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/qa-publish-110.test.js:39:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'missing'
+    - 'https://example.com/x'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'https://example.com/x'
+  actual: 'missing'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/qa-publish-110.test.js:42:12)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: QP-2 CSV neutralises a cell that starts with a tab or a carriage return
+not ok 5 - QP-2 CSV neutralises a cell that starts with a tab or a carriage return
+  ---
+  duration_ms: 0.315063
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/qa-publish-110.test.js:46:1'
+  failureType: 'testCodeFailure'
+  error: 'leading tab'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    	=1+1
+    
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/qa-publish-110.test.js:48:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 0
+# fail 5
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 64.51694

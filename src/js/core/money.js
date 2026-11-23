@@ -309,7 +309,8 @@ export function affordability(summary, priceMinor, days) {
 export function toCsv(rows) {
   const cell = (v) => {
     let x = String(v ?? '');
-    if (/^[=+@]/.test(x) || (/^-/.test(x) && Number.isNaN(Number(x)))) x = `'${x}`;
+    // QP-2: a leading tab or CR too (OWASP CSV injection); a negative number stays a number
+    if (/^[=+@\t\r]/.test(x) || (/^-/.test(x) && Number.isNaN(Number(x)))) x = `'${x}`;
     return /[",\r\n]/.test(x) ? `"${x.replace(/"/g, '""')}"` : x;
   };
   return `\uFEFF${rows.map((r) => r.map(cell).join(',')).join('\r\n')}\r\n`;

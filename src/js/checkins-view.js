@@ -6,6 +6,7 @@ import { todayIn } from './core/trip.js';
 import {
   CHECKIN_KINDS, validateCheckin, makeCheckin, cleanCheckins, sortCheckins, checkinState, dueCheckins,
 } from './core/checkins.js';
+import { safeLink } from './core/transfers.js';
 import { zoneDiffMinutes, convertLocal } from './core/timezones.js';
 import { formatDate, sortStops, cleanStops } from './core/itinerary.js';
 import { makeId } from './core/ids.js';
@@ -109,9 +110,10 @@ export function renderCheckins(ctx) {
     if (stop) li.append(el('p', 'item-note', interpolate(t('checkin.stopLink'), { name: stop.name })));
     if (c.booking) li.append(el('p', 'item-note', interpolate(t('transfer.bookingShort'), { booking: c.booking })));
     if (c.note) li.append(el('p', 'item-note', c.note));
-    if (c.link) {
+    const href = safeLink(c.link); // QP-1: also from a backup or a file, so checked again here
+    if (href) {
       const a = el('a', 'transfer-link', t('checkin.openLink'));
-      a.href = c.link; // typed by the user; validated as http(s) only
+      a.href = href;
       a.target = '_blank';
       a.rel = 'noopener noreferrer';
       li.append(a);
