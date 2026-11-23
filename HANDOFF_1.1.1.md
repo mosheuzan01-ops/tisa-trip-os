@@ -47,8 +47,9 @@
   - `scripts/qa/stage14-real-e2e.cjs`: עודכן לשני השלבים, **לא הורץ**.
 - **תיעוד:** `docs/GOALS_STAGE14.md` (הבדיקה הידנית), ‏`HANDOFF_STAGE14.md`, והקובץ הזה.
 
-## 4. בדיקות
-ראו `docs/evidence/1.1.1/README.md`.
+## 4. בדיקות (בפועל, `docs/evidence/1.1.1/README.md`)
+- **Red:** הבדיקות MG1–MG8 נכשלו 0/8, ו-S14-6d ו-VER-14 נכשלו. אחר כך green.
+- **×3 ברצף:** ‏`npm test` ‏518/518, ‏`stage14-browser` ‏37/0, ‏`stage13-upgrade-browser` ‏9/0, ‏`stage7-close-browser` ‏6/0, ‏`contrast-browser` ‏3/0, ‏`a11y-names-browser` ‏1/0. כולן exit 0, בכל אחת משלוש הריצות.
 
 ## 5. לא נבדק
 - **אייפון אמיתי:** הבדיקה הידנית ב-`docs/GOALS_STAGE14.md`. בלעדיה התיקון לא נסגר.

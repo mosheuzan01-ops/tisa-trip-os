@@ -1,0 +1,6 @@
+npm-test exit=0
+stage14-browser exit=0
+stage13-upgrade-browser exit=0
+stage7-close-browser exit=0
+contrast-browser exit=0
+a11y-names-browser exit=0
