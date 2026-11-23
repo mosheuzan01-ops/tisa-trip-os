@@ -1,0 +1,9 @@
+# red: QA_OUT=<scratch> SHOTS=0 node scripts/qa/budget-total-browser.cjs, core done, screens not yet (f75d063), 2026-11-22T22:57:19Z
+FAIL  T1 new install: one total field on the money screen, "details" closed, no budget yet; home "set the budget" opens the single shekel field (no currency menu)
+FAIL  run
+PASS  no JS errors
+PASS  no requests outside the app
+FAIL 2
+
+# T1 details
+["T1 new install: one total field on the money screen, \"details\" closed, no budget yet; home \"set the budget\" opens the single shekel field (no currency menu)",{"result":"FAIL","form":0,"m1":{"free":"—","total":"‏0 ‏₪","today":"עוד אין תקציב. קובעים אותו בבית או כאן.","reserved":null,"emheld":null,"unalloc":null,"fx":null,"detailsOpen":null},"homeDialog":false,"homeField":0,"currencySelect":1}]

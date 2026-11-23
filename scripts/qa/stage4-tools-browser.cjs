@@ -3,6 +3,7 @@
 // Waits for UI state, not fixed sleeps (docs/RULES.md rule 6). Run 3 times before calling it PASS.
 // Run from the repo root: node scripts/qa/stage4-tools-browser.cjs   (port 8099)
 const { chromium } = require('playwright');
+const { openMoneyDetails } = require('./lib/money-details.cjs');
 const { blankTrip } = require('./lib/blank-trip.cjs');
 const { spawn } = require('node:child_process');
 const fs = require('node:fs');
@@ -35,6 +36,7 @@ const shot = async (page, name, full = false) => { if (SHOTS) await page.screens
   await page.waitForFunction(() => document.querySelector('[data-slot="version-app"]')?.textContent.length > 0);
 
   // ---------- S4-17: scenario names, explanations, emergency 2,500 ----------
+  await openMoneyDetails(page); // 1.0.1: inside "details"
   await page.click('[data-slot="money-empty"] [data-action="profile-open"]');
   await page.locator('#dlg-profile details.profile-archive').evaluate((d) => { d.open = true; });
   const options = await page.locator('#dlg-profile details.profile-archive .replan-mode').allTextContents();
@@ -43,6 +45,7 @@ const shot = async (page, name, full = false) => { if (SHOTS) await page.screens
   await page.click('#dlg-profile [type="submit"]');
   await closed(page, '#dlg-profile');
   const b = (await trip(page)).budget;
+  await openMoneyDetails(page); // 1.0.1: inside "details"
   const em = await page.locator('[data-slot="cat-emergency"]').textContent();
   pass('S4-17', options.length === 3 && /חסכון/.test(options[0]) && /ממוצע/.test(options[1]) && /אופטימלי/.test(options[2])
     && options.every((o) => o.length > 20) && b.profileId === 'comfort' && b.categoriesMinor.emergency === 250000 && /2,500/.test(em),

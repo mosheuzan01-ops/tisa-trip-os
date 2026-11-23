@@ -87,10 +87,11 @@ test('S13-3 one version everywhere it is set, and settings reads it from config'
   assert.match(read('src/js/app.js'), /\[data-slot="version-app"\]'\)\.textContent = ctx\.config\.appVersion/);
 });
 
-test('S13-3 1.0.0 in every place the version is set (the release of stage 13)', () => {
-  assert.equal(JSON.parse(read('config/app.config.json')).appVersion, '1.0.0');
-  assert.equal(JSON.parse(read('package.json')).version, '1.0.0');
-  assert.equal(/const VERSION = '([^']+)'/.exec(read('sw.js'))[1], '1.0.0');
+test('S13-3 1.0.0 or a later 1.x in every place the version is set (the release of stage 13; 1.0.1 after it)', () => {
+  const v = JSON.parse(read('config/app.config.json')).appVersion;
+  assert.match(v, /^1\.\d+\.\d+$/);
+  assert.equal(JSON.parse(read('package.json')).version, v);
+  assert.equal(/const VERSION = '([^']+)'/.exec(read('sw.js'))[1], v);
 });
 
 test('R-22 (rule 22) browser scripts from stage 13 on use the shared sample data (scripts/qa/lib/), not a copy of their own', () => {

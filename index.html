@@ -361,6 +361,18 @@
           </div>
         </section>
 
+        <!-- 1.0.1 (owner decision, docs/BUDGET_AND_START.md): one total is the budget. Whole shekels; dollars and baht shown small. -->
+        <section class="card surface money-total-card" aria-labelledby="total-label">
+          <form class="total-form" data-form="total" novalidate>
+            <label class="field"><span id="total-label" data-i18n="total.label">כמה כסף יש לך לחופשה?</span>
+              <span class="total-input"><input class="ltr" type="text" name="total" inputmode="numeric" autocomplete="off" aria-describedby="total-fx total-error" data-i18n-placeholder="total.placeholder" placeholder="לדוגמה 15,000"><span class="total-cur" aria-hidden="true">₪</span></span>
+            </label>
+            <p class="total-fx" id="total-fx" data-slot="total-fx"></p>
+            <p class="form-error" id="total-error" role="alert"></p>
+            <button class="btn btn-primary" type="submit" data-i18n="total.save">שמירה</button>
+          </form>
+        </section>
+
         <section class="card surface money-hero" aria-labelledby="money-free-label">
           <div class="tip-row"><h2 class="money-hero-label" id="money-free-label" data-i18n="money.free.title">פנוי אחרי התכנון</h2><button class="tip-btn" type="button" data-tip="freeAfter"></button></div>
           <p class="money-big ltr" data-slot="money-free">—</p>
@@ -372,6 +384,7 @@
             <div><dt><span class="dot dot-planned" aria-hidden="true"></span><span data-i18n="money.planned">מתוכנן</span><button class="tip-btn" type="button" data-tip="planned"></button></dt><dd class="ltr" data-slot="money-planned"></dd></div>
             <div><dt><span class="dot dot-committed" aria-hidden="true"></span><span data-i18n="money.committed">התחייבות עתידית</span><button class="tip-btn" type="button" data-tip="committed"></button></dt><dd class="ltr" data-slot="money-committed"></dd></div>
             <div data-slot="money-reserved-row" hidden><dt><span class="dot dot-reserved" aria-hidden="true"></span><span data-i18n="money.reserved">שמור לטיסה</span></dt><dd class="ltr" data-slot="money-reserved"></dd></div>
+            <div data-slot="money-emheld-row" hidden><dt><span class="dot dot-emheld" aria-hidden="true"></span><span data-i18n="money.emheld">קרן חירום (בתוך התקציב)</span></dt><dd class="ltr" data-slot="money-emheld"></dd></div>
             <div><dt><span class="dot dot-free" aria-hidden="true"></span><span data-i18n="money.freeShort">פנוי אחרי התכנון</span></dt><dd class="ltr" data-slot="money-free-small"></dd></div>
             <div class="money-split-total"><dt data-i18n="money.total">תקציב שוטף</dt><dd class="ltr" data-slot="money-total"></dd></div>
           </dl>
@@ -381,26 +394,39 @@
           <p class="money-em-note" data-slot="money-emergency-note" hidden></p>
         </section>
 
-        <section class="card surface money-empty" data-slot="money-empty" aria-labelledby="money-empty-title" hidden>
-          <h2 id="money-empty-title" data-i18n="money.empty.title">עוד אין חלוקה לקטגוריות</h2>
-          <p data-i18n="money.empty.text">טוענים פרופיל מוכן ומשנים את הסכומים, או כותבים סכומים משלכם.</p>
-          <div class="settings-actions">
-            <button class="btn btn-primary" type="button" data-action="profile-open" data-i18n="money.profile.open">לבחור פרופיל</button>
-            <button class="btn btn-ghost" type="button" data-action="cats-open" data-i18n="money.cats.edit">עריכת סכומים</button>
+        <!-- 1.0.1: the categories are an optional plan inside the total, folded by default; the suggestion is saved only on "approve". -->
+        <details class="card surface fold money-details" data-slot="money-details">
+          <summary class="fold-head"><h2 data-i18n="money.details.title">פירוט</h2><span class="fold-sub" data-slot="money-details-sub"></span></summary>
+          <p class="money-unallocated" data-slot="money-unallocated" hidden></p>
+          <div class="money-suggest" data-slot="money-suggest" hidden>
+            <h3 class="tool-title" data-i18n="suggest.title">הצעת חלוקה</h3>
+            <p class="sheet-hint" data-i18n="suggest.note">הצעה בלבד, לא הוצאה. אפשר לשנות הכול גם אחרי האישור.</p>
+            <ul class="suggest-list" data-slot="suggest-list"></ul>
+            <p class="suggest-hint" data-slot="money-suggest-hint" data-i18n="suggest.paidFlight">טיסה ששולמה? הוסיפו אותה כהוצאה, ואז הסכום שלה לא נשמר בצד.</p>
+            <p class="form-warn-calm" data-slot="suggest-warn" data-i18n="suggest.replace" hidden>הסכומים הנוכחיים בקטגוריות יוחלפו. קרן החירום לא משתנה.</p>
+            <button class="btn btn-primary" type="button" data-action="suggest-apply" data-i18n="suggest.apply">לאשר את ההצעה</button>
           </div>
-        </section>
+          <section class="card surface money-empty" data-slot="money-empty" aria-labelledby="money-empty-title" hidden>
+            <h2 id="money-empty-title" data-i18n="money.empty.title">עוד אין חלוקה לקטגוריות</h2>
+            <p data-i18n="money.empty.text">טוענים פרופיל מוכן ומשנים את הסכומים, או כותבים סכומים משלכם.</p>
+            <div class="settings-actions">
+              <button class="btn btn-primary" type="button" data-action="profile-open" data-i18n="money.profile.open">לבחור פרופיל</button>
+              <button class="btn btn-ghost" type="button" data-action="cats-open" data-i18n="money.cats.edit">עריכת סכומים</button>
+            </div>
+          </section>
 
-        <section class="card surface settings-card money-cats" data-slot="money-cats" aria-labelledby="money-cats-title" hidden>
-          <div class="money-card-head">
-            <h2 id="money-cats-title" data-i18n="money.cats.title">לפי קטגוריה</h2>
-            <button class="btn btn-ghost btn-small" type="button" data-action="cats-open">
-              <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-edit"/></svg><span data-i18n="money.cats.edit">עריכת סכומים</span>
-            </button>
-          </div>
-          <ul class="cat-list" data-slot="cat-list"></ul>
-          <div class="cat-emergency" data-slot="cat-emergency"></div>
-          <button class="link-btn link-btn-calm" type="button" data-action="profile-open" data-i18n="money.profile.change">לטעון פרופיל אחר</button>
-        </section>
+          <section class="card surface settings-card money-cats" data-slot="money-cats" aria-labelledby="money-cats-title" hidden>
+            <div class="money-card-head">
+              <h2 id="money-cats-title" data-i18n="money.cats.title">לפי קטגוריה</h2>
+              <button class="btn btn-ghost btn-small" type="button" data-action="cats-open">
+                <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-edit"/></svg><span data-i18n="money.cats.edit">עריכת סכומים</span>
+              </button>
+            </div>
+            <ul class="cat-list" data-slot="cat-list"></ul>
+            <div class="cat-emergency" data-slot="cat-emergency"></div>
+            <button class="link-btn link-btn-calm" type="button" data-action="profile-open" data-i18n="money.profile.change">לטעון פרופיל אחר</button>
+          </section>
+        </details>
 
         <section class="money-expenses" aria-labelledby="money-exp-title">
           <div class="money-card-head">
@@ -1059,10 +1085,10 @@
     <dialog class="sheet dmetal" id="dlg-budget" aria-labelledby="dlg-budget-title">
       <form class="sheet-form" data-form="budget" novalidate>
         <h2 id="dlg-budget-title" data-i18n="budget.dialogTitle">תקציב הטיול</h2>
-        <div class="field-row">
-          <label class="field field-grow"><span data-i18n="budget.amount">סכום כולל</span><input class="ltr" type="text" name="amount" inputmode="decimal" autocomplete="off" aria-describedby="budget-error"></label>
-          <label class="field"><span data-i18n="budget.currency">מטבע</span><select name="currency" data-slot="currency-select"></select></label>
-        </div>
+        <label class="field"><span data-i18n="total.label">כמה כסף יש לך לחופשה?</span>
+          <span class="total-input"><input class="ltr" type="text" name="amount" inputmode="numeric" autocomplete="off" aria-describedby="budget-fx budget-error" data-i18n-placeholder="total.placeholder" placeholder="לדוגמה 15,000"><span class="total-cur" aria-hidden="true">₪</span></span>
+        </label>
+        <p class="total-fx" id="budget-fx" data-slot="budget-fx"></p>
         <p class="sheet-hint" data-i18n="budget.hint">הסכום לכל הטיול. חלוקה לקטגוריות והוצאות נמצאות במסך הכסף.</p>
         <p class="form-error" id="budget-error" role="alert" data-slot="budget-error"></p>
         <div class="sheet-actions">

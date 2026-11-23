@@ -8,6 +8,7 @@ import {
   ratesConsistent, categoryIds, validateExpense, makeExpense, editExpense, profileToBudget, summarize, daysLeft,
   dailyAllowance, filterExpenses, pieSlices, convertAll, atmCost, affordability, toCsv, stampRates,
   dailyBase, moveBetween, renameCategory, categoryLabel, visibleCategories, CATEGORY_NAME_MAX,
+  parseWholeShekels, setTotal, suggestSplit, applySuggestion, withProfile, fxApprox,
 } from './core/money.js';
 import { needsTemplateOffer, declineTemplate, applyTemplate, templatePreview, stopNameFor, TEMPLATE_ID } from './core/template.js';
 import { tripCounts } from './core/route-plan.js';
@@ -34,6 +35,21 @@ export function formatMinor(minor, currency, locale) {
     style: 'currency', currency, minimumFractionDigits: minor % 100 === 0 ? 0 : 2, maximumFractionDigits: 2,
   }).format(value);
   return minor < 0 ? `\u2066${text}\u2069` : text; // keep the minus sign before the number inside Hebrew text
+}
+
+/** 1.0.1: a total as typed in the field: whole shekels with thousands commas. */
+export const wholeShekels = (minor) => (Number.isInteger(minor) && minor > 0 ? new Intl.NumberFormat('en-US').format(Math.floor(minor / 100)) : '');
+
+/** 1.0.1: the total in dollars and baht (the pack's other currencies), small under the shekel field. */
+export function fxText(ctx, minor, rates) {
+  if (!(Number.isInteger(minor) && minor > 0)) return '';
+  const fx = fxApprox(minor, rates);
+  const f = (code) => (fx[code] === undefined ? '' : new Intl.NumberFormat(ctx.fmtLocale, { style: 'currency', currency: code, currencyDisplay: 'narrowSymbol', maximumFractionDigits: 0 }).format(fx[code]));
+  const codes = Object.keys(fx);
+  if (!codes.length) return '';
+  const usd = codes.includes('USD') ? f('USD') : '';
+  const other = codes.filter((c) => c !== 'USD').map(f);
+  return interpolate(ctx.t('total.fx'), { usd, thb: other.join(', ') });
 }
 
 const tripDates = (trip) => (isIsoDate(trip.startDate) && isIsoDate(trip.endDate) ? { start: trip.startDate, end: trip.endDate } : null);
@@ -100,6 +116,12 @@ export function renderMoney(ctx) {
   $('[data-slot="money-reserved-row"]').hidden = !(s.hasBudget && s.flightReserveMinor > 0);
   $('[data-slot="money-reserved"]').textContent = fm(s.flightReserveMinor);
   $('[data-slot="money-total"]').textContent = fm(s.totalMinor);
+  // 1.0.1: the total field (not while it is being typed in), its dollars and baht, and the emergency fund inside the total.
+  const totalInput = $('[data-form="total"] [name="total"]');
+  if (totalInput && document.activeElement !== totalInput) totalInput.value = s.hasBudget ? wholeShekels(s.totalMinor) : '';
+  $('[data-slot="total-fx"]').textContent = s.hasBudget ? fxText(ctx, s.totalMinor, m.rates) : '';
+  $('[data-slot="money-emheld-row"]').hidden = !(s.anchored && s.emergencyHeldMinor > 0);
+  $('[data-slot="money-emheld"]').textContent = fm(s.emergencyHeldMinor);
   $('[data-slot="money-estimate"]').hidden = !m.trip.budget?.estimate;
   // 9.0b: daily base (budget without the flight / trip dates), the counts, and the emergency fund kept apart.
   const dates = tripDates(m.trip);
@@ -108,16 +130,22 @@ export function renderMoney(ctx) {
   const counts = dates ? tripCounts(dates.start, dates.end, cleanStops(m.trip.destinations)) : null;
   const baseEl = $('[data-slot="money-base"]');
   baseEl.hidden = baseMinor === null;
-  if (baseMinor !== null) { baseEl.textContent = interpolate(t('money.base'), { amount: fm(baseMinor), budget: fm(s.totalMinor - flightMinor), days: counts.dates }); baseEl.append(tipButton(t, 'base')); }
+  const baseBudget = s.totalMinor - flightMinor - (s.anchored ? s.emergency.planMinor : 0); // 1.0.1: the fund is inside an anchored total
+  if (baseMinor !== null) { baseEl.textContent = interpolate(t('money.base'), { amount: fm(baseMinor), budget: fm(baseBudget), days: counts.dates }); baseEl.append(tipButton(t, 'base')); }
   const countsEl = $('[data-slot="money-counts"]');
   countsEl.hidden = !counts;
   if (counts) countsEl.textContent = interpolate(t('money.counts'), { dates: counts.dates, nights: counts.nights, lodging: counts.lodgingNights });
   const emEl = $('[data-slot="money-emergency-note"]');
   emEl.hidden = !(s.emergency.planMinor > 0);
-  if (s.emergency.planMinor > 0) { emEl.textContent = interpolate(t('money.emergencyApart'), { em: fm(s.emergency.planMinor), base: fm(s.totalMinor), both: fm(s.totalMinor + s.emergency.planMinor) }); emEl.append(tipButton(t, 'emergency')); }
+  if (s.emergency.planMinor > 0) {
+    emEl.textContent = s.anchored
+      ? interpolate(t('money.emergencyInside'), { em: fm(s.emergency.planMinor), base: fm(s.totalMinor) })
+      : interpolate(t('money.emergencyApart'), { em: fm(s.emergency.planMinor), base: fm(s.totalMinor), both: fm(s.totalMinor + s.emergency.planMinor) });
+    emEl.append(tipButton(t, 'emergency'));
+  }
   $('[data-slot="template-card"]').hidden = !needsTemplateOffer(m.trip);
   const bar = $('[data-slot="money-bar"]');
-  const parts = [['paid', s.paidMinor], ['planned', s.plannedMinor], ['committed', s.committedMinor], ['reserved', s.flightReserveMinor], ['free', Math.max(0, s.freeMinor)]];
+  const parts = [['paid', s.paidMinor], ['planned', s.plannedMinor], ['committed', s.committedMinor], ['reserved', s.flightReserveMinor], ['emheld', s.emergencyHeldMinor], ['free', Math.max(0, s.freeMinor)]];
   const whole = parts.reduce((a, [, v]) => a + v, 0);
   bar.replaceChildren(...parts.filter(([, v]) => v > 0).map(([k, v]) => {
     const seg = el('span', `seg seg-${k}`);
@@ -125,6 +153,29 @@ export function renderMoney(ctx) {
     return seg;
   }));
   bar.hidden = whole === 0;
+
+  // 1.0.1 "details": what is left to split of the total, and the suggested split (shown only; saved on "approve").
+  const unalloc = $('[data-slot="money-unallocated"]');
+  const unallocText = s.anchored && s.hasBudget
+    ? interpolate(t(s.unallocatedMinor < 0 ? 'money.unallocated.over' : 'money.unallocated.left'), { amount: fm(Math.abs(s.unallocatedMinor)) }) : '';
+  unalloc.hidden = !unallocText;
+  unalloc.textContent = unallocText;
+  unalloc.classList.toggle('is-over', s.anchored && s.unallocatedMinor < 0);
+  $('[data-slot="money-details-sub"]').textContent = unallocText;
+  const suggestBox = $('[data-slot="money-suggest"]');
+  suggestBox.hidden = !(s.anchored && s.totalMinor > 0);
+  if (!suggestBox.hidden) {
+    const sug = suggestSplit(s.totalMinor, m.pack);
+    const shown = visibleCategories(m.trip.budget, m.expenses, Object.keys(sug)).filter((id) => sug[id] > 0);
+    $('[data-slot="suggest-list"]').replaceChildren(...shown.map((id) => {
+      const li = el('li');
+      const amount = el('b', 'ltr', fm(sug[id]));
+      amount.dataset.suggest = id;
+      li.append(el('span', '', catName(ctx, id)), amount);
+      return li;
+    }));
+    $('[data-slot="suggest-warn"]').hidden = !(s.allocatedMinor - s.emergency.planMinor > 0);
+  }
 
   // Categories
   $('[data-slot="money-empty"]').hidden = s.hasCategories;
@@ -158,7 +209,7 @@ export function renderMoney(ctx) {
   list.replaceChildren(...ids.map((id) => catLine(lines.get(id) ?? { id, planMinor: 0, usedMinor: 0, leftMinor: 0, over: false }, catName(ctx, id))));
   const em = $('[data-slot="cat-emergency"]');
   const emLine = catLine({ id: EMERGENCY, ...s.emergency }, catName(ctx, EMERGENCY));
-  emLine.append(el('p', 'cat-note', t('money.cat.emergencyNote')));
+  emLine.append(el('p', 'cat-note', t(s.anchored ? 'money.cat.emergencyInside' : 'money.cat.emergencyNote'))); // 1.0.1: inside a typed total
   em.replaceChildren(emLine);
 
   // Filters (options reflect the data; a stale choice falls back to "all")
@@ -393,6 +444,31 @@ export function setupMoney(ctx, { wireDialog, showFormErrors }) {
   };
   const option = (value, label) => Object.assign(document.createElement('option'), { value, textContent: label });
 
+  // ---------- 1.0.1: one total (whole shekels) and the suggested split, saved only on "approve" ----------
+  const tForm = $('[data-form="total"]');
+  const tInput = tForm.total;
+  const tError = tForm.querySelector('.form-error');
+  tInput.addEventListener('input', () => {
+    const v = parseWholeShekels(tInput.value);
+    $('[data-slot="total-fx"]').textContent = Number.isNaN(v) ? '' : fxText(ctx, v, moneyState(ctx).rates);
+  });
+  tForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const v = parseWholeShekels(tInput.value);
+    tInput.setAttribute('aria-invalid', String(Number.isNaN(v)));
+    tError.textContent = Number.isNaN(v) ? t('total.err') : '';
+    if (Number.isNaN(v)) { tInput.focus(); return; }
+    tInput.blur();
+    commit((st) => { const trip = st.trips[st.activeTripId]; trip.budget = setTotal(trip.budget, v); }, 'total.saved');
+  });
+  $('[data-action="suggest-apply"]').addEventListener('click', () => {
+    commit((st) => {
+      const trip = st.trips[st.activeTripId];
+      if (trip.budget?.anchor !== 'total') return; // the suggestion is only offered for a typed total
+      trip.budget = applySuggestion(trip.budget, suggestSplit(trip.budget.totalMinor, ctx.pack));
+    }, 'suggest.applied');
+  });
+
   setupSearch($('[data-search="money"]'), (v) => { query = v; renderMoney(ctx); });
   for (const node of panel.querySelectorAll('select[data-filter]')) {
     node.addEventListener('change', () => { filters[node.dataset.filter] = node.value; renderMoney(ctx); });
@@ -560,7 +636,7 @@ export function setupMoney(ctx, { wireDialog, showFormErrors }) {
     box.open = archived.some((p) => p.id === current?.id);
     box.append(el('summary', '', t('money.profile.archive')), ...archived.map((p) => option(p, true)));
     $('[data-slot="profile-options"]').replaceChildren(...templates.map((p) => option(p, false)), ...(archived.length ? [box] : []));
-    $('[data-slot="profile-warn"]').textContent = m.summary.hasBudget ? t('money.profile.replace') : ''; // stage 13: names at 0 have nothing to replace
+    $('[data-slot="profile-warn"]').textContent = m.summary.allocatedMinor > 0 ? t('money.profile.replace') : ''; // only when there are amounts to replace
     dlgProfile.showModal();
     pForm.querySelector('input:checked')?.focus();
   }
@@ -571,10 +647,7 @@ export function setupMoney(ctx, { wireDialog, showFormErrors }) {
     if (!profile) return;
     commit((st) => {
       const trip = st.trips[st.activeTripId];
-      const next = profileToBudget(profile, ctx.locale);
-      const keepEmergency = trip.budget?.categoriesMinor?.[EMERGENCY];
-      if (Number.isInteger(keepEmergency) && keepEmergency > 0) next.categoriesMinor[EMERGENCY] = keepEmergency; // never wipe the user's own emergency amount
-      trip.budget = { ...trip.budget, ...next, currency: BASE_CURRENCY };
+      trip.budget = withProfile(trip.budget, profile, ctx.locale); // never wipes the user's own emergency amount; 1.0.1: an anchored total stays
       if (profile.id === TEMPLATE_ID && trip.templateOffer == null) trip.templateOffer = 'applied';
     }, 'money.profile.done');
     dlgProfile.close();
@@ -665,7 +738,13 @@ export function setupMoney(ctx, { wireDialog, showFormErrors }) {
       if (Number.isNaN(v)) continue;
       if (input.name === EMERGENCY) emergency = v; else total += v;
     }
-    $('[data-slot="cats-sum"]').textContent = interpolate(t('money.cats.sum'), { total: formatMinor(total, BASE_CURRENCY, fmtLocale), emergency: formatMinor(emergency, BASE_CURRENCY, fmtLocale) });
+    let text = interpolate(t('money.cats.sum'), { total: formatMinor(total, BASE_CURRENCY, fmtLocale), emergency: formatMinor(emergency, BASE_CURRENCY, fmtLocale) });
+    const sm = moneyState(ctx).summary;
+    if (sm.anchored) { // 1.0.1: the typed total stays; show what is left to split of it (or the overspend)
+      const left = sm.totalMinor - total - emergency;
+      text += ` ${interpolate(t('money.cats.left'), { total: formatMinor(sm.totalMinor, BASE_CURRENCY, fmtLocale), state: interpolate(t(left < 0 ? 'money.unallocated.over' : 'money.unallocated.left'), { amount: formatMinor(Math.abs(left), BASE_CURRENCY, fmtLocale) }) })}`;
+    }
+    $('[data-slot="cats-sum"]').textContent = text;
   };
   function openCats(from) {
     opener = from;

@@ -3,6 +3,7 @@
 // Waits for UI state, not fixed sleeps (docs/RULES.md rule 6). Run 3 times before calling it PASS.
 // Run from the repo root: node scripts/qa/stage4-browser.cjs   (port 8097)
 const { chromium } = require('playwright');
+const { openMoneyDetails } = require('./lib/money-details.cjs');
 const { blankTrip } = require('./lib/blank-trip.cjs');
 const { spawn } = require('node:child_process');
 const fs = require('node:fs');
@@ -43,6 +44,7 @@ async function fresh(browser, when, extra = {}) {
 }
 
 async function loadProfile(page, id = 'realistic') {
+  await openMoneyDetails(page); // 1.0.1: inside "details"
   await page.click('#panel-money [data-action="profile-open"] >> nth=0');
   await page.locator('#dlg-profile details.profile-archive').evaluate((d) => { d.open = true; }); await page.check(`#dlg-profile input[value="${id}"]`);
   await page.click('#dlg-profile [type="submit"]');
@@ -72,6 +74,7 @@ async function addExpense(page, o) {
     const { ctx, page } = await fresh(browser, '2026-12-12T09:00:00+07:00');
     await shot(page, 'after-money-empty-375-light');
     // S4-7: cancel loads nothing; yes loads; label shown; amounts editable
+    await openMoneyDetails(page); // 1.0.1: inside "details"
     await page.click('[data-slot="money-empty"] [data-action="profile-open"]');
     await page.click('#dlg-profile [data-close]');
     await closed(page, '#dlg-profile');
@@ -80,6 +83,7 @@ async function addExpense(page, o) {
     const loaded = (await trip(page)).budget;
     const label = await page.locator('[data-slot="money-estimate"]').isVisible();
     const labelText = (await page.locator('[data-slot="money-estimate"]').textContent()).trim();
+    await openMoneyDetails(page); // 1.0.1: inside "details"
     await page.click('[data-slot="money-cats"] [data-action="cats-open"]');
     await page.fill('#dlg-cats [name="food"]', '2500.50');
     await page.fill('#dlg-cats [name="emergency"]', '1000');
@@ -136,8 +140,11 @@ async function addExpense(page, o) {
     shown.free = Math.round(num(await page.locator('[data-slot="money-free-small"]').textContent()) * 100);
     shown.big = Math.round(num(await page.locator('[data-slot="money-free"]').textContent()) * 100);
     shown.reserved = (await page.locator('[data-slot="money-reserved-row"]').isVisible()) ? Math.round(num(await page.locator('[data-slot="money-reserved"]').textContent()) * 100) : 0;
+    await openMoneyDetails(page); // 1.0.1: inside "details"
     const foodOver = await page.locator('.cat-list .cat.is-over').allTextContents();
+    await openMoneyDetails(page); // 1.0.1: inside "details"
     const foodLine = await page.locator('.cat-list .cat.c-4').textContent();
+    await openMoneyDetails(page); // 1.0.1: inside "details"
     const emText = await page.locator('[data-slot="cat-emergency"]').textContent();
     await shot(page, 'after-money-full-375-light');
     pass('S4-6', shown.paid === want.paid && shown.planned === want.planned && shown.committed === want.committed && shown.free === want.free && shown.big === want.free
@@ -195,6 +202,7 @@ async function addExpense(page, o) {
     await shot(page, 'after-expense-dialog-375', false);
     await page.click('#dlg-expense [data-close]');
     await closed(page, '#dlg-expense');
+    await openMoneyDetails(page); // 1.0.1: inside "details"
     await page.click('[data-slot="money-cats"] [data-action="cats-open"]');
     const catsA = await audit();
     await page.click('#dlg-cats [data-close]');

@@ -2,7 +2,7 @@
 // Applying copies the current budget and route into trip.archive first, then sets the template budget and, when
 // the trip has dates, the suggested route. Expenses, transfers, check-ins, photos and every other field are never
 // touched. Declining only records the answer. Pure functions on the trip object; tests/stage9-data.test.js.
-import { profileToBudget, EMERGENCY } from './money.js';
+import { profileToBudget, withProfile } from './money.js';
 import { planRoute } from './route-plan.js';
 import { isIsoDate } from './trip.js';
 import { cleanStops } from './itinerary.js';
@@ -44,10 +44,8 @@ export function applyTemplate(trip, pack, locale, makeId, nowIso) {
   archive.budgets = Array.isArray(archive.budgets) ? archive.budgets : [];
   archive.routes = Array.isArray(archive.routes) ? archive.routes : [];
   if (hasBudget(trip.budget)) archive.budgets.push({ at: nowIso, budget: structuredClone(trip.budget) });
-  const next = profileToBudget(tpl, locale);
-  const own = trip.budget?.categoriesMinor?.[EMERGENCY];
-  if (Number.isInteger(own) && own > 0) next.categoriesMinor[EMERGENCY] = own; // never wipe the user's own emergency amount
-  trip.budget = { ...trip.budget, ...next };
+  // never wipe the user's own emergency amount; 1.0.1: an anchored total stays (withProfile, core/money.js)
+  trip.budget = withProfile(trip.budget, tpl, locale);
   let warnings = [];
   if (isIsoDate(trip.startDate) && isIsoDate(trip.endDate)) {
     const route = planRoute(trip.startDate, trip.endDate, pack.routeTemplate, locale, makeId);

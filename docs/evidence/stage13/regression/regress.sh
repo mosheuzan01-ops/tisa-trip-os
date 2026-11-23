@@ -18,6 +18,6 @@ for run in "$@"; do
     limit=300; case "$n" in stage13-keyboard-browser) limit=1500;; stage13-layout-browser|stage13-upgrade-browser) limit=600;; esac
     QA_OUT="$out" RUN=$run SHOTS=0 timeout $limit node "$f" > "$out/stdout.txt" 2>&1
     echo "run$run $n exit=$? $(tail -1 "$out/stdout.txt")"
-    pkill -f "scripts/serve.js" 2>/dev/null; rm -rf /tmp/tisa-update-* /tmp/tisa-close-update-* /tmp/tisa-071-* 2>/dev/null # a script that crashed must not leave its server on a port the next one uses
+    pkill -f "scripts/serve.js" 2>/dev/null; rm -rf /tmp/tisa-update-* /tmp/tisa-close-update-* /tmp/tisa-071-* /tmp/tisa-100-* 2>/dev/null # a script that crashed must not leave its server on a port the next one uses
   done
 done

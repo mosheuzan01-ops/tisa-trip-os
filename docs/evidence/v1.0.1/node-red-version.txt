@@ -1,0 +1,7 @@
+# red: BT-13 before the version change, 2026-11-22T23:01:17Z
+not ok 1 - BT-13 1.0.1 in every place the version is set (docs/FREEZE.md: a fix reaches phones only with a new version)
+  name: 'AssertionError'
+  expected: '1.0.1'
+  actual: '1.0.0'
+# pass 0
+# fail 1

@@ -3,6 +3,7 @@
 // only (rule 16): 2030-03-01..2030-04-01 is 32 dates. 390px. Waits for UI state (rule 6). Run 3 times.
 // Writes only to QA_OUT, default docs/evidence/stage9/browser (rule 10). Port 8126.
 const { chromium } = require('playwright');
+const { openMoneyDetails } = require('./lib/money-details.cjs');
 const { blankTrip } = require('./lib/blank-trip.cjs');
 const { spawn } = require('node:child_process');
 const fs = require('node:fs');
@@ -56,6 +57,7 @@ async function setDates(page, start, end) {
     const n = await open(browser, null, 'money');
     await setDates(n.page, '2030-03-01', '2030-04-01');
     await n.page.goto(`${BASE}#/money`);
+    await openMoneyDetails(n.page); // 1.0.1: inside "details"
     await n.page.click('[data-slot="money-empty"] [data-action="profile-open"]');
     await n.page.locator('#dlg-profile[open]').waitFor();
     const checked = await n.page.locator('#dlg-profile input[name="profile"]:checked').getAttribute('value');
@@ -133,6 +135,7 @@ async function setDates(page, start, end) {
     await closed(a.page, '#dlg-template');
     const applied = await trip(a.page);
     const same = ['expenses', 'transfers', 'checkins', 'photos', 'journal', 'checklist', 'tasks', 'luggage'].every((k) => JSON.stringify(applied[k]) === JSON.stringify(beforeApply[k]));
+    await openMoneyDetails(a.page); // 1.0.1: inside "details"
     const greenShown = await a.page.locator('#panel-money [data-slot="cat-list"] li.cat[data-cat="green"]').count();
     const archivedStop = await a.page.locator('#panel-money .exp:has-text("צ\'יאנג מאי")').count();
     if (SHOTS) await a.page.screenshot({ path: `${OUT}/money-after-apply-mobile.png`, fullPage: true });
@@ -142,6 +145,7 @@ async function setDates(page, start, end) {
     pass('S9-6 an expense in hidden "green" keeps it visible; an expense on an archived stop still shows the stop name', greenShown === 1 && archivedStop >= 1, { greenShown, archivedStop });
 
     // move money and rename
+    await openMoneyDetails(a.page); // 1.0.1: inside "details"
     await a.page.click('#panel-money li.cat[data-cat="misc"] [data-action="cat-edit"]');
     await a.page.locator('#dlg-cat[open]').waitFor();
     await a.page.fill('#dlg-cat [name="name"]', 'מתנות');

@@ -4,7 +4,7 @@ import { loadConfig, loadLocale, loadCountry, loadCountryInfo, loadPacking } fro
 import { createTranslator, resolveLocale, interpolate } from './core/i18n.js';
 import { buildTitle, validateCountry } from './core/country.js';
 import {
-  todayIn, tripStatus, validateDates, validateBudget, setupProgress,
+  todayIn, tripStatus, validateDates, setupProgress,
 } from './core/trip.js';
 import { createStorage, browserBackend, requestPersistence, isPersisted } from './core/storage.js';
 import { needsBackupReminder } from './core/schema.js';
@@ -14,8 +14,8 @@ import { exportBackup, parseBackup, backupFileName } from './core/backup.js';
 import { makeId } from './core/ids.js';
 import { createAutosave } from './core/autosave.js';
 import { setupItinerary, renderItinerary } from './itinerary-view.js';
-import { setupMoney, renderMoney, moneyState, formatMinor } from './money-view.js';
-import { parseMoney } from './core/money.js';
+import { setupMoney, renderMoney, moneyState, formatMinor, wholeShekels, fxText } from './money-view.js';
+import { parseWholeShekels, setTotal } from './core/money.js';
 import { setupLists, renderLists } from './checklist-view.js';
 import { setupTransfers, renderTransfers } from './transfers-view.js';
 import { renderAssistant } from './assistant-view.js';
@@ -378,14 +378,6 @@ function setupSheets(ctx) {
   const city = country.timeZoneCity?.[locale] ?? country.timeZone;
   for (const el of $$('[data-slot="dates-hint"]')) el.textContent = interpolate(t('dates.hint'), { city });
 
-  const select = $('[data-slot="currency-select"]');
-  const names = typeof Intl.DisplayNames === 'function' ? new Intl.DisplayNames([locale], { type: 'currency' }) : null;
-  for (const code of config.budgetCurrencies) {
-    const opt = document.createElement('option');
-    opt.value = code;
-    opt.textContent = names ? interpolate(t('form.currencyOption'), { name: names.of(code), code }) : code;
-    select.append(opt);
-  }
 
   const sheets = { dates: $('#dlg-dates'), budget: $('#dlg-budget') };
   let opener = null;
@@ -395,16 +387,16 @@ function setupSheets(ctx) {
     const dlg = sheets[name];
     const form = dlg.querySelector('form');
     const view = tripView(ctx);
-    if (name === 'budget' && view.hasCategories) { ctx.go('money'); return; } // the split by category lives on the money screen
     form.reset();
     showFormErrors(t, form, []);
     if (name === 'dates' && view.dates) {
       form.start.value = view.dates.start;
       form.end.value = view.dates.end;
     }
-    if (name === 'budget') {
-      form.currency.value = config.budgetCurrencies.includes(view.homeTotal?.currency) ? view.homeTotal.currency : config.budgetCurrencies[0];
-      if (view.homeTotal) form.amount.value = String(view.homeTotal.amount);
+    if (name === 'budget') { // 1.0.1: one total in whole shekels; dollars and baht shown small under it
+      const total = view.money.hasBudget ? view.money.totalMinor : null;
+      form.amount.value = wholeShekels(total);
+      $('[data-slot="budget-fx"]').textContent = fxText(ctx, total, moneyState(ctx).rates);
     }
     dlg.querySelector('[data-clear]').hidden = !(name === 'budget' ? view.homeTotal : view.dates);
     dlg.showModal();
@@ -439,14 +431,14 @@ function setupSheets(ctx) {
   $('[data-form="budget"]').addEventListener('submit', (e) => {
     e.preventDefault();
     const form = e.currentTarget;
-    const entry = { amount: form.amount.value, currency: form.currency.value };
-    const errors = validateBudget(entry, config.budgetCurrencies);
-    if (!errors.length && Number.isNaN(parseMoney(entry.amount))) errors.push('amount.invalid'); // stored as whole agorot
-    if (errors.length) { showFormErrors(t, form, errors); return; }
-    commit((s) => {
-      const trip = s.trips[s.activeTripId];
-      trip.budget = { ...trip.budget, totalMinor: parseMoney(entry.amount), currency: entry.currency };
-    }, sheets.budget, 'toast.saved');
+    const v = parseWholeShekels(form.amount.value); // 1.0.1: whole shekels, the same rule as the money screen
+    if (Number.isNaN(v)) {
+      form.amount.setAttribute('aria-invalid', 'true');
+      $('[data-slot="budget-error"]').textContent = t('total.err');
+      form.amount.focus();
+      return;
+    }
+    commit((s) => { const trip = s.trips[s.activeTripId]; trip.budget = setTotal(trip.budget, v); }, sheets.budget, 'toast.saved');
   });
 
   for (const b of $$('[data-clear]')) {
@@ -455,7 +447,7 @@ function setupSheets(ctx) {
       commit((s) => {
         const trip = s.trips[s.activeTripId];
         if (part === 'dates') { trip.startDate = null; trip.endDate = null; }
-        if (part === 'budget') { trip.budget.totalMinor = null; trip.budget.currency = 'ILS'; }
+        if (part === 'budget') { trip.budget.totalMinor = null; trip.budget.currency = 'ILS'; delete trip.budget.anchor; }
       }, sheets[part], 'toast.cleared');
     });
   }
