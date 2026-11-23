@@ -1,0 +1,13 @@
+{
+  "run": "2",
+  "red": false,
+  "postgres": "16",
+  "steps": {
+    "stub.sql": "ok",
+    "migration.sql": "ok"
+  },
+  "pass": 53,
+  "fail": 0,
+  "failures": [],
+  "rowsLeftAfterCheck": 0
+}

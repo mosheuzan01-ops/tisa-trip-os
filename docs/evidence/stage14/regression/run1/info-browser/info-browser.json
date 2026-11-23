@@ -1,0 +1,278 @@
+{
+  "J1 home: the emergency button is on the first screen; one tap opens info and emergency; the home tab stays lit": {
+    "result": "PASS",
+    "box": {
+      "x": 20,
+      "y": 84,
+      "width": 350,
+      "height": 78.984375
+    },
+    "homeLit": "true"
+  },
+  "J2 emergency: exactly the five verified numbers, each with a tel: link, a copy button, its source and check date; 1155 (not 1151)": {
+    "result": "PASS",
+    "rows": [
+      {
+        "status": "verified-official",
+        "href": "tel:1669",
+        "src": "מקור: ממשלת תאילנד (thailand.go.th): מספרי טלפון חשובים. נבדק ב-22.11.2026. https://www.thailand.go.th/issue-focus-detail/009_152",
+        "copy": true,
+        "value": "1669"
+      },
+      {
+        "status": "verified-official",
+        "href": "tel:191",
+        "src": "מקור: ממשלת תאילנד (thailand.go.th): מספרי טלפון חשובים. נבדק ב-22.11.2026. https://www.thailand.go.th/issue-focus-detail/009_152",
+        "copy": true,
+        "value": "191"
+      },
+      {
+        "status": "verified-official",
+        "href": "tel:199",
+        "src": "מקור: ממשלת בריטניה (GOV.UK): עזרה בתאילנד. נבדק ב-22.11.2026. https://www.gov.uk/foreign-travel-advice/thailand/getting-help",
+        "copy": true,
+        "value": "199"
+      },
+      {
+        "status": "verified-official",
+        "href": "tel:1155",
+        "src": "מקור: ממשלת תאילנד (thailand.go.th): מספרי טלפון חשובים. נבדק ב-22.11.2026. https://www.thailand.go.th/issue-focus-detail/009_152",
+        "copy": true,
+        "value": "1155"
+      },
+      {
+        "status": "verified-official",
+        "href": "tel:1672",
+        "src": "מקור: ממשלת תאילנד (thailand.go.th): מספרי טלפון חשובים. נבדק ב-22.11.2026. https://www.thailand.go.th/issue-focus-detail/009_152",
+        "copy": true,
+        "value": "1672"
+      }
+    ]
+  },
+  "J3 the screen explains that calling needs a phone signal and is not guaranteed in airplane mode": {
+    "result": "PASS",
+    "dialNote": "חיוג דורש קליטה סלולרית. במצב טיסה החיוג לא מובטח. אפשר להעתיק את המספר."
+  },
+  "J4 every detail has a status; verified ones show a source; \"not verified\" ones show how to check and no value; insurance stays not verified": {
+    "result": "PASS",
+    "total": 84,
+    "badgeless": 0,
+    "unverifiedWithValue": 0,
+    "unverifiedNoHow": 0,
+    "verifiedNoSource": 0,
+    "pendingBadges": [
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת"
+    ],
+    "embassyAddr": "כתובתנמסר על ידי המשתמשOcean Tower 2, 25th floor, 75 Sukhumvit Soi 19, Bangkokהאתר הרשמי של השגרירות לא נפתח מכאן בבדיקה, ולכן הכתובת לא סומנה כמאומתת.נמסר על ידי המשתמש ב-22.11.2026. לא נבדק מול מקור רשמי.העתקה",
+    "insurance": [
+      "unverified",
+      "unverified",
+      "unverified",
+      "unverified",
+      "unverified",
+      "unverified",
+      "unverified",
+      "unverified",
+      "unverified",
+      "unverified",
+      "unverified",
+      "unverified",
+      "unverified",
+      "unverified",
+      "unverified",
+      "unverified",
+      "unverified",
+      "unverified",
+      "unverified",
+      "unverified",
+      "unverified"
+    ],
+    "draft": "טיוטה: הרשימה תותאם למסלול הסופי. נשמר כאן רק מה שנבדק.",
+    "chiangMai": "עדיפות נמוכה",
+    "huaHin": false,
+    "emergencyMobile": false
+  },
+  "J5 embassy address marked \"given by the user\"; no embassy emergency mobile; hospital list marked draft; Chiang Mai low; no Hua Hin": {
+    "result": "PASS",
+    "total": 84,
+    "badgeless": 0,
+    "unverifiedWithValue": 0,
+    "unverifiedNoHow": 0,
+    "verifiedNoSource": 0,
+    "pendingBadges": [
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת",
+      "טרם אומת"
+    ],
+    "embassyAddr": "כתובתנמסר על ידי המשתמשOcean Tower 2, 25th floor, 75 Sukhumvit Soi 19, Bangkokהאתר הרשמי של השגרירות לא נפתח מכאן בבדיקה, ולכן הכתובת לא סומנה כמאומתת.נמסר על ידי המשתמש ב-22.11.2026. לא נבדק מול מקור רשמי.העתקה",
+    "insurance": [
+      "unverified",
+      "unverified",
+      "unverified",
+      "unverified",
+      "unverified",
+      "unverified",
+      "unverified",
+      "unverified",
+      "unverified",
+      "unverified",
+      "unverified",
+      "unverified",
+      "unverified",
+      "unverified",
+      "unverified",
+      "unverified",
+      "unverified",
+      "unverified",
+      "unverified",
+      "unverified",
+      "unverified"
+    ],
+    "draft": "טיוטה: הרשימה תותאם למסלול הסופי. נשמר כאן רק מה שנבדק.",
+    "chiangMai": "עדיפות נמוכה",
+    "huaHin": false,
+    "emergencyMobile": false
+  },
+  "J6 copy: the tourist police number is copied and a short message says so": {
+    "result": "PASS",
+    "clip": "1155"
+  },
+  "J7 maps: nothing opened before a tap; the Chabad map opens from its verified address; no map for the user-given embassy address or for Koh Tao": {
+    "result": "PASS",
+    "opened": [
+      {
+        "url": "https://www.google.com/maps/search/?api=1&query=18%20Phra%20Athit%20Road%2C%20Chana%20Songkhram%2C%20Phra%20Nakhon%2C%20Bangkok%2010200%2C%20Thailand",
+        "target": "_blank",
+        "features": "noopener"
+      }
+    ],
+    "embassyMap": 0,
+    "kohTaoMap": 0
+  },
+  "J8 notes: insurance and hospital notes saved in trip.info.notes (part of the backup) and shown again after reload": {
+    "result": "PASS",
+    "notes": {
+      "insurance": "פוליסה לדוגמה 123",
+      "hospital-samui": "הסדר: לבדוק בפוליסה (דוגמה)"
+    }
+  },
+  "J9 390px and desktop, light and dark: no sideways scroll; every field and button has a name": {
+    "result": "PASS",
+    "mobile-light": true,
+    "mobile-dark": true,
+    "unnamed": 0,
+    "desktop-light": true,
+    "desktop-dark": true
+  },
+  "J10 airplane mode: the info files are cached; the screen opens offline; closed and opened again offline, numbers, addresses and medical details are all there": {
+    "result": "PASS",
+    "cached": {
+      "./data/info/th.json": true,
+      "./src/js/info-view.js": true,
+      "./src/js/core/info.js": true
+    },
+    "version": "1.1.0",
+    "n1": 5,
+    "again": {
+      "sos": 5,
+      "chabad": "18 Phra Athit Road, Chana Songkhram, Phra Nakhon, Bangkok 10200, Thailand",
+      "samuiEr": "מיון 24 שעות",
+      "offline": true
+    }
+  },
+  "no JS errors, no outside requests": {
+    "result": "PASS",
+    "errors": [],
+    "outside": []
+  }
+}

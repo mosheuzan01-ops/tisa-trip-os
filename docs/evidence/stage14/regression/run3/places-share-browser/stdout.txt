@@ -1,0 +1,17 @@
+PASS  H1 share window: name, address and map link ticked; category, coordinates, dates and note offered but not ticked; preview has only the ticked fields
+PASS  H1b 390px: the share window has no sideways scroll
+PASS  H2 "share": the phone share sheet (WhatsApp is one of its targets) gets the title and exactly the ticked text; no outside request
+PASS  H3 "copy": the same text goes to the clipboard and the window says so
+PASS  H3b sharing and copying change nothing in the saved place
+PASS  H4 no share sheet: the text is copied and the window says why; cancelled: nothing copied or sent; clipboard refused: the older copy way
+PASS  H5 share my location: one reading, then the share sheet with "my location", the coordinates and the map link; no file; says there is no tracking; nothing saved
+PASS  H6 export: a "tisa-places" file named by date with the two places, details only (no status, dates, stop or photos)
+PASS  H6b export of one place from the share window
+PASS  H7 import: preview first (nothing saved before yes); 2 new come in as "want to visit" with no dates or stop; mine unchanged
+PASS  H7b the same file again: "0 new, 2 already here", no add button, nothing changes
+PASS  H8 a backup or broken file is refused with a message; nothing changes
+PASS  H9 a photo linked to a place (by id, no copy) joins the slideshow with the place name; no star changed; photos not copied
+PASS  H10 10 starred + 5 place photos: 12 in the slideshow (all 10 starred, then the first 2 place photos by date); every star as it was
+PASS  H11 airplane mode (service worker): place-share.js cached; copy works; an import file is read offline (1 new, 1 already here)
+PASS  H12 desktop: no sideways scroll; every field in the share window and the screen has a name (the hidden file input too)
+PASS  no JS errors, no outside requests

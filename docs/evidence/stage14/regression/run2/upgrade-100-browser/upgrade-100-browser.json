@@ -1,0 +1,87 @@
+{
+  "V1 1.0.0 (from git) shows the rich sample built by its own code": {
+    "result": "PASS",
+    "shownOld": "1.0.0",
+    "figBefore": {
+      "money-free": "‏15,000 ‏₪",
+      "money-free-before": "פנוי לפני התכנון: ‏15,000 ‏₪",
+      "money-today": "פנוי היום: ‏535 ‏₪",
+      "money-total": "‏20,000 ‏₪",
+      "money-paid": "‏50 ‏₪",
+      "money-planned": "‏0 ‏₪",
+      "money-committed": "‏0 ‏₪",
+      "money-free-small": "‏15,000 ‏₪",
+      "money-base": "בסיס יומי: ‏468.75 ‏₪ (‏15,000 ‏₪ בלי טיסה, חלקי 32 תאריכים).",
+      "reserved": "‏4,950 ‏₪",
+      "kpi-total": "‏20,000 ‏₪",
+      "kpi-spent": "‏50 ‏₪",
+      "kpi-left": "‏15,000 ‏₪",
+      "today-money": "פנוי היום: ‏535 ‏₪"
+    },
+    "errors": []
+  },
+  "V2 the update banner; no reload before the tap": {
+    "result": "PASS",
+    "bannerShown": true,
+    "noReload": true
+  },
+  "V3 after the tap: this version": {
+    "result": "PASS",
+    "shownNew": "1.1.0"
+  },
+  "V4 the saved data is exactly the same (trips and settings); no \"anchor\" was added and nothing was split again": {
+    "result": "PASS",
+    "sameTrips": true,
+    "sameSettings": true
+  },
+  "V5 every money figure on the money screen and the home card is the same as in 1.0.0": {
+    "result": "PASS",
+    "diff": [],
+    "figBefore": {
+      "money-free": "‏15,000 ‏₪",
+      "money-free-before": "פנוי לפני התכנון: ‏15,000 ‏₪",
+      "money-today": "פנוי היום: ‏535 ‏₪",
+      "money-total": "‏20,000 ‏₪",
+      "money-paid": "‏50 ‏₪",
+      "money-planned": "‏0 ‏₪",
+      "money-committed": "‏0 ‏₪",
+      "money-free-small": "‏15,000 ‏₪",
+      "money-base": "בסיס יומי: ‏468.75 ‏₪ (‏15,000 ‏₪ בלי טיסה, חלקי 32 תאריכים).",
+      "reserved": "‏4,950 ‏₪",
+      "kpi-total": "‏20,000 ‏₪",
+      "kpi-spent": "‏50 ‏₪",
+      "kpi-left": "‏15,000 ‏₪",
+      "today-money": "פנוי היום: ‏535 ‏₪"
+    },
+    "figAfter": {
+      "money-free": "‏15,000 ‏₪",
+      "money-free-before": "פנוי לפני התכנון: ‏15,000 ‏₪",
+      "money-today": "פנוי היום: ‏535 ‏₪",
+      "money-total": "‏20,000 ‏₪",
+      "money-paid": "‏50 ‏₪",
+      "money-planned": "‏0 ‏₪",
+      "money-committed": "‏0 ‏₪",
+      "money-free-small": "‏15,000 ‏₪",
+      "money-base": "בסיס יומי: ‏468.75 ‏₪ (‏15,000 ‏₪ בלי טיסה, חלקי 32 תאריכים).",
+      "reserved": "‏4,950 ‏₪",
+      "kpi-total": "‏20,000 ‏₪",
+      "kpi-spent": "‏50 ‏₪",
+      "kpi-left": "‏15,000 ‏₪",
+      "today-money": "פנוי היום: ‏535 ‏₪"
+    }
+  },
+  "V6 the photo file is still in IndexedDB": {
+    "result": "PASS",
+    "filesAfter": [
+      "rich-photo-1"
+    ]
+  },
+  "no JS errors": {
+    "result": "PASS",
+    "errors": []
+  },
+  "no requests outside the app": {
+    "result": "PASS",
+    "outside": []
+  }
+}

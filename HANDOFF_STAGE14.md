@@ -11,7 +11,11 @@
 - **הענף:** `claude/eager-allen-ooe3kx`, מ-main. **אין PR ואין מיזוג.** בעל המוצר מחליט.
 - **גרסה:** 1.1.0 ב-`package.json`, ב-`config/app.config.json` וב-`sw.js`.
 - **Supabase:** **לא נוצר פרויקט.** ‏`config.cloud` ריק, ולכן באתר הכרטיס אומר "הסנכרון לענן עוד לא הוגדר". שום דבר לא נטען מהרשת.
-- **בדיקות:** `docs/GOALS_STAGE14.md` וסיכום הרגרסיה ב-`docs/evidence/stage14/regression/summary.log`.
+- **בדיקות:**
+  - `npm test` ‏495/495, ‏×3.
+  - RLS מקומי 53/53, ‏×3.
+  - הרגרסיה בדפדפן: 119 מתוך 120 עם exit 0. החריגה היחידה היא באג המתנה בבדיקה של שלב 14. תוקן, ואחריו 3/3 ברצף.
+  - **הפירוט:** `docs/evidence/stage14/README.md` ו-`docs/GOALS_STAGE14.md`.
 
 ## מה נבנה (קבצים)
 - **מסד נתונים:**

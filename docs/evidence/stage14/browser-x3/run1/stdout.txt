@@ -1,0 +1,34 @@
+PASS  S14-1a no cloud set up: the card says so, no buttons, no account dialogs, nothing requested from the cloud or the library
+PASS  S14-1b data unchanged by opening (1.0.x behaviour)
+PASS  S14-1c cloud set up but no session: no library, no request to Supabase, only "sign in" and "sign up"; pill hidden
+PASS  S14-1d the app works without signing in: home and data as before
+PASS  KEYBOARD sign-in dialog: Enter opens it, focus on the email field, Esc closes, focus returns to the button
+PASS  A11Y every field in the account dialogs has an accessible name (its wrapping label)
+PASS  S14-2a sign-up: account is "waiting for approval", the name is saved, too-short password refused first
+PASS  S14-2b a pending user reads only its own profile and sends no trip data
+PASS  S14-2c local data unchanged while pending
+PASS  S14-2d sign-out: back to "sign in", the session key is gone, the data stays
+PASS  S14-2e wrong password says so; "forgot password" sends the request and explains the manual reset for friends
+PASS  S14-2f a blocked user sees "blocked", reads only its profile, sends nothing, keeps the local data
+PASS  S14-6a first sign-in offers the move, with counts; a backup file downloads first; the exact data text is kept once
+PASS  S14-6b the trip moved to the account and nothing on the phone changed
+PASS  S14-6c a reload syncs again with no duplicate and no second offer
+PASS  S14-4a an edit in airplane mode is saved on the phone, the pill says offline, and it syncs once the network is back
+PASS  S14-4b a second phone of the owner gets the trip and the offline edit, once, and keeps its own trip too
+PASS  S14-5 server error 500, 402 (paused or restricted) and no network: no local byte changes, the waiting changes stay, "offline" shown, then it recovers
+PASS  S14-3a sharing by email: an unknown address is refused, the friend sees the shared trip (route, places, people)
+PASS  S14-3b the friend gets none of the owner's personal data (budget, checklist, bags, journal)
+PASS  S14-3c a friend cannot change the trip dates or share it further (owner only)
+PASS  S14-3d a user the trip was not shared with does not see it
+PASS  S14-3e removing a friend: their copy stays on their phone, unlinked, nothing deleted
+PASS  S14-7a regular users: no admin button, admin-view.js never loaded, no admin_* call sent
+PASS  S14-7b the admin sees users and trips, approves a pending user and blocks another (after a confirm)
+PASS  PASSWORD a signed-in user changes the password (only a new password is asked)
+PASS  RST a backup restored while signed in asks "this phone only / the cloud too" and sends nothing until then; "this phone only" leaves the cloud as it was
+PASS  S14-1e signed in and no network: the app opens from its offline copy with the last data, says "offline", asks nothing
+PASS  KEYS only tisa:* (unchanged keys) and latisa:* (new) in storage; no password stored anywhere
+PASS  LAYOUT the account card and the pill: no horizontal scroll at 390 and 1440, light and dark
+PASS  CSP no policy violation in any flow (sign-in, sync, sharing, admin, import, offline)
+PASS  no JS errors
+PASS  no requests outside the app and the (fake) Supabase project
+ALL PASS
