@@ -2,7 +2,7 @@
 // Data lives in localStorage and is never touched here. Stage 14: requests to Supabase (another origin) are never
 // handled or cached here, so no answer or token from the server is ever stored by the worker. A new VERSION means a new cache; the new worker
 // waits until the user taps "Update" in the app (message SKIP_WAITING), then old caches are deleted.
-const VERSION = '1.1.2';
+const VERSION = '1.1.3';
 const CACHE = `tisa-${VERSION}`;
 const PRECACHE = [
   './',

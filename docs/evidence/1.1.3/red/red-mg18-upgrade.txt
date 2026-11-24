@@ -1,0 +1,166 @@
+# red: MG18 against the fix without the 1.1.2 rule (created = prev.created only)
+TAP version 13
+# Subtest: MG18 (M2): a move left unfinished by 1.1.2 (sent records, no flag) is still finished the 1.1.2 way after the update: the phone wins
+not ok 1 - MG18 (M2): a move left unfinished by 1.1.2 (sent records, no flag) is still finished the 1.1.2 way after the update: the phone wins
+  ---
+  duration_ms: 16.179309
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage14-migrate.test.js:409:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + {
+    +   archive: {
+    +     budgets: [],
+    +     routes: []
+    +   },
+    +   assistant: {},
+    +   budget: {
+    +     categoriesMinor: {},
+    +     categoryNames: {},
+    +     currency: 'ILS',
+    +     estimate: false,
+    +     hidden: [],
+    +     profileId: null,
+    +     totalMinor: null
+    +   },
+    +   checkins: [],
+    +   checklist: [
+    +     {
+    +       done: false,
+    +       group: 'documents',
+    +       id: 'item-1',
+    +       name: 'Sample item',
+    +       note: '',
+    +       qty: 1
+    +     }
+    +   ],
+    +   countryCode: 'TH',
+    +   destinations: [
+    +     {
+    +       endDate: '2026-12-24',
+    +       id: 'stop-1',
+    +       name: 'Sample city',
+    +       note: '',
+    +       startDate: '2026-12-20'
+    +     }
+    +   ],
+    +   endDate: '2027-01-10',
+    +   events: [],
+    +   expenses: [
+    +     {
+    +       amountMinor: 1000,
+    +       baseMinor: 1000,
+    +       category: 'food',
+    +       currency: 'ILS',
+    +       date: '2026-12-21',
+    +       description: 'Sample',
+    +       destinationId: 'stop-1',
+    +       id: 'exp-1',
+    +       method: 'cash',
+    +       note: '',
+    +       rate: 1,
+    +       status: 'paid'
+    +     }
+    +   ],
+    +   id: 'mg-0001',
+    +   info: {},
+    +   journal: {},
+    +   luggage: {
+    +     bags: []
+    +   },
+    +   name: 'Sample trip',
+    +   photos: [],
+    +   places: [],
+    +   rates: {},
+    +   smartBag: {
+    +     activities: []
+    +   },
+    +   startDate: '2026-12-20',
+    +   tasks: [],
+    +   templateOffer: null,
+    +   transfers: []
+    + }
+    - null
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: ~
+  actual:
+    id: 'mg-0001'
+    photos:
+    templateOffer: ~
+    name: 'Sample trip'
+    countryCode: 'TH'
+    startDate: '2026-12-20'
+    endDate: '2027-01-10'
+    budget:
+      currency: 'ILS'
+      totalMinor: ~
+      categoriesMinor:
+      profileId: ~
+      estimate: false
+      categoryNames:
+      hidden:
+    rates:
+    info:
+    assistant:
+    journal:
+    luggage:
+      bags:
+    smartBag:
+      activities:
+    archive:
+      budgets:
+      routes:
+    destinations:
+      0:
+        id: 'stop-1'
+        name: 'Sample city'
+        startDate: '2026-12-20'
+        endDate: '2026-12-24'
+        note: ''
+    places:
+    transfers:
+    checklist:
+      0:
+        id: 'item-1'
+        group: 'documents'
+        name: 'Sample item'
+        qty: 1
+        note: ''
+        done: false
+    tasks:
+    checkins:
+    events:
+    expenses:
+      0:
+        id: 'exp-1'
+        amountMinor: 1000
+        currency: 'ILS'
+        rate: 1
+        baseMinor: 1000
+        category: 'food'
+        date: '2026-12-21'
+        destinationId: 'stop-1'
+        description: 'Sample'
+        note: ''
+        method: 'cash'
+        status: 'paid'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage14-migrate.test.js:422:10)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 76.473019

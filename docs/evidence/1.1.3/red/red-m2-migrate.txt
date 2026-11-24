@@ -1,0 +1,203 @@
+# red: tests/stage14-migrate.test.js (with MG13-MG17) against src/js/core/sync-engine.js of main 351e8e1, 2026-11-24T09:19:51Z
+TAP version 13
+# Subtest: MG1: success = the trip is created first, then its records go up; only then it is linked, and nothing on the phone changes
+ok 1 - MG1: success = the trip is created first, then its records go up; only then it is linked, and nothing on the phone changes
+  ---
+  duration_ms: 22.444807
+  type: 'test'
+  ...
+# Subtest: MG2: no network when creating: a visible failure (stage create, offline), not linked, nothing sent; a retry then works
+ok 2 - MG2: no network when creating: a visible failure (stage create, offline), not linked, nothing sent; a retry then works
+  ---
+  duration_ms: 3.748811
+  type: 'test'
+  ...
+# Subtest: MG3: the trip already exists in my account (an earlier attempt): no second trip, the records go up, it is linked
+ok 3 - MG3: the trip already exists in my account (an earlier attempt): no second trip, the records go up, it is linked
+  ---
+  duration_ms: 1.559966
+  type: 'test'
+  ...
+# Subtest: MG4: the id belongs to someone else (taken): nothing is linked or sent, and the failure says so
+ok 4 - MG4: the id belongs to someone else (taken): nothing is linked or sent, and the failure says so
+  ---
+  duration_ms: 0.928731
+  type: 'test'
+  ...
+# Subtest: MG5: sending the records fails: no success, not linked, the phone keeps everything; a retry finishes with no duplicate
+ok 5 - MG5: sending the records fails: no success, not linked, the phone keeps everything; a retry finishes with no duplicate
+  ---
+  duration_ms: 2.588958
+  type: 'test'
+  ...
+# Subtest: MG6: records half sent, then edited on the phone, then a retry: the phone's newer version wins in the cloud and on the phone
+ok 6 - MG6: records half sent, then edited on the phone, then a retry: the phone's newer version wins in the cloud and on the phone
+  ---
+  duration_ms: 2.877732
+  type: 'test'
+  ...
+# Subtest: MG7: a double tap runs one move: one create_trip call, one trip
+ok 7 - MG7: a double tap runs one move: one create_trip call, one trip
+  ---
+  duration_ms: 3.85207
+  type: 'test'
+  ...
+# Subtest: MG8: a pending (not approved) user: denied, nothing linked, the failure is kept for the screen
+ok 8 - MG8: a pending (not approved) user: denied, nothing linked, the failure is kept for the screen
+  ---
+  duration_ms: 0.606283
+  type: 'test'
+  ...
+# Subtest: MG9 (M1): records reached the server but the answer was lost, the user deletes one, the retry: it does not come back, on the phone or in the cloud
+ok 9 - MG9 (M1): records reached the server but the answer was lost, the user deletes one, the retry: it does not come back, on the phone or in the cloud
+  ---
+  duration_ms: 5.353856
+  type: 'test'
+  ...
+# Subtest: MG10 (M1): the delete survives a second failed try (offline when creating) and a new backup before the retry
+ok 10 - MG10 (M1): the delete survives a second failed try (offline when creating) and a new backup before the retry
+  ---
+  duration_ms: 2.170765
+  type: 'test'
+  ...
+# Subtest: MG11 (M1): the delete is limited to what this phone sent: a record it never had is still taken from the cloud, and an untouched one stays
+ok 11 - MG11 (M1): the delete is limited to what this phone sent: a record it never had is still taken from the cloud, and an untouched one stays
+  ---
+  duration_ms: 2.622097
+  type: 'test'
+  ...
+# Subtest: MG12 (M1): after the move, normal sync of edits and deletes still works
+ok 12 - MG12 (M1): after the move, normal sync of edits and deletes still works
+  ---
+  duration_ms: 2.299927
+  type: 'test'
+  ...
+# Subtest: MG13 (M2): a stale copy of a trip already in the account: the newer edit and the delete stay, in the cloud and on the other phone
+not ok 13 - MG13 (M2): a stale copy of a trip already in the account: the newer edit and the delete stay, in the cloud and on the other phone
+  ---
+  duration_ms: 3.830658
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage14-migrate.test.js:311:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    the newer edit stays in the cloud
+    + actual - expected
+    
+    + 'Sample item'
+    - 'Sample item, edited on phone A'
+                  ^
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'Sample item, edited on phone A'
+  actual: 'Sample item'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage14-migrate.test.js:321:10)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: MG14 (M2): the same move keeps the account's trip header (dates), and phone B's older header is kept as a copy
+not ok 14 - MG14 (M2): the same move keeps the account's trip header (dates), and phone B's older header is kept as a copy
+  ---
+  duration_ms: 2.424521
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage14-migrate.test.js:338:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    the account's dates stay
+    + actual - expected
+    
+    + '2026-12-20'
+    - '2026-12-21'
+                ^
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: '2026-12-21'
+  actual: '2026-12-20'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage14-migrate.test.js:344:10)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: MG15 (M2): that move fails half way, then a retry: the stale copy still does not overwrite the account
+not ok 15 - MG15 (M2): that move fails half way, then a retry: the stale copy still does not overwrite the account
+  ---
+  duration_ms: 3.390771
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage14-migrate.test.js:350:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'Sample item'
+    - 'Sample item, edited on phone A'
+                  ^
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'Sample item, edited on phone A'
+  actual: 'Sample item'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage14-migrate.test.js:361:10)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: MG16 (M2): this phone created the trip, the records failed, a new backup and an edit, then a retry: the phone still wins
+not ok 16 - MG16 (M2): this phone created the trip, the records failed, a new backup and an edit, then a retry: the phone still wins
+  ---
+  duration_ms: 0.717828
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage14-migrate.test.js:368:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    kept: this phone created the trip
+    + actual - expected
+    
+    + undefined
+    - true
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage14-migrate.test.js:374:10)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: MG17 (M2): the account does not list the trip after "exists": nothing is sent, the phone header is not replaced, not linked
+not ok 17 - MG17 (M2): the account does not list the trip after "exists": nothing is sent, the phone header is not replaced, not linked
+  ---
+  duration_ms: 0.998552
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage14-migrate.test.js:393:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    'done' !== 'failed'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'failed'
+  actual: 'done'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage14-migrate.test.js:401:10)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..17
+# tests 17
+# suites 0
+# pass 12
+# fail 5
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 147.797286

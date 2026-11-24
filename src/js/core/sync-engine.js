@@ -18,6 +18,7 @@ const MAX_RECORD_CHARS = 900_000; // the server refuses a record over 1 MB; a bi
 const SETTINGS_FIELDS = ['language', 'assistantQuestionLimit'];
 const EPOCH = '1970-01-01T00:00:00.000Z';
 const GONE = '#removed-on-this-phone'; // stands in for the shadow of a record deleted on the phone before it was linked
+const UNKNOWN = '#not-known-on-this-phone'; // the shadow of a phone record whose version the account never had from this phone
 
 const clone = (v) => (v === undefined ? undefined : JSON.parse(JSON.stringify(v)));
 const later = (a, b) => Date.parse(a) > Date.parse(b);
@@ -84,10 +85,13 @@ async function pullAll(api, tripId, cursor) {
 
 /** Sync one linked trip. Returns { trip (or null when nothing changed here), entry, copies, notices }. Throws on failure.
  *  removed: keys this phone sent in an earlier, unfinished move and has deleted since (see migrateTrip). If the cloud
- *  still has one, it is a delete made on the phone: it is sent, not taken back from the cloud. */
-export async function syncTrip({ api, entry: entryIn, trip, userId, serverTrip, nowIso, removed = [] }) {
+ *  still has one, it is a delete made on the phone: it is sent, not taken back from the cloud.
+ *  unknown: keys of phone records with no known baseline (see migrateTrip, M2). If the cloud has one, the phone's
+ *  version counts as an edit with no known time, so the cloud's version is taken and the phone's is kept as a copy. */
+export async function syncTrip({ api, entry: entryIn, trip, userId, serverTrip, nowIso, removed = [], unknown = [] }) {
   const e = clone(entryIn);
   const removedHere = new Set(removed);
+  const unknownHere = new Set(unknown);
   const tripId = trip.id;
   let { meta, records } = tripToRecords(trip);
   const copies = [];
@@ -124,7 +128,7 @@ export async function syncTrip({ api, entry: entryIn, trip, userId, serverTrip, 
       const rh = row.deleted ? null : hashValue(row.data);
       const local = records.get(k);
       const lhash = local ? hashValue(local.data) : null;
-      const shadow = e.shadow[k] ?? (removedHere.has(k) && !local ? GONE : null);
+      const shadow = e.shadow[k] ?? (removedHere.has(k) && !local ? GONE : unknownHere.has(k) && local ? UNKNOWN : null);
       if (rh === shadow) continue;                      // nothing new in the cloud for this record
       if (rh === lhash) { setShadow(k, rh); continue; } // the phone already has it
       const localDirty = lhash !== shadow;
@@ -316,12 +320,16 @@ export function resendAll(syncIn) {
 // a reload: { tripId, step: 'ready' | 'done' | 'failed', backupAt, stage: 'create' | 'records', kind, at, sentKeys }.
 // sentKeys: the records an unfinished move may have put in the cloud (the answer can be lost after the server took
 // them). A key there that is no longer on the phone was deleted on the phone, so the retry deletes it in the cloud too.
+// created: an earlier try of this phone got 'created' for this trip, so what the account holds came from this phone.
+// adopted: an earlier try found the trip already in the account (M2). Neither flag with sentKeys = a try of 1.1.2,
+// which had always created the trip itself: it is still treated as created.
 
 /** Step 1 is done: the backup file was handed to the phone. Returns a new sync state; the trips are not touched. */
 export function markBackup(syncIn, tripId, nowIso) {
   const sync = clone(syncIn ?? emptySyncState());
-  const sentKeys = sync.migration?.tripId === tripId ? sync.migration.sentKeys : undefined;
-  sync.migration = { tripId, step: 'ready', backupAt: nowIso, stage: null, kind: null, at: nowIso, ...(sentKeys ? { sentKeys } : {}) };
+  const same = sync.migration?.tripId === tripId ? sync.migration : null;
+  const sentKeys = same?.sentKeys;
+  sync.migration = { tripId, step: 'ready', backupAt: nowIso, stage: null, kind: null, at: nowIso, ...(sentKeys ? { sentKeys } : {}), ...(same?.created ? { created: true } : {}), ...(same?.adopted ? { adopted: true } : {}) };
   return sync;
 }
 
@@ -335,8 +343,11 @@ export async function migrateTrip({ api, sync: syncIn, trip, nowIso }) {
   const onPhone = [...tripToRecords(trip).records.keys()];
   const earlier = prev?.sentKeys ?? [];
   let sentKeys = earlier;
+  // this phone's own try created the trip in the account (kept for a retry); see "adopted" above for a 1.1.2 try
+  let created = Boolean(prev?.created) || (earlier.length > 0 && !prev?.adopted);
+  let adopted = false;
   const fail = (stage, kind) => {
-    sync.migration = { tripId: trip.id, step: 'failed', backupAt: prev?.backupAt ?? null, stage, kind, at: nowIso, ...(sentKeys.length ? { sentKeys } : {}) };
+    sync.migration = { tripId: trip.id, step: 'failed', backupAt: prev?.backupAt ?? null, stage, kind, at: nowIso, ...(sentKeys.length ? { sentKeys } : {}), ...(created ? { created } : {}), ...(adopted ? { adopted } : {}) };
     return { sync, result: kind === 'taken' ? 'taken' : 'failed', trip: null, notices: [] };
   };
   const kindOf = (e) => (e instanceof CloudError ? e.kind : 'bad');
@@ -345,10 +356,29 @@ export async function migrateTrip({ api, sync: syncIn, trip, nowIso }) {
   try { up = await uploadTrip({ api, sync, trip, nowIso }); } catch (e) { return fail('create', kindOf(e)); }
   if (up.result === 'taken') return fail('create', 'taken');
   if (up.result !== 'created' && up.result !== 'exists') return fail('create', 'bad');
-  // The first move: everything on the phone is the newest version (a copy half sent by an earlier attempt loses).
+  // When this phone created the trip in the account (now, or in an earlier unfinished try), everything on the phone is
+  // the newest version (a copy half sent by that try loses), and so is its header. M2: a trip that was already in the
+  // account ('exists' and this phone never got 'created' for it, e.g. moved from another phone and then restored here
+  // from a backup) is not overwritten by this copy: the later edit wins, as in every sync. The phone's version, whose
+  // edit time is not known, loses to what the account has and is kept as a copy; records only the phone has are sent.
   const entry = up.sync.trips[trip.id];
-  for (const k of onPhone) entry.dirtyAt[k] = nowIso;
-  entry.meta.shadow = null; // and so is its header (name, country, dates): it is sent, never taken from the cloud
+  created = created || up.result === 'created';
+  adopted = !created;
+  const unknown = created ? [] : onPhone;
+  if (created) for (const k of onPhone) entry.dirtyAt[k] = nowIso;
+  let serverTrip = { id: trip.id };
+  const metaCopy = [];
+  if (created) entry.meta.shadow = null; // its header (name, country, dates) is sent, never taken from the cloud
+  else {
+    // The account's header stays; the phone's, if different, is kept as a copy.
+    try { serverTrip = (await api.myTrips()).find((x) => x.id === trip.id); } catch (e) { return fail('records', kindOf(e)); }
+    if (!serverTrip) return fail('records', 'bad'); // not expected after 'exists'; nothing is sent or changed then
+    const { meta } = tripToRecords(trip);
+    entry.meta.shadow = hashValue(meta);
+    if (hashValue(metaOfServer(serverTrip)) !== entry.meta.shadow) {
+      metaCopy.push({ type: 'replaced', tripId: trip.id, key: 'meta', local: meta, remote: metaOfServer(serverTrip), at: nowIso });
+    }
+  }
   // Records an earlier attempt sent that are gone from the phone now were deleted here: deleted in the cloud too.
   const has = new Set(onPhone);
   const removed = earlier.filter((k) => !has.has(k));
@@ -357,12 +387,12 @@ export async function migrateTrip({ api, sync: syncIn, trip, nowIso }) {
   sentKeys = [...new Set([...earlier, ...onPhone])];
   let r;
   try {
-    r = await syncTrip({ api, entry, trip, userId: sync.userId, serverTrip: { id: trip.id }, nowIso, removed });
+    r = await syncTrip({ api, entry, trip, userId: sync.userId, serverTrip, nowIso, removed, unknown });
   } catch (e) { return fail('records', kindOf(e)); }
   for (const k of removed) if (!(k in r.entry.shadow)) delete r.entry.dirtyAt[k]; // it never reached the cloud: nothing to send
   sync.trips[trip.id] = r.entry;
   delete sync.declined?.[trip.id];
-  keepCopies(sync, r.copies);
+  keepCopies(sync, [...metaCopy, ...r.copies]);
   sync.migration = { tripId: trip.id, step: 'done', backupAt: prev?.backupAt ?? null, stage: null, kind: null, at: nowIso };
   return { sync, result: 'done', trip: r.trip, notices: r.notices };
 }

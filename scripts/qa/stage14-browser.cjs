@@ -309,6 +309,37 @@ const shot = async (page, name) => { if (SHOTS) await page.screenshot({ path: pa
       await ctx2.close();
     }
 
+    // S14-6g (1.1.3, M2): another device holds an older copy of the same trip (the data before the move, as a restored
+    // backup would be) and taps "Move to my account". The account already has a newer edit from phone A and the
+    // offline item: neither is overwritten, the device takes them, and there is still one trip.
+    {
+      const tripId = JSON.parse(original).activeTripId;
+      const rows = [...fake.records.values()].filter((r) => r.trip_id === tripId && r.kind === 'item' && !r.deleted && r.data?.v?.name !== 'Offline sample item');
+      const edited = rows[0];
+      const top = [...fake.records.values()].reduce((m, r) => (r.server_at > m ? r.server_at : m), '');
+      Object.assign(edited, { data: { ...edited.data, v: { ...edited.data.v, name: 'Sample item, edited on phone A' } }, edited_at: new Date(Date.now() - 30_000).toISOString(), server_at: new Date(Date.parse(top) + 1).toISOString() });
+      const records = fake.records.size;
+      const ctx3 = await context(browser, sb, { seed: rich });
+      const p3 = await open(ctx3, 'owner-a-device3');
+      await signIn(p3, 'owner-a@example.com');
+      await closed(p3, '#dlg-cloud-auth');
+      await p3.waitForSelector('[data-cloud="upload"]:not([hidden])', { timeout: 15000 });
+      await p3.click('[data-cloud="upload"]');
+      await p3.waitForSelector('#dlg-cloud-migrate[open]');
+      await Promise.all([p3.waitForEvent('download'), p3.click('[data-cloud="migrate-yes"]')]);
+      await p3.waitForSelector('#dlg-cloud-migrate[open] [data-cloud="migrate-upload"]:not([hidden])');
+      await p3.click('[data-cloud="migrate-upload"]');
+      await closed(p3, '#dlg-cloud-migrate');
+      await waitPill(p3, 'מסונכרן');
+      const inCloud = fake.records.get(`${edited.trip_id}|${edited.scope}|${edited.kind}|${edited.rec_id}`).data.v.name;
+      const t3 = JSON.parse(await data(p3)).trips[tripId];
+      const onDevice = t3.checklist.find((x) => x.id === edited.rec_id)?.name;
+      const offline = t3.checklist.filter((x) => x.name === 'Offline sample item').length;
+      const mine = await p3.evaluate(() => [...document.querySelectorAll('[data-slot="cloud-trip-list"] span')].some((s) => s.textContent.includes('(שלי)')));
+      pass('S14-6g an older copy on another device moved to the account: the newer edit stays in the cloud and comes to the device, one trip, no duplicate', inCloud === 'Sample item, edited on phone A' && onDevice === inCloud && offline === 1 && fake.trips.size === 1 && fake.records.size === records && mine, { inCloud, onDevice, offline, trips: fake.trips.size, records: [records, fake.records.size], mine });
+      await ctx3.close();
+    }
+
     // S14-5 server failures
     {
       const fails = {};
