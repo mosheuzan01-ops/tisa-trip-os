@@ -16,7 +16,7 @@
 | `contrast-browser` | 3/0 | 3/0 | 3/0 |
 | `a11y-names-browser` | 144/144, PASS | 144/144, PASS | 144/144, PASS |
 | `stage13-layout-browser` | 12/0 | 12/0 | 12/0 |
-| `stage13-keyboard-browser` | 4/0 (601 שניות) | בהרצה | בהרצה |
+| `stage13-keyboard-browser` | 4/0 (601 שניות) | 4/0 (601 שניות) | 4/0 (604 שניות) |
 
 - **הקבצים:** `regression/run1..3/`, והסיכומים ב-`regression/summary-run1.txt` ו-`regression/summary-run2-3.txt`.
 - **בדרך, הקלדה:** בריצה הראשונה של הרגרסיה `stage13-keyboard-browser` נקטעה אחרי 600 שניות, בגבול זמן שהוגדר בסקריפט ההרצה ולא באפליקציה. Playwright סגר את הדפדפן, ולכן FAIL של "Target page… has been closed" (`regression/run1/stage13-keyboard-browser-cut-at-600s/`). ההרצה המלאה בלי הגבול לוקחת כ-601 שניות. שלוש ההרצות שבטבלה הן הרצות מלאות, בלי גבול זמן (`keyboard/run1..3/`).
