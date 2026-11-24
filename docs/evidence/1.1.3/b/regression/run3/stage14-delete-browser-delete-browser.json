@@ -1,0 +1,91 @@
+{
+  "DB1 only the owner of a linked trip sees \"Delete trip\"; a member does not": {
+    "result": "PASS",
+    "ownerActions": [
+      "share",
+      "members",
+      "delete",
+      "password",
+      "signout"
+    ],
+    "friendActions": [
+      "members",
+      "password",
+      "signout"
+    ]
+  },
+  "DB2 \"Delete trip\" opens a dialog: the trip's name, what is deleted, that it cannot be undone, the question, Cancel and Yes; nothing sent": {
+    "result": "PASS",
+    "dlg": {
+      "name": "תאילנד",
+      "what": "מהחשבון יימחקו: 7 תחנות, 1 הוצאות, 61 פריטים ברשימות, 1 מקומות וכל שאר הנתונים של הטיול. גם לחברי הטיול לא תהיה אליו גישה.",
+      "yes": "כן, למחוק את הטיול",
+      "cancel": "ביטול",
+      "focus": true
+    },
+    "deletes": 0
+  },
+  "DB3 Cancel, Esc and a tap outside close the dialog and delete nothing": {
+    "result": "PASS",
+    "ways": {
+      "cancel": true,
+      "esc": true,
+      "outside": true
+    },
+    "deletes": 0
+  },
+  "DB4 no network or a refusal: the reason is in the dialog, nothing is deleted or changed, \"Yes\" works again": {
+    "result": "PASS",
+    "fails": {
+      "network": {
+        "msg": "אין חיבור לשרת. הטיול לא נמחק. נסו שוב כשיש רשת.",
+        "ok": true
+      },
+      "refused": {
+        "msg": "אין הרשאה למחוק את הטיול הזה. רק בעל הטיול יכול למחוק אותו. הטיול לא נמחק.",
+        "ok": true
+      }
+    },
+    "stillLinked": true
+  },
+  "DB5 a double tap sends one delete; the trip, its records and its members are gone; the owner's other trip is untouched": {
+    "result": "PASS",
+    "calls": 1,
+    "records": 0,
+    "other": 1
+  },
+  "DB6 the phone keeps its copy byte for byte, now \"on this device only\"; share, members and delete are gone; no move offered by itself": {
+    "result": "PASS",
+    "actions": [
+      "upload",
+      "password",
+      "signout"
+    ],
+    "label": "תאילנד (במכשיר בלבד)",
+    "offered": false
+  },
+  "DB8 the trip's photo on the phone (IndexedDB) is still there, byte for byte, after the delete and a reload": {
+    "result": "PASS",
+    "photoBefore": {
+      "type": "image/jpeg",
+      "full": "c1e592df5c3f932a133b422cec32a60a8ec1ce46fb08fafd2c91736b34da6e08",
+      "thumb": "c1e592df5c3f932a133b422cec32a60a8ec1ce46fb08fafd2c91736b34da6e08"
+    },
+    "photoAfter": {
+      "type": "image/jpeg",
+      "full": "c1e592df5c3f932a133b422cec32a60a8ec1ce46fb08fafd2c91736b34da6e08",
+      "thumb": "c1e592df5c3f932a133b422cec32a60a8ec1ce46fb08fafd2c91736b34da6e08"
+    }
+  },
+  "DB7 a friend's phone keeps its copy, told it is no longer shared": {
+    "result": "PASS"
+  },
+  "no JS errors": {
+    "result": "PASS",
+    "errors": []
+  },
+  "no requests outside the app and the (fake) Supabase project": {
+    "result": "PASS",
+    "outside": []
+  }
+}

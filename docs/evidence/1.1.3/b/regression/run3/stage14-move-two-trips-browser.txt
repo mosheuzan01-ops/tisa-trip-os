@@ -1,0 +1,6 @@
+PASS  MT1 trip 1: records reached the server, the answer was lost; the dialog says so and trip 1 stays on this device only
+PASS  MT2 trip 2 is moved completely; trip 1 is still on this device only
+PASS  MT3 the item deleted on the phone before the retry does not come back, on the phone or in the cloud; the rest stays; no duplicate
+PASS  MT4 trip 2 was not touched by trip 1's retry; after a reload both are "(mine)" and the item is still gone
+PASS  MT-clean no page errors and no request outside the app and the fake project
+PASS 0
