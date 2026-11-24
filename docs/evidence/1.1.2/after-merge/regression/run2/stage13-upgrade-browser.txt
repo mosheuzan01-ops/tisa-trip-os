@@ -1,0 +1,10 @@
+PASS  U1 0.7.1 opens the 0.7.1 sample data (schema 5) with no error; the photo file is stored
+PASS  U2 the old app shows the update banner; no reload before the tap
+PASS  U3 after the tap: this version, schema 8, the old cache is gone
+PASS  U4 every 0.7.1 field of the trip and of the settings is unchanged (the migration only adds)
+PASS  U5 the photo file is still in IndexedDB; no corrupt copy was made
+PASS  U6 the screens show the 0.7.1 data: every stop, both expenses, the extra list item, the journal note, the check-in, the bag, the photo
+PASS  U7 a JSON backup from the upgraded app restores to the same trip data
+PASS  no JS errors
+PASS  no requests outside the app
+ALL PASS

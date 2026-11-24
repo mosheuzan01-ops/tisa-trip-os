@@ -1,0 +1,22 @@
+run2 npm-test exit=0 # pass 529 # fail 0 
+run2 stage14-rls-local exit=0 pass=0 fail=0 ALL PASS
+run2 stage14-delete-browser exit=0 pass=9 fail=0 ALL PASS
+run2 stage14-account-layout-browser exit=0 pass=6 fail=0 ALL PASS
+run2 stage14-browser exit=0 pass=37 fail=0 ALL PASS
+run2 stage13-upgrade-browser exit=0 pass=9 fail=0 ALL PASS
+run2 stage7-close-browser exit=0 pass=6 fail=0 ALL PASS
+run2 stage7-offline-browser exit=0 pass=6 fail=0 ALL PASS
+run2 contrast-browser exit=0 pass=3 fail=0 PASS  no JS errors
+run2 a11y-names-browser exit=0 pass=0 fail=0 ALL PASS
+run2 stage13-layout-browser exit=0 pass=12 fail=0 ALL PASS
+run3 npm-test exit=0 # pass 529 # fail 0 
+run3 stage14-rls-local exit=0 pass=0 fail=0 ALL PASS
+run3 stage14-delete-browser exit=0 pass=9 fail=0 ALL PASS
+run3 stage14-account-layout-browser exit=0 pass=6 fail=0 ALL PASS
+run3 stage14-browser exit=0 pass=37 fail=0 ALL PASS
+run3 stage13-upgrade-browser exit=0 pass=9 fail=0 ALL PASS
+run3 stage7-close-browser exit=0 pass=6 fail=0 ALL PASS
+run3 stage7-offline-browser exit=0 pass=6 fail=0 ALL PASS
+run3 contrast-browser exit=0 pass=3 fail=0 PASS  no JS errors
+run3 a11y-names-browser exit=0 pass=0 fail=0 ALL PASS
+run3 stage13-layout-browser exit=0 pass=12 fail=0 ALL PASS

@@ -1,0 +1,11 @@
+PASS  DB1 only the owner of a linked trip sees "Delete trip"; a member does not
+PASS  DB2 "Delete trip" opens a dialog: the trip's name, what is deleted, that it cannot be undone, the question, Cancel and Yes; nothing sent
+PASS  DB3 Cancel, Esc and a tap outside close the dialog and delete nothing
+PASS  DB4 no network or a refusal: the reason is in the dialog, nothing is deleted or changed, "Yes" works again
+PASS  DB5 a double tap sends one delete; the trip, its records and its members are gone; the owner's other trip is untouched
+PASS  DB6 the phone keeps its copy byte for byte, now "on this device only"; share, members and delete are gone; no move offered by itself
+FAIL  DB8 the trip's photo on the phone (IndexedDB) is still there, byte for byte, after the delete and a reload  {"result":"FAIL","photoBefore":{"type":"image/jpeg","full":"c1e592df5c3f932a133b422cec32a60a8ec1ce46fb08fafd2c91736b34da6e08","thumb":"c1e592df5c3f932a133b422cec32a60a8ec1ce46fb08fafd2c91736b34da6e08"},"photoAfter":null}
+PASS  DB7 a friend's phone keeps its copy, told it is no longer shared
+PASS  no JS errors
+PASS  no requests outside the app and the (fake) Supabase project
+FAIL 1

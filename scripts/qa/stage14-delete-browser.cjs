@@ -8,12 +8,13 @@
 // DB5 a double tap on "Yes" sends one delete; the trip, its records and members are gone; another trip is untouched
 // DB6 the phone keeps its copy byte for byte, now "on this device only"; no move is offered by itself after a reload
 // DB7 a friend's phone keeps its copy too ("no longer shared")
+// DB8 the trip's photos on the phone (IndexedDB tisa-photos, never in the cloud) stay byte for byte after the delete
 // Screenshots: the dialog at 390 and 1440, the failure at 390, the card after the delete at 390.
 // Usage: QA_OUT=<dir> RUN=<n> PORT=<port> node scripts/qa/stage14-delete-browser.cjs
 const { chromium } = require('playwright');
 const fs = require('node:fs');
 const path = require('node:path');
-const { richState } = require('./lib/rich-trip.cjs');
+const { richState, putSamplePhoto, PHOTO_ID } = require('./lib/rich-trip.cjs');
 const { createFakeSupabase, PROJECT } = require('./lib/fake-supabase.cjs');
 const { ROOT, PASS, startServer, newContext, openSettings, signIn, signInAndMove, waitPill, visibleActions } = require('./lib/cloud-owner.cjs');
 
@@ -64,6 +65,19 @@ const toast = (page, re) => page.waitForFunction((s) => new RegExp(s).test(docum
     for (let i = 0; i < 100 && recordsOf() < 10; i += 1) await pageA.waitForTimeout(100);
     const original = await data(pageA);
     const tripRecords = recordsOf();
+    // the trip's photo lives only on this phone (IndexedDB): its bytes are read again after the delete (DB8)
+    await putSamplePhoto(pageA);
+    const photoBytes = () => pageA.evaluate(async (id) => {
+      const { getPhoto } = await import('/src/js/photo-store.js');
+      const r = await getPhoto(id);
+      if (!r) return null;
+      const sha = async (b) => {
+        const buf = b instanceof Blob ? await b.arrayBuffer() : b;
+        return Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256', buf))).map((x) => x.toString(16).padStart(2, '0')).join('');
+      };
+      return { type: r.type, full: await sha(r.full), thumb: await sha(r.thumb) };
+    }, PHOTO_ID);
+    const photoBefore = await photoBytes();
 
     // a friend gets the trip on their phone
     fake.rpc(A, 'share_trip', { t: tripId, friend_email: 'friend-b@example.com' });
@@ -154,6 +168,11 @@ const toast = (page, re) => page.waitForFunction((s) => new RegExp(s).test(docum
       JSON.stringify(JSON.parse(afterDelete).trips) === JSON.stringify(JSON.parse(original).trips) && JSON.stringify(JSON.parse(await data(pageA)).trips) === JSON.stringify(JSON.parse(original).trips)
       && /במכשיר בלבד/.test(await label()) && !actions.includes('delete') && !actions.includes('share') && !actions.includes('members') && actions.includes('upload') && !offered,
       { actions, label: await label(), offered });
+
+    // DB8 the photos on the phone are untouched (after the delete and the reload above)
+    const photoAfter = await photoBytes();
+    pass('DB8 the trip\'s photo on the phone (IndexedDB) is still there, byte for byte, after the delete and a reload',
+      Boolean(photoBefore?.full) && JSON.stringify(photoAfter) === JSON.stringify(photoBefore), { photoBefore, photoAfter });
 
     // DB7 the friend's phone keeps its copy
     const friendBefore = JSON.parse(await data(pageB)).trips[tripId];
