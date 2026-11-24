@@ -18,7 +18,7 @@
     "he": "ישראל",
     "en": "Israel"
   },
-  "appVersion": "1.1.3",
+  "appVersion": "1.1.4",
   "mapsSearchUrl": "https://www.google.com/maps/search/?api=1&query=",
   "cloud": {
     "url": "https://picrnywobwgvtavozrvn.supabase.co",

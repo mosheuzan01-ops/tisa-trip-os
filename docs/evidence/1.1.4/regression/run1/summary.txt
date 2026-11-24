@@ -1,0 +1,18 @@
+npm-test exit=0 # pass 558 # fail 0 
+tools-admin-114-browser exit=0 secs=7 14/14 pass
+stage14-browser exit=0 secs=25 PASS  KEYS only tisa:* (unchanged keys) and latisa:* (new) in storage; no password stored anywhere
+stage14-move-two-trips-browser exit=0 secs=5 
+stage14-delete-browser exit=0 secs=7 
+stage14-account-layout-browser exit=0 secs=4 PASS  L3 the card groups trip actions (share, members) apart from account actions (admin, password, sign-out)
+stage13-upgrade-browser exit=0 secs=7 
+stage7-close-browser exit=0 secs=30 
+contrast-browser exit=0 secs=2 
+a11y-names-browser exit=0 secs=4 
+stage13-layout-browser exit=0 secs=6 
+stage2-browser exit=0 secs=16 
+transfers-browser exit=0 secs=19 
+places-browser exit=0 secs=8 
+assistant-browser exit=0 secs=12 
+stage6-calendar-browser exit=0 secs=5 
+stage13-keyboard-browser exit=0 secs=616 
+DONE

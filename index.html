@@ -58,6 +58,13 @@
               <h1 class="display" data-slot="country"></h1>
             </div>
 
+            <!-- 1.1.4: admins only, and only while users wait for approval (cached count, src/js/cloud-view.js). In the app only, no push. -->
+            <button class="home-admin surface" type="button" data-slot="home-admin" hidden>
+              <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-gear"/></svg>
+              <span class="home-admin-text" data-slot="home-admin-text"></span>
+              <span class="count-badge ltr" data-slot="home-admin-count" aria-hidden="true"></span>
+            </button>
+
             <button class="home-sos" type="button" data-action="home-emergency">
               <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-sos"/></svg>
               <span class="home-sos-text"><span class="home-sos-title" data-i18n="home.emergency">חירום</span><span class="home-sos-desc" data-i18n="home.emergency.desc">מספרים מאומתים, חיוג בלחיצה</span></span>
@@ -182,7 +189,7 @@
 
             <section class="tools" aria-labelledby="tools-title">
               <div class="tools-head">
-                <h2 id="tools-title" class="section-title" data-i18n="tools.title">הכלים שלכם</h2>
+                <h2 id="tools-title" class="section-title" data-i18n="tools.title">קיצורי דרך</h2>
                 <p class="tools-note" data-i18n="tools.note">ייפתחו בשלבים הבאים</p>
               </div>
               <div class="tiles">
@@ -321,22 +328,6 @@
           </button>
         </div>
 
-        <button class="btn btn-ghost itin-transfers-link" type="button" data-go="transfers">
-          <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-plane"/></svg><span data-i18n="transfers.open">טיסות ומעברים</span>
-        </button>
-        <button class="btn btn-ghost itin-transfers-link" type="button" data-go="calendar">
-          <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-calendar"/></svg><span data-i18n="cal.open">לוח שנה</span>
-        </button>
-        <button class="btn btn-ghost itin-transfers-link" type="button" data-go="photos">
-          <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-image"/></svg><span data-i18n="photo.open">תמונות</span>
-        </button>
-        <button class="btn btn-ghost itin-transfers-link" type="button" data-go="places">
-          <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-pin"/></svg><span data-i18n="place.open">מקומות שמורים</span>
-        </button>
-        <button class="btn btn-ghost itin-transfers-link" type="button" data-go="summary">
-          <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-summary"/></svg><span data-i18n="sum.open">סיכום הטיול</span>
-        </button>
-
         <section class="card surface settings-card itin-trip" aria-labelledby="itin-trip-title">
           <h2 id="itin-trip-title" data-i18n="itin.trip.title">תאריכי הטיול</h2>
           <p data-slot="itin-trip-dates"></p>
@@ -345,6 +336,41 @@
             <span data-i18n="itin.replan.open">שינוי תאריכים ותכנון מחדש</span>
           </button>
         </section>
+      </section>
+
+      <!-- 1.1.4: TOOLS, the fifth tab. The five tools that look at the whole trip; each opens its own screen. -->
+      <section class="panel tools-tab" id="panel-tools" role="tabpanel" aria-labelledby="tools-tab-title" hidden>
+        <div class="itin-head">
+          <h1 class="display" id="tools-tab-title" data-i18n="toolsTab.title">כלים</h1>
+          <p class="muted" data-i18n="toolsTab.lead">מבט על כל הטיול</p>
+        </div>
+        <div class="tools-tab-list">
+          <button class="tile surface tools-tab-tile" type="button" data-go="transfers">
+            <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-plane"/></svg>
+            <span class="tile-name" data-i18n="transfers.open">טיסות ומעברים</span>
+            <span class="tile-desc" data-i18n="toolsTab.transfers.desc">טיסות, נסיעות וצ'ק-אין</span>
+          </button>
+          <button class="tile surface tools-tab-tile" type="button" data-go="calendar">
+            <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-calendar"/></svg>
+            <span class="tile-name" data-i18n="cal.open">לוח שנה</span>
+            <span class="tile-desc" data-i18n="toolsTab.calendar.desc">כל הימים במבט אחד</span>
+          </button>
+          <button class="tile surface tools-tab-tile" type="button" data-go="photos">
+            <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-image"/></svg>
+            <span class="tile-name" data-i18n="photo.open">תמונות</span>
+            <span class="tile-desc" data-i18n="toolsTab.photos.desc">נשמרות רק במכשיר</span>
+          </button>
+          <button class="tile surface tools-tab-tile" type="button" data-go="places">
+            <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-pin"/></svg>
+            <span class="tile-name" data-i18n="place.open">מקומות שמורים</span>
+            <span class="tile-desc" data-i18n="toolsTab.places.desc">מה רוצים לראות ולאכול</span>
+          </button>
+          <button class="tile surface tools-tab-tile" type="button" data-go="summary">
+            <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-summary"/></svg>
+            <span class="tile-name" data-i18n="sum.open">סיכום הטיול</span>
+            <span class="tile-desc" data-i18n="toolsTab.summary.desc">ימים, הוצאות ותמונות</span>
+          </button>
+        </div>
       </section>
 
       <!-- MONEY (features 2-4, Stage 4): budget, expenses, planning rates. Amounts are whole agorot. -->
@@ -925,6 +951,10 @@
             <legend data-i18n="cloud.trips.legend">הטיול שמוצג</legend>
             <div class="choices" data-slot="cloud-trip-list"></div>
           </fieldset>
+          <!-- 1.1.4: a new trip on this phone ("on this device only"); works with no account. No trip is changed. -->
+          <div class="settings-actions" data-slot="trip-actions">
+            <button class="btn btn-ghost" type="button" data-action="trip-new"><svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-plus"/></svg><span data-i18n="trip.new">טיול חדש</span></button>
+          </div>
           <!-- 1.1.2: two groups. The shown trip's actions (just under the trip choice), then the account's own actions
                after a thin line. Each row is filled edge to edge (main.css .settings-actions): no empty cell. -->
           <div class="settings-actions" data-slot="cloud-actions">
@@ -936,7 +966,7 @@
             <button class="btn btn-ghost btn-danger" type="button" data-cloud="delete" hidden><svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-trash"/></svg><span data-i18n="cloud.delete">מחיקת טיול</span></button>
           </div>
           <div class="settings-actions cloud-account-actions" data-slot="cloud-account-actions">
-            <button class="btn btn-ghost" type="button" data-cloud="admin" hidden><svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-gear"/></svg><span data-i18n="cloud.admin">ניהול</span></button>
+            <button class="btn btn-ghost" type="button" data-cloud="admin" hidden><svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-gear"/></svg><span data-i18n="cloud.admin">ניהול</span><span class="count-badge ltr" data-slot="admin-badge" hidden></span></button>
             <button class="btn btn-ghost" type="button" data-cloud="retry" hidden><span data-i18n="cloud.retry">בדיקה שוב</span></button>
             <button class="btn btn-ghost" type="button" data-cloud="password" hidden><span data-i18n="cloud.password">שינוי סיסמה</span></button>
             <button class="btn btn-ghost" type="button" data-cloud="signout" hidden><span data-i18n="cloud.signout">התנתקות</span></button>
@@ -1102,9 +1132,27 @@
           <span class="tab-chip"><svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-list"/></svg></span>
           <span data-i18n="nav.lists">רשימות</span>
         </button>
+        <button class="tab" role="tab" id="tab-tools" data-tab="tools" data-route="tools" data-icon="i-grid" aria-selected="false" aria-controls="panel-tools" tabindex="-1" type="button">
+          <span class="tab-chip"><svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-grid"/></svg></span>
+          <span data-i18n="nav.tools">כלים</span>
+        </button>
       </div>
     </nav>
 
+
+    <!-- 1.1.4: a new trip. Only a name; the trip is created on this phone only, empty, and shown. -->
+    <dialog class="sheet dmetal" id="dlg-new-trip" aria-labelledby="dlg-new-trip-title">
+      <form class="sheet-form" data-form="new-trip" novalidate>
+        <h2 id="dlg-new-trip-title" data-i18n="trip.new.title">טיול חדש</h2>
+        <p class="sheet-hint" data-i18n="trip.new.hint">הטיול נוצר רק במכשיר הזה, ריק. הטיולים האחרים לא משתנים. אפשר להעביר אותו לחשבון אחר כך.</p>
+        <label class="field"><span data-i18n="trip.new.name">שם הטיול</span><input type="text" name="name" maxlength="60" autocomplete="off" aria-describedby="new-trip-error"></label>
+        <p class="form-error" id="new-trip-error" role="alert" data-slot="new-trip-error"></p>
+        <div class="sheet-actions">
+          <button class="btn metal-btn" type="submit" data-i18n="trip.new.create">יצירת הטיול</button>
+          <button class="btn btn-ghost" type="button" data-close data-i18n="form.cancel">ביטול</button>
+        </div>
+      </form>
+    </dialog>
 
     <!-- Trip setup dialogs (data stays on this device) -->
     <dialog class="sheet dmetal" id="dlg-dates" aria-labelledby="dlg-dates-title">
@@ -1796,6 +1844,7 @@
         <form class="sheet-form" data-form="cloud-share" novalidate>
           <h2 id="dlg-cloud-share-title" data-i18n="cloud.share">שיתוף עם חבר</h2>
           <p class="sheet-hint" data-i18n="cloud.share.hint">החבר צריך חשבון מאושר. הוא יראה רק את החלק המשותף של הטיול.</p>
+          <p class="sheet-hint" data-i18n="cloud.share.hintAccount">יצירת חשבון לא מוסיפה את החבר לטיול. אחרי שהמנהל אישר אותו, מוסיפים אותו כאן לפי המייל.</p>
           <label class="field"><span data-i18n="cloud.f.friendEmail">המייל של החבר</span><input class="ltr" type="email" name="email" autocomplete="off" inputmode="email" maxlength="254" aria-describedby="cloud-share-error"></label>
           <p class="form-error" id="cloud-share-error" role="alert" data-slot="cloud-share-error"></p>
           <div class="sheet-actions">
@@ -1865,6 +1914,10 @@
           <p class="sheet-hint" data-slot="cloud-admin-hint"></p>
           <h3 data-i18n="cloud.admin.users">משתמשים</h3>
           <ul class="cloud-list" data-slot="cloud-admin-users"></ul>
+          <details class="cloud-blocked" data-slot="cloud-admin-blocked" hidden>
+            <summary data-slot="cloud-admin-blocked-title"></summary>
+            <ul class="cloud-list" data-slot="cloud-admin-blocked-list"></ul>
+          </details>
           <h3 data-i18n="cloud.admin.trips">טיולים</h3>
           <ul class="cloud-list" data-slot="cloud-admin-trips"></ul>
           <div class="sheet-actions">

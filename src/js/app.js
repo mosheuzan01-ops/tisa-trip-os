@@ -7,7 +7,7 @@ import {
   todayIn, tripStatus, validateDates, setupProgress,
 } from './core/trip.js';
 import { createStorage, browserBackend, requestPersistence, isPersisted } from './core/storage.js';
-import { needsBackupReminder } from './core/schema.js';
+import { needsBackupReminder, addTrip, TRIP_NAME_MAX as TRIP_NAME_LIMIT } from './core/schema.js';
 import { readyTrip, fillRoute } from './core/template.js';
 import { dataSummary } from './core/device-data.js';
 import { exportBackup, parseBackup, backupFileName } from './core/backup.js';
@@ -41,13 +41,14 @@ const SCREENS = {
   itinerary: { tab: 'itinerary', title: 'nav.itinerary', icon: 'i-route' },
   money: { tab: 'budget', title: 'screen.money', icon: 'i-wallet' },
   checklist: { tab: 'lists', title: 'screen.checklist', icon: 'i-list' },
-  transfers: { tab: 'itinerary', title: 'screen.transfers', icon: 'i-plane' }, // opened from the itinerary; that tab stays lit
-  calendar: { tab: 'itinerary', title: 'screen.calendar', icon: 'i-calendar' }, // 6.0b, opened from the itinerary; that tab stays lit
+  tools: { tab: 'tools', title: 'screen.tools', icon: 'i-grid' }, // 1.1.4: the fifth tab, the tools that look at the whole trip
+  transfers: { tab: 'tools', title: 'screen.transfers', icon: 'i-plane' }, // 1.1.4: opened from the tools tab; that tab stays lit
+  calendar: { tab: 'tools', title: 'screen.calendar', icon: 'i-calendar' }, // 6.0b; 1.1.4: opened from the tools tab
   luggage: { tab: 'lists', title: 'screen.luggage', icon: 'i-bag' }, // 6.0e, opened from the lists; that tab stays lit
   'smart-bag': { tab: 'lists', title: 'screen.smartBag', icon: 'i-bag' }, // Stage 12, opened from the lists
-  photos: { tab: 'itinerary', title: 'screen.photos', icon: 'i-image' }, // 7.0b, opened from the itinerary
-  summary: { tab: 'itinerary', title: 'screen.summary', icon: 'i-summary' }, // 7.0c, opened from the itinerary
-  places: { tab: 'itinerary', title: 'screen.places', icon: 'i-pin' }, // Stage 10, opened from the itinerary
+  photos: { tab: 'tools', title: 'screen.photos', icon: 'i-image' }, // 7.0b; 1.1.4: opened from the tools tab
+  summary: { tab: 'tools', title: 'screen.summary', icon: 'i-summary' }, // 7.0c; 1.1.4: opened from the tools tab
+  places: { tab: 'tools', title: 'screen.places', icon: 'i-pin' }, // Stage 10; 1.1.4: opened from the tools tab
   info: { tab: 'home', title: 'screen.info', icon: 'i-sos' }, // Stage 11, opened from home (tile and emergency button)
   assistant: { tab: 'home', title: 'screen.assistant', icon: 'i-chat' }, // opened from home; the home tab stays lit
   settings: {},
@@ -475,7 +476,7 @@ function setupSheets(ctx) {
 function setupRouter(ctx) {
   const { t } = ctx;
   const tabs = $$('[role="tab"]');
-  const panels = { home: $('#panel-home'), itinerary: $('#panel-itinerary'), money: $('#panel-money'), checklist: $('#panel-checklist'), transfers: $('#panel-transfers'), calendar: $('#panel-calendar'), luggage: $('#panel-luggage'), 'smart-bag': $('#panel-smart-bag'), photos: $('#panel-photos'), summary: $('#panel-summary'), places: $('#panel-places'), info: $('#panel-info'), assistant: $('#panel-assistant'), soon: $('#panel-soon'), settings: $('#panel-settings') };
+  const panels = { home: $('#panel-home'), itinerary: $('#panel-itinerary'), tools: $('#panel-tools'), money: $('#panel-money'), checklist: $('#panel-checklist'), transfers: $('#panel-transfers'), calendar: $('#panel-calendar'), luggage: $('#panel-luggage'), 'smart-bag': $('#panel-smart-bag'), photos: $('#panel-photos'), summary: $('#panel-summary'), places: $('#panel-places'), info: $('#panel-info'), assistant: $('#panel-assistant'), soon: $('#panel-soon'), settings: $('#panel-settings') };
   const main = $('#main');
   const rtl = () => document.documentElement.dir === 'rtl';
 
@@ -666,6 +667,32 @@ function setupSettings(ctx) {
   const panel = $('#panel-settings');
   const word = t('reset.word');
   $('[data-slot="reset-type-label"]').textContent = interpolate(t('reset.typeLabel'), { word });
+
+  // 1.1.4: "New trip". A name only; the trip is added on this phone (core/schema.js addTrip), empty and shown. No other
+  // trip is touched, and nothing is sent: with no sync entry it is "on this device only" until "Move to my account".
+  const dlgTrip = $('#dlg-new-trip');
+  const tripForm = $('[data-form="new-trip"]');
+  const tripErr = $('[data-slot="new-trip-error"]');
+  let tripOpener = null;
+  wireDialog(dlgTrip, () => { tripForm.reset(); tripErr.textContent = ''; tripForm.name.setAttribute('aria-invalid', 'false'); if (tripOpener?.isConnected) tripOpener.focus(); });
+  $('[data-action="trip-new"]').addEventListener('click', (e) => {
+    tripOpener = e.currentTarget;
+    tripForm.reset();
+    tripErr.textContent = '';
+    dlgTrip.showModal();
+    tripForm.name.focus();
+  });
+  tripForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name = tripForm.name.value;
+    const clean = name.trim();
+    if (!clean || clean.length > TRIP_NAME_LIMIT) { tripErr.textContent = t('trip.new.err'); tripForm.name.setAttribute('aria-invalid', 'true'); tripForm.name.focus(); return; }
+    let made = null;
+    const result = ctx.change((s) => { made = addTrip(s, { name, makeId: () => makeId(), countryCode: ctx.country.id.toUpperCase() }); }, { now: true });
+    if (!made?.ok) { tripErr.textContent = t('trip.new.err'); return; }
+    dlgTrip.close();
+    ctx.toast(result?.ok === false ? 'form.saveFailed' : 'trip.new.done');
+  });
 
   // Dates
   const datesForm = $('[data-form="settings-dates"]');

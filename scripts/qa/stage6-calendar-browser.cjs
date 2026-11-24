@@ -79,19 +79,19 @@ const day = (page, iso) => page.locator(`#panel-calendar [data-date="${iso}"]`);
   const browser = await chromium.launch();
 
   for (const view of Object.keys(VIEWS)) {
-    // ---------- CB-1: opened from the itinerary, the itinerary tab stays lit, Back returns to the itinerary ----------
+    // ---------- CB-1: opened from the tools tab (1.1.4), that tab stays lit, Back returns to it ----------
     {
-      const { ctx, page } = await open(browser, view, state(), 'itinerary');
+      const { ctx, page } = await open(browser, view, state(), 'tools'); // 1.1.4: opened from the tools tab
       const tabsBefore = await page.locator('[role="tab"]').count();
-      await page.click('#panel-itinerary [data-go="calendar"]');
+      await page.click('#panel-tools [data-go="calendar"]');
       await page.locator('#panel-calendar').waitFor();
       const url = new URL(page.url()).hash;
       const lit = await page.locator('[role="tab"][aria-selected="true"]').getAttribute('data-tab');
       const tabsAfter = await page.locator('[role="tab"]').count();
       await page.goBack();
-      await page.locator('#panel-itinerary').waitFor();
+      await page.locator('#panel-tools').waitFor();
       const back = new URL(page.url()).hash;
-      pass(`CB-1 open and back ${view}`, url === '#/calendar' && lit === 'itinerary' && back === '#/itinerary' && tabsBefore === tabsAfter, { url, lit, back, tabsBefore, tabsAfter });
+      pass(`CB-1 open and back ${view}`, url === '#/calendar' && lit === 'tools' && back === '#/tools' && tabsBefore === tabsAfter, { url, lit, back, tabsBefore, tabsAfter });
       await ctx.close();
     }
 

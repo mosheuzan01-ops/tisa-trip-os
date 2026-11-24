@@ -201,3 +201,22 @@ export function needsBackupReminder(state, now) {
   const ms = now.getTime() - new Date(since).getTime();
   return Number.isFinite(ms) && ms >= BACKUP_REMINDER_DAYS * 86_400_000;
 }
+
+/** 1.1.4: the longest trip name the new-trip dialog takes. */
+export const TRIP_NAME_MAX = 60;
+
+/** 1.1.4: "New trip". Adds an empty trip next to the others (the same shape as createTrip) and shows it. No other trip
+ *  is read, changed or removed. The new trip is local only: it has no sync entry, so it is "on this device only"
+ *  until the user moves it to the account. No template, dates, route or budget: those belong to the country pack's own plan.
+ *  Returns { ok, id } or { ok: false } (empty or too long name; nothing changes then). */
+export function addTrip(state, { name, makeId, countryCode }) {
+  const clean = typeof name === 'string' ? name.trim() : '';
+  if (!clean || clean.length > TRIP_NAME_MAX || !isObj(state?.trips)) return { ok: false };
+  let id = makeId();
+  for (let i = 0; Object.hasOwn(state.trips, id) && i < 20; i += 1) id = makeId();
+  if (Object.hasOwn(state.trips, id)) return { ok: false };
+  const trip = createTrip({ makeId: () => id, countryCode, tripName: clean });
+  state.trips[id] = trip;
+  state.activeTripId = id;
+  return { ok: true, id };
+}

@@ -25,7 +25,7 @@ fs.mkdirSync(OUT, { recursive: true });
     await page.waitForSelector('#dlg-seed:not([open])', { state: 'attached' });
     await page.waitForFunction(() => !document.querySelector('[data-slot="toast"]').classList.contains('show'), null, { timeout: 6000 }).catch(() => {});
     await page.evaluate(() => document.fonts.ready);
-    await page.locator('.itin-transfers-link').first().scrollIntoViewIfNeeded();
+    await page.locator('.itin-trip').scrollIntoViewIfNeeded(); // 1.1.4: the global tool links moved to the tools tab
     await page.screenshot({ path: `${OUT}/${PREFIX}-itinerary-${view}.png` });
     await ctx.close();
   }

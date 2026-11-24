@@ -7,6 +7,7 @@ import { createKv, authStorage, keepCloudCopy, hasSavedSession, browserBackend, 
 import { createCloudApi, toCloudError } from './core/cloud-api.js';
 import { emptySyncState, runSync, downloadTrip, noteLocalChanges, pendingCount, unlinkAll, resendAll, markBackup, markMoveFailed, migrateTrip, singleFlight, deleteTripFromAccount } from './core/sync-engine.js';
 import { interpolate } from './core/i18n.js';
+import { badgeDue, badgeCount, pendingOf } from './core/admin-users.js';
 
 const LIB = './vendor/supabase/supabase-js-2.119.2.umd.js';
 const LIB_INTEGRITY = 'sha256-iBavBNmRXbuhiC1vhPC0AtxAJoBjpj2cZtJPUvNxwmM='; // = the pin in tests/stage14-vendor.test.js
@@ -74,6 +75,26 @@ export function setupCloud(ctx, { wireDialog }) {
     save();
   };
 
+  // My trips: switch the trip on screen; a trip that is only in the account comes down first.
+  // 1.1.4: wired before the no-account return, so a phone with no account (two trips after "New trip") switches too.
+  $('[data-slot="cloud-trip-list"]').addEventListener('change', async (e) => {
+    const id = e.target.value;
+    if (!id || id === ctx.state.activeTripId) return;
+    if (ctx.state.trips[id]) { ctx.change((s) => { s.activeTripId = id; }, { now: true }); ctx.toast('cloud.trips.switched'); return; }
+    const st = (cloud.sync.cloudTrips ?? []).find((x) => x.id === id);
+    if (!cloud.api || !st) { renderCloud(ctx); return; }
+    try {
+      const dl = await downloadTrip({ api: cloud.api, sync: cloud.sync, serverTrip: st, nowIso: nowIso() });
+      cloud.sync = dl.sync;
+      save();
+      ctx.change((s) => { s.trips[id] = dl.trip; s.activeTripId = id; }, { now: true });
+      ctx.toast('cloud.trips.switched');
+    } catch (err) {
+      ctx.toast(`cloud.err.${toCloudError(err).kind}`);
+      renderCloud(ctx);
+    }
+  });
+
   if (!cloud.configured) { cloud.status = 'off'; return cloud; }
 
   // ---------- dialogs: added to the page only now ----------
@@ -138,6 +159,7 @@ export function setupCloud(ctx, { wireDialog }) {
       const notice = res.notices.find((x) => ['replaced', 'datesOwnerOnly', 'deleted', 'lost', 'tooBig'].includes(x.type));
       if (notice) ctx.toast(`cloud.notice.${notice.type}`);
       offerMigrate();
+      checkPending();
     } catch (e) {
       const err = toCloudError(e);
       if (err.kind === 'auth') cloud.status = 'expired';
@@ -149,6 +171,46 @@ export function setupCloud(ctx, { wireDialog }) {
     }
   }
   cloud.refresh = refresh;
+
+  // ---------- 1.1.4: how many users wait for approval (admin only, in the app only: no push) ----------
+  // The existing admin_list_users, asked at most once in BADGE_TTL_MS (core/admin-users.js). The count is kept in
+  // latisa:sync:v1 (sync.adminPending, with the admin's id), so a reload or a new sync does not ask again. Opening
+  // "Admin" refreshes it for free. A regular user never gets here: no admin_* call, admin-view.js never loaded.
+  let pendingBusy = false;
+  const isAdmin = () => cloud.status === 'approved' && cloud.sync.profile?.role === 'admin' && Boolean(cloud.client);
+  function notePending(users) {
+    cloud.sync.adminPending = { userId: cloud.sync.userId, n: pendingOf(users), at: nowIso() };
+    save();
+    renderCloud(ctx);
+  }
+  async function checkPending() {
+    if (!isAdmin() || pendingBusy || !badgeDue(cloud.sync.adminPending, cloud.sync.userId, Date.now())) return;
+    pendingBusy = true;
+    try {
+      const { listUsers } = await import('./admin-view.js');
+      notePending(await listUsers(cloud.client));
+    } catch {
+      // keep the last count; the next try waits the same time (no retry loop)
+      const old = cloud.sync.adminPending?.userId === cloud.sync.userId ? cloud.sync.adminPending : null;
+      cloud.sync.adminPending = { userId: cloud.sync.userId, n: old?.n ?? 0, at: nowIso() };
+      save();
+    } finally { pendingBusy = false; }
+  }
+  async function openAdminArea(from) {
+    if (!isAdmin()) return;
+    try {
+      const { openAdmin } = await import('./admin-view.js');
+      opener = from;
+      openAdmin({
+        t, client: cloud.client, dialog: dlg.admin, toast: ctx.toast, ask, selfId: cloud.sync.userId,
+        ownedTrips: () => (cloud.sync.cloudTrips ?? []).filter((x) => x.role === 'owner'), onUsers: notePending,
+      });
+    } catch { ctx.toast('cloud.err.offline'); }
+  }
+  $('[data-slot="home-admin"]').addEventListener('click', () => {
+    ctx.go?.('settings');
+    openAdminArea($('[data-cloud="admin"]'));
+  });
 
   // ---------- moving the trip on this phone into the account (1.1.1: two steps) ----------
   // Step 1 downloads the backup (on an iPhone: the share sheet). Step 2 starts only when the user is back and taps
@@ -452,13 +514,7 @@ export function setupCloud(ctx, { wireDialog }) {
     if (a === 'members') showMembers(b);
     if (a === 'upload') offerMigrate(true);
     if (a === 'delete') openDelete(b);
-    if (a === 'admin' && cloud.sync.profile?.role === 'admin' && cloud.status === 'approved') {
-      try {
-        const { openAdmin } = await import('./admin-view.js');
-        opener = b;
-        openAdmin({ t, client: cloud.client, dialog: dlg.admin, toast: ctx.toast, ask, selfId: cloud.sync.userId });
-      } catch { ctx.toast('cloud.err.offline'); }
-    }
+    if (a === 'admin') openAdminArea(b);
     if (a === 'signout') {
       cloud.signingOut = true;
       try { await cloud.api?.signOut(); } catch { /* offline: the session is removed from this phone below anyway */ }
@@ -466,6 +522,7 @@ export function setupCloud(ctx, { wireDialog }) {
       authStorage(backend).removeItem(`${AUTH_KEY}-code-verifier`);
       cloud.signingOut = false;
       cloud.sync.profile = null; // linked trips stay linked for the next sign-in; the phone keeps every trip
+      cloud.sync.adminPending = null; // 1.1.4: the admin's count is not kept after sign-out
       save();
       cloud.status = 'signed-out';
       cloud.net = 'idle';
@@ -474,24 +531,6 @@ export function setupCloud(ctx, { wireDialog }) {
     }
     if (a === 'restore-device') { cloud.sync = unlinkAll(cloud.sync); save(); ctx.toast('cloud.restore.deviceDone'); renderCloud(ctx); }
     if (a === 'restore-cloud') { cloud.sync = resendAll(cloud.sync); save(); renderCloud(ctx); refresh(); }
-  });
-
-  // My trips: switch the trip on screen; a trip that is only in the account comes down first.
-  $('[data-slot="cloud-trip-list"]').addEventListener('change', async (e) => {
-    const id = e.target.value;
-    if (!id || id === ctx.state.activeTripId) return;
-    if (ctx.state.trips[id]) { ctx.change((s) => { s.activeTripId = id; }, { now: true }); ctx.toast('cloud.trips.switched'); return; }
-    const st = (cloud.sync.cloudTrips ?? []).find((x) => x.id === id);
-    try {
-      const dl = await downloadTrip({ api: cloud.api, sync: cloud.sync, serverTrip: st, nowIso: nowIso() });
-      cloud.sync = dl.sync;
-      save();
-      ctx.change((s) => { s.trips[id] = dl.trip; s.activeTripId = id; }, { now: true });
-      ctx.toast('cloud.trips.switched');
-    } catch (err) {
-      ctx.toast(`cloud.err.${toCloudError(err).kind}`);
-      renderCloud(ctx);
-    }
   });
 
   // ---------- when to sync ----------
@@ -611,6 +650,18 @@ export function renderCloud(ctx) {
   show('upload', signedIn && !active?.linked && !cloud.sync.restorePending);
   show('delete', signedIn && Boolean(active?.linked) && active.role === 'owner' && !cloud.sync.restorePending);
   show('admin', signedIn && cloud.sync.profile?.role === 'admin');
+  // 1.1.4: the pending count, for the admin only and only when above 0 (home notice and the "Admin" button)
+  const waiting = signedIn && cloud.sync.profile?.role === 'admin' ? badgeCount(cloud.sync.adminPending, cloud.sync.userId) : 0;
+  const badge = $('[data-slot="admin-badge"]', card);
+  badge.hidden = !waiting;
+  badge.textContent = waiting ? String(waiting) : '';
+  const home = $('[data-slot="home-admin"]');
+  if (home) {
+    home.hidden = !waiting;
+    $('[data-slot="home-admin-text"]').textContent = t('cloud.admin.pendingShort');
+    $('[data-slot="home-admin-count"]').textContent = waiting ? String(waiting) : '';
+    home.setAttribute('aria-label', interpolate(t('cloud.admin.pending'), { n: waiting }));
+  }
   show('password', configured && ['approved', 'pending'].includes(st));
   show('signout', configured && ['approved', 'pending', 'blocked', 'loading', 'expired'].includes(st));
   renderPill(ctx);

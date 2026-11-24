@@ -118,10 +118,11 @@ async function beforeShots(browser) {
     await a.page.goto(`${BASE}#/itinerary`);
     await a.page.locator('#panel-itinerary').waitFor();
     if (SHOTS) await a.page.screenshot({ path: `${OUT}/after-itinerary-mobile.png`, fullPage: true });
-    await a.page.click('#panel-itinerary [data-go="places"]');
+    await a.page.click('[data-tab="tools"]'); // 1.1.4: the global tools moved to the tools tab
+    await a.page.click('#panel-tools [data-go="places"]');
     await a.page.waitForFunction(() => location.hash === '#/places' && !document.querySelector('#panel-places').hidden);
-    const tabLit = await a.page.locator('#tab-itinerary').getAttribute('aria-selected');
-    pass('G1 itinerary -> saved places; the itinerary tab stays lit; empty state; no location asked and no map opened on load',
+    const tabLit = await a.page.locator('#tab-tools').getAttribute('aria-selected');
+    pass('G1 tools -> saved places (1.1.4); the tools tab stays lit; empty state; no location asked and no map opened on load',
       tabLit === 'true' && await a.page.locator('[data-slot="place-empty"]').isVisible()
       && (await a.page.evaluate(() => window.__geoCalls)) === 0 && (await a.page.evaluate(() => window.__opened.length)) === 0,
       { tabLit });

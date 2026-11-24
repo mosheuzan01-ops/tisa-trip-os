@@ -1,0 +1,213 @@
+{
+  "run": "3",
+  "total": 14,
+  "fail": 0,
+  "results": {
+    "NT1 no account: an empty name is refused; \"New trip\" adds a second trip on this device only, shown in the choice; the old trip is unchanged": {
+      "result": "PASS",
+      "err": "צריך שם לטיול, עד 60 תווים.",
+      "labels": [
+        "תאילנד (במכשיר בלבד)",
+        "טיול לדוגמה שני (במכשיר בלבד)"
+      ],
+      "active": true
+    },
+    "NT2 no account: the trip choice switches back to the old trip, and a reload keeps both trips and the old trip as it was": {
+      "result": "PASS"
+    },
+    "HOME four shortcuts kept, titled \"קיצורי דרך\"; no admin notice without an account": {
+      "result": "PASS",
+      "title": "קיצורי דרך",
+      "tiles": [
+        "itinerary",
+        "money",
+        "checklist",
+        "info"
+      ],
+      "admin": true
+    },
+    "NAV1 five tabs (home, itinerary, budget, lists, tools): each shows its screen and is lit; arrow keys reach all five": {
+      "result": "PASS",
+      "tabs": [
+        [
+          "home",
+          "home"
+        ],
+        [
+          "itinerary",
+          "itinerary"
+        ],
+        [
+          "budget",
+          "money"
+        ],
+        [
+          "lists",
+          "checklist"
+        ],
+        [
+          "tools",
+          "tools"
+        ]
+      ],
+      "nav": [
+        {
+          "tab": "home",
+          "shown": true,
+          "lit": true,
+          "hash": "#/home"
+        },
+        {
+          "tab": "itinerary",
+          "shown": true,
+          "lit": true,
+          "hash": "#/itinerary"
+        },
+        {
+          "tab": "budget",
+          "shown": true,
+          "lit": true,
+          "hash": "#/money"
+        },
+        {
+          "tab": "lists",
+          "shown": true,
+          "lit": true,
+          "hash": "#/checklist"
+        },
+        {
+          "tab": "tools",
+          "shown": true,
+          "lit": true,
+          "hash": "#/tools"
+        }
+      ],
+      "keys": [
+        "itinerary",
+        "budget",
+        "lists",
+        "tools",
+        "home"
+      ]
+    },
+    "NAV2 #/tools: \"כלים\", \"מבט על כל הטיול\", the five global tools; each opens its own screen with the tools tab lit; the itinerary no longer lists them": {
+      "result": "PASS",
+      "tools": {
+        "title": "כלים",
+        "lead": "מבט על כל הטיול",
+        "links": [
+          "transfers",
+          "calendar",
+          "photos",
+          "places",
+          "summary"
+        ],
+        "itin": []
+      },
+      "opened": [
+        {
+          "g": "transfers",
+          "shown": true,
+          "toolsLit": true
+        },
+        {
+          "g": "calendar",
+          "shown": true,
+          "toolsLit": true
+        },
+        {
+          "g": "photos",
+          "shown": true,
+          "toolsLit": true
+        },
+        {
+          "g": "places",
+          "shown": true,
+          "toolsLit": true
+        },
+        {
+          "g": "summary",
+          "shown": true,
+          "toolsLit": true
+        }
+      ]
+    },
+    "LAY 360, 390 and 1440: five tabs, no sideways scroll, no label cut, each tab at least 44px tall and wide": {
+      "result": "PASS",
+      "lay": [
+        {
+          "width": 360,
+          "sideScroll": false,
+          "cut": [],
+          "minH": 68.1875,
+          "minW": 65.1875,
+          "count": 5
+        },
+        {
+          "width": 390,
+          "sideScroll": false,
+          "cut": [],
+          "minH": 68.1875,
+          "minW": 71.1875,
+          "count": 5
+        },
+        {
+          "width": 1440,
+          "sideScroll": false,
+          "cut": [],
+          "minH": 68.1875,
+          "minW": 86,
+          "count": 5
+        }
+      ]
+    },
+    "AD1 a regular user: no pending notice, no admin_* call, admin-view.js never loaded": {
+      "result": "PASS",
+      "fAdmin": 0,
+      "fFile": 0
+    },
+    "AD2 the admin: the home notice and the \"Admin\" button show 2 pending; a reload uses the cache (no second admin_list_users)": {
+      "result": "PASS",
+      "homeText": "משתמשים ממתינים לאישור\n              2",
+      "badge": "2",
+      "callsBefore": 1,
+      "callsAfter": 1
+    },
+    "AD3 a pending user: an explanation to approve first, and no \"add to a trip\"": {
+      "result": "PASS",
+      "p1Note": "כדי להוסיף לטיול, צריך לאשר אותו קודם.",
+      "p1Add": 0
+    },
+    "AD4 \"add to a trip\": only the admin's own trip is offered (not another user's), after a confirm, through share_trip; then not offered again": {
+      "result": "PASS",
+      "options": [
+        "sample-1"
+      ],
+      "confirmText": "להוסיף את friend-f@example.com לטיול \"תאילנד\"? הוא יראה את החלק המשותף של הטיול. אפשר להסיר אותו אחר כך.",
+      "shareCalls": 1
+    },
+    "AD5 block: the confirm says the account and data stay; blocked users are in a closed \"חסומים (N)\" group that opens; unblock brings the user back": {
+      "result": "PASS",
+      "blockText": "לחסום את pending-p2@example.com? החסימה מונעת ממנו גישה לחשבון ולטיולים בשרת. היא לא מוחקת את החשבון, את הטיולים או את הנתונים, ואפשר לבטל אותה.",
+      "group": {
+        "tag": "DETAILS",
+        "open": false,
+        "hidden": false,
+        "title": "חסומים (2)",
+        "inMain": false
+      },
+      "p2": "approved"
+    },
+    "AD6 no pending users left: the notice and the badge are hidden": {
+      "result": "PASS"
+    },
+    "SH1 the share dialog: an account alone does not add anyone to a trip": {
+      "result": "PASS",
+      "shareHint": "החבר צריך חשבון מאושר. הוא יראה רק את החלק המשותף של הטיול. יצירת חשבון לא מוסיפה את החבר לטיול. אחרי שהמנהל אישר אותו, מוסיפים אותו כאן לפי המייל."
+    },
+    "ERRORS no page error": {
+      "result": "PASS",
+      "errors": []
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "run": "1",
+  "total": 4,
+  "fail": 2,
+  "results": {
+    "NT1": {
+      "result": "FAIL",
+      "error": "page.click: Timeout 4000ms exceeded."
+    },
+    "AD1 a regular user: no pending notice, no admin_* call, admin-view.js never loaded": {
+      "result": "PASS",
+      "fAdmin": 0,
+      "fFile": 0
+    },
+    "AD": {
+      "result": "FAIL",
+      "error": "page.waitForSelector: Timeout 10000ms exceeded."
+    },
+    "ERRORS no page error": {
+      "result": "PASS",
+      "errors": []
+    }
+  }
+}

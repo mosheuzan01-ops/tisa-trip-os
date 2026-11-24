@@ -1,0 +1,398 @@
+{
+  "320": {
+    "rows": [
+      {
+        "slot": "trip-actions",
+        "names": [
+          "טיול חדש"
+        ],
+        "lines": 1,
+        "gaps": [],
+        "heights": [
+          48
+        ]
+      },
+      {
+        "slot": "cloud-actions",
+        "names": [
+          "share",
+          "members",
+          "delete"
+        ],
+        "lines": 3,
+        "gaps": [],
+        "heights": [
+          48
+        ]
+      },
+      {
+        "slot": "cloud-account-actions",
+        "names": [
+          "admin",
+          "password",
+          "signout"
+        ],
+        "lines": 3,
+        "gaps": [],
+        "heights": [
+          48
+        ]
+      },
+      {
+        "slot": "set-backup-title",
+        "names": [
+          "ייצוא גיבוי",
+          "ייבוא גיבוי"
+        ],
+        "lines": 2,
+        "gaps": [],
+        "heights": [
+          48
+        ]
+      },
+      {
+        "slot": "set-photos-title",
+        "names": [
+          "ייצוא תמונות",
+          "שחזור תמונות"
+        ],
+        "lines": 2,
+        "gaps": [],
+        "heights": [
+          48
+        ]
+      }
+    ],
+    "overflow": 0
+  },
+  "390": {
+    "rows": [
+      {
+        "slot": "trip-actions",
+        "names": [
+          "טיול חדש"
+        ],
+        "lines": 1,
+        "gaps": [],
+        "heights": [
+          48
+        ]
+      },
+      {
+        "slot": "cloud-actions",
+        "names": [
+          "share",
+          "members",
+          "delete"
+        ],
+        "lines": 2,
+        "gaps": [],
+        "heights": [
+          48
+        ]
+      },
+      {
+        "slot": "cloud-account-actions",
+        "names": [
+          "admin",
+          "password",
+          "signout"
+        ],
+        "lines": 2,
+        "gaps": [],
+        "heights": [
+          48
+        ]
+      },
+      {
+        "slot": "set-backup-title",
+        "names": [
+          "ייצוא גיבוי",
+          "ייבוא גיבוי"
+        ],
+        "lines": 1,
+        "gaps": [],
+        "heights": [
+          48
+        ]
+      },
+      {
+        "slot": "set-photos-title",
+        "names": [
+          "ייצוא תמונות",
+          "שחזור תמונות"
+        ],
+        "lines": 1,
+        "gaps": [],
+        "heights": [
+          48
+        ]
+      }
+    ],
+    "overflow": 0
+  },
+  "430": {
+    "rows": [
+      {
+        "slot": "trip-actions",
+        "names": [
+          "טיול חדש"
+        ],
+        "lines": 1,
+        "gaps": [],
+        "heights": [
+          48
+        ]
+      },
+      {
+        "slot": "cloud-actions",
+        "names": [
+          "share",
+          "members",
+          "delete"
+        ],
+        "lines": 2,
+        "gaps": [],
+        "heights": [
+          48
+        ]
+      },
+      {
+        "slot": "cloud-account-actions",
+        "names": [
+          "admin",
+          "password",
+          "signout"
+        ],
+        "lines": 2,
+        "gaps": [],
+        "heights": [
+          48
+        ]
+      },
+      {
+        "slot": "set-backup-title",
+        "names": [
+          "ייצוא גיבוי",
+          "ייבוא גיבוי"
+        ],
+        "lines": 1,
+        "gaps": [],
+        "heights": [
+          48
+        ]
+      },
+      {
+        "slot": "set-photos-title",
+        "names": [
+          "ייצוא תמונות",
+          "שחזור תמונות"
+        ],
+        "lines": 1,
+        "gaps": [],
+        "heights": [
+          48
+        ]
+      }
+    ],
+    "overflow": 0
+  },
+  "768": {
+    "rows": [
+      {
+        "slot": "trip-actions",
+        "names": [
+          "טיול חדש"
+        ],
+        "lines": 1,
+        "gaps": [],
+        "heights": [
+          48
+        ]
+      },
+      {
+        "slot": "cloud-actions",
+        "names": [
+          "share",
+          "members",
+          "delete"
+        ],
+        "lines": 1,
+        "gaps": [],
+        "heights": [
+          48
+        ]
+      },
+      {
+        "slot": "cloud-account-actions",
+        "names": [
+          "admin",
+          "password",
+          "signout"
+        ],
+        "lines": 1,
+        "gaps": [],
+        "heights": [
+          48
+        ]
+      },
+      {
+        "slot": "set-backup-title",
+        "names": [
+          "ייצוא גיבוי",
+          "ייבוא גיבוי"
+        ],
+        "lines": 1,
+        "gaps": [],
+        "heights": [
+          48
+        ]
+      },
+      {
+        "slot": "set-photos-title",
+        "names": [
+          "ייצוא תמונות",
+          "שחזור תמונות"
+        ],
+        "lines": 1,
+        "gaps": [],
+        "heights": [
+          48
+        ]
+      }
+    ],
+    "overflow": 0
+  },
+  "1024": {
+    "rows": [
+      {
+        "slot": "trip-actions",
+        "names": [
+          "טיול חדש"
+        ],
+        "lines": 1,
+        "gaps": [],
+        "heights": [
+          48
+        ]
+      },
+      {
+        "slot": "cloud-actions",
+        "names": [
+          "share",
+          "members",
+          "delete"
+        ],
+        "lines": 1,
+        "gaps": [],
+        "heights": [
+          48
+        ]
+      },
+      {
+        "slot": "cloud-account-actions",
+        "names": [
+          "admin",
+          "password",
+          "signout"
+        ],
+        "lines": 1,
+        "gaps": [],
+        "heights": [
+          48
+        ]
+      },
+      {
+        "slot": "set-backup-title",
+        "names": [
+          "ייצוא גיבוי",
+          "ייבוא גיבוי"
+        ],
+        "lines": 1,
+        "gaps": [],
+        "heights": [
+          48
+        ]
+      },
+      {
+        "slot": "set-photos-title",
+        "names": [
+          "ייצוא תמונות",
+          "שחזור תמונות"
+        ],
+        "lines": 1,
+        "gaps": [],
+        "heights": [
+          48
+        ]
+      }
+    ],
+    "overflow": 0
+  },
+  "1440": {
+    "rows": [
+      {
+        "slot": "trip-actions",
+        "names": [
+          "טיול חדש"
+        ],
+        "lines": 1,
+        "gaps": [],
+        "heights": [
+          48
+        ]
+      },
+      {
+        "slot": "cloud-actions",
+        "names": [
+          "share",
+          "members",
+          "delete"
+        ],
+        "lines": 1,
+        "gaps": [],
+        "heights": [
+          48
+        ]
+      },
+      {
+        "slot": "cloud-account-actions",
+        "names": [
+          "admin",
+          "password",
+          "signout"
+        ],
+        "lines": 1,
+        "gaps": [],
+        "heights": [
+          48
+        ]
+      },
+      {
+        "slot": "set-backup-title",
+        "names": [
+          "ייצוא גיבוי",
+          "ייבוא גיבוי"
+        ],
+        "lines": 1,
+        "gaps": [],
+        "heights": [
+          48
+        ]
+      },
+      {
+        "slot": "set-photos-title",
+        "names": [
+          "ייצוא תמונות",
+          "שחזור תמונות"
+        ],
+        "lines": 1,
+        "gaps": [],
+        "heights": [
+          48
+        ]
+      }
+    ],
+    "overflow": 0
+  }
+}
