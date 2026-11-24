@@ -92,8 +92,8 @@ async function context(browser, w, h, tag) {
     await task('לקנות כרטיס לאוטובוס', '2026-12-12');
     await task('לארוז לאיים', '2026-12-15');
     await task('משהו בעוד שבועיים', '2026-12-26');
-    await page.click('[data-tab="itinerary"]');
-    await page.click('#panel-itinerary [data-go="transfers"]');
+    await page.click('[data-tab="tools"]'); // 1.1.4: the global tools moved to the tools tab
+    await page.click('#panel-tools [data-go="transfers"]');
     await page.click('#panel-transfers [data-action="transfer-add"]');
     await page.selectOption('#dlg-transfer [name="kind"]', 'bus');
     await page.fill('#dlg-transfer [name="from"]', 'פאי');

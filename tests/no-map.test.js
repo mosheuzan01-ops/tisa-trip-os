@@ -14,10 +14,11 @@ test('M1: no map tab, route or copy', () => {
   }
 });
 
-test('M2: the tab bar has exactly four tabs and a four-column grid', () => {
+// 1.1.4 (owner): a fifth tab, "Tools" (#/tools). Still no map tab (M1, M3).
+test('M2: the tab bar has exactly five tabs and a five-column grid', () => {
   const html = readText('index.html');
-  assert.equal([...html.matchAll(/class="tab" role="tab"/g)].length, 4);
-  assert.match(readText('src/css/main.css'), /\.tabbar-list \{[^}]*repeat\(4,/);
+  assert.equal([...html.matchAll(/class="tab" role="tab"/g)].length, 5);
+  assert.match(readText('src/css/main.css'), /\.tabbar-list \{[^}]*repeat\(5,/);
 });
 
 test('M3: an old #/map link lands on home', () => {

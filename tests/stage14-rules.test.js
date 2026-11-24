@@ -110,7 +110,12 @@ test('S14-7: admin calls live only in admin-view.js, which is loaded only by imp
   assert.deepEqual(withAdmin, ['src/js/admin-view.js']);
   for (const f of js) assert.doesNotMatch(readText(f), /^import[^;]*admin-view/m, `${f} imports admin-view statically`);
   const view = readText('src/js/cloud-view.js');
-  assert.match(view, /a === 'admin' && cloud\.sync\.profile\?\.role === 'admin' && cloud\.status === 'approved'[\s\S]{0,120}await import\('\.\/admin-view\.js'\)/);
+  // 1.1.4: two ways in (the "Admin" button and the pending count), both behind the same check
+  assert.match(view, /const isAdmin = \(\) => cloud\.status === 'approved' && cloud\.sync\.profile\?\.role === 'admin'/);
+  const imports = [...view.matchAll(/import\('\.\/admin-view\.js'\)/g)].length;
+  const guarded = [...view.matchAll(/if \(!isAdmin\(\)[^\n]*return;[\s\S]{0,160}?await import\('\.\/admin-view\.js'\)/g)].length;
+  assert.equal(imports, 2);
+  assert.equal(guarded, 2);
   assert.doesNotMatch(readText('sw.js'), /admin_/);
 });
 
@@ -167,10 +172,10 @@ test('PRIV-14: the privacy text says what 1.1.0 does with an account', () => {
   }
 });
 
-test('VER-14: version 1.1.3 in package.json, config and the service worker (a move does not overwrite a trip already in the account)', () => {
-  assert.equal(readJson('package.json').version, '1.1.3');
-  assert.equal(readJson('config/app.config.json').appVersion, '1.1.3');
-  assert.match(readText('sw.js'), /const VERSION = '1\.1\.3';/);
+test('VER-14: version 1.1.4 in package.json, config and the service worker (new trip, tools tab, admin users area)', () => {
+  assert.equal(readJson('package.json').version, '1.1.4');
+  assert.equal(readJson('config/app.config.json').appVersion, '1.1.4');
+  assert.match(readText('sw.js'), /const VERSION = '1\.1\.4';/);
 });
 
 test('MIG-3: 0003 adds delete_trip only: owner and approved checked in the function, search_path pinned, no anon, no table delete', () => {

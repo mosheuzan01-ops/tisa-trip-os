@@ -54,9 +54,9 @@ async function fill(page, o) {
     await closed(page, '#dlg-profile');
     const committed0 = num(await page.locator('[data-slot="money-committed"]').textContent());
 
-    // entry point from the itinerary screen
-    await page.click('[data-tab="itinerary"]');
-    await page.click('#panel-itinerary [data-go="transfers"]');
+    // entry point: the tools tab (1.1.4; was the itinerary screen)
+    await page.click('[data-tab="tools"]'); // 1.1.4: the global tools moved to the tools tab
+    await page.click('#panel-tools [data-go="transfers"]');
     await page.waitForFunction(() => location.hash === '#/transfers');
     const panelShown = await page.waitForSelector('#panel-transfers', { state: 'visible', timeout: 5000 }).then(() => true).catch(() => false); // wait for the screen (rule 6)
     const future = (await page.locator('[data-slot="transfers-future"]').textContent()).trim();
@@ -85,8 +85,8 @@ async function fill(page, o) {
     // TB-2 the budget sees it once; editing updates the same expense
     await page.click('[data-tab="budget"]');
     const committed1 = num(await page.locator('[data-slot="money-committed"]').textContent());
-    await page.click('[data-tab="itinerary"]');
-    await page.click('#panel-itinerary [data-go="transfers"]');
+    await page.click('[data-tab="tools"]'); // 1.1.4: the global tools moved to the tools tab
+    await page.click('#panel-tools [data-go="transfers"]');
     await page.click('#panel-transfers [data-action="transfer-edit"]');
     await fill(page, { price: '2500', status: 'paid', time: '07:45' });
     await page.click('#dlg-transfer [type="submit"]');
@@ -100,8 +100,8 @@ async function fill(page, o) {
       { committed0, committed1, committed2, paid, linked: linked.length });
 
     // TB-3 a Bangkok -> Chiang Mai bus shows on both stops in the itinerary
-    await page.click('[data-tab="itinerary"]');
-    await page.click('#panel-itinerary [data-go="transfers"]');
+    await page.click('[data-tab="tools"]'); // 1.1.4: the global tools moved to the tools tab
+    await page.click('#panel-tools [data-go="transfers"]');
     await page.click('#panel-transfers [data-action="transfer-add"]');
     await fill(page, { kind: 'bus', from: 'בנגקוק', to: "צ'יאנג מאי", date: '2026-12-08', time: '20:00', status: 'planned' });
     await page.click('#dlg-transfer [type="submit"]');
@@ -116,7 +116,8 @@ async function fill(page, o) {
       { onStops, order });
 
     // TB-4 delete: cancel keeps; "keep the expense" keeps it; "with expense" removes it
-    await page.click('#panel-itinerary [data-go="transfers"]');
+    await page.click('[data-tab="tools"]'); // 1.1.4: the global tools moved to the tools tab
+    await page.click('#panel-tools [data-go="transfers"]');
     await page.click('#panel-transfers .transfer:has-text("ABC123") [data-action="transfer-delete"]');
     const ask = (await page.locator('[data-slot="transfer-delete-text"]').textContent()).trim();
     const boxShown = await page.locator('#dlg-transfer-delete [name="withExpense"]').isVisible();

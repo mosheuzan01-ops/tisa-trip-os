@@ -261,7 +261,7 @@ test('P-20 (L11): storage moves saved v6 data to v7 and keeps the exact old text
 // ---------- Screen wiring, offline, version ----------
 test('P-21: the places screen has its own address, panel, class names and data attributes (rule 14), and is cached offline', () => {
   const app = readText('src/js/app.js');
-  assert.match(app, /places: \{ tab: 'itinerary'/);
+  assert.match(app, /places: \{ tab: 'tools'/); // 1.1.4: opened from the tools tab (was the itinerary)
   const html = readText('index.html');
   assert.match(html, /id="panel-places"/);
   assert.match(html, /data-go="places"/);

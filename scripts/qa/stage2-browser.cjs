@@ -69,7 +69,7 @@ async function datesOnlyIfAsked(page) {
       else if (await page.locator(`[role="tab"][data-route="${route}"]`).count()) await page.click(`[role="tab"][data-route="${route}"]`);
       else if (route === 'assistant') { await page.click('[data-tab="home"]'); await page.click('#panel-home [data-go="assistant"]'); } // a real screen since 0.5.4, opened from home
       else if (route === 'info') { await page.click('[data-tab="home"]'); await page.click('.tile[data-go="info"]'); } // a real screen since 0.10.0 (stage 11), opened from home
-      else if (route === 'transfers') { await page.click('[data-tab="itinerary"]'); await page.click('#panel-itinerary [data-go="transfers"]'); } // a real screen since 0.5.3, opened from the itinerary
+      else if (route === 'transfers') { await page.click('[data-tab="tools"]'); await page.click('#panel-tools [data-go="transfers"]'); } // a real screen since 0.5.3; 1.1.4: opened from the tools tab
       else { await page.click('[data-tab="home"]'); await page.click('.tile[data-go="info"]'); if (route !== 'info') await page.click(`.soon-link[data-route="${route}"]`); } // all tabs are real screens since Stage 5; soon screens open from the home tile
       await page.waitForFunction((r) => location.hash === `#/${r}`, route);
       if (route === 'transfers' || route === 'assistant' || route === 'info') await page.waitForSelector(`#panel-${route}`, { state: 'visible' }); // no tab of their own: the parent tab stays selected
@@ -78,7 +78,7 @@ async function datesOnlyIfAsked(page) {
     for (const route of ROUTES) {
       await open(route);
       const panel = { home: '#panel-home', settings: '#panel-settings', itinerary: '#panel-itinerary', money: '#panel-money', checklist: '#panel-checklist', transfers: '#panel-transfers', assistant: '#panel-assistant', info: '#panel-info' }[route] ?? '#panel-soon';
-      const current = route === 'transfers' ? await page.locator('[data-tab="itinerary"][aria-selected="true"]').count() : route === 'assistant' || route === 'info' ? await page.locator('[data-tab="home"][aria-selected="true"]').count() : await page.locator(`[data-route="${route}"][aria-current="page"]`).count();
+      const current = route === 'transfers' ? await page.locator('[data-tab="tools"][aria-selected="true"]').count() : route === 'assistant' || route === 'info' ? await page.locator('[data-tab="home"][aria-selected="true"]').count() : await page.locator(`[data-route="${route}"][aria-current="page"]`).count();
       const hscroll = await page.evaluate(() => document.documentElement.scrollWidth > innerWidth);
       nav[route] = { hash: await page.evaluate(() => location.hash), panelVisible: await visible(page, panel), ariaCurrent: current, hscroll };
       if (!['home', 'settings', 'itinerary', 'money', 'checklist', 'transfers', 'assistant', 'info'].includes(route)) {
