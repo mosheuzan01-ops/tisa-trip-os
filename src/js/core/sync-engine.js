@@ -316,20 +316,59 @@ export function resendAll(syncIn) {
 
 // ---------- moving a trip from this phone into the account (1.1.1: two steps) ----------
 // Step 1 is the backup file (on an iPhone it opens the share sheet). Step 2 starts only when the user comes back and
-// taps "move now". The state of the move is kept in sync.migration (latisa:sync:v1), so the screen can show it after
-// a reload: { tripId, step: 'ready' | 'done' | 'failed', backupAt, stage: 'create' | 'records', kind, at, sentKeys }.
+// taps "move now". Two things are kept in latisa:sync:v1:
+//  - sync.migration: what the dialog shows after a reload, for the last trip the dialog worked on:
+//    { tripId, step: 'ready' | 'done' | 'failed', backupAt, stage: 'create' | 'records', kind, at }.
+//  - sync.moves[tripId]: the progress of each trip's unfinished move, on its own (B, 1.1.3: one shared slot let a
+//    move of another trip erase it). { sentKeys, created, adopted }; removed once that trip is moved or deleted.
 // sentKeys: the records an unfinished move may have put in the cloud (the answer can be lost after the server took
 // them). A key there that is no longer on the phone was deleted on the phone, so the retry deletes it in the cloud too.
 // created: an earlier try of this phone got 'created' for this trip, so what the account holds came from this phone.
 // adopted: an earlier try found the trip already in the account (M2). Neither flag with sentKeys = a try of 1.1.2,
 // which had always created the trip itself: it is still treated as created.
+// 1.1.2 (and the first 1.1.3 build) kept that progress inside sync.migration; it is moved to sync.moves the first
+// time a move function runs (liftProgress), so an update in the middle of a move loses nothing.
+
+const PROGRESS = ['sentKeys', 'created', 'adopted'];
+/** Move progress kept the old way (inside sync.migration) to sync.moves[tripId]. Mutates `sync`. */
+function liftProgress(sync) {
+  const m = sync.migration;
+  if (!m || !PROGRESS.some((f) => f in m)) return;
+  const old = { sentKeys: m.sentKeys, created: m.created, adopted: m.adopted };
+  if (m.tripId && !sync.moves?.[m.tripId]) setProgress(sync, m.tripId, old);
+  const rest = { ...m };
+  for (const f of PROGRESS) delete rest[f];
+  sync.migration = rest;
+}
+/** Keep one trip's move progress, or drop it when there is nothing to keep. Mutates `sync`. */
+function setProgress(sync, tripId, p) {
+  const moves = { ...(sync.moves ?? {}) };
+  const keep = { ...(p?.sentKeys?.length ? { sentKeys: p.sentKeys } : {}), ...(p?.created ? { created: true } : {}), ...(p?.adopted ? { adopted: true } : {}) };
+  if (Object.keys(keep).length) moves[tripId] = keep; else delete moves[tripId];
+  sync.moves = moves;
+}
+/** The progress of one trip's unfinished move ({} when none). */
+export function moveProgress(sync, tripId) {
+  const s = clone(sync ?? {});
+  liftProgress(s);
+  return s.moves?.[tripId] ?? {};
+}
 
 /** Step 1 is done: the backup file was handed to the phone. Returns a new sync state; the trips are not touched. */
 export function markBackup(syncIn, tripId, nowIso) {
   const sync = clone(syncIn ?? emptySyncState());
+  liftProgress(sync); // the progress of every trip stays in sync.moves; only the dialog's state is replaced
+  sync.migration = { tripId, step: 'ready', backupAt: nowIso, stage: null, kind: null, at: nowIso };
+  return sync;
+}
+
+/** The move could not start at all (e.g. the sync library did not load): a failure of the first stage, for the
+ *  dialog. The progress of this and every other trip is kept as it was. */
+export function markMoveFailed(syncIn, tripId, kind, nowIso) {
+  const sync = clone(syncIn ?? emptySyncState());
+  liftProgress(sync);
   const same = sync.migration?.tripId === tripId ? sync.migration : null;
-  const sentKeys = same?.sentKeys;
-  sync.migration = { tripId, step: 'ready', backupAt: nowIso, stage: null, kind: null, at: nowIso, ...(sentKeys ? { sentKeys } : {}), ...(same?.created ? { created: true } : {}), ...(same?.adopted ? { adopted: true } : {}) };
+  sync.migration = { tripId, step: 'failed', backupAt: same?.backupAt ?? null, stage: 'create', kind, at: nowIso };
   return sync;
 }
 
@@ -339,15 +378,18 @@ export function markBackup(syncIn, tripId, nowIso) {
  *  trip is a new trip object only when the cloud changed it (not expected on a first move), else null. */
 export async function migrateTrip({ api, sync: syncIn, trip, nowIso }) {
   const sync = clone(syncIn ?? emptySyncState());
-  const prev = sync.migration?.tripId === trip.id ? sync.migration : null;
+  liftProgress(sync);
+  const prev = sync.migration?.tripId === trip.id ? sync.migration : null; // the dialog's state (backupAt)
+  const progress = sync.moves?.[trip.id] ?? {}; // this trip's own unfinished move, whatever trip the dialog showed since
   const onPhone = [...tripToRecords(trip).records.keys()];
-  const earlier = prev?.sentKeys ?? [];
+  const earlier = progress.sentKeys ?? [];
   let sentKeys = earlier;
   // this phone's own try created the trip in the account (kept for a retry); see "adopted" above for a 1.1.2 try
-  let created = Boolean(prev?.created) || (earlier.length > 0 && !prev?.adopted);
+  let created = Boolean(progress.created) || (earlier.length > 0 && !progress.adopted);
   let adopted = false;
   const fail = (stage, kind) => {
-    sync.migration = { tripId: trip.id, step: 'failed', backupAt: prev?.backupAt ?? null, stage, kind, at: nowIso, ...(sentKeys.length ? { sentKeys } : {}), ...(created ? { created } : {}), ...(adopted ? { adopted } : {}) };
+    setProgress(sync, trip.id, { sentKeys, created, adopted: adopted || progress.adopted });
+    sync.migration = { tripId: trip.id, step: 'failed', backupAt: prev?.backupAt ?? null, stage, kind, at: nowIso };
     return { sync, result: kind === 'taken' ? 'taken' : 'failed', trip: null, notices: [] };
   };
   const kindOf = (e) => (e instanceof CloudError ? e.kind : 'bad');
@@ -393,6 +435,7 @@ export async function migrateTrip({ api, sync: syncIn, trip, nowIso }) {
   sync.trips[trip.id] = r.entry;
   delete sync.declined?.[trip.id];
   keepCopies(sync, [...metaCopy, ...r.copies]);
+  setProgress(sync, trip.id, null); // moved: nothing of this trip's move is needed any more
   sync.migration = { tripId: trip.id, step: 'done', backupAt: prev?.backupAt ?? null, stage: null, kind: null, at: nowIso };
   return { sync, result: 'done', trip: r.trip, notices: r.notices };
 }
@@ -424,6 +467,8 @@ export async function deleteTripFromAccount({ api, sync: syncIn, tripId, nowIso 
   e.deletedAt = nowIso;
   sync.declined = { ...(sync.declined ?? {}), [tripId]: true };
   sync.cloudTrips = (sync.cloudTrips ?? []).filter((x) => x.id !== tripId);
+  liftProgress(sync);
+  setProgress(sync, tripId, null); // the account's copy is gone: what an earlier move sent is gone with it
   if (sync.migration?.tripId === tripId) sync.migration = null;
   return { sync, result };
 }

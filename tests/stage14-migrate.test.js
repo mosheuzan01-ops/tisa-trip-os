@@ -4,10 +4,10 @@
 // stays "on this device only", and the phone's data is never changed. Fake backend, sample data only.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { emptySyncState, runSync, uploadTrip, pendingCount, markBackup, migrateTrip, singleFlight } from '../src/js/core/sync-engine.js';
+import { emptySyncState, runSync, uploadTrip, pendingCount, markBackup, markMoveFailed, migrateTrip, singleFlight, moveProgress, deleteTripFromAccount } from '../src/js/core/sync-engine.js';
 import { createCloudApi, CloudError } from '../src/js/core/cloud-api.js';
 import { createDefaultState } from '../src/js/core/schema.js';
-import { recKey } from '../src/js/core/sync-map.js';
+import { recKey, tripToRecords } from '../src/js/core/sync-map.js';
 import { createFakeCloud, fakeClient } from './fakes/fake-cloud.js';
 
 const clone = (v) => JSON.parse(JSON.stringify(v));
@@ -223,7 +223,7 @@ test('MG9 (M1): records reached the server but the answer was lost, the user del
   assert.equal(cloudRow(fake, 'place', 'place-1').deleted, false, 'the other records stay');
   assert.equal(pendingCount(retry.sync, state), 0, 'nothing left waiting');
   assert.ok(retry.sync.conflicts.some((c) => c.key === recKey('personal', 'item', 'item-1') && c.remote?.v?.name === 'Sample item'), 'the cloud version is kept as a copy');
-  assert.equal(retry.sync.migration.sentKeys, undefined, 'the list of earlier sent records is dropped once moved');
+  assert.equal(moveProgress(retry.sync, id).sentKeys, undefined, 'the list of earlier sent records is dropped once moved');
   // later syncs, on this phone and on another phone of the same account, do not bring it back
   const next = await runSync({ api, sync: retry.sync, state, nowIso: T(6) });
   assert.deepEqual(Object.keys(next.trips), []);
@@ -354,8 +354,8 @@ test('MG15 (M2): that move fails half way, then a retry: the stale copy still do
   let syncB = markBackup((await runSync({ api: apiB, sync: emptySyncState(), state: stale, nowIso: T(20) })).sync, id, T(21));
   const first = await migrateTrip({ api: answerLost(apiB), sync: syncB, trip: stale.trips[id], nowIso: T(22) });
   assert.equal(first.result, 'failed');
-  assert.equal(first.sync.migration.created, undefined, 'phone B did not create this trip');
-  assert.equal(first.sync.migration.adopted, true, 'it found the trip already in the account');
+  assert.equal(moveProgress(first.sync, id).created, undefined, 'phone B did not create this trip');
+  assert.equal(moveProgress(first.sync, id).adopted, true, 'it found the trip already in the account');
   syncB = markBackup(first.sync, id, T(23));
   const retry = await migrateTrip({ api: apiB, sync: syncB, trip: stale.trips[id], nowIso: T(24) });
   assert.equal(retry.result, 'done');
@@ -372,13 +372,13 @@ test('MG16 (M2): this phone created the trip, the records failed, a new backup a
   const state = sampleState(); const id = state.activeTripId;
   let sync = markBackup(await signedIn(api, state), id, T(1));
   sync = (await migrateTrip({ api: answerLost(api), sync, trip: state.trips[id], nowIso: T(2) })).sync;
-  assert.equal(sync.migration.created, true, 'kept: this phone created the trip');
+  assert.equal(moveProgress(sync, id).created, true, 'kept: this phone created the trip');
   fake.fail = 'network';
   sync = (await migrateTrip({ api, sync, trip: state.trips[id], nowIso: T(3) })).sync;
   fake.fail = null;
-  assert.equal(sync.migration.created, true, 'kept through a failure when creating');
+  assert.equal(moveProgress(sync, id).created, true, 'kept through a failure when creating');
   sync = markBackup(sync, id, T(4));
-  assert.equal(sync.migration.created, true, 'and through a new backup');
+  assert.equal(moveProgress(sync, id).created, true, 'and through a new backup');
   state.trips[id].checklist[0].name = 'Sample item, edited later';
   state.trips[id].name = 'Sample trip, renamed';
   const after = clone(state);
@@ -388,7 +388,7 @@ test('MG16 (M2): this phone created the trip, the records failed, a new backup a
   assert.deepEqual(state, after);
   assert.equal(cloudRow(fake, 'item', 'item-1').data.v.name, 'Sample item, edited later');
   assert.equal(fake.trips.get(id).name, 'Sample trip, renamed');
-  assert.equal(retry.sync.migration.created, undefined, 'dropped once moved');
+  assert.equal(moveProgress(retry.sync, id).created, undefined, 'dropped once moved');
 });
 
 test('MG17 (M2): the account does not list the trip after "exists": nothing is sent, the phone header is not replaced, not linked', async () => {
@@ -412,7 +412,9 @@ test('MG18 (M2): a move left unfinished by 1.1.2 (sent records, no flag) is stil
   const state = sampleState(); const id = state.activeTripId;
   let sync = markBackup(await signedIn(api, state), id, T(1));
   sync = (await migrateTrip({ api: answerLost(api), sync, trip: state.trips[id], nowIso: T(2) })).sync;
-  delete sync.migration.created; // the state 1.1.2 kept: sentKeys, and no created / adopted flag
+  // the state 1.1.2 kept: sentKeys inside sync.migration, no per-trip list and no created / adopted flag
+  sync = { ...sync, migration: { ...sync.migration, sentKeys: sync.moves[id].sentKeys } };
+  delete sync.moves;
   assert.ok(sync.migration.sentKeys.length > 0);
   state.trips[id].checklist[0].name = 'Sample item, edited later';
   state.trips[id].places = [];
@@ -423,4 +425,133 @@ test('MG18 (M2): a move left unfinished by 1.1.2 (sent records, no flag) is stil
   assert.deepEqual(state, after);
   assert.equal(cloudRow(fake, 'item', 'item-1').data.v.name, 'Sample item, edited later');
   assert.equal(cloudRow(fake, 'place', 'place-1').deleted, true);
+});
+
+// ---------- B (1.1.3): two trips on one phone. The move progress of each trip is kept on its own ----------
+// Before the fix one slot (sync.migration) held it: starting to move trip 2 erased what trip 1's unfinished move had
+// sent, and a record then deleted from trip 1 came back on its retry (M1 again, with two trips).
+function twoTrips() {
+  const state = sampleState();
+  const one = state.activeTripId;
+  const two = 'trip-two-sample';
+  state.trips[two] = { ...clone(state.trips[one]), id: two, name: 'Second sample trip', photos: [] };
+  state.trips[two].checklist = [{ id: 'item-two', group: 'documents', name: 'Sample item of trip 2', qty: 1, note: '', done: false }];
+  return { state, one, two };
+}
+
+test('MG19 (B): trip 1 half sent, then a backup of trip 2, then a delete in trip 1 and its retry: the delete stays, in the cloud and on the phone', async () => {
+  const fake = createFakeCloud();
+  const api = await approvedApi(fake, 'mg19@example.com');
+  const { state, one, two } = twoTrips();
+  let sync = markBackup(await signedIn(api, state), one, T(1));
+  sync = (await migrateTrip({ api: answerLost(api), sync, trip: state.trips[one], nowIso: T(2) })).sync;
+  assert.equal(cloudRow(fake, 'item', 'item-1')?.deleted, false, 'trip 1\'s record really reached the server');
+  sync = markBackup(sync, two, T(3)); // the user starts moving trip 2
+  state.trips[one].checklist = []; // and deletes the record in trip 1
+  const after = clone(state);
+  sync = markBackup(sync, one, T(4));
+  const retry = await migrateTrip({ api, sync, trip: state.trips[one], nowIso: T(5) });
+  assert.equal(retry.result, 'done');
+  assert.equal(retry.trip, null, 'the deleted record is not brought back to the phone');
+  assert.deepEqual(state, after);
+  assert.equal(cloudRow(fake, 'item', 'item-1').deleted, true, 'the delete reached the cloud');
+  assert.equal(fake.trips.size, 1, 'one trip in the account, no duplicate');
+});
+
+test('MG20 (B): the same, when trip 2 is fully moved in between: trip 1\'s delete still stays, and trip 2 is untouched', async () => {
+  const fake = createFakeCloud();
+  const api = await approvedApi(fake, 'mg20@example.com');
+  const { state, one, two } = twoTrips();
+  let sync = markBackup(await signedIn(api, state), one, T(1));
+  sync = (await migrateTrip({ api: answerLost(api), sync, trip: state.trips[one], nowIso: T(2) })).sync;
+  sync = markBackup(sync, two, T(3));
+  const moved2 = await migrateTrip({ api, sync, trip: state.trips[two], nowIso: T(4) });
+  assert.equal(moved2.result, 'done');
+  sync = moved2.sync;
+  state.trips[one].checklist = [];
+  const records = fake.records.size;
+  sync = markBackup(sync, one, T(5));
+  const retry = await migrateTrip({ api, sync, trip: state.trips[one], nowIso: T(6) });
+  assert.equal(retry.result, 'done');
+  assert.equal(retry.trip, null);
+  assert.equal(cloudRow(fake, 'item', 'item-1').deleted, true);
+  assert.equal(cloudRow(fake, 'item', 'item-two').deleted, false, 'trip 2\'s record stays');
+  assert.equal(fake.records.size, records, 'no new record: only the delete of an existing one');
+  assert.equal(fake.trips.size, 2);
+  assert.ok(linked(retry.sync, one) && linked(retry.sync, two));
+});
+
+test('MG21 (B): trip 1 was created by this phone and half sent; trip 2 starts and fails; an edit in trip 1 and its retry: the phone still wins', async () => {
+  const fake = createFakeCloud();
+  const api = await approvedApi(fake, 'mg21@example.com');
+  const { state, one, two } = twoTrips();
+  let sync = markBackup(await signedIn(api, state), one, T(1));
+  sync = (await migrateTrip({ api: answerLost(api), sync, trip: state.trips[one], nowIso: T(2) })).sync;
+  sync = markBackup(sync, two, T(3));
+  fake.fail = 'network';
+  sync = (await migrateTrip({ api, sync, trip: state.trips[two], nowIso: T(4) })).sync;
+  fake.fail = null;
+  state.trips[one].checklist[0].name = 'Sample item, edited later';
+  const retry = await migrateTrip({ api, sync: markBackup(sync, one, T(5)), trip: state.trips[one], nowIso: T(6) });
+  assert.equal(retry.result, 'done');
+  assert.equal(retry.trip, null, 'the phone copy is not replaced by its own older half-sent copy');
+  assert.equal(cloudRow(fake, 'item', 'item-1').data.v.name, 'Sample item, edited later');
+});
+
+test('MG22 (B): a state left by 1.1.2 (progress inside sync.migration) survives a backup of another trip', async () => {
+  const fake = createFakeCloud();
+  const api = await approvedApi(fake, 'mg22@example.com');
+  const { state, one, two } = twoTrips();
+  let sync = markBackup(await signedIn(api, state), one, T(1));
+  const first = await migrateTrip({ api: answerLost(api), sync, trip: state.trips[one], nowIso: T(2) });
+  // what 1.1.2 kept: one slot with the trip id and sentKeys, no per-trip list and no flags
+  const keys = [...tripToRecords(state.trips[one]).records.keys()];
+  sync = { ...first.sync, migration: { tripId: one, step: 'failed', backupAt: T(1), stage: 'records', kind: 'offline', at: T(2), sentKeys: keys } };
+  delete sync.moves;
+  sync = markBackup(sync, two, T(3));
+  state.trips[one].checklist = [];
+  const retry = await migrateTrip({ api, sync: markBackup(sync, one, T(4)), trip: state.trips[one], nowIso: T(5) });
+  assert.equal(retry.result, 'done');
+  assert.equal(retry.trip, null);
+  assert.equal(cloudRow(fake, 'item', 'item-1').deleted, true);
+});
+
+test('MG23 (B): the move cannot start (library not loaded) for trip 2: trip 1\'s progress is not copied onto trip 2 and not lost', async () => {
+  const fake = createFakeCloud();
+  const api = await approvedApi(fake, 'mg23@example.com');
+  const { state, one, two } = twoTrips();
+  let sync = markBackup(await signedIn(api, state), one, T(1));
+  sync = (await migrateTrip({ api: answerLost(api), sync, trip: state.trips[one], nowIso: T(2) })).sync;
+  const p1 = moveProgress(sync, one);
+  assert.ok(p1.sentKeys.length > 0 && p1.created);
+  sync = markMoveFailed(markBackup(sync, two, T(3)), two, 'offline', T(4));
+  assert.equal(sync.migration.tripId, two);
+  assert.equal(sync.migration.step, 'failed');
+  assert.equal(sync.migration.backupAt, T(3), 'the dialog still knows trip 2 was backed up');
+  assert.deepEqual(moveProgress(sync, two), {}, 'nothing of trip 1 on trip 2');
+  assert.deepEqual(moveProgress(sync, one), p1, 'trip 1 kept as it was');
+  // a 1.1.2 state of trip 1 inside sync.migration is not copied onto trip 2 either
+  const old = { ...emptySyncState(), userId: sync.userId, migration: { tripId: one, step: 'failed', backupAt: T(1), stage: 'records', kind: 'offline', at: T(2), sentKeys: p1.sentKeys } };
+  const after = markMoveFailed(old, two, 'offline', T(5));
+  assert.deepEqual(moveProgress(after, two), {});
+  assert.deepEqual(moveProgress(after, one).sentKeys, p1.sentKeys);
+  assert.equal(after.migration.sentKeys, undefined, 'the dialog state holds no progress any more');
+});
+
+test('MG24 (B): deleting a trip from the account drops its move progress only; a later move of it starts clean', async () => {
+  const fake = createFakeCloud();
+  const api = await approvedApi(fake, 'mg24@example.com');
+  const { state, one, two } = twoTrips();
+  let sync = markBackup(await signedIn(api, state), two, T(1));
+  sync = (await migrateTrip({ api: answerLost(api), sync, trip: state.trips[two], nowIso: T(2) })).sync;
+  sync = markBackup(sync, one, T(3));
+  sync = (await migrateTrip({ api, sync, trip: state.trips[one], nowIso: T(4) })).sync;
+  const p2 = moveProgress(sync, two);
+  const del = await deleteTripFromAccount({ api, sync, tripId: one, nowIso: T(5) });
+  assert.deepEqual(moveProgress(del.sync, one), {});
+  assert.deepEqual(moveProgress(del.sync, two), p2, 'trip 2\'s unfinished move is kept');
+  const again = await migrateTrip({ api, sync: markBackup(del.sync, one, T(6)), trip: state.trips[one], nowIso: T(7) });
+  assert.equal(again.result, 'done');
+  assert.equal(again.trip, null);
+  assert.equal(fake.trips.size, 2);
 });
