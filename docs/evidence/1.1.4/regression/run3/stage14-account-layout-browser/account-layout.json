@@ -1,0 +1,48 @@
+{
+  "L1 every action row in settings is filled edge to edge at 320-1440 px (no empty cell beside a button)": {
+    "result": "PASS",
+    "gapRows": [],
+    "shown": [
+      "share",
+      "members",
+      "delete",
+      "admin",
+      "password",
+      "signout"
+    ]
+  },
+  "L2 the buttons of one row have one height": {
+    "result": "PASS",
+    "tallRows": []
+  },
+  "L3 the card groups trip actions (share, members) apart from account actions (admin, password, sign-out)": {
+    "result": "PASS",
+    "groups": [
+      [
+        "restore-device",
+        "restore-cloud"
+      ],
+      [
+        "share",
+        "members",
+        "delete"
+      ],
+      [
+        "admin",
+        "password",
+        "signout"
+      ]
+    ]
+  },
+  "L4 no sideways scroll of the page at any width": {
+    "result": "PASS",
+    "overflow": []
+  },
+  "L5 \"Trip members\" and \"Admin\" still open their dialogs and close again": {
+    "result": "PASS"
+  },
+  "no JS errors": {
+    "result": "PASS",
+    "errors": []
+  }
+}
