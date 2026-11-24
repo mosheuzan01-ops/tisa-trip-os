@@ -81,6 +81,9 @@ async function createFakeSupabase() {
     const m = /^\/rest\/v1\/rpc\/([a-z_]+)$/.exec(p);
     if (m && req.method() === 'POST') {
       entry.fn = m[1];
+      // fake.loseAnswer = '<rpc name>': the fake server does the call, then the connection drops before the answer
+      // reaches the app (the case of M1 and B: the records are in the cloud, the phone does not know it).
+      if (fake.loseAnswer === m[1]) { try { fake.rpc(uid, m[1], body); } catch { /* as if it failed */ } return route.abort('connectionreset'); }
       try {
         const data = fake.rpc(uid, m[1], body);
         return json(route, 200, data === undefined ? null : data);

@@ -1,0 +1,8 @@
+# red (B): scripts/qa/stage14-move-two-trips-browser.cjs against sync-engine.js and cloud-view.js of PR #54 head 932ef10, fake Supabase only, 2026-11-24T10:37:32Z
+PASS  MT1 trip 1: records reached the server, the answer was lost; the dialog says so and trip 1 stays on this device only
+PASS  MT2 trip 2 is moved completely; trip 1 is still on this device only
+FAIL  MT3 the item deleted on the phone before the retry does not come back, on the phone or in the cloud; the rest stays; no duplicate  {"result":"FAIL","comesBack":true,"cloudDeleted":false,"others":true,"records":[84,84],"trips":2}
+FAIL  MT4 trip 2 was not touched by trip 1's retry; after a reload both are "(mine)" and the item is still gone  {"result":"FAIL"}
+PASS  MT-clean no page errors and no request outside the app and the fake project
+FAIL 2
+exit 1

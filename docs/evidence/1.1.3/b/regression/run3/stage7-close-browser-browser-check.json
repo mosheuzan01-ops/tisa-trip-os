@@ -1,0 +1,59 @@
+{
+  "C1 stored file is a real JPEG that decodes, long side 1280": {
+    "result": "PASS",
+    "jpeg": {
+      "type": "image/jpeg",
+      "soi": true,
+      "eoi": true,
+      "w": 1280,
+      "h": 960,
+      "bytes": 11711
+    },
+    "meta": {
+      "w": 1280,
+      "h": 960,
+      "bytes": 11711
+    }
+  },
+  "C2 slideshow holds at most 12; the 13th star is refused with a message": {
+    "result": "PASS",
+    "refusal": "אפשר לבחור עד 12 תמונות למצגת.",
+    "starred": 12,
+    "count": "1 / 12"
+  },
+  "C3 restoring twice: no duplicates, nothing deleted": {
+    "result": "PASS",
+    "before": 13,
+    "after": 13,
+    "files": 13,
+    "msgs": [
+      "כל התמונות שבקובץ כבר בטלפון",
+      "כל התמונות שבקובץ כבר בטלפון"
+    ]
+  },
+  "C4 JSON backup and restore keep the photo details; files untouched": {
+    "result": "PASS",
+    "fileHasPhotos": 13,
+    "after": 13,
+    "files": 13
+  },
+  "C5 update: banner, no reload before the tap, new version shown, old cache gone, data and photos kept": {
+    "result": "PASS",
+    "bannerShown": true,
+    "noReload": true,
+    "shownBefore": "1.1.3",
+    "shownAfter": "9.9.9-test",
+    "cachesBefore": [
+      "tisa-1.1.3"
+    ],
+    "cachesAfter": [
+      "tisa-9.9.9-test"
+    ],
+    "photos": 1,
+    "files": 1
+  },
+  "no JS errors": {
+    "result": "PASS",
+    "errors": []
+  }
+}

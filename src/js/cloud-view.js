@@ -5,7 +5,7 @@
 // src/js/core/storage.js), and it never resets or replaces the app data. Admin code is not here (admin-view.js).
 import { createKv, authStorage, keepCloudCopy, hasSavedSession, browserBackend, SYNC_KEY, AUTH_KEY } from './core/storage.js';
 import { createCloudApi, toCloudError } from './core/cloud-api.js';
-import { emptySyncState, runSync, downloadTrip, noteLocalChanges, pendingCount, unlinkAll, resendAll, markBackup, migrateTrip, singleFlight, deleteTripFromAccount } from './core/sync-engine.js';
+import { emptySyncState, runSync, downloadTrip, noteLocalChanges, pendingCount, unlinkAll, resendAll, markBackup, markMoveFailed, migrateTrip, singleFlight, deleteTripFromAccount } from './core/sync-engine.js';
 import { interpolate } from './core/i18n.js';
 
 const LIB = './vendor/supabase/supabase-js-2.119.2.umd.js';
@@ -222,7 +222,8 @@ export function setupCloud(ctx, { wireDialog }) {
       }
     } catch (e) {
       // ensureApi failed (the library did not load): kept as a failure of the first stage, shown in the dialog
-      cloud.sync = { ...cloud.sync, migration: { ...(cloud.sync.migration ?? {}), tripId: trip.id, step: 'failed', stage: 'create', kind: toCloudError(e).kind, at: nowIso() } };
+      // (B: only this trip's dialog state; no other trip's move progress is copied onto it or lost)
+      cloud.sync = markMoveFailed(cloud.sync, trip.id, toCloudError(e).kind, nowIso());
       save();
     } finally {
       migrating = false;

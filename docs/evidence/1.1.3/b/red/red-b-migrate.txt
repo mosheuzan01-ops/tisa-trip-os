@@ -1,0 +1,867 @@
+# red (B): tests/stage14-migrate.test.js with MG19-MG22 against sync-engine.js of PR #54 head 932ef10 (one slot sync.migration), 2026-11-24T10:34:53Z
+TAP version 13
+# Subtest: MG1: success = the trip is created first, then its records go up; only then it is linked, and nothing on the phone changes
+ok 1 - MG1: success = the trip is created first, then its records go up; only then it is linked, and nothing on the phone changes
+  ---
+  duration_ms: 31.828165
+  type: 'test'
+  ...
+# Subtest: MG2: no network when creating: a visible failure (stage create, offline), not linked, nothing sent; a retry then works
+ok 2 - MG2: no network when creating: a visible failure (stage create, offline), not linked, nothing sent; a retry then works
+  ---
+  duration_ms: 4.310526
+  type: 'test'
+  ...
+# Subtest: MG3: the trip already exists in my account (an earlier attempt): no second trip, the records go up, it is linked
+ok 3 - MG3: the trip already exists in my account (an earlier attempt): no second trip, the records go up, it is linked
+  ---
+  duration_ms: 1.678927
+  type: 'test'
+  ...
+# Subtest: MG4: the id belongs to someone else (taken): nothing is linked or sent, and the failure says so
+ok 4 - MG4: the id belongs to someone else (taken): nothing is linked or sent, and the failure says so
+  ---
+  duration_ms: 0.862762
+  type: 'test'
+  ...
+# Subtest: MG5: sending the records fails: no success, not linked, the phone keeps everything; a retry finishes with no duplicate
+ok 5 - MG5: sending the records fails: no success, not linked, the phone keeps everything; a retry finishes with no duplicate
+  ---
+  duration_ms: 2.594748
+  type: 'test'
+  ...
+# Subtest: MG6: records half sent, then edited on the phone, then a retry: the phone's newer version wins in the cloud and on the phone
+ok 6 - MG6: records half sent, then edited on the phone, then a retry: the phone's newer version wins in the cloud and on the phone
+  ---
+  duration_ms: 2.900567
+  type: 'test'
+  ...
+# Subtest: MG7: a double tap runs one move: one create_trip call, one trip
+ok 7 - MG7: a double tap runs one move: one create_trip call, one trip
+  ---
+  duration_ms: 3.506746
+  type: 'test'
+  ...
+# Subtest: MG8: a pending (not approved) user: denied, nothing linked, the failure is kept for the screen
+ok 8 - MG8: a pending (not approved) user: denied, nothing linked, the failure is kept for the screen
+  ---
+  duration_ms: 0.68412
+  type: 'test'
+  ...
+# Subtest: MG9 (M1): records reached the server but the answer was lost, the user deletes one, the retry: it does not come back, on the phone or in the cloud
+ok 9 - MG9 (M1): records reached the server but the answer was lost, the user deletes one, the retry: it does not come back, on the phone or in the cloud
+  ---
+  duration_ms: 5.94454
+  type: 'test'
+  ...
+# Subtest: MG10 (M1): the delete survives a second failed try (offline when creating) and a new backup before the retry
+ok 10 - MG10 (M1): the delete survives a second failed try (offline when creating) and a new backup before the retry
+  ---
+  duration_ms: 3.479278
+  type: 'test'
+  ...
+# Subtest: MG11 (M1): the delete is limited to what this phone sent: a record it never had is still taken from the cloud, and an untouched one stays
+ok 11 - MG11 (M1): the delete is limited to what this phone sent: a record it never had is still taken from the cloud, and an untouched one stays
+  ---
+  duration_ms: 3.52877
+  type: 'test'
+  ...
+# Subtest: MG12 (M1): after the move, normal sync of edits and deletes still works
+ok 12 - MG12 (M1): after the move, normal sync of edits and deletes still works
+  ---
+  duration_ms: 3.385114
+  type: 'test'
+  ...
+# Subtest: MG13 (M2): a stale copy of a trip already in the account: the newer edit and the delete stay, in the cloud and on the other phone
+ok 13 - MG13 (M2): a stale copy of a trip already in the account: the newer edit and the delete stay, in the cloud and on the other phone
+  ---
+  duration_ms: 5.80238
+  type: 'test'
+  ...
+# Subtest: MG14 (M2): the same move keeps the account's trip header (dates), and phone B's older header is kept as a copy
+ok 14 - MG14 (M2): the same move keeps the account's trip header (dates), and phone B's older header is kept as a copy
+  ---
+  duration_ms: 2.914529
+  type: 'test'
+  ...
+# Subtest: MG15 (M2): that move fails half way, then a retry: the stale copy still does not overwrite the account
+ok 15 - MG15 (M2): that move fails half way, then a retry: the stale copy still does not overwrite the account
+  ---
+  duration_ms: 3.212578
+  type: 'test'
+  ...
+# Subtest: MG16 (M2): this phone created the trip, the records failed, a new backup and an edit, then a retry: the phone still wins
+ok 16 - MG16 (M2): this phone created the trip, the records failed, a new backup and an edit, then a retry: the phone still wins
+  ---
+  duration_ms: 1.472252
+  type: 'test'
+  ...
+# Subtest: MG17 (M2): the account does not list the trip after "exists": nothing is sent, the phone header is not replaced, not linked
+ok 17 - MG17 (M2): the account does not list the trip after "exists": nothing is sent, the phone header is not replaced, not linked
+  ---
+  duration_ms: 0.465401
+  type: 'test'
+  ...
+# Subtest: MG18 (M2): a move left unfinished by 1.1.2 (sent records, no flag) is still finished the 1.1.2 way after the update: the phone wins
+ok 18 - MG18 (M2): a move left unfinished by 1.1.2 (sent records, no flag) is still finished the 1.1.2 way after the update: the phone wins
+  ---
+  duration_ms: 1.771824
+  type: 'test'
+  ...
+# Subtest: MG19 (B): trip 1 half sent, then a backup of trip 2, then a delete in trip 1 and its retry: the delete stays, in the cloud and on the phone
+not ok 19 - MG19 (B): trip 1 half sent, then a backup of trip 2, then a delete in trip 1 and its retry: the delete stays, in the cloud and on the phone
+  ---
+  duration_ms: 3.273977
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage14-migrate.test.js:440:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    the deleted record is not brought back to the phone
+    + actual - expected
+    
+    + {
+    +   archive: {
+    +     budgets: [],
+    +     routes: []
+    +   },
+    +   assistant: {},
+    +   budget: {
+    +     categoriesMinor: {},
+    +     categoryNames: {},
+    +     currency: 'ILS',
+    +     estimate: false,
+    +     hidden: [],
+    +     profileId: null,
+    +     totalMinor: null
+    +   },
+    +   checkins: [],
+    +   checklist: [
+    +     {
+    +       done: false,
+    +       group: 'documents',
+    +       id: 'item-1',
+    +       name: 'Sample item',
+    +       note: '',
+    +       qty: 1
+    +     }
+    +   ],
+    +   countryCode: 'TH',
+    +   destinations: [
+    +     {
+    +       endDate: '2026-12-24',
+    +       id: 'stop-1',
+    +       name: 'Sample city',
+    +       note: '',
+    +       startDate: '2026-12-20'
+    +     }
+    +   ],
+    +   endDate: '2027-01-10',
+    +   events: [],
+    +   expenses: [
+    +     {
+    +       amountMinor: 1000,
+    +       baseMinor: 1000,
+    +       category: 'food',
+    +       currency: 'ILS',
+    +       date: '2026-12-21',
+    +       description: 'Sample',
+    +       destinationId: 'stop-1',
+    +       id: 'exp-1',
+    +       method: 'cash',
+    +       note: '',
+    +       rate: 1,
+    +       status: 'paid'
+    +     }
+    +   ],
+    +   id: 'mg-0019',
+    +   info: {},
+    +   journal: {},
+    +   luggage: {
+    +     bags: []
+    +   },
+    +   name: 'Sample trip',
+    +   photos: [],
+    +   places: [
+    +     {
+    +       address: '',
+    +       category: 'temple',
+    +       createdAt: '2026-11-23T12:00:00.000Z',
+    +       id: 'place-1',
+    +       lat: null,
+    +       lng: null,
+    +       name: 'Sample place',
+    +       note: '',
+    +       photoIds: [],
+    +       plannedDate: null,
+    +       status: 'want',
+    +       stopId: 'stop-1',
+    +       updatedAt: '2026-11-23T12:00:00.000Z',
+    +       visitedDate: null
+    +     }
+    +   ],
+    +   rates: {},
+    +   smartBag: {
+    +     activities: []
+    +   },
+    +   startDate: '2026-12-20',
+    +   tasks: [],
+    +   templateOffer: null,
+    +   transfers: []
+    + }
+    - null
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: ~
+  actual:
+    id: 'mg-0019'
+    photos:
+    templateOffer: ~
+    name: 'Sample trip'
+    countryCode: 'TH'
+    startDate: '2026-12-20'
+    endDate: '2027-01-10'
+    budget:
+      currency: 'ILS'
+      totalMinor: ~
+      categoriesMinor:
+      profileId: ~
+      estimate: false
+      categoryNames:
+      hidden:
+    rates:
+    info:
+    assistant:
+    journal:
+    luggage:
+      bags:
+    smartBag:
+      activities:
+    archive:
+      budgets:
+      routes:
+    destinations:
+      0:
+        id: 'stop-1'
+        name: 'Sample city'
+        startDate: '2026-12-20'
+        endDate: '2026-12-24'
+        note: ''
+    places:
+      0:
+        id: 'place-1'
+        name: 'Sample place'
+        category: 'temple'
+        status: 'want'
+        lat: ~
+        lng: ~
+        address: ''
+        note: ''
+        stopId: 'stop-1'
+        plannedDate: ~
+        visitedDate: ~
+        createdAt: '2026-11-23T12:00:00.000Z'
+        updatedAt: '2026-11-23T12:00:00.000Z'
+        photoIds:
+    transfers:
+    checklist:
+      0:
+        id: 'item-1'
+        group: 'documents'
+        name: 'Sample item'
+        qty: 1
+        note: ''
+        done: false
+    tasks:
+    checkins:
+    events:
+    expenses:
+      0:
+        id: 'exp-1'
+        amountMinor: 1000
+        currency: 'ILS'
+        rate: 1
+        baseMinor: 1000
+        category: 'food'
+        date: '2026-12-21'
+        destinationId: 'stop-1'
+        description: 'Sample'
+        note: ''
+        method: 'cash'
+        status: 'paid'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage14-migrate.test.js:453:10)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: MG20 (B): the same, when trip 2 is fully moved in between: trip 1's delete still stays, and trip 2 is untouched
+not ok 20 - MG20 (B): the same, when trip 2 is fully moved in between: trip 1's delete still stays, and trip 2 is untouched
+  ---
+  duration_ms: 2.106325
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage14-migrate.test.js:459:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + {
+    +   archive: {
+    +     budgets: [],
+    +     routes: []
+    +   },
+    +   assistant: {},
+    +   budget: {
+    +     categoriesMinor: {},
+    +     categoryNames: {},
+    +     currency: 'ILS',
+    +     estimate: false,
+    +     hidden: [],
+    +     profileId: null,
+    +     totalMinor: null
+    +   },
+    +   checkins: [],
+    +   checklist: [
+    +     {
+    +       done: false,
+    +       group: 'documents',
+    +       id: 'item-1',
+    +       name: 'Sample item',
+    +       note: '',
+    +       qty: 1
+    +     }
+    +   ],
+    +   countryCode: 'TH',
+    +   destinations: [
+    +     {
+    +       endDate: '2026-12-24',
+    +       id: 'stop-1',
+    +       name: 'Sample city',
+    +       note: '',
+    +       startDate: '2026-12-20'
+    +     }
+    +   ],
+    +   endDate: '2027-01-10',
+    +   events: [],
+    +   expenses: [
+    +     {
+    +       amountMinor: 1000,
+    +       baseMinor: 1000,
+    +       category: 'food',
+    +       currency: 'ILS',
+    +       date: '2026-12-21',
+    +       description: 'Sample',
+    +       destinationId: 'stop-1',
+    +       id: 'exp-1',
+    +       method: 'cash',
+    +       note: '',
+    +       rate: 1,
+    +       status: 'paid'
+    +     }
+    +   ],
+    +   id: 'mg-0020',
+    +   info: {},
+    +   journal: {},
+    +   luggage: {
+    +     bags: []
+    +   },
+    +   name: 'Sample trip',
+    +   photos: [],
+    +   places: [
+    +     {
+    +       address: '',
+    +       category: 'temple',
+    +       createdAt: '2026-11-23T12:00:00.000Z',
+    +       id: 'place-1',
+    +       lat: null,
+    +       lng: null,
+    +       name: 'Sample place',
+    +       note: '',
+    +       photoIds: [],
+    +       plannedDate: null,
+    +       status: 'want',
+    +       stopId: 'stop-1',
+    +       updatedAt: '2026-11-23T12:00:00.000Z',
+    +       visitedDate: null
+    +     }
+    +   ],
+    +   rates: {},
+    +   smartBag: {
+    +     activities: []
+    +   },
+    +   startDate: '2026-12-20',
+    +   tasks: [],
+    +   templateOffer: null,
+    +   transfers: []
+    + }
+    - null
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: ~
+  actual:
+    id: 'mg-0020'
+    photos:
+    templateOffer: ~
+    name: 'Sample trip'
+    countryCode: 'TH'
+    startDate: '2026-12-20'
+    endDate: '2027-01-10'
+    budget:
+      currency: 'ILS'
+      totalMinor: ~
+      categoriesMinor:
+      profileId: ~
+      estimate: false
+      categoryNames:
+      hidden:
+    rates:
+    info:
+    assistant:
+    journal:
+    luggage:
+      bags:
+    smartBag:
+      activities:
+    archive:
+      budgets:
+      routes:
+    destinations:
+      0:
+        id: 'stop-1'
+        name: 'Sample city'
+        startDate: '2026-12-20'
+        endDate: '2026-12-24'
+        note: ''
+    places:
+      0:
+        id: 'place-1'
+        name: 'Sample place'
+        category: 'temple'
+        status: 'want'
+        lat: ~
+        lng: ~
+        address: ''
+        note: ''
+        stopId: 'stop-1'
+        plannedDate: ~
+        visitedDate: ~
+        createdAt: '2026-11-23T12:00:00.000Z'
+        updatedAt: '2026-11-23T12:00:00.000Z'
+        photoIds:
+    transfers:
+    checklist:
+      0:
+        id: 'item-1'
+        group: 'documents'
+        name: 'Sample item'
+        qty: 1
+        note: ''
+        done: false
+    tasks:
+    checkins:
+    events:
+    expenses:
+      0:
+        id: 'exp-1'
+        amountMinor: 1000
+        currency: 'ILS'
+        rate: 1
+        baseMinor: 1000
+        category: 'food'
+        date: '2026-12-21'
+        destinationId: 'stop-1'
+        description: 'Sample'
+        note: ''
+        method: 'cash'
+        status: 'paid'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage14-migrate.test.js:474:10)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: MG21 (B): trip 1 was created by this phone and half sent; trip 2 starts and fails; an edit in trip 1 and its retry: the phone still wins
+not ok 21 - MG21 (B): trip 1 was created by this phone and half sent; trip 2 starts and fails; an edit in trip 1 and its retry: the phone still wins
+  ---
+  duration_ms: 2.035722
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage14-migrate.test.js:482:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    the phone copy is not replaced by its own older half-sent copy
+    + actual - expected
+    
+    + {
+    +   archive: {
+    +     budgets: [],
+    +     routes: []
+    +   },
+    +   assistant: {},
+    +   budget: {
+    +     categoriesMinor: {},
+    +     categoryNames: {},
+    +     currency: 'ILS',
+    +     estimate: false,
+    +     hidden: [],
+    +     profileId: null,
+    +     totalMinor: null
+    +   },
+    +   checkins: [],
+    +   checklist: [
+    +     {
+    +       done: false,
+    +       group: 'documents',
+    +       id: 'item-1',
+    +       name: 'Sample item',
+    +       note: '',
+    +       qty: 1
+    +     }
+    +   ],
+    +   countryCode: 'TH',
+    +   destinations: [
+    +     {
+    +       endDate: '2026-12-24',
+    +       id: 'stop-1',
+    +       name: 'Sample city',
+    +       note: '',
+    +       startDate: '2026-12-20'
+    +     }
+    +   ],
+    +   endDate: '2027-01-10',
+    +   events: [],
+    +   expenses: [
+    +     {
+    +       amountMinor: 1000,
+    +       baseMinor: 1000,
+    +       category: 'food',
+    +       currency: 'ILS',
+    +       date: '2026-12-21',
+    +       description: 'Sample',
+    +       destinationId: 'stop-1',
+    +       id: 'exp-1',
+    +       method: 'cash',
+    +       note: '',
+    +       rate: 1,
+    +       status: 'paid'
+    +     }
+    +   ],
+    +   id: 'mg-0021',
+    +   info: {},
+    +   journal: {},
+    +   luggage: {
+    +     bags: []
+    +   },
+    +   name: 'Sample trip',
+    +   photos: [],
+    +   places: [
+    +     {
+    +       address: '',
+    +       category: 'temple',
+    +       createdAt: '2026-11-23T12:00:00.000Z',
+    +       id: 'place-1',
+    +       lat: null,
+    +       lng: null,
+    +       name: 'Sample place',
+    +       note: '',
+    +       photoIds: [],
+    +       plannedDate: null,
+    +       status: 'want',
+    +       stopId: 'stop-1',
+    +       updatedAt: '2026-11-23T12:00:00.000Z',
+    +       visitedDate: null
+    +     }
+    +   ],
+    +   rates: {},
+    +   smartBag: {
+    +     activities: []
+    +   },
+    +   startDate: '2026-12-20',
+    +   tasks: [],
+    +   templateOffer: null,
+    +   transfers: []
+    + }
+    - null
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: ~
+  actual:
+    id: 'mg-0021'
+    photos:
+    templateOffer: ~
+    name: 'Sample trip'
+    countryCode: 'TH'
+    startDate: '2026-12-20'
+    endDate: '2027-01-10'
+    budget:
+      currency: 'ILS'
+      totalMinor: ~
+      categoriesMinor:
+      profileId: ~
+      estimate: false
+      categoryNames:
+      hidden:
+    rates:
+    info:
+    assistant:
+    journal:
+    luggage:
+      bags:
+    smartBag:
+      activities:
+    archive:
+      budgets:
+      routes:
+    destinations:
+      0:
+        id: 'stop-1'
+        name: 'Sample city'
+        startDate: '2026-12-20'
+        endDate: '2026-12-24'
+        note: ''
+    places:
+      0:
+        id: 'place-1'
+        name: 'Sample place'
+        category: 'temple'
+        status: 'want'
+        lat: ~
+        lng: ~
+        address: ''
+        note: ''
+        stopId: 'stop-1'
+        plannedDate: ~
+        visitedDate: ~
+        createdAt: '2026-11-23T12:00:00.000Z'
+        updatedAt: '2026-11-23T12:00:00.000Z'
+        photoIds:
+    transfers:
+    checklist:
+      0:
+        id: 'item-1'
+        group: 'documents'
+        name: 'Sample item'
+        qty: 1
+        note: ''
+        done: false
+    tasks:
+    checkins:
+    events:
+    expenses:
+      0:
+        id: 'exp-1'
+        amountMinor: 1000
+        currency: 'ILS'
+        rate: 1
+        baseMinor: 1000
+        category: 'food'
+        date: '2026-12-21'
+        destinationId: 'stop-1'
+        description: 'Sample'
+        note: ''
+        method: 'cash'
+        status: 'paid'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage14-migrate.test.js:495:10)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: MG22 (B): a state left by 1.1.2 (progress inside sync.migration) survives a backup of another trip
+not ok 22 - MG22 (B): a state left by 1.1.2 (progress inside sync.migration) survives a backup of another trip
+  ---
+  duration_ms: 1.415748
+  type: 'test'
+  location: '/home/user/tisa-trip-os/tests/stage14-migrate.test.js:499:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + {
+    +   archive: {
+    +     budgets: [],
+    +     routes: []
+    +   },
+    +   assistant: {},
+    +   budget: {
+    +     categoriesMinor: {},
+    +     categoryNames: {},
+    +     currency: 'ILS',
+    +     estimate: false,
+    +     hidden: [],
+    +     profileId: null,
+    +     totalMinor: null
+    +   },
+    +   checkins: [],
+    +   checklist: [
+    +     {
+    +       done: false,
+    +       group: 'documents',
+    +       id: 'item-1',
+    +       name: 'Sample item',
+    +       note: '',
+    +       qty: 1
+    +     }
+    +   ],
+    +   countryCode: 'TH',
+    +   destinations: [
+    +     {
+    +       endDate: '2026-12-24',
+    +       id: 'stop-1',
+    +       name: 'Sample city',
+    +       note: '',
+    +       startDate: '2026-12-20'
+    +     }
+    +   ],
+    +   endDate: '2027-01-10',
+    +   events: [],
+    +   expenses: [
+    +     {
+    +       amountMinor: 1000,
+    +       baseMinor: 1000,
+    +       category: 'food',
+    +       currency: 'ILS',
+    +       date: '2026-12-21',
+    +       description: 'Sample',
+    +       destinationId: 'stop-1',
+    +       id: 'exp-1',
+    +       method: 'cash',
+    +       note: '',
+    +       rate: 1,
+    +       status: 'paid'
+    +     }
+    +   ],
+    +   id: 'mg-0022',
+    +   info: {},
+    +   journal: {},
+    +   luggage: {
+    +     bags: []
+    +   },
+    +   name: 'Sample trip',
+    +   photos: [],
+    +   places: [
+    +     {
+    +       address: '',
+    +       category: 'temple',
+    +       createdAt: '2026-11-23T12:00:00.000Z',
+    +       id: 'place-1',
+    +       lat: null,
+    +       lng: null,
+    +       name: 'Sample place',
+    +       note: '',
+    +       photoIds: [],
+    +       plannedDate: null,
+    +       status: 'want',
+    +       stopId: 'stop-1',
+    +       updatedAt: '2026-11-23T12:00:00.000Z',
+    +       visitedDate: null
+    +     }
+    +   ],
+    +   rates: {},
+    +   smartBag: {
+    +     activities: []
+    +   },
+    +   startDate: '2026-12-20',
+    +   tasks: [],
+    +   templateOffer: null,
+    +   transfers: []
+    + }
+    - null
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: ~
+  actual:
+    id: 'mg-0022'
+    photos:
+    templateOffer: ~
+    name: 'Sample trip'
+    countryCode: 'TH'
+    startDate: '2026-12-20'
+    endDate: '2027-01-10'
+    budget:
+      currency: 'ILS'
+      totalMinor: ~
+      categoriesMinor:
+      profileId: ~
+      estimate: false
+      categoryNames:
+      hidden:
+    rates:
+    info:
+    assistant:
+    journal:
+    luggage:
+      bags:
+    smartBag:
+      activities:
+    archive:
+      budgets:
+      routes:
+    destinations:
+      0:
+        id: 'stop-1'
+        name: 'Sample city'
+        startDate: '2026-12-20'
+        endDate: '2026-12-24'
+        note: ''
+    places:
+      0:
+        id: 'place-1'
+        name: 'Sample place'
+        category: 'temple'
+        status: 'want'
+        lat: ~
+        lng: ~
+        address: ''
+        note: ''
+        stopId: 'stop-1'
+        plannedDate: ~
+        visitedDate: ~
+        createdAt: '2026-11-23T12:00:00.000Z'
+        updatedAt: '2026-11-23T12:00:00.000Z'
+        photoIds:
+    transfers:
+    checklist:
+      0:
+        id: 'item-1'
+        group: 'documents'
+        name: 'Sample item'
+        qty: 1
+        note: ''
+        done: false
+    tasks:
+    checkins:
+    events:
+    expenses:
+      0:
+        id: 'exp-1'
+        amountMinor: 1000
+        currency: 'ILS'
+        rate: 1
+        baseMinor: 1000
+        category: 'food'
+        date: '2026-12-21'
+        destinationId: 'stop-1'
+        description: 'Sample'
+        note: ''
+        method: 'cash'
+        status: 'paid'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/user/tisa-trip-os/tests/stage14-migrate.test.js:513:10)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..22
+# tests 22
+# suites 0
+# pass 18
+# fail 4
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 178.462621

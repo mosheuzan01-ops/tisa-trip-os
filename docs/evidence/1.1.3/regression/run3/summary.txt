@@ -1,0 +1,6 @@
+# run 3, 2026-11-24T09:25:35Z, tree: HEAD 9e4189f + working tree
+npm test exit 0 # pass 535 # fail 0 
+stage14-browser exit 0 PASS=38 FAIL=0
+stage14-delete-browser exit 0 PASS=10 FAIL=0
+stage13-upgrade-browser exit 0 PASS=9 FAIL=0
+stage7-close-browser exit 0 PASS=6 FAIL=0

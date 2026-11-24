@@ -167,10 +167,10 @@ test('PRIV-14: the privacy text says what 1.1.0 does with an account', () => {
   }
 });
 
-test('VER-14: version 1.1.2 in package.json, config and the service worker (deleting a trip, the account card layout)', () => {
-  assert.equal(readJson('package.json').version, '1.1.2');
-  assert.equal(readJson('config/app.config.json').appVersion, '1.1.2');
-  assert.match(readText('sw.js'), /const VERSION = '1\.1\.2';/);
+test('VER-14: version 1.1.3 in package.json, config and the service worker (a move does not overwrite a trip already in the account)', () => {
+  assert.equal(readJson('package.json').version, '1.1.3');
+  assert.equal(readJson('config/app.config.json').appVersion, '1.1.3');
+  assert.match(readText('sw.js'), /const VERSION = '1\.1\.3';/);
 });
 
 test('MIG-3: 0003 adds delete_trip only: owner and approved checked in the function, search_path pinned, no anon, no table delete', () => {
