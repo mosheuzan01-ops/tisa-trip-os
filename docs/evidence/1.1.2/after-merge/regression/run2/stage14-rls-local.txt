@@ -1,0 +1,2 @@
+RLS local (full migration): 66 PASS, 0 FAIL, rows left after check: 0
+ALL PASS

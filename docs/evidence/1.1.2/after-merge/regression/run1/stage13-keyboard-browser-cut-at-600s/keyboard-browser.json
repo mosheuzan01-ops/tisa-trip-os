@@ -1,0 +1,10 @@
+{
+  "run": {
+    "result": "FAIL",
+    "error": "page.evaluate: Target page, context or browser has been closed\n    at fresh (/home/user/tisa-trip-os/scripts/qa/stage13-keyboard-browser.cjs:36:14)\n    at /home/user/tisa-trip-os/scripts/qa/stage13-keyboard-browser.cjs:218:13"
+  },
+  "no JS errors": {
+    "result": "PASS",
+    "errors": []
+  }
+}
