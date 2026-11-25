@@ -8,6 +8,7 @@
 /* ---------- Non-color tokens (shared) ---------- */
 :root {
   --font-sans: "Heebo", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+  --font-figure: "FreeSerif", Georgia, "Times New Roman", serif; /* PR #56: main figures and selected headings only */
   --font-mono: "Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
 
   /* Type scale (rem = 16px). Body never below 1rem. */
@@ -72,6 +73,10 @@
   --metal-5: #B9A684; --metal-6: #E4D8C0; --metal-7: #C7B79A;
   --metal-ink: #3B3123;
   --metal-hi: rgba(255, 255, 255, .65);
+  /* PR #56: the trip pass only, its own metal 25% darker (each channel x .75), same hue family */
+  --pass-1: #A39E95; --pass-2: #B6B3AD; --pass-3: #988F7E; --pass-4: #B3AD9F;
+  --pass-5: #8B7D63; --pass-6: #ABA290; --pass-7: #958974;
+  --pass-ink: #1A140C; --pass-hi: rgba(255, 255, 255, .55);
   --metal-lo: rgba(0, 0, 0, .18);
   --metal-pill: #0F2B34;
   --shine: rgba(255, 255, 255, .5); --shine-peak: rgba(255, 255, 255, .85);
@@ -141,6 +146,9 @@
   --metal-5: #998A6C; --metal-6: #BCAE91; --metal-7: #A29479;
   --metal-ink: #1F1A12;
   --metal-hi: rgba(255, 255, 255, .35);
+  --pass-1: #868072; --pass-2: #A19A8C; --pass-3: #7F7560; --pass-4: #988F7D;
+  --pass-5: #736851; --pass-6: #8D836D; --pass-7: #7A6F5B;
+  --pass-ink: #120E08; --pass-hi: rgba(255, 255, 255, .3);
   --metal-lo: rgba(0, 0, 0, .2);
   --metal-pill: #0F2B34;
   --shine: rgba(255, 255, 255, .35); --shine-peak: rgba(255, 250, 235, .6);

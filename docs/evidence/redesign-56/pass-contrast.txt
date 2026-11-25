@@ -1,0 +1,5 @@
+PASS  light .pass-latin: 4.53:1 (min 3) ink rgb(26,20,12) on darkest rgb(139,125,99)
+PASS  light .pass-dates: 4.53:1 (min 4.5) ink rgb(26,20,12) on darkest rgb(139,125,99)
+PASS  dark .pass-latin: 3.51:1 (min 3) ink rgb(18,14,8) on darkest rgb(115,104,81)
+FAIL  dark .pass-dates: 3.51:1 (min 4.5) ink rgb(18,14,8) on darkest rgb(115,104,81)
+FAILED
