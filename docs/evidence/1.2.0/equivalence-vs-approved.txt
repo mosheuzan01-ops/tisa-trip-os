@@ -1,4 +1,5 @@
-# 1.2.0 against the approved design (latisa-design-final, its four photos blocked: they are not in 1.2.0)
+# 1.2.0 (commit 461ef66) against the approved design (latisa-design-final; its four photos blocked, they are not in 1.2.0)
+# reference = the approved design + the same E4 rule fix (14px minimum); everything else must match exactly
 # styles: every computed property of every element of the five panels, the top bar and the tab bar (+ ::before/::after in the panels)
 
 PASS  home-light-390: 580 elements/pseudo, 0 style differences, only-proto 0, only-app 0, shown text same
@@ -23,25 +24,25 @@ PASS  checklist-dark-1440: 2905 elements/pseudo, 0 style differences, only-proto
 PASS  tools-dark-1440: 175 elements/pseudo, 0 style differences, only-proto 0, only-app 0, shown text same  (expected: E3)
 
 0 failing states
-E1 route caption drawn by CSS; E2 notebook line in two spans with a CSS separator; E3 line breaks between the tools links (no visual effect)
+E4 the route's 11-13px text raised to 14px on both sides (project minimum), and the board caption's letter-spacing .2em -> .05em so it still fits; E1 route caption drawn by CSS; E2 notebook line in two spans with a CSS separator; E3 line breaks between the tools links (no visual effect)
 # pixels: whole screens, same states
 checklist-dark-1440: 1440x3200, 0 pixels differ, max delta 0/255, area None
 checklist-dark-390: 390x3200, 0 pixels differ, max delta 0/255, area None
 checklist-light-1440: 1440x3200, 0 pixels differ, max delta 0/255, area None
 checklist-light-390: 390x3200, 0 pixels differ, max delta 0/255, area None
-home-dark-1440: 1440x1498, 1 pixels differ, max delta 1/255, area (128, 99, 129, 100)
+home-dark-1440: 1440x1498, 0 pixels differ, max delta 0/255, area None
 home-dark-390: 390x2144, 0 pixels differ, max delta 0/255, area None
 home-light-1440: 1440x1498, 0 pixels differ, max delta 0/255, area None
 home-light-390: 390x2144, 0 pixels differ, max delta 0/255, area None
-itinerary-dark-1440: 1440x2058, 0 pixels differ, max delta 0/255, area None
-itinerary-dark-390: 390x2117, 0 pixels differ, max delta 0/255, area None
-itinerary-light-1440: 1440x2058, 0 pixels differ, max delta 0/255, area None
-itinerary-light-390: 390x2117, 0 pixels differ, max delta 0/255, area None
+itinerary-dark-1440: 1440x2066, 0 pixels differ, max delta 0/255, area None
+itinerary-dark-390: 390x2125, 0 pixels differ, max delta 0/255, area None
+itinerary-light-1440: 1440x2066, 0 pixels differ, max delta 0/255, area None
+itinerary-light-390: 390x2125, 0 pixels differ, max delta 0/255, area None
 money-dark-1440: 1440x2289, 0 pixels differ, max delta 0/255, area None
 money-dark-390: 390x2472, 0 pixels differ, max delta 0/255, area None
 money-light-1440: 1440x2289, 0 pixels differ, max delta 0/255, area None
-money-light-390: 390x2472, 31 pixels differ, max delta 2/255, area (368, 2387, 377, 2448)
+money-light-390: 390x2472, 0 pixels differ, max delta 0/255, area None
 tools-dark-1440: 1440x900, 0 pixels differ, max delta 0/255, area None
 tools-dark-390: 390x902, 0 pixels differ, max delta 0/255, area None
 tools-light-1440: 1440x900, 0 pixels differ, max delta 0/255, area None
-tools-light-390: 390x902, 32 pixels differ, max delta 2/255, area (13, 817, 23, 878)
+tools-light-390: 390x902, 0 pixels differ, max delta 0/255, area None

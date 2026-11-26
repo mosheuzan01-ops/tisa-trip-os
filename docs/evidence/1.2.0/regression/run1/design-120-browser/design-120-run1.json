@@ -1,0 +1,230 @@
+{
+  "TAB1": {
+    "result": "PASS",
+    "states": 30,
+    "failed": []
+  },
+  "CAP": {
+    "result": "PASS",
+    "rows": [
+      {
+        "scheme": "light",
+        "width": 360,
+        "fits": true,
+        "scroll": 320,
+        "client": 320
+      },
+      {
+        "scheme": "light",
+        "width": 390,
+        "fits": true,
+        "scroll": 350,
+        "client": 350
+      },
+      {
+        "scheme": "light",
+        "width": 1440,
+        "fits": true,
+        "scroll": 1056,
+        "client": 1056
+      },
+      {
+        "scheme": "dark",
+        "width": 360,
+        "fits": true,
+        "scroll": 320,
+        "client": 320
+      },
+      {
+        "scheme": "dark",
+        "width": 390,
+        "fits": true,
+        "scroll": 350,
+        "client": 350
+      },
+      {
+        "scheme": "dark",
+        "width": 1440,
+        "fits": true,
+        "scroll": 1056,
+        "client": 1056
+      }
+    ]
+  },
+  "RT1": {
+    "result": "PASS",
+    "statuses": [
+      "done",
+      "now",
+      "ahead",
+      "ahead",
+      "ahead",
+      "ahead",
+      "ahead"
+    ],
+    "caption": {
+      "hidden": false,
+      "text": "\"NO. · DESTINATION · DATES · STATUS\""
+    }
+  },
+  "RT3": {
+    "result": "PASS",
+    "buttonsPerRow": [
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4
+    ],
+    "editOpens": true
+  },
+  "TL1": {
+    "result": "PASS",
+    "links": [
+      {
+        "href": "#/luggage",
+        "ok": true,
+        "hash": "#/luggage"
+      },
+      {
+        "href": "#/smart-bag",
+        "ok": true,
+        "hash": "#/smart-bag"
+      },
+      {
+        "href": "#/info",
+        "ok": true,
+        "hash": "#/info"
+      }
+    ]
+  },
+  "DATA": {
+    "result": "PASS",
+    "bytes": 10499,
+    "same": true
+  },
+  "LS1": {
+    "result": "PASS",
+    "before": {
+      "group": "0 מתוך 8",
+      "notes": "0 מתוך 25 (0%)|0 מתוך 20 (0%)|0 מתוך 12 (0%)|0 מתוך 4 (0%)",
+      "line": "0 מתוך 61 מוכנים",
+      "lineHidden": false,
+      "checked": false
+    },
+    "ticked": {
+      "group": "1 מתוך 8",
+      "notes": "1 מתוך 25 (4%)|0 מתוך 20 (0%)|0 מתוך 12 (0%)|0 מתוך 4 (0%)",
+      "line": "1 מתוך 61 מוכנים",
+      "lineHidden": false,
+      "checked": true
+    },
+    "after": {
+      "group": "0 מתוך 8",
+      "notes": "0 מתוך 25 (0%)|0 מתוך 20 (0%)|0 מתוך 12 (0%)|0 מתוך 4 (0%)",
+      "line": "0 מתוך 61 מוכנים",
+      "lineHidden": false,
+      "checked": false
+    }
+  },
+  "LS2": {
+    "result": "PASS",
+    "hiddenWhileFilter": true,
+    "hiddenWhileSearch": true,
+    "shownAgain": true
+  },
+  "CON": {
+    "result": "PASS",
+    "checks": [
+      {
+        "sel": "#panel-itinerary .stop-status.is-done",
+        "fg": "rgb(233, 220, 192)",
+        "bg": "rgb(39, 35, 30)",
+        "ratio": 11.49
+      },
+      {
+        "sel": "#panel-itinerary .stop-status.is-ahead",
+        "fg": "rgb(255, 196, 110)",
+        "bg": "rgb(16, 13, 12)",
+        "ratio": 12.33
+      },
+      {
+        "sel": "#panel-itinerary .stop-badge-today",
+        "fg": "rgb(26, 10, 3)",
+        "bg": "rgb(232, 115, 47)",
+        "ratio": 6.36
+      },
+      {
+        "sel": "#panel-checklist .item-name",
+        "fg": "rgb(46, 36, 24)",
+        "bg": "rgb(246, 237, 217)",
+        "ratio": 13.05
+      },
+      {
+        "sel": "#panel-checklist .item-note",
+        "fg": "rgb(106, 90, 69)",
+        "bg": "rgb(246, 237, 217)",
+        "ratio": 5.7
+      },
+      {
+        "sel": "note 1 label (light)",
+        "ratio": 8.84
+      },
+      {
+        "sel": "note 2 label (light)",
+        "ratio": 10.97
+      },
+      {
+        "sel": "note 3 label (light)",
+        "ratio": 10.5
+      },
+      {
+        "sel": "note 4 label (light)",
+        "ratio": 9.28
+      },
+      {
+        "sel": "note 1 label (dark)",
+        "ratio": 6.1
+      },
+      {
+        "sel": "note 2 label (dark)",
+        "ratio": 9.32
+      },
+      {
+        "sel": "note 3 label (dark)",
+        "ratio": 6.02
+      },
+      {
+        "sel": "note 4 label (dark)",
+        "ratio": 5.22
+      }
+    ]
+  },
+  "RT2": {
+    "result": "PASS",
+    "before": [
+      "ahead",
+      "ahead",
+      "ahead",
+      "ahead",
+      "ahead",
+      "ahead",
+      "ahead"
+    ],
+    "after": [
+      "done",
+      "done",
+      "done",
+      "done",
+      "done",
+      "done",
+      "done"
+    ]
+  },
+  "RUN": {
+    "result": "PASS",
+    "errors": []
+  }
+}

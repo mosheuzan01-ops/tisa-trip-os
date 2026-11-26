@@ -1,0 +1,80 @@
+commit 461ef66
+run1 0 npm-test # pass 574 # fail 0 
+run1 exit=0 design-120-browser pass=11 fail=0 tail=11/0
+run1 exit=0 stage13-layout-browser pass=12 fail=0 tail=ALL PASS
+run1 exit=0 stage3-browser pass=10 fail=0 tail=PASS  no errors / no outside requests
+run1 exit=0 stage3-polish-browser pass=3 fail=0 tail=PASS  no errors
+run1 exit=0 stage5-browser pass=15 fail=0 tail=PASS  S5-11 (no JS errors, no outside requests)
+run1 exit=0 ready-checklist-browser pass=13 fail=0 tail=ALL PASS
+run1 exit=0 stage4-browser pass=11 fail=0 tail=PASS  S4-11 (no JS errors, no outside requests)
+run1 exit=0 budget-total-browser pass=12 fail=0 tail=ALL PASS
+run1 exit=0 stage4-tools-browser pass=7 fail=0 tail=PASS  no JS errors
+run1 exit=0 smart-bag-browser pass=12 fail=0 tail=PASS  L11 (S12-7) zero requests outside the app in the whole
+run1 exit=0 contrast-browser pass=3 fail=0 tail=PASS  no JS errors
+run1 exit=0 a11y-names-browser pass=0 fail=0 tail=ALL PASS
+run1 exit=0 stage2-browser pass=0 fail=0 tail=B20 PASS
+run1 exit=0 tools-admin-114-browser pass=14 fail=0 tail=14/14 pass
+run1 exit=0 stage14-browser pass=38 fail=0 tail=ALL PASS
+run1 exit=0 stage14-move-two-trips-browser pass=6 fail=0 tail=PASS 0
+run1 exit=0 stage14-delete-browser pass=10 fail=0 tail=ALL PASS
+run1 exit=0 stage14-account-layout-browser pass=6 fail=0 tail=ALL PASS
+run1 exit=0 stage13-upgrade-browser pass=9 fail=0 tail=ALL PASS
+run1 exit=0 stage7-close-browser pass=6 fail=0 tail=ALL PASS
+run1 exit=0 transfers-browser pass=16 fail=0 tail=PASS  no JS errors
+run1 exit=0 places-browser pass=19 fail=0 tail=PASS  no JS errors, no outside requests
+run1 exit=0 assistant-browser pass=11 fail=0 tail=PASS  no JS errors
+run1 exit=0 stage6-calendar-browser pass=19 fail=0 tail=PASS  no JS errors, no outside requests
+run1 exit=0 info-browser pass=11 fail=0 tail=ALL PASS
+run2 0 npm-test # pass 574 # fail 0 
+run2 exit=0 design-120-browser pass=11 fail=0 tail=11/0
+run2 exit=0 stage13-layout-browser pass=12 fail=0 tail=ALL PASS
+run2 exit=0 stage3-browser pass=10 fail=0 tail=PASS  no errors / no outside requests
+run2 exit=0 stage3-polish-browser pass=3 fail=0 tail=PASS  no errors
+run2 exit=0 stage5-browser pass=15 fail=0 tail=PASS  S5-11 (no JS errors, no outside requests)
+run2 exit=0 ready-checklist-browser pass=13 fail=0 tail=ALL PASS
+run2 exit=0 stage4-browser pass=11 fail=0 tail=PASS  S4-11 (no JS errors, no outside requests)
+run2 exit=0 budget-total-browser pass=12 fail=0 tail=ALL PASS
+run2 exit=0 stage4-tools-browser pass=7 fail=0 tail=PASS  no JS errors
+run2 exit=0 smart-bag-browser pass=12 fail=0 tail=PASS  L11 (S12-7) zero requests outside the app in the whole
+run2 exit=0 contrast-browser pass=3 fail=0 tail=PASS  no JS errors
+run2 exit=0 a11y-names-browser pass=0 fail=0 tail=ALL PASS
+run2 exit=0 stage2-browser pass=0 fail=0 tail=B20 PASS
+run2 exit=0 tools-admin-114-browser pass=14 fail=0 tail=14/14 pass
+run2 exit=0 stage14-browser pass=38 fail=0 tail=ALL PASS
+run2 exit=0 stage14-move-two-trips-browser pass=6 fail=0 tail=PASS 0
+run2 exit=0 stage14-delete-browser pass=10 fail=0 tail=ALL PASS
+run2 exit=0 stage14-account-layout-browser pass=6 fail=0 tail=ALL PASS
+run2 exit=0 stage13-upgrade-browser pass=9 fail=0 tail=ALL PASS
+run2 exit=0 stage7-close-browser pass=6 fail=0 tail=ALL PASS
+run2 exit=0 transfers-browser pass=16 fail=0 tail=PASS  no JS errors
+run2 exit=0 places-browser pass=19 fail=0 tail=PASS  no JS errors, no outside requests
+run2 exit=0 assistant-browser pass=11 fail=0 tail=PASS  no JS errors
+run2 exit=0 stage6-calendar-browser pass=19 fail=0 tail=PASS  no JS errors, no outside requests
+run2 exit=0 info-browser pass=11 fail=0 tail=ALL PASS
+run3 0 npm-test # pass 574 # fail 0 
+run3 exit=0 design-120-browser pass=11 fail=0 tail=11/0
+run3 exit=0 stage13-layout-browser pass=12 fail=0 tail=ALL PASS
+run3 exit=0 stage3-browser pass=10 fail=0 tail=PASS  no errors / no outside requests
+run3 exit=0 stage3-polish-browser pass=3 fail=0 tail=PASS  no errors
+run3 exit=0 stage5-browser pass=15 fail=0 tail=PASS  S5-11 (no JS errors, no outside requests)
+run3 exit=0 ready-checklist-browser pass=13 fail=0 tail=ALL PASS
+run3 exit=0 stage4-browser pass=11 fail=0 tail=PASS  S4-11 (no JS errors, no outside requests)
+run3 exit=0 budget-total-browser pass=12 fail=0 tail=ALL PASS
+run3 exit=0 stage4-tools-browser pass=7 fail=0 tail=PASS  no JS errors
+run3 exit=0 smart-bag-browser pass=12 fail=0 tail=PASS  L11 (S12-7) zero requests outside the app in the whole
+run3 exit=0 contrast-browser pass=3 fail=0 tail=PASS  no JS errors
+run3 exit=0 a11y-names-browser pass=0 fail=0 tail=ALL PASS
+run3 exit=0 stage2-browser pass=0 fail=0 tail=B20 PASS
+run3 exit=0 tools-admin-114-browser pass=14 fail=0 tail=14/14 pass
+run3 exit=1 stage14-browser pass=21 fail=2 tail=FAIL 1
+run3 exit=0 stage14-move-two-trips-browser pass=6 fail=0 tail=PASS 0
+run3 exit=0 stage14-delete-browser pass=10 fail=0 tail=ALL PASS
+run3 exit=0 stage14-account-layout-browser pass=6 fail=0 tail=ALL PASS
+run3 exit=0 stage13-upgrade-browser pass=9 fail=0 tail=ALL PASS
+run3 exit=0 stage7-close-browser pass=6 fail=0 tail=ALL PASS
+run3 exit=0 transfers-browser pass=16 fail=0 tail=PASS  no JS errors
+run3 exit=0 places-browser pass=19 fail=0 tail=PASS  no JS errors, no outside requests
+run3 exit=0 assistant-browser pass=11 fail=0 tail=PASS  no JS errors
+run3 exit=0 stage6-calendar-browser pass=19 fail=0 tail=PASS  no JS errors, no outside requests
+run3 exit=0 info-browser pass=11 fail=0 tail=ALL PASS
+DONE

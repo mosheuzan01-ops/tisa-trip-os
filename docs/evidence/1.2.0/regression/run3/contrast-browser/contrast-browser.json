@@ -1,0 +1,50 @@
+{
+  "light: every text button outside a card reaches its contrast (4.5:1, large text 3:1)": {
+    "result": "PASS",
+    "measured": 10,
+    "lowest": {
+      "route": "tools",
+      "label": "#/info: \"מידע וחירום\"",
+      "ratio": 5.694,
+      "need": 4.5,
+      "bg": "rgb(252, 235, 232)"
+    },
+    "low": [],
+    "onImage": [
+      "checklist luggage: \"משקל מזוודה\"",
+      "checklist smart-bag: \"מזוודה חכמה: הצעות לאריזה\"",
+      "transfers transfer-add: \"הוספה\"",
+      "transfers checkin-add: \"צ'ק-אין חדש\"",
+      "money expense-add: \"הוספת הוצאה\"",
+      "photos photo-add: \"הוספת תמונות\"",
+      "places place-add: \"מקום חדש\"",
+      "luggage bag-add: \"תיק חדש\""
+    ]
+  },
+  "dark: every text button outside a card reaches its contrast (4.5:1, large text 3:1)": {
+    "result": "PASS",
+    "measured": 10,
+    "lowest": {
+      "route": "tools",
+      "label": "#/info: \"מידע וחירום\"",
+      "ratio": 7.463,
+      "need": 4.5,
+      "bg": "rgb(58, 30, 25)"
+    },
+    "low": [],
+    "onImage": [
+      "checklist luggage: \"משקל מזוודה\"",
+      "checklist smart-bag: \"מזוודה חכמה: הצעות לאריזה\"",
+      "transfers transfer-add: \"הוספה\"",
+      "transfers checkin-add: \"צ'ק-אין חדש\"",
+      "money expense-add: \"הוספת הוצאה\"",
+      "photos photo-add: \"הוספת תמונות\"",
+      "places place-add: \"מקום חדש\"",
+      "luggage bag-add: \"תיק חדש\""
+    ]
+  },
+  "no JS errors": {
+    "result": "PASS",
+    "errors": []
+  }
+}

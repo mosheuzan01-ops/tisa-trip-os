@@ -1,0 +1,202 @@
+{
+  "S14-1a no cloud set up: the card says so, no buttons, no account dialogs, nothing requested from the cloud or the library": {
+    "result": "PASS",
+    "text": "הסנכרון לענן עוד לא הוגדר. הכול נשמר במכשיר הזה.",
+    "buttons": 0,
+    "dialogs": 0,
+    "lib": 0
+  },
+  "S14-1b data unchanged by opening (1.0.x behaviour)": {
+    "result": "PASS"
+  },
+  "S14-1c cloud set up but no session: no library, no request to Supabase, only \"sign in\" and \"sign up\"; pill hidden": {
+    "result": "PASS",
+    "lib": 0,
+    "calls": 0,
+    "visible": [
+      "signin",
+      "signup"
+    ]
+  },
+  "S14-1d the app works without signing in: home and data as before": {
+    "result": "PASS"
+  },
+  "KEYBOARD sign-in dialog: Enter opens it, focus on the email field, Esc closes, focus returns to the button": {
+    "result": "PASS",
+    "inside": true,
+    "back": true
+  },
+  "A11Y every field in the account dialogs has an accessible name (its wrapping label)": {
+    "result": "PASS",
+    "unnamed": [],
+    "total": 5
+  },
+  "S14-2a sign-up: account is \"waiting for approval\", the name is saved, too-short password refused first": {
+    "result": "PASS",
+    "status": "pending",
+    "text": "ממתין לאישור מנהל. עד האישור הכול נשמר רק במכשיר.",
+    "shortErr": "הסיסמה צריכה 8 תווים לפחות."
+  },
+  "S14-2b a pending user reads only its own profile and sends no trip data": {
+    "result": "PASS",
+    "calls": [
+      "my_profile"
+    ]
+  },
+  "S14-2c local data unchanged while pending": {
+    "result": "PASS"
+  },
+  "S14-2d sign-out: back to \"sign in\", the session key is gone, the data stays": {
+    "result": "PASS",
+    "keys": [
+      "tisa:v1",
+      "latisa:sync:v1"
+    ]
+  },
+  "S14-2e wrong password says so; \"forgot password\" sends the request and explains the manual reset for friends": {
+    "result": "PASS",
+    "wrong": "המייל או הסיסמה לא נכונים."
+  },
+  "S14-2f a blocked user sees \"blocked\", reads only its profile, sends nothing, keeps the local data": {
+    "result": "PASS",
+    "xcalls": [
+      "my_profile"
+    ]
+  },
+  "S14-6d after the backup the dialog stays open on step 2, and nothing was sent to the server": {
+    "result": "PASS",
+    "stepTwoText": "הגיבוי ירד. אחרי ששמרתם אותו, חזרו לכאן ולחצו \"העברה לחשבון עכשיו\".",
+    "createCalls": 0
+  },
+  "S14-6e a failed move shows its reason in the dialog, keeps the trip on this device only and changes nothing": {
+    "result": "PASS",
+    "failText": "הטיול לא נוצר בחשבון. אין חיבור לשרת כרגע. הנתונים נשמרים במכשיר, ונסנכרן כשיחזור החיבור. הנתונים במכשיר לא השתנו, ואפשר לנסות שוב.",
+    "deviceOnly": true,
+    "cloudTrips": 0
+  },
+  "S14-6f a double tap on \"move now\" sends one create_trip and makes one trip": {
+    "result": "PASS",
+    "calls": 1
+  },
+  "S14-6a first sign-in offers the move, with counts; a backup file downloads first; the exact data text is kept once": {
+    "result": "PASS",
+    "migrateText": "תאילנד: 7 תחנות, 1 הוצאות, 61 פריטים ברשימות, 1 מקומות.",
+    "file": "tisa-backup-2026-11-26.json"
+  },
+  "S14-6b the trip moved to the account and nothing on the phone changed": {
+    "result": "PASS",
+    "records": 84
+  },
+  "S14-6c a reload syncs again with no duplicate and no second offer": {
+    "result": "PASS",
+    "records": 84
+  },
+  "S14-4a an edit in airplane mode is saved on the phone, the pill says offline, and it syncs once the network is back": {
+    "result": "PASS",
+    "inCloud": 1
+  },
+  "S14-4b a second phone of the owner gets the trip and the offline edit, once, and keeps its own trip too": {
+    "result": "PASS",
+    "items": 1
+  },
+  "S14-6g an older copy on another device moved to the account: the newer edit stays in the cloud and comes to the device, one trip, no duplicate": {
+    "result": "PASS",
+    "inCloud": "Sample item, edited on phone A",
+    "onDevice": "Sample item, edited on phone A",
+    "offline": 1,
+    "trips": 1,
+    "records": [
+      85,
+      85
+    ],
+    "mine": true
+  },
+  "S14-5 server error 500, 402 (paused or restricted) and no network: no local byte changes, the waiting changes stay, \"offline\" shown, then it recovers": {
+    "result": "PASS",
+    "fails": {
+      "402": {
+        "same": true,
+        "syncKept": true,
+        "line": "לא מחובר. השינויים נשמרים במכשיר וישלחו כשיחזור החיבור."
+      },
+      "500": {
+        "same": true,
+        "syncKept": true,
+        "line": "לא מחובר. השינויים נשמרים במכשיר וישלחו כשיחזור החיבור."
+      },
+      "network": {
+        "same": true,
+        "syncKept": true,
+        "line": "לא מחובר. השינויים נשמרים במכשיר וישלחו כשיחזור החיבור."
+      }
+    }
+  },
+  "S14-3a sharing by email: an unknown address is refused, the friend sees the shared trip (route, places, people)": {
+    "result": "PASS",
+    "notFound": "לא נמצא משתמש מאושר עם המייל הזה. בקשו מהחבר להירשם, ומהמנהל לאשר אותו."
+  },
+  "S14-3b the friend gets none of the owner's personal data (budget, checklist, bags, journal)": {
+    "result": "PASS"
+  },
+  "S14-3c a friend cannot change the trip dates or share it further (owner only)": {
+    "result": "PASS",
+    "start": "2030-12-20"
+  },
+  "S14-3d a user the trip was not shared with does not see it": {
+    "result": "PASS",
+    "listed": [
+      "c1d1716c-1271-459a-b771-0ddf0e385433"
+    ]
+  },
+  "S14-3e removing a friend: their copy stays on their phone, unlinked, nothing deleted": {
+    "result": "PASS"
+  },
+  "S14-7a regular users: no admin button, admin-view.js never loaded, no admin_* call sent": {
+    "result": "PASS",
+    "regularAdmin": 0,
+    "loaded": 0
+  },
+  "KEYBOARD-2 the account dialogs after sign-in (share, members, delete, confirm, move to account, admin): focus inside, Tab stays inside, Esc closes, focus back": {
+    "result": "PASS",
+    "kb": []
+  },
+  "S14-7b the admin sees users and trips, approves a pending user and blocks another (after a confirm)": {
+    "result": "PASS",
+    "approved": true,
+    "blocked": true
+  },
+  "PASSWORD a signed-in user changes the password (only a new password is asked)": {
+    "result": "PASS"
+  },
+  "RST a backup restored while signed in asks \"this phone only / the cloud too\" and sends nothing until then; \"this phone only\" leaves the cloud as it was": {
+    "result": "PASS",
+    "pushesBefore": 2,
+    "pushesAfterImport": 2
+  },
+  "S14-1e signed in and no network: the app opens from its offline copy with the last data, says \"offline\", asks nothing": {
+    "result": "PASS",
+    "who": "מחובר: friend-b@example.com"
+  },
+  "KEYS only tisa:* (unchanged keys) and latisa:* (new) in storage; no password stored anywhere": {
+    "result": "PASS",
+    "badKeys": [],
+    "leaked": false
+  },
+  "LAYOUT the account card and the pill: no horizontal scroll at 390 and 1440, light and dark": {
+    "result": "PASS",
+    "bad": []
+  },
+  "CSP no policy violation in any flow (sign-in, sync, sharing, admin, import, offline)": {
+    "result": "PASS",
+    "v": [],
+    "csp": []
+  },
+  "no JS errors": {
+    "result": "PASS",
+    "errors": []
+  },
+  "no requests outside the app and the (fake) Supabase project": {
+    "result": "PASS",
+    "outside": []
+  }
+}
