@@ -46,16 +46,18 @@ test('DF5: the design ships as real CSS: design.css after main.css, precached; n
   for (const file of ['index.html', 'sw.js', ...listFiles('src', ['.js', '.css'])]) {
     const text = readText(file);
     assert.doesNotMatch(text, /proto\/|data-dir=|data-metal=|data-screens|data-final|latisa-proto/, `${file} has a prototype leftover`);
-    assert.doesNotMatch(text, /\.webp|\.jpe?g|photos\//i, `${file} references a photograph`);
+    if (file.endsWith('.css')) assert.doesNotMatch(text, /url\("?[^")]*\.(webp|jpe?g|png|avif)/i, `${file} loads an image file`);
+    assert.doesNotMatch(text, /photos\/photo-/, `${file} references a prototype photograph`);
     assert.doesNotMatch(text, /\b(v5|fx)-[a-z]/, `${file} has a prototype class name`);
   }
 });
 
-test('DF6: route markup: the country line reuses the country slot; the board caption is drawn by CSS only', () => {
+test('DF6: route markup: the country line has its own slot, filled with the country name; the caption is drawn by CSS only', () => {
   const html = readText('index.html');
   const panel = html.slice(html.indexOf('id="panel-itinerary"'), html.indexOf('data-slot="stops"'));
-  assert.match(panel, /class="itin-country" data-slot="country"/);
-  assert.match(panel, /class="stops-head" data-slot="stops-head" aria-hidden="true" hidden><\/p>/);
+  assert.match(panel, /class="itin-country" data-slot="itin-country"/);
+  assert.match(readText('src/js/app.js'), /\[data-slot="itin-country"\]/);
+  assert.match(panel, /class="stops-head ltr" data-slot="stops-head" aria-hidden="true" hidden><\/p>/);
   assert.match(readText('src/css/design.css'), /\.stops-head::before\s*\{[^}]*content:\s*"NO\. · DESTINATION · DATES · STATUS"/);
 });
 

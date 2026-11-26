@@ -24,6 +24,7 @@
   <link rel="stylesheet" href="./src/css/fonts.css">
   <link rel="stylesheet" href="./src/css/tokens.css">
   <link rel="stylesheet" href="./src/css/main.css">
+  <link rel="stylesheet" href="./src/css/design.css">
   <script type="module" src="./src/js/app.js"></script>
 </head>
 <body>
@@ -282,6 +283,7 @@
       <!-- ITINERARY (feature 1, Stage 3): stops, nights, today. No calendar, no map. -->
       <section class="panel itinerary" id="panel-itinerary" role="tabpanel" aria-labelledby="tab-itinerary" hidden>
         <div class="itin-head">
+          <p class="itin-country" data-slot="itin-country"></p>
           <h1 class="display itin-title" data-i18n="itin.title">המסלול</h1>
           <p class="muted" data-slot="itin-summary"></p>
         </div>
@@ -319,6 +321,8 @@
 
         <section class="card surface route-note" data-slot="route-note" role="status" hidden></section>
 
+        <!-- 1.2.0: the departures-board caption; its text is drawn by design.css, shown when there are stops -->
+        <p class="stops-head ltr" data-slot="stops-head" aria-hidden="true" hidden></p>
         <ol class="stops" data-slot="stops" aria-label="תחנות" data-i18n-label="itin.listLabel"></ol>
 
         <div class="itin-actions" data-slot="itin-actions" hidden>
@@ -371,6 +375,14 @@
             <span class="tile-desc" data-i18n="toolsTab.summary.desc">ימים, הוצאות ותמונות</span>
           </button>
         </div>
+        <!-- 1.2.0: more tools, links to screens that already exist -->
+        <nav class="tools-more" data-i18n-label="tools.more" aria-label="עוד כלים">
+          <div class="tools-chips">
+            <a class="tools-chip" href="#/luggage"><svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-bag"/></svg><span data-i18n="lug.open">משקל מזוודה</span></a>
+            <a class="tools-chip" href="#/smart-bag"><svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-bag"/></svg><span data-i18n="sbag.open">מזוודה חכמה: הצעות לאריזה</span></a>
+          </div>
+          <a class="tools-sos" href="#/info"><svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#i-sos"/></svg><span data-i18n="tools.info">מידע וחירום</span></a>
+        </nav>
       </section>
 
       <!-- MONEY (features 2-4, Stage 4): budget, expenses, planning rates. Amounts are whole agorot. -->
@@ -558,6 +570,7 @@
       <section class="panel lists" id="panel-checklist" role="tabpanel" aria-labelledby="tab-lists" hidden>
         <div class="itin-head">
           <h1 class="display" data-i18n="lists.title">רשימות</h1>
+          <p class="lists-summary" data-slot="lists-summary" hidden><span data-i18n="lists.notebook">מחברת הטיול</span><span class="lists-summary-count" data-slot="lists-summary-count"></span></p>
         </div>
 
         <section class="card surface lists-progress" aria-labelledby="lists-progress-title">

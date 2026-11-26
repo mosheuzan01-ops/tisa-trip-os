@@ -6,7 +6,7 @@ import { todayIn, isIsoDate, validateDates } from './core/trip.js';
 import { needsTemplateOffer, declineTemplate, rebuildRoute } from './core/template.js';
 import {
   sortStops, cleanStops, stopNights, totalNights, validateStop, findOverlaps, stopsOutsideTrip,
-  whereToday, moveStop, replan, seedFromPack, formatDate, formatRange,
+  whereToday, stopStatuses, moveStop, replan, seedFromPack, formatDate, formatRange,
 } from './core/itinerary.js';
 import { makeId } from './core/ids.js';
 import { tipButton } from './tip.js';
@@ -119,6 +119,9 @@ export function renderItinerary(ctx) {
     note.replaceChildren(...lines.map((x, k) => el('p', k ? 'route-note-warn' : '', x)));
   }
 
+  // 1.2.0 departures board: the caption (drawn by design.css) and one status per stop, from the dates only.
+  $('[data-slot="stops-head"]').hidden = stops.length === 0;
+  const statuses = stopStatuses(stops, today);
   const list = $('[data-slot="stops"]');
   const focused = list.contains(document.activeElement) ? document.activeElement : null;
   const focusKey = focused ? [focused.dataset.action, focused.dataset.id] : null;
@@ -158,6 +161,9 @@ export function renderItinerary(ctx) {
       iconButton('i-trash', interpolate(t('stop.deleteLabel'), { name: stop.name }), 'stop-delete', stop.id),
     );
     li.append(actions);
+    // 'now' is the app's own "today" badge in the head; done and ahead get a status tag (CSS adds DONE / AHEAD).
+    const status = statuses[stop.id];
+    if (status === 'done' || status === 'ahead') li.append(el('span', 'stop-status is-' + status, t(`itin.status.${status}`)));
     return li;
   }));
   if (focusKey) {
