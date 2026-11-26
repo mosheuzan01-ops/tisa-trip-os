@@ -86,6 +86,7 @@ const PRECACHE = [
   './assets/brand/latisa-logo-light.png',
   './assets/fonts/Heebo-VF.ttf',
   './assets/fonts/IBMPlexMono-Medium.ttf',
+  './assets/fonts/FreeSerifBold.ttf',
   './icons/apple-touch-icon-180.png',
   './icons/favicon-32.png',
   './icons/icon-192.png',

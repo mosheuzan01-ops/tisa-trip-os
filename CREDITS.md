@@ -6,6 +6,7 @@
 |------|---------------|-------|---------|----------------|
 | Heebo (גופן משתנה, 100–900) | `assets/fonts/Heebo-VF.ttf` | github.com/google/fonts, תיקייה `ofl/heebo` (הפרויקט: github.com/OdedEzer/heebo) | SIL Open Font License 1.1 | `assets/fonts/OFL-Heebo.txt` |
 | IBM Plex Mono Medium | `assets/fonts/IBMPlexMono-Medium.ttf` | github.com/google/fonts, תיקייה `ofl/ibmplexmono` | SIL Open Font License 1.1 | `assets/fonts/OFL-IBMPlexMono.txt` |
+| FreeSerif Bold (GNU FreeFont, 1.1.5) | `assets/fonts/FreeSerifBold.ttf` | חבילת דביאן `fonts-freefont-ttf` 20211204+svn4273-2, הקובץ כמו שהוא, בלי שינוי (המקור: savannah.gnu.org/projects/freefont). SHA-256 ברישיון | GPL-3+ עם חריגת הגופן (font exception): הטמעה במסמך או באתר לא הופכת אותם ל-GPL | `assets/fonts/LICENSE-FreeFont.txt` |
 
 רישיון OFL מתיר שימוש, הטמעה והפצה חינם, גם במוצר מסחרי, כל עוד קובץ הרישיון נשאר מצורף ולא מוכרים את הגופן עצמו בנפרד.
 

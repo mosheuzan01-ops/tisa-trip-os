@@ -402,8 +402,15 @@
         </section>
 
         <section class="card surface money-hero" aria-labelledby="money-free-label">
-          <div class="tip-row"><h2 class="money-hero-label" id="money-free-label" data-i18n="money.free.title">פנוי אחרי התכנון</h2><button class="tip-btn" type="button" data-tip="freeAfter"></button></div>
-          <p class="money-big ltr" data-slot="money-free">—</p>
+          <!-- PR #56: the ring. The arc is paid / running budget (core ringShare); the center is the free amount. -->
+          <div class="money-ring" data-slot="money-ring">
+            <svg viewBox="0 0 200 200" aria-hidden="true" focusable="false"><circle class="ring-track" cx="100" cy="100" r="88"/><circle class="ring-arc" data-slot="money-ring-arc" cx="100" cy="100" r="88" stroke-dasharray="0 553" transform="rotate(-90 100 100)"/></svg>
+            <div class="money-ring-c">
+              <div class="tip-row"><h2 class="money-hero-label" id="money-free-label" data-i18n="money.free.title">פנוי אחרי התכנון</h2><button class="tip-btn" type="button" data-tip="freeAfter"></button></div>
+              <p class="money-big ltr" data-slot="money-free">—</p>
+              <p class="money-ring-sub" data-slot="money-ring-sub" hidden></p>
+            </div>
+          </div>
           <p class="money-before" data-slot="money-free-before"></p>
           <p class="money-today" data-slot="money-today"></p>
           <div class="money-bar" data-slot="money-bar" aria-hidden="true"></div>

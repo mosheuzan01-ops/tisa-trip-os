@@ -265,6 +265,7 @@
   "money.freeShort": "Free after planning",
   "money.reserved": "Set aside for the flight",
   "money.total": "Running budget",
+  "money.ring.paid": "{pct}% of the budget paid",
   "money.estimate": "Planning estimate, not verified",
   "money.empty.title": "No category split yet",
   "money.empty.text": "Pick a template as a starting point and change the amounts, or write your own. Everything is calculated from your budget.",
