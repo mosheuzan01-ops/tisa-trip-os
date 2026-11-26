@@ -242,7 +242,7 @@ html[data-theme][data-theme][data-theme] #panel-itinerary .itin-head { justify-c
 html[data-theme][data-theme][data-theme] #panel-itinerary .itin-head .display { text-align: center; background: var(--pg-title); -webkit-background-clip: text; background-clip: text; }
 html[data-theme][data-theme][data-theme] #panel-itinerary .itin-country { color: var(--pg-ink); }
 html[data-theme][data-theme][data-theme] #panel-itinerary .itin-head .muted { color: var(--pg-muted); }
-html[data-theme][data-theme][data-theme] #panel-itinerary .stops-head { margin: 6px 0 -2px; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font: 500 var(--text-caption)/1.4 var(--font-mono); letter-spacing: .2em; color: var(--pg-head); direction: ltr; }
+html[data-theme][data-theme][data-theme] #panel-itinerary .stops-head { margin: 6px 0 -2px; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font: 500 var(--text-caption)/1.4 var(--font-mono); letter-spacing: .05em; /* 14px text must fit 320px (360 screen) */ color: var(--pg-head); direction: ltr; }
 /* the column caption is decorative (aria-hidden); its letters live here so the copy stays free of meta strings */
 html[data-theme][data-theme][data-theme] #panel-itinerary .stops-head::before { content: "NO. · DESTINATION · DATES · STATUS"; }
 html[data-theme][data-theme][data-theme] #panel-itinerary .stops { display: grid; gap: 10px; padding: 0; background: none; border: 0; box-shadow: none; -webkit-backdrop-filter: none; backdrop-filter: none; }

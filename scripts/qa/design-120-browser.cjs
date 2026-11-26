@@ -1,5 +1,6 @@
 // 1.2.0 browser checks: the final design in the real app (sample trip only, rule 16; no network beyond the local server).
 // TAB1 the five tabs, clicked: each shows its own screen, lit; light and dark; 360, 390 and 1440: no sideways scroll
+// CAP the board caption is whole (not cut) at 360, 390 and 1440, light and dark
 // RT1 mid-trip: one NOW (the app's own "today" badge), DONE before it, AHEAD after it; the caption is shown
 // RT2 before the trip every stop is AHEAD; after it every stop is DONE (dates only, no "booked")
 // RT3 every row keeps edit / up / down / delete; edit opens the stop dialog
@@ -62,7 +63,7 @@ const sec = async (ids, fn) => {
     const seedFor = (scheme) => ({ ...seed, settings: { ...seed.settings, theme: scheme } });
 
     // TAB1
-    const tabRows = [];
+    const tabRows = []; const capRows = [];
     for (const scheme of ['light', 'dark']) for (const width of [360, 390, 1440]) {
       const { ctx, page } = await open(browser, base, seedFor(scheme), { scheme, width });
       for (const name of TABS) {
@@ -70,10 +71,13 @@ const sec = async (ids, fn) => {
         const s = await page.evaluate((n) => ({ lit: document.querySelector(`.tabbar [aria-controls="panel-${n}"]`).getAttribute('aria-selected'),
           ox: document.documentElement.scrollWidth - innerWidth, theme: document.documentElement.dataset.theme }), name);
         tabRows.push({ scheme, width, name, ...s, ok: s.lit === 'true' && s.ox <= 0 && s.theme === scheme });
+        // CAP the board caption (CSS text, not cut): its line holds the whole text at every width
+        if (name === 'itinerary') capRows.push({ scheme, width, ...await page.$eval('[data-slot="stops-head"]', (n) => ({ fits: n.scrollWidth <= n.clientWidth, scroll: n.scrollWidth, client: n.clientWidth })) });
       }
       await ctx.close();
     }
     pass('TAB1', tabRows.every((r) => r.ok), { states: tabRows.length, failed: tabRows.filter((r) => !r.ok) });
+    pass('CAP', capRows.length === 6 && capRows.every((r) => r.fits), { rows: capRows });
 
     // RT1, RT3, CON (route)
     const { ctx, page } = await open(browser, base, seedFor('dark'), { scheme: 'dark' });
