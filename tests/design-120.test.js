@@ -106,3 +106,15 @@ test('DF11: version 1.2.0 in package.json, config and the service worker', () =>
   assert.equal(readJson('config/app.config.json').appVersion, '1.2.0');
   assert.match(readText('sw.js'), /const VERSION = '1\.2\.0';/);
 });
+
+test('DF12: no text in design.css is smaller than the smallest text token (14px), pseudo-element text included', () => {
+  const css = readText('src/css/design.css');
+  const small = [];
+  for (const [, sel, body] of css.matchAll(/([^{}\n]*)\{([^}]*)\}/g)) {
+    for (const d of body.split(';').filter((x) => /\bfont(-size)?\s*:/.test(x))) {
+      const size = d.replace(/\/[^\s;]+/, '').match(/(?<![\w.-])(\.\d+|\d+(?:\.\d+)?)(rem|px)\b/);
+      if (size && (size[2] === 'rem' ? Number(size[1]) * 16 : Number(size[1])) < 14) small.push(`${sel.trim().slice(-60)}: ${d.trim()}`);
+    }
+  }
+  assert.deepEqual(small, []);
+});

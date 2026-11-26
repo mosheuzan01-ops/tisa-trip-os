@@ -78,7 +78,7 @@ html[data-theme] .today .card-head h2 { font: 600 var(--text-caption)/1.2 var(--
 html[data-theme] .today-stop-link { color: var(--title); text-decoration-color: var(--gold-line); }
 html[data-theme] .stop { gap: var(--space-3); }
 html[data-theme] .stop-head { padding-bottom: var(--space-2); border-bottom: 1px dashed var(--line-strong); }
-html[data-theme] .stop-num { display: inline-grid; place-items: center; min-width: 2.6em; padding: 5px 8px; border-radius: 6px; background: var(--gold-metal); color: var(--gold-ink); box-shadow: var(--gold-edge); font: 600 .8125rem/1 var(--font-mono); letter-spacing: .12em; }
+html[data-theme] .stop-num { display: inline-grid; place-items: center; min-width: 2.6em; padding: 5px 8px; border-radius: 6px; background: var(--gold-metal); color: var(--gold-ink); box-shadow: var(--gold-edge); font: 600 var(--text-caption)/1 var(--font-mono); letter-spacing: .12em; }
 html[data-theme] .stop-name { font-size: calc(var(--text-lead) * 1.12); color: var(--title); }
 html[data-theme] .stop-meta { font-variant-numeric: tabular-nums; }
 html[data-theme] .stop-meta :is(.stop-dates) { font-weight: 600; }
@@ -133,13 +133,13 @@ html[data-theme][data-theme] #panel-itinerary .stop-meta { gap: 2px 10px; color:
 html[data-theme][data-theme] #panel-itinerary .stop-dates { font-weight: 700; }
 html[data-theme][data-theme] #panel-itinerary .stop-nights { color: var(--scr-muted); padding: 0; border: 0; }
 html[data-theme][data-theme] #panel-itinerary .stop-nights::before { content: "· " / ""; }
-html[data-theme][data-theme] #panel-itinerary .stop-transfer { padding: 0; border: 0; font-family: var(--font-mono); font-size: .8125rem; letter-spacing: .04em; color: var(--scr-muted); }
+html[data-theme][data-theme] #panel-itinerary .stop-transfer { padding: 0; border: 0; font-family: var(--font-mono); font-size: var(--text-caption); letter-spacing: .04em; color: var(--scr-muted); }
 html[data-theme][data-theme] #panel-itinerary .stop-transfer .icon { color: var(--scr-amber); }
 html[data-theme][data-theme] #panel-itinerary .stop-note { color: var(--scr-muted); font-size: .9375rem; }
 html[data-theme][data-theme] #panel-itinerary .stop-actions { padding: 0; border: 0; gap: 2px; }
 html[data-theme][data-theme] #panel-itinerary .stop-actions .icon-btn { border-color: transparent; background: transparent; color: var(--scr-muted); }
 html[data-theme][data-theme] #panel-itinerary .stop-actions .icon-btn:hover:not(:disabled) { border-color: var(--scr-line-strong); color: var(--scr-ink); }
-html[data-theme][data-theme] #panel-itinerary .stop-head .badge { flex: none; padding: 4px 10px; border-radius: 999px; font: 700 .8125rem/1.1 var(--font-sans); letter-spacing: .02em; border: 1.5px solid var(--scr-sea); color: var(--scr-sea); background: transparent; }
+html[data-theme][data-theme] #panel-itinerary .stop-head .badge { flex: none; padding: 4px 10px; border-radius: 999px; font: 700 var(--text-caption)/1.1 var(--font-sans); letter-spacing: .02em; border: 1.5px solid var(--scr-sea); color: var(--scr-sea); background: transparent; }
 html[data-theme][data-theme] #panel-itinerary .stop-head .stop-badge-today { background: var(--scr-now); color: var(--scr-now-ink); border-color: var(--scr-now); }
 html[data-theme][data-theme] #panel-itinerary .stop-head .stop-badge-today::before { content: "● " / ""; font-size: .7em; vertical-align: .15em; }
 html[data-theme][data-theme] #panel-itinerary .stop.is-today { background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--scr-now) 22%, transparent)); box-shadow: inset -4px 0 0 var(--scr-now); }
@@ -242,7 +242,7 @@ html[data-theme][data-theme][data-theme] #panel-itinerary .itin-head { justify-c
 html[data-theme][data-theme][data-theme] #panel-itinerary .itin-head .display { text-align: center; background: var(--pg-title); -webkit-background-clip: text; background-clip: text; }
 html[data-theme][data-theme][data-theme] #panel-itinerary .itin-country { color: var(--pg-ink); }
 html[data-theme][data-theme][data-theme] #panel-itinerary .itin-head .muted { color: var(--pg-muted); }
-html[data-theme][data-theme][data-theme] #panel-itinerary .stops-head { margin: 6px 0 -2px; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font: 500 .75rem/1.4 var(--font-mono); letter-spacing: .2em; color: var(--pg-head); direction: ltr; }
+html[data-theme][data-theme][data-theme] #panel-itinerary .stops-head { margin: 6px 0 -2px; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font: 500 var(--text-caption)/1.4 var(--font-mono); letter-spacing: .2em; color: var(--pg-head); direction: ltr; }
 /* the column caption is decorative (aria-hidden); its letters live here so the copy stays free of meta strings */
 html[data-theme][data-theme][data-theme] #panel-itinerary .stops-head::before { content: "NO. · DESTINATION · DATES · STATUS"; }
 html[data-theme][data-theme][data-theme] #panel-itinerary .stops { display: grid; gap: 10px; padding: 0; background: none; border: 0; box-shadow: none; -webkit-backdrop-filter: none; backdrop-filter: none; }
@@ -257,11 +257,11 @@ html[data-theme][data-theme][data-theme] #panel-itinerary .stop-name { grid-area
 html[data-theme][data-theme][data-theme] #panel-itinerary .stop-meta { grid-area: meta; margin: 0; display: flex; flex-wrap: wrap; gap: 0 8px; color: var(--pg-muted); font: 500 .9375rem/1.45 var(--font-sans); font-variant-numeric: tabular-nums lining-nums; }
 html[data-theme][data-theme][data-theme] #panel-itinerary .stop-dates { font-weight: 600; color: var(--pg-ink); }
 html[data-theme][data-theme][data-theme] #panel-itinerary .stop-nights { color: var(--pg-muted); font-family: var(--font-sans); }
-html[data-theme][data-theme][data-theme] #panel-itinerary .stop-transfer { font: 500 .8125rem/1.4 var(--font-mono); color: var(--pg-muted); gap: 6px; }
+html[data-theme][data-theme][data-theme] #panel-itinerary .stop-transfer { font: 500 var(--text-caption)/1.4 var(--font-mono); color: var(--pg-muted); gap: 6px; }
 html[data-theme][data-theme][data-theme] #panel-itinerary .stop-transfer .icon { color: var(--pg-head); }
 html[data-theme][data-theme][data-theme] #panel-itinerary .stop-note { color: var(--pg-muted); font-size: .9375rem; }
-html[data-theme][data-theme][data-theme] #panel-itinerary :is(.stop-status, .stop-badge-today) { grid-area: status; justify-self: end; align-self: start; display: inline-flex; align-items: center; gap: 6px; min-height: 30px; margin: 0; padding: 0 12px; border-radius: 999px; border: 0; white-space: nowrap; font: 600 .8125rem/1 var(--font-sans); }
-html[data-theme][data-theme][data-theme] #panel-itinerary :is(.stop-status, .stop-badge-today)::before { font: 600 .6875rem/1 var(--font-mono); letter-spacing: .1em; direction: ltr; }
+html[data-theme][data-theme][data-theme] #panel-itinerary :is(.stop-status, .stop-badge-today) { grid-area: status; justify-self: end; align-self: start; display: inline-flex; align-items: center; gap: 6px; min-height: 30px; margin: 0; padding: 0 12px; border-radius: 999px; border: 0; white-space: nowrap; font: 600 var(--text-caption)/1 var(--font-sans); }
+html[data-theme][data-theme][data-theme] #panel-itinerary :is(.stop-status, .stop-badge-today)::before { font: 600 var(--text-caption)/1 var(--font-mono); letter-spacing: .1em; direction: ltr; }
 html[data-theme][data-theme][data-theme] #panel-itinerary .stop-badge-today::before { content: "NOW" / ""; }
 html[data-theme][data-theme][data-theme] #panel-itinerary .stop-badge-today::after { content: "" / ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
 html[data-theme][data-theme][data-theme] #panel-itinerary .stop-status.is-done { background: var(--pg-done-bg); color: var(--pg-done-ink); box-shadow: inset 0 0 0 1px var(--pg-done-edge); }
@@ -271,7 +271,7 @@ html[data-theme][data-theme][data-theme] #panel-itinerary .stop-status.is-done::
 html[data-theme][data-theme][data-theme] #panel-itinerary .stop-status.is-ahead::before { content: "AHEAD" / ""; }
 html[data-theme][data-theme][data-theme] #panel-itinerary .stop-badge-today { background: var(--pg-now-bg); color: var(--pg-now-ink); box-shadow: inset 0 0 0 1px var(--pg-now-edge), var(--pg-now-glow); }
 html[data-theme][data-theme][data-theme] #panel-itinerary .stop.is-today .stop-status { display: none; }
-html[data-theme][data-theme][data-theme] #panel-itinerary .stop-head .badge:not(.stop-badge-today) { grid-area: flex; justify-self: start; align-self: center; margin: 4px 0 0; padding: 2px 10px; min-height: 0; border: 0; border-radius: 999px; background: var(--pg-flex-bg); color: var(--pg-flex-ink); font: 600 .75rem/1.5 var(--font-sans); }
+html[data-theme][data-theme][data-theme] #panel-itinerary .stop-head .badge:not(.stop-badge-today) { grid-area: flex; justify-self: start; align-self: center; margin: 4px 0 0; padding: 2px 10px; min-height: 0; border: 0; border-radius: 999px; background: var(--pg-flex-bg); color: var(--pg-flex-ink); font: 600 var(--text-caption)/1.5 var(--font-sans); }
 html[data-theme][data-theme][data-theme] #panel-itinerary .stop-head .tip-btn { grid-area: flex; justify-self: start; align-self: center; margin-inline-start: 56px; margin-top: 4px; color: var(--pg-muted); }
 html[data-theme][data-theme][data-theme] #panel-itinerary .stop-head .badge:not(.stop-badge-today) + button { grid-area: flex; justify-self: start; align-self: center; margin-inline-start: 56px; margin-top: 4px; color: var(--pg-muted); }
 html[data-theme][data-theme][data-theme] #panel-itinerary .stop.is-today { background: var(--pg-row); box-shadow: inset 0 1px 0 var(--pg-row-edge), var(--pg-row-now), var(--pg-drop); }
@@ -282,7 +282,7 @@ html[data-theme][data-theme][data-theme] #panel-itinerary .stop-actions .icon-bt
 html[data-theme][data-theme][data-theme] #panel-itinerary .stop-actions .icon-btn:hover:not(:disabled) { border-color: var(--pg-row-line); color: var(--pg-ink); }
 html[data-theme][data-theme][data-theme] #panel-itinerary :is(.itin-now, .route-note, .itin-trip, .itin-template-card) { background: var(--pg-row); color: var(--pg-ink); border-color: transparent; border-radius: 20px; box-shadow: inset 0 1px 0 var(--pg-row-edge), inset 0 0 0 1px var(--pg-row-line), var(--pg-drop); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
 html[data-theme][data-theme][data-theme] #panel-itinerary .itin-now { border-inline-start: 4px solid var(--pg-now-edge); }
-html[data-theme][data-theme][data-theme] #panel-itinerary .itin-now-label { font: 600 .75rem/1.3 var(--font-mono); letter-spacing: .14em; color: var(--pg-head); }
+html[data-theme][data-theme][data-theme] #panel-itinerary .itin-now-label { font: 600 var(--text-caption)/1.3 var(--font-mono); letter-spacing: .14em; color: var(--pg-head); }
 html[data-theme][data-theme][data-theme] #panel-itinerary .itin-now-place { color: var(--pg-ink); }
 html[data-theme][data-theme][data-theme] #panel-itinerary :is(.itin-now, .route-note) .muted { color: var(--pg-muted); }
 html[data-theme][data-theme][data-theme] #panel-checklist { --pg-torn: url("data:image/svg+xml,%3Csvg xmlns='http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox='0 0 48 9' preserveAspectRatio='none'%3E%3Cpath d='M0 0H48V4.2L45.6 6.8 43 3.6 40.2 7.9 37 4.4 34.5 6.4 31.8 3.2 29 7.4 26 4.8 23.6 8.2 20.4 3.9 17.8 6.9 15 3.4 12.2 7.6 9.4 4.6 6.6 6.3 3.8 3.5 1.6 6.8 0 4.6Z'/%3E%3C/svg%3E"); --pg-wave: url("data:image/svg+xml,%3Csvg xmlns='http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox='0 0 150 10' preserveAspectRatio='none'%3E%3Cpath d='M3 6 C40 2 80 9 147 4' fill='none' stroke='%23000' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E"); }

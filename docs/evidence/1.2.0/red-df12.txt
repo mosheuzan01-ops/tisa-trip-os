@@ -1,0 +1,4 @@
+# DF12 red: tests/design-120.test.js DF12 against design.css before the fix (design.css at b6c0743)
+not ok 1 - DF12: no text in design.css is smaller than the smallest text token (14px), pseudo-element text included
+# pass 0
+# fail 1
