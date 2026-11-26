@@ -1,0 +1,60 @@
+{
+  "TAB1": {
+    "result": "PASS",
+    "states": 30,
+    "failed": []
+  },
+  "RT1": {
+    "result": "FAIL",
+    "error": "Error: page.$eval: Failed to find element matching selector \"[data-slot=\"stops-head\"]\""
+  },
+  "RT3": {
+    "result": "FAIL",
+    "error": "Error: page.$eval: Failed to find element matching selector \"[data-slot=\"stops-head\"]\""
+  },
+  "TL1": {
+    "result": "FAIL",
+    "error": "TimeoutError: page.click: Timeout 5000ms exceeded."
+  },
+  "DATA": {
+    "result": "FAIL",
+    "error": "TimeoutError: page.click: Timeout 5000ms exceeded."
+  },
+  "LS1": {
+    "result": "FAIL",
+    "error": "Error: page.evaluate: TypeError: Cannot read properties of null (reading 'textContent')"
+  },
+  "LS2": {
+    "result": "FAIL",
+    "error": "Error: page.evaluate: TypeError: Cannot read properties of null (reading 'textContent')"
+  },
+  "CON": {
+    "result": "FAIL",
+    "error": "TypeError: Cannot read properties of null (reading 'slice')"
+  },
+  "RT2": {
+    "result": "FAIL",
+    "before": [
+      "-",
+      "-",
+      "-",
+      "-",
+      "-",
+      "-",
+      "-"
+    ],
+    "after": [
+      "-",
+      "-",
+      "-",
+      "-",
+      "-",
+      "-",
+      "-"
+    ]
+  },
+  "RUN": {
+    "result": "PASS",
+    "errors": []
+  }
+}
