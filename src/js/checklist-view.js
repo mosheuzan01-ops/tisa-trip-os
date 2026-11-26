@@ -112,6 +112,11 @@ export function renderLists(ctx) {
   found.textContent = interpolate(t('lists.found'), { items: plural('lists.found.items', shownItems.length), tasks: plural('lists.found.tasks', shownTasks.length) });
   $('[data-slot="lists-no-results"]').hidden = !searching || (shownItems.length + shownTasks.length > 0);
   $('[data-slot="lists-bar"]').hidden = s.items.length + s.tasks.length === 0;
+  // 1.2.0: the notebook line under the title, "X of Y ready" over all checklist items (the sum of the group counts).
+  // Hidden while a filter or the search is on, so it never shows a partial sum as the whole.
+  const ready = s.items.filter((x) => x.done).length;
+  $('[data-slot="lists-summary"]').hidden = s.items.length === 0 || searching || Boolean(view.items) || Boolean(view.tasks);
+  $('[data-slot="lists-summary-count"]').textContent = interpolate(t('lists.ready'), { done: ready, total: s.items.length });
   $('[data-slot="groups"]').replaceChildren(...GROUPS.filter((g) => shownItems.some((x) => x.group === g)).map((g) => {
     const all = s.items.filter((x) => x.group === g);
     const list = shownItems.filter((x) => x.group === g);

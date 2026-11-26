@@ -9,6 +9,7 @@ import {
   dailyAllowance, filterExpenses, pieSlices, convertAll, atmCost, affordability, toCsv, stampRates,
   dailyBase, moveBetween, renameCategory, categoryLabel, visibleCategories, CATEGORY_NAME_MAX,
   parseWholeShekels, setTotal, suggestSplit, applySuggestion, withProfile, fxApprox,
+  ringShare,
 } from './core/money.js';
 import { needsTemplateOffer, declineTemplate, applyTemplate, templatePreview, stopNameFor, TEMPLATE_ID } from './core/template.js';
 import { tripCounts } from './core/route-plan.js';
@@ -103,6 +104,16 @@ export function renderMoney(ctx) {
   // Hero
   $('[data-slot="money-free"]').textContent = s.hasBudget ? fm(s.freeMinor) : '—';
   $('[data-slot="money-free"]').classList.toggle('is-over', s.freeMinor < 0);
+  // PR #56: the ring's arc, paid / running budget; its caption says the same in words.
+  const share = s.hasBudget ? ringShare(s.paidMinor, s.totalMinor) : null;
+  const arc = $('[data-slot="money-ring-arc"]');
+  const circ = 2 * Math.PI * Number(arc.getAttribute('r'));
+  arc.setAttribute('stroke-dasharray', `${((share ?? 0) * circ).toFixed(2)} ${circ.toFixed(2)}`);
+  arc.toggleAttribute('data-empty', !share || Math.round(share * 100) === 0); // under 0.5%: no lone dot
+  $('[data-slot="money-ring"]').classList.toggle('is-over', s.hasBudget && s.freeMinor < 0);
+  const ringSub = $('[data-slot="money-ring-sub"]');
+  ringSub.hidden = share === null;
+  ringSub.textContent = share === null ? '' : interpolate(t('money.ring.paid'), { pct: Math.round(share * 100) });
   const before = $('[data-slot="money-free-before"]');
   before.textContent = s.hasBudget ? interpolate(t('money.freeBefore'), { amount: fm(s.freeBeforePlanMinor) }) : '';
   if (s.hasBudget) before.append(tipButton(t, 'freeBefore'));

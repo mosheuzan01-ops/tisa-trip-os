@@ -62,6 +62,10 @@ button { font: inherit; color: inherit; }
 .pass {
   display: block; width: 100%; height: 214px; padding: 0; border: 0; background: none;
   perspective: 1400px; cursor: pointer; border-radius: var(--radius-xl); text-align: start;
+  /* PR #56: the pass wears its own metal, 25% darker; the shine, edges and window keep their light */
+  --metal-1: var(--pass-1); --metal-2: var(--pass-2); --metal-3: var(--pass-3); --metal-4: var(--pass-4);
+  --metal-5: var(--pass-5); --metal-6: var(--pass-6); --metal-7: var(--pass-7);
+  --metal-ink: var(--pass-ink); --metal-hi: var(--pass-hi);
 }
 .pass-inner {
   position: relative; display: block; width: 100%; height: 100%;
@@ -1209,3 +1213,31 @@ body::before {
 .cloud-add .settings-actions { margin: 0; }
 .cloud-blocked { margin-top: var(--space-2); }
 .cloud-blocked summary { min-height: 44px; display: flex; align-items: center; cursor: pointer; font-weight: 700; }
+
+/* ============ PR #56: home direction B (pass + flight board) and budget direction A (ring) ============ */
+/* FreeSerif Bold: the main figures and the home and budget titles. Everything else stays Heebo. */
+.home .hero .display, .money .itin-head .display, .status-num, .money-big { font-family: var(--font-figure); font-weight: 700; letter-spacing: 0; }
+
+/* Home: the "today" card reads like a departures board: one row per fact, thin rules between them. */
+.home .today { gap: 0; }
+.home .today .card-head { padding-bottom: var(--space-3); }
+.home .today > :is(.today-status, .today-stop, .today-money, .today-time):not([hidden]) {
+  margin: 0; padding-block: var(--space-3); border-top: 1px solid var(--line);
+}
+.home .today .clock { font-family: var(--font-mono); font-weight: 500; }
+
+/* Budget: the free amount sits inside a ring; the arc is paid / running budget. */
+.money-ring { position: relative; display: grid; place-items: center; width: min(236px, 72vw); aspect-ratio: 1; margin: var(--space-2) auto var(--space-3); }
+.money-ring svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.money-ring circle { fill: none; stroke-width: 10.35; }
+.money-ring .ring-track { stroke: var(--line-strong); }
+.money-ring .ring-arc { stroke: var(--accent); stroke-linecap: round; transition: stroke-dasharray var(--dur-base) var(--ease-out); }
+.money-ring.is-over .ring-arc { stroke: var(--danger); }
+.money-ring .ring-arc[data-empty] { visibility: hidden; } /* nothing paid yet: no stray round cap */
+.money-ring-c { position: relative; display: grid; justify-items: center; gap: var(--space-1); width: 76%; text-align: center; container-type: inline-size; }
+.money-ring-c .tip-row { justify-content: center; flex-wrap: nowrap; gap: 0; }
+.money-ring-c .money-hero-label { font-size: var(--text-caption); white-space: nowrap; }
+.money-ring-c .tip-btn { margin-inline: -10px -14px; }
+.money-ring-c .money-big { text-align: center; font-size: min(2.75rem, 24cqi); line-height: 1.1; }
+.money-ring-sub { color: var(--muted); font-size: var(--text-caption); }
+@media (prefers-reduced-motion: reduce) { .money-ring .ring-arc { transition: none; } }

@@ -86,7 +86,7 @@ async function boot() {
   for (const el of $$('[data-i18n-placeholder]')) el.setAttribute('placeholder', t(el.dataset.i18nPlaceholder));
 
   const place = country.names[locale] ?? country.names.en;
-  for (const el of $$('[data-slot="country"]')) el.textContent = place;
+  for (const el of $$('[data-slot="country"], [data-slot="itin-country"]')) el.textContent = place; // 1.2.0: the route shows it too
   for (const el of $$('[data-slot="country-latin"]')) el.textContent = country.names.en ?? country.id;
 
   const prefix = config.storageKeyPrefix;

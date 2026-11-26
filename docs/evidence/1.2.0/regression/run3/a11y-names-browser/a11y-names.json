@@ -1,0 +1,1444 @@
+{
+ "summary": {
+  "total": 145,
+  "checked": 145,
+  "byChrome": 119,
+  "byDom": 26,
+  "named": 141,
+  "known": [
+   "import-file",
+   "photos-import-file",
+   "flights-import-file",
+   "photo-file"
+  ],
+  "unnamed": [],
+  "errors": [],
+  "result": "PASS"
+ },
+ "fields": {
+  "panel-settings:start:44": {
+   "how": "chrome",
+   "where": "route settings",
+   "name": "יציאה",
+   "ignored": false,
+   "id": "",
+   "type": "date",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "panel-settings:end:45": {
+   "how": "chrome",
+   "where": "route settings",
+   "name": "חזרה",
+   "ignored": false,
+   "id": "",
+   "type": "date",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "panel-settings:theme:46": {
+   "how": "chrome",
+   "where": "route settings",
+   "name": "אוטומטי",
+   "ignored": false,
+   "id": "",
+   "type": "radio",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "panel-settings:theme:47": {
+   "how": "chrome",
+   "where": "route settings",
+   "name": "בהיר",
+   "ignored": false,
+   "id": "",
+   "type": "radio",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "panel-settings:theme:48": {
+   "how": "chrome",
+   "where": "route settings",
+   "name": "כהה",
+   "ignored": false,
+   "id": "",
+   "type": "radio",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "import-file": {
+   "how": "chrome",
+   "where": "route settings",
+   "name": "",
+   "ignored": true,
+   "id": "import-file",
+   "type": "file",
+   "ariaHidden": true,
+   "tabindex": "-1"
+  },
+  "photos-import-file": {
+   "how": "chrome",
+   "where": "route settings",
+   "name": "",
+   "ignored": true,
+   "id": "photos-import-file",
+   "type": "file",
+   "ariaHidden": true,
+   "tabindex": "-1"
+  },
+  "flights-import-file": {
+   "how": "chrome",
+   "where": "dialog dlg-cloud-admin",
+   "name": "",
+   "ignored": true,
+   "id": "flights-import-file",
+   "type": "file",
+   "ariaHidden": true,
+   "tabindex": "-1"
+  },
+  "panel-money:total:10": {
+   "how": "chrome",
+   "where": "route money",
+   "name": "כמה כסף יש לך לחופשה?",
+   "ignored": false,
+   "id": "",
+   "type": "text",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "panel-money:search:11": {
+   "how": "chrome",
+   "where": "route money",
+   "name": "חיפוש הוצאה: תיאור, קטגוריה, יעד",
+   "ignored": false,
+   "id": "",
+   "type": "search",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "panel-money:select-one:12": {
+   "how": "chrome",
+   "where": "route money",
+   "name": "יום",
+   "ignored": false,
+   "id": "",
+   "type": "select-one",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "panel-money:select-one:13": {
+   "how": "chrome",
+   "where": "route money",
+   "name": "קטגוריה",
+   "ignored": false,
+   "id": "",
+   "type": "select-one",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "panel-money:select-one:14": {
+   "how": "chrome",
+   "where": "route money",
+   "name": "יעד",
+   "ignored": false,
+   "id": "",
+   "type": "select-one",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "panel-money:name:15": {
+   "how": "chrome",
+   "where": "route money",
+   "name": "שם",
+   "ignored": false,
+   "id": "",
+   "type": "text",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "panel-money:item:16": {
+   "how": "chrome",
+   "where": "route money",
+   "name": "מה רוצים לקנות",
+   "ignored": false,
+   "id": "",
+   "type": "text",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "panel-money:price:17": {
+   "how": "chrome",
+   "where": "route money",
+   "name": "מחיר",
+   "ignored": false,
+   "id": "",
+   "type": "text",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "panel-money:currency:18": {
+   "how": "chrome",
+   "where": "route money",
+   "name": "מטבע",
+   "ignored": false,
+   "id": "",
+   "type": "select-one",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "panel-money:amount:19": {
+   "how": "chrome",
+   "where": "route money",
+   "name": "סכום",
+   "ignored": false,
+   "id": "",
+   "type": "text",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "panel-money:currency:20": {
+   "how": "chrome",
+   "where": "route money",
+   "name": "מטבע",
+   "ignored": false,
+   "id": "",
+   "type": "select-one",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "panel-money:amount:21": {
+   "how": "chrome",
+   "where": "route money",
+   "name": "סכום משיכה (THB)",
+   "ignored": false,
+   "id": "",
+   "type": "text",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "panel-money:fee:22": {
+   "how": "chrome",
+   "where": "route money",
+   "name": "עמלה (THB)",
+   "ignored": false,
+   "id": "",
+   "type": "text",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "panel-checklist:search:23": {
+   "how": "chrome",
+   "where": "route checklist",
+   "name": "חיפוש בפריטים ובמשימות",
+   "ignored": false,
+   "id": "",
+   "type": "search",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "panel-checklist:checkbox:24": {
+   "how": "chrome",
+   "where": "route checklist",
+   "name": "להסתיר מה שכבר מוכן",
+   "ignored": false,
+   "id": "",
+   "type": "checkbox",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "panel-checklist:checkbox:25": {
+   "how": "chrome",
+   "where": "route checklist",
+   "name": "להסתיר משימות שבוצעו",
+   "ignored": false,
+   "id": "",
+   "type": "checkbox",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "panel-checklist:checkbox:26": {
+   "how": "chrome",
+   "where": "route checklist",
+   "name": "דרכון",
+   "ignored": false,
+   "id": "",
+   "type": "checkbox",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "panel-checklist:checkbox:27": {
+   "how": "chrome",
+   "where": "route checklist",
+   "name": "נעלי הליכה",
+   "ignored": false,
+   "id": "",
+   "type": "checkbox",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "panel-checklist:checkbox:28": {
+   "how": "chrome",
+   "where": "route checklist",
+   "name": "להזמין טיסה לקו טאו",
+   "ignored": false,
+   "id": "",
+   "type": "checkbox",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "panel-checklist:checkbox:29": {
+   "how": "chrome",
+   "where": "route checklist",
+   "name": "לכבס",
+   "ignored": false,
+   "id": "",
+   "type": "checkbox",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-new-trip:name:49": {
+   "how": "chrome",
+   "where": "dialog dlg-new-trip",
+   "name": "שם הטיול",
+   "ignored": false,
+   "id": "",
+   "type": "text",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-dates:start:50": {
+   "how": "chrome",
+   "where": "dialog dlg-dates",
+   "name": "יציאה",
+   "ignored": false,
+   "id": "",
+   "type": "date",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-dates:end:51": {
+   "how": "chrome",
+   "where": "dialog dlg-dates",
+   "name": "חזרה",
+   "ignored": false,
+   "id": "",
+   "type": "date",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-budget:amount:52": {
+   "how": "chrome",
+   "where": "dialog dlg-budget",
+   "name": "כמה כסף יש לך לחופשה?",
+   "ignored": false,
+   "id": "",
+   "type": "text",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-reset:text:53": {
+   "how": "chrome",
+   "where": "dialog dlg-reset",
+   "name": "כדי לאשר, הקלידו: איפוס",
+   "ignored": false,
+   "id": "",
+   "type": "text",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-stop:name:54": {
+   "how": "chrome",
+   "where": "dialog dlg-stop",
+   "name": "שם המקום",
+   "ignored": false,
+   "id": "",
+   "type": "text",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-stop:start:55": {
+   "how": "chrome",
+   "where": "dialog dlg-stop",
+   "name": "הגעה",
+   "ignored": false,
+   "id": "",
+   "type": "date",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-stop:end:56": {
+   "how": "chrome",
+   "where": "dialog dlg-stop",
+   "name": "עזיבה",
+   "ignored": false,
+   "id": "",
+   "type": "date",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-stop:note:57": {
+   "how": "chrome",
+   "where": "dialog dlg-stop",
+   "name": "הערה (לא חובה)",
+   "ignored": false,
+   "id": "",
+   "type": "text",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-replan:start:58": {
+   "how": "chrome",
+   "where": "dialog dlg-replan",
+   "name": "יציאה",
+   "ignored": false,
+   "id": "",
+   "type": "date",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-replan:end:59": {
+   "how": "chrome",
+   "where": "dialog dlg-replan",
+   "name": "חזרה",
+   "ignored": false,
+   "id": "",
+   "type": "date",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-replan:mode:60": {
+   "how": "chrome",
+   "where": "dialog dlg-replan",
+   "name": "להזיז את כל המסלול כל תחנה זזה באותו מספר ימים.",
+   "ignored": false,
+   "id": "",
+   "type": "radio",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-replan:mode:61": {
+   "how": "chrome",
+   "where": "dialog dlg-replan",
+   "name": "לשנות את התחנה הגמישה רק היעד הגמיש מתארך או מתקצר.",
+   "ignored": false,
+   "id": "",
+   "type": "radio",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-replan:mode:62": {
+   "how": "chrome",
+   "where": "dialog dlg-replan",
+   "name": "מסלול חדש לפי התבנית קודם רואים את המסלול החדש. המסלול הנוכחי נשמר בארכיון.",
+   "ignored": false,
+   "id": "",
+   "type": "radio",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-replan:mode:63": {
+   "how": "chrome",
+   "where": "dialog dlg-replan",
+   "name": "רק תאריכי הטיול התחנות לא זזות. תקבלו אזהרה על מה שבחוץ.",
+   "ignored": false,
+   "id": "",
+   "type": "radio",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-expense:amount:64": {
+   "how": "chrome",
+   "where": "dialog dlg-expense",
+   "name": "סכום",
+   "ignored": false,
+   "id": "",
+   "type": "text",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-expense:currency:65": {
+   "how": "chrome",
+   "where": "dialog dlg-expense",
+   "name": "מטבע",
+   "ignored": false,
+   "id": "",
+   "type": "select-one",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-expense:category:66": {
+   "how": "chrome",
+   "where": "dialog dlg-expense",
+   "name": "קטגוריה",
+   "ignored": false,
+   "id": "",
+   "type": "select-one",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-expense:date:67": {
+   "how": "chrome",
+   "where": "dialog dlg-expense",
+   "name": "תאריך",
+   "ignored": false,
+   "id": "",
+   "type": "date",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-expense:status:68": {
+   "how": "chrome",
+   "where": "dialog dlg-expense",
+   "name": "סטטוס",
+   "ignored": false,
+   "id": "",
+   "type": "select-one",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-expense:destinationId:69": {
+   "how": "chrome",
+   "where": "dialog dlg-expense",
+   "name": "יעד (לא חובה)",
+   "ignored": false,
+   "id": "",
+   "type": "select-one",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-expense:paidBy:70": {
+   "how": "chrome",
+   "where": "dialog dlg-expense",
+   "name": "מי שילם",
+   "ignored": false,
+   "id": "",
+   "type": "select-one",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-expense:splitMode:71": {
+   "how": "chrome",
+   "where": "dialog dlg-expense",
+   "name": "איך מחלקים",
+   "ignored": false,
+   "id": "",
+   "type": "select-one",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-expense:description:72": {
+   "how": "chrome",
+   "where": "dialog dlg-expense",
+   "name": "תיאור",
+   "ignored": false,
+   "id": "",
+   "type": "text",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-expense:method:73": {
+   "how": "chrome",
+   "where": "dialog dlg-expense",
+   "name": "אמצעי תשלום",
+   "ignored": false,
+   "id": "",
+   "type": "select-one",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-expense:note:74": {
+   "how": "chrome",
+   "where": "dialog dlg-expense",
+   "name": "הערה (לא חובה)",
+   "ignored": false,
+   "id": "",
+   "type": "text",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-item:name:75": {
+   "how": "chrome",
+   "where": "dialog dlg-item",
+   "name": "שם הפריט",
+   "ignored": false,
+   "id": "",
+   "type": "text",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-item:group:76": {
+   "how": "chrome",
+   "where": "dialog dlg-item",
+   "name": "קבוצה",
+   "ignored": false,
+   "id": "",
+   "type": "select-one",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-item:qty:77": {
+   "how": "chrome",
+   "where": "dialog dlg-item",
+   "name": "כמות",
+   "ignored": false,
+   "id": "",
+   "type": "text",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-item:note:78": {
+   "how": "chrome",
+   "where": "dialog dlg-item",
+   "name": "הערה (לא חובה)",
+   "ignored": false,
+   "id": "",
+   "type": "text",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-item:verify:79": {
+   "how": "chrome",
+   "where": "dialog dlg-item",
+   "name": "תלוי בכללים: לבדוק במקור רשמי",
+   "ignored": false,
+   "id": "",
+   "type": "checkbox",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-item:source:80": {
+   "how": "chrome",
+   "where": "dialog dlg-item",
+   "name": "איפה בדקתם (מקור)",
+   "ignored": false,
+   "id": "",
+   "type": "text",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-item:checkedAt:81": {
+   "how": "chrome",
+   "where": "dialog dlg-item",
+   "name": "תאריך הבדיקה",
+   "ignored": false,
+   "id": "",
+   "type": "date",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-task:title:82": {
+   "how": "chrome",
+   "where": "dialog dlg-task",
+   "name": "משימה",
+   "ignored": false,
+   "id": "",
+   "type": "text",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-task:status:83": {
+   "how": "chrome",
+   "where": "dialog dlg-task",
+   "name": "סטטוס",
+   "ignored": false,
+   "id": "",
+   "type": "select-one",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-task:due:84": {
+   "how": "chrome",
+   "where": "dialog dlg-task",
+   "name": "תאריך יעד (לא חובה)",
+   "ignored": false,
+   "id": "",
+   "type": "date",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-task:note:85": {
+   "how": "chrome",
+   "where": "dialog dlg-task",
+   "name": "הערה (לא חובה)",
+   "ignored": false,
+   "id": "",
+   "type": "text",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-cat:name:86": {
+   "how": "chrome",
+   "where": "dialog dlg-cat",
+   "name": "שם הקטגוריה",
+   "ignored": false,
+   "id": "",
+   "type": "text",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-cat:amount:87": {
+   "how": "chrome",
+   "where": "dialog dlg-cat",
+   "name": "סכום להעברה (לא חובה)",
+   "ignored": false,
+   "id": "",
+   "type": "text",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-cat:to:88": {
+   "how": "chrome",
+   "where": "dialog dlg-cat",
+   "name": "אל",
+   "ignored": false,
+   "id": "",
+   "type": "select-one",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-note:note:89": {
+   "how": "chrome",
+   "where": "dialog dlg-note",
+   "name": "מה היה היום?",
+   "ignored": false,
+   "id": "",
+   "type": "textarea",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-photo:date:90": {
+   "how": "chrome",
+   "where": "dialog dlg-photo",
+   "name": "תאריך",
+   "ignored": false,
+   "id": "",
+   "type": "date",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-photo:stopId:91": {
+   "how": "chrome",
+   "where": "dialog dlg-photo",
+   "name": "יעד",
+   "ignored": false,
+   "id": "",
+   "type": "select-one",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-photo:caption:92": {
+   "how": "chrome",
+   "where": "dialog dlg-photo",
+   "name": "כיתוב (לא חובה)",
+   "ignored": false,
+   "id": "",
+   "type": "text",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-photo:featured:93": {
+   "how": "chrome",
+   "where": "dialog dlg-photo",
+   "name": "להציג במצגת (עד 12)",
+   "ignored": false,
+   "id": "",
+   "type": "checkbox",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-place:name:94": {
+   "how": "chrome",
+   "where": "dialog dlg-place",
+   "name": "שם המקום",
+   "ignored": false,
+   "id": "",
+   "type": "text",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-place:category:95": {
+   "how": "chrome",
+   "where": "dialog dlg-place",
+   "name": "קטגוריה",
+   "ignored": false,
+   "id": "",
+   "type": "select-one",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-place:status:96": {
+   "how": "chrome",
+   "where": "dialog dlg-place",
+   "name": "סטטוס",
+   "ignored": false,
+   "id": "",
+   "type": "select-one",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-place:coords:97": {
+   "how": "chrome",
+   "where": "dialog dlg-place",
+   "name": "קואורדינטות (לא חובה)",
+   "ignored": false,
+   "id": "",
+   "type": "text",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-place:address:98": {
+   "how": "chrome",
+   "where": "dialog dlg-place",
+   "name": "כתובת (לא חובה)",
+   "ignored": false,
+   "id": "",
+   "type": "text",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-place:stopId:99": {
+   "how": "chrome",
+   "where": "dialog dlg-place",
+   "name": "יעד במסלול (לא חובה)",
+   "ignored": false,
+   "id": "",
+   "type": "select-one",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-place:plannedDate:100": {
+   "how": "chrome",
+   "where": "dialog dlg-place",
+   "name": "יום מתוכנן (לא חובה)",
+   "ignored": false,
+   "id": "",
+   "type": "date",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-place:visitedDate:101": {
+   "how": "chrome",
+   "where": "dialog dlg-place",
+   "name": "תאריך ביקור בפועל (לא חובה)",
+   "ignored": false,
+   "id": "",
+   "type": "date",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-place:note:102": {
+   "how": "chrome",
+   "where": "dialog dlg-place",
+   "name": "הערה (לא חובה)",
+   "ignored": false,
+   "id": "",
+   "type": "textarea",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-checkin:kind:103": {
+   "how": "chrome",
+   "where": "dialog dlg-checkin",
+   "name": "סוג",
+   "ignored": false,
+   "id": "",
+   "type": "select-one",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-checkin:zone:104": {
+   "how": "chrome",
+   "where": "dialog dlg-checkin",
+   "name": "לפי שעון",
+   "ignored": false,
+   "id": "",
+   "type": "select-one",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-checkin:title:105": {
+   "how": "chrome",
+   "where": "dialog dlg-checkin",
+   "name": "שם",
+   "ignored": false,
+   "id": "",
+   "type": "text",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-checkin:date:106": {
+   "how": "chrome",
+   "where": "dialog dlg-checkin",
+   "name": "תאריך",
+   "ignored": false,
+   "id": "",
+   "type": "date",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-checkin:time:107": {
+   "how": "chrome",
+   "where": "dialog dlg-checkin",
+   "name": "שעה (לא חובה)",
+   "ignored": false,
+   "id": "",
+   "type": "time",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-checkin:transferId:108": {
+   "how": "chrome",
+   "where": "dialog dlg-checkin",
+   "name": "טיסה מהרשימה (לא חובה)",
+   "ignored": false,
+   "id": "",
+   "type": "select-one",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-checkin:stopId:109": {
+   "how": "chrome",
+   "where": "dialog dlg-checkin",
+   "name": "תחנה במסלול (לא חובה)",
+   "ignored": false,
+   "id": "",
+   "type": "select-one",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-checkin:booking:110": {
+   "how": "chrome",
+   "where": "dialog dlg-checkin",
+   "name": "מספר הזמנה",
+   "ignored": false,
+   "id": "",
+   "type": "text",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-checkin:link:111": {
+   "how": "chrome",
+   "where": "dialog dlg-checkin",
+   "name": "קישור לצ'ק-אין (לא חובה)",
+   "ignored": false,
+   "id": "",
+   "type": "url",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-checkin:note:112": {
+   "how": "chrome",
+   "where": "dialog dlg-checkin",
+   "name": "הערה (לא חובה)",
+   "ignored": false,
+   "id": "",
+   "type": "text",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-bag:name:113": {
+   "how": "chrome",
+   "where": "dialog dlg-bag",
+   "name": "שם התיק",
+   "ignored": false,
+   "id": "",
+   "type": "text",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-bag:limit:114": {
+   "how": "chrome",
+   "where": "dialog dlg-bag",
+   "name": "מגבלה בק״ג (לא חובה)",
+   "ignored": false,
+   "id": "",
+   "type": "text",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-luggage-item:name:115": {
+   "how": "chrome",
+   "where": "dialog dlg-luggage-item",
+   "name": "פריט",
+   "ignored": false,
+   "id": "",
+   "type": "text",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-luggage-item:weight:116": {
+   "how": "chrome",
+   "where": "dialog dlg-luggage-item",
+   "name": "משקל בק״ג",
+   "ignored": false,
+   "id": "",
+   "type": "text",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-luggage-item:bagId:117": {
+   "how": "chrome",
+   "where": "dialog dlg-luggage-item",
+   "name": "תיק",
+   "ignored": false,
+   "id": "",
+   "type": "select-one",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-transfer:kind:118": {
+   "how": "chrome",
+   "where": "dialog dlg-transfer",
+   "name": "סוג",
+   "ignored": false,
+   "id": "",
+   "type": "select-one",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-transfer:status:119": {
+   "how": "chrome",
+   "where": "dialog dlg-transfer",
+   "name": "סטטוס",
+   "ignored": false,
+   "id": "",
+   "type": "select-one",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-transfer:from:120": {
+   "how": "chrome",
+   "where": "dialog dlg-transfer",
+   "name": "מוצא",
+   "ignored": false,
+   "id": "",
+   "type": "text",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-transfer:to:121": {
+   "how": "chrome",
+   "where": "dialog dlg-transfer",
+   "name": "יעד",
+   "ignored": false,
+   "id": "",
+   "type": "text",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-transfer:date:122": {
+   "how": "chrome",
+   "where": "dialog dlg-transfer",
+   "name": "תאריך",
+   "ignored": false,
+   "id": "",
+   "type": "date",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-transfer:time:123": {
+   "how": "chrome",
+   "where": "dialog dlg-transfer",
+   "name": "שעה (לא חובה)",
+   "ignored": false,
+   "id": "",
+   "type": "time",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-transfer:flightNo:124": {
+   "how": "chrome",
+   "where": "dialog dlg-transfer",
+   "name": "מספר טיסה (לא חובה)",
+   "ignored": false,
+   "id": "",
+   "type": "text",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-transfer:ticket:125": {
+   "how": "chrome",
+   "where": "dialog dlg-transfer",
+   "name": "כרטיס",
+   "ignored": false,
+   "id": "",
+   "type": "select-one",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-transfer:seat:126": {
+   "how": "chrome",
+   "where": "dialog dlg-transfer",
+   "name": "מושב (לא חובה)",
+   "ignored": false,
+   "id": "",
+   "type": "text",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-transfer:seatPrice:127": {
+   "how": "chrome",
+   "where": "dialog dlg-transfer",
+   "name": "תשלום על מושב (לא חובה)",
+   "ignored": false,
+   "id": "",
+   "type": "text",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-transfer:company:128": {
+   "how": "chrome",
+   "where": "dialog dlg-transfer",
+   "name": "חברה",
+   "ignored": false,
+   "id": "",
+   "type": "text",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-transfer:booking:129": {
+   "how": "chrome",
+   "where": "dialog dlg-transfer",
+   "name": "מספר הזמנה",
+   "ignored": false,
+   "id": "",
+   "type": "text",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-transfer:price:130": {
+   "how": "chrome",
+   "where": "dialog dlg-transfer",
+   "name": "מחיר (לא חובה)",
+   "ignored": false,
+   "id": "",
+   "type": "text",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-transfer:currency:131": {
+   "how": "chrome",
+   "where": "dialog dlg-transfer",
+   "name": "מטבע",
+   "ignored": false,
+   "id": "",
+   "type": "select-one",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-transfer:link:132": {
+   "how": "chrome",
+   "where": "dialog dlg-transfer",
+   "name": "קישור להזמנה (לא חובה)",
+   "ignored": false,
+   "id": "",
+   "type": "url",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-transfer:note:133": {
+   "how": "chrome",
+   "where": "dialog dlg-transfer",
+   "name": "הערה (לא חובה)",
+   "ignored": false,
+   "id": "",
+   "type": "text",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-transfer-delete:withExpense:134": {
+   "how": "chrome",
+   "where": "dialog dlg-transfer-delete",
+   "name": "למחוק גם את ההוצאה המקושרת במסך הכסף",
+   "ignored": false,
+   "id": "",
+   "type": "checkbox",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-cloud-auth:email:135": {
+   "how": "chrome",
+   "where": "dialog dlg-cloud-auth",
+   "name": "מייל",
+   "ignored": false,
+   "id": "",
+   "type": "email",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-cloud-auth:pass:136": {
+   "how": "chrome",
+   "where": "dialog dlg-cloud-auth",
+   "name": "סיסמה (8 תווים לפחות)",
+   "ignored": false,
+   "id": "",
+   "type": "password",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-cloud-auth:name:137": {
+   "how": "chrome",
+   "where": "dialog dlg-cloud-auth",
+   "name": "שם (רשות)",
+   "ignored": false,
+   "id": "",
+   "type": "text",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-cloud-auth:phone:138": {
+   "how": "chrome",
+   "where": "dialog dlg-cloud-auth",
+   "name": "טלפון (רשות, לא משמש לכניסה)",
+   "ignored": false,
+   "id": "",
+   "type": "tel",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "dlg-cloud-share:email:139": {
+   "how": "chrome",
+   "where": "dialog dlg-cloud-share",
+   "name": "המייל של החבר",
+   "ignored": false,
+   "id": "",
+   "type": "email",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "panel-info:textarea:0": {
+   "how": "dom",
+   "where": "not rendered",
+   "name": "ההערות שלי: שגרירות ישראל בבנגקוק",
+   "id": "",
+   "type": "textarea",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "panel-info:textarea:1": {
+   "how": "dom",
+   "where": "not rendered",
+   "name": "ההערות שלי: בית חב\"ד בנגקוק",
+   "id": "",
+   "type": "textarea",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "panel-info:textarea:2": {
+   "how": "dom",
+   "where": "not rendered",
+   "name": "ההערות שלי: בנגקוק",
+   "id": "",
+   "type": "textarea",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "panel-info:textarea:3": {
+   "how": "dom",
+   "where": "not rendered",
+   "name": "ההערות שלי: קו סמוי",
+   "id": "",
+   "type": "textarea",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "panel-info:textarea:4": {
+   "how": "dom",
+   "where": "not rendered",
+   "name": "ההערות שלי: קראבי",
+   "id": "",
+   "type": "textarea",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "panel-info:textarea:5": {
+   "how": "dom",
+   "where": "not rendered",
+   "name": "ההערות שלי: קופנגן (רק אם במסלול)",
+   "id": "",
+   "type": "textarea",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "panel-info:textarea:6": {
+   "how": "dom",
+   "where": "not rendered",
+   "name": "ההערות שלי: קו טאו",
+   "id": "",
+   "type": "textarea",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "panel-info:textarea:7": {
+   "how": "dom",
+   "where": "not rendered",
+   "name": "ההערות שלי: פוקט (רק אם במסלול)",
+   "id": "",
+   "type": "textarea",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "panel-info:textarea:8": {
+   "how": "dom",
+   "where": "not rendered",
+   "name": "ההערות שלי: צ'אנג מאי (לא במסלול)",
+   "id": "",
+   "type": "textarea",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "panel-info:textarea:9": {
+   "how": "dom",
+   "where": "not rendered",
+   "name": "ההערות שלי: ביטוח נסיעות",
+   "id": "",
+   "type": "textarea",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "panel-transfers:checkbox:30": {
+   "how": "dom",
+   "where": "not rendered",
+   "name": "בוצע: צ'ק-אין לטיסה הביתה",
+   "id": "",
+   "type": "checkbox",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "panel-transfers:checkbox:31": {
+   "how": "dom",
+   "where": "not rendered",
+   "name": "בוצע: מלון בקו טאו",
+   "id": "",
+   "type": "checkbox",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "photo-file": {
+   "how": "dom",
+   "where": "not rendered",
+   "name": "",
+   "id": "photo-file",
+   "type": "file",
+   "ariaHidden": true,
+   "tabindex": "-1"
+  },
+  "places-file": {
+   "how": "dom",
+   "where": "not rendered",
+   "name": "קובץ מקומות",
+   "id": "places-file",
+   "type": "file",
+   "ariaHidden": true,
+   "tabindex": "-1"
+  },
+  "panel-places:search:32": {
+   "how": "dom",
+   "where": "not rendered",
+   "name": "חיפוש מקום: שם, כתובת, הערה",
+   "id": "",
+   "type": "search",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "panel-places:select-one:33": {
+   "how": "dom",
+   "where": "not rendered",
+   "name": "קטגוריההכולאוכלאטרקציהמקדשחוףטבעשוקלינהאחר",
+   "id": "",
+   "type": "select-one",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "panel-places:select-one:34": {
+   "how": "dom",
+   "where": "not rendered",
+   "name": "יעדהכולבנגקוקצ'יאנג מאיקו טאו",
+   "id": "",
+   "type": "select-one",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "panel-places:select-one:35": {
+   "how": "dom",
+   "where": "not rendered",
+   "name": "סטטוסהכולרוצה לבקרביקרתיאהבתי",
+   "id": "",
+   "type": "select-one",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "panel-smart-bag:checkbox:36": {
+   "how": "dom",
+   "where": "not rendered",
+   "name": "חוף",
+   "id": "",
+   "type": "checkbox",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "panel-smart-bag:checkbox:37": {
+   "how": "dom",
+   "where": "not rendered",
+   "name": "שנורקל או צלילה",
+   "id": "",
+   "type": "checkbox",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "panel-smart-bag:checkbox:38": {
+   "how": "dom",
+   "where": "not rendered",
+   "name": "מסיבות",
+   "id": "",
+   "type": "checkbox",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "panel-smart-bag:checkbox:39": {
+   "how": "dom",
+   "where": "not rendered",
+   "name": "מקדשים",
+   "id": "",
+   "type": "checkbox",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "panel-smart-bag:checkbox:40": {
+   "how": "dom",
+   "where": "not rendered",
+   "name": "טרקים וטבע",
+   "id": "",
+   "type": "checkbox",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "panel-smart-bag:checkbox:41": {
+   "how": "dom",
+   "where": "not rendered",
+   "name": "אופנוע או קטנוע",
+   "id": "",
+   "type": "checkbox",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "panel-smart-bag:checkbox:42": {
+   "how": "dom",
+   "where": "not rendered",
+   "name": "עיר וקניות",
+   "id": "",
+   "type": "checkbox",
+   "ariaHidden": false,
+   "tabindex": null
+  },
+  "panel-settings:cloud-trip:43": {
+   "how": "dom",
+   "where": "not rendered",
+   "name": "תאילנד (במכשיר בלבד)",
+   "id": "",
+   "type": "radio",
+   "ariaHidden": false,
+   "tabindex": null
+  }
+ }
+}

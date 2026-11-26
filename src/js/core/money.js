@@ -422,3 +422,9 @@ export function fxApprox(minor, rates) {
   }
   return out;
 }
+
+/** PR #56: the budget ring's arc, paid / running budget as 0..1 (clamped); null when there is no budget. */
+export function ringShare(paidMinor, totalMinor) {
+  if (!Number.isFinite(totalMinor) || totalMinor <= 0) return null;
+  return Math.min(1, Math.max(0, paidMinor / totalMinor));
+}

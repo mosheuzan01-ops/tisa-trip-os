@@ -1,0 +1,61 @@
+# CAP red: scripts/qa/design-120-browser.cjs on design.css at 0347f3d (caption letter-spacing .2em at 14px)
+PASS TAB1
+FAIL CAP
+PASS RT1
+PASS RT3
+PASS TL1
+PASS DATA
+PASS LS1
+PASS LS2
+PASS CON
+PASS RT2
+PASS RUN
+10/1
+
+{
+ "result": "FAIL",
+ "rows": [
+  {
+   "scheme": "light",
+   "width": 360,
+   "fits": false,
+   "scroll": 381,
+   "client": 320
+  },
+  {
+   "scheme": "light",
+   "width": 390,
+   "fits": false,
+   "scroll": 381,
+   "client": 350
+  },
+  {
+   "scheme": "light",
+   "width": 1440,
+   "fits": true,
+   "scroll": 1056,
+   "client": 1056
+  },
+  {
+   "scheme": "dark",
+   "width": 360,
+   "fits": false,
+   "scroll": 381,
+   "client": 320
+  },
+  {
+   "scheme": "dark",
+   "width": 390,
+   "fits": false,
+   "scroll": 381,
+   "client": 350
+  },
+  {
+   "scheme": "dark",
+   "width": 1440,
+   "fits": true,
+   "scroll": 1056,
+   "client": 1056
+  }
+ ]
+}

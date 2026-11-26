@@ -72,6 +72,22 @@ export function whereToday(stops, today) {
 }
 
 /**
+ * 1.2.0 departures board: each stop's status for today, by id: 'now' (the stop whereToday names), 'done' (every
+ * stop before it in date order), 'ahead' (every stop after it). With no stop today: before the trip all 'ahead',
+ * after it all 'done', between stops 'done' up to the next stop. Only dates; there is no booking status in the data.
+ */
+export function stopStatuses(stops, today) {
+  const list = sortStops(cleanStops(stops));
+  const where = whereToday(list, today);
+  const out = {};
+  if (where.phase === 'empty') return out;
+  const pivotId = where.currentId ?? where.nextId;
+  const k = pivotId == null ? list.length : list.findIndex((x) => x.id === pivotId);
+  list.forEach((x, i) => { out[x.id] = i < k ? 'done' : (i === k && where.currentId ? 'now' : 'ahead'); });
+  return out;
+}
+
+/**
  * Swap a stop with the one before (dir -1) or after (dir 1). Each keeps its nights; the pair starts where
  * the earlier one started, and any gap between them stays. Returns the new sorted list, or null if it cannot move.
  */
